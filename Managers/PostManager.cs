@@ -291,16 +291,7 @@ namespace MKForum.Managers
 
                         while (reader.Read())
                         {
-                            Post po = new Post()
-                            {
-                                PostID = (Guid)reader["PostID"],
-                                MemberID = (Guid)reader["MemberID"],
-                                PostDate = (DateTime)reader["PostDate"],
-                                PostView = (int)reader["PostView"],
-                                PostCotent = (string)reader["PostCotent"],
-                                LastEditTime = reader["LastEditTime"] as DateTime?,
-                                Title = (string)reader["Title"]
-                            };
+                            Post po = this.BuildPostContent(reader);
                             postList.Add(po);
                         }
                         return postList;
@@ -331,18 +322,7 @@ namespace MKForum.Managers
                         SqlDataReader reader = command.ExecuteReader();
                         if (reader.Read())
                         {
-                            Post post = new Post()
-                            {
-                                PostID = (Guid)reader["PostID"],
-                                MemberID = (Guid)reader["MemberID"],
-                                CboardID = (int)reader["CboardID"],
-                                PointID = (Guid?)reader["PointID"],
-                                PostDate = (DateTime)reader["PostDate"],
-                                PostView = (int)reader["PostView"],
-                                Title = (string)reader["Title"],
-                                PostCotent = (string)reader["PostCotent"],
-                                LastEditTime = (DateTime?)reader["LastEditTime"]
-                            };
+                            Post post = this.BuildPostContent(reader);
                             return post;
                         }
                         return null;
@@ -355,7 +335,26 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public void UpdatePost(Guid postid, string title, string postcotent)
+
+        private Post BuildPostContent(SqlDataReader reader)
+        {
+            return new Post()
+            {
+                PostID = (Guid)reader["PostID"],
+                MemberID = (Guid)reader["MemberID"],
+                CboardID = (int)reader["CboardID"],
+                PointID = reader["PointID"] as Guid?,
+                PostDate = (DateTime)reader["PostDate"],
+                PostView = (int)reader["PostView"],
+                Title = (string)reader["Title"],
+                PostCotent = (string)reader["PostCotent"],
+                LastEditTime = reader["LastEditTime"] as DateTime?,
+                Floor = (int)reader["Floor"],
+                CoverImage = reader["CoverImage"] as string
+            };
+        }
+
+        public void UpdatePost(Post post)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -373,9 +372,9 @@ namespace MKForum.Managers
                     {
                         connection.Open();
 
-                        command.Parameters.AddWithValue(@"postID", postid);
-                        command.Parameters.AddWithValue(@"title", title);
-                        command.Parameters.AddWithValue(@"postcotent", postcotent);
+                        command.Parameters.AddWithValue(@"postID", post.PostID);
+                        command.Parameters.AddWithValue(@"title", post.Title);
+                        command.Parameters.AddWithValue(@"postcotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"lastedittime", DateTime.Now.ToString());
                         command.ExecuteNonQuery();
                     }

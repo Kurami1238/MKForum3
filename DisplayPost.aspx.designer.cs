@@ -11,52 +11,61 @@ namespace MKForum
 {
 
 
-    public partial class EditPost
+    public partial class WebForm1
     {
 
         /// <summary>
-        /// form1 控制項。
+        /// lblTitle 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Label lblTitle;
 
         /// <summary>
-        /// Title 控制項。
+        /// btnEditPost 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Title;
+        protected global::System.Web.UI.WebControls.Button btnEditPost;
 
         /// <summary>
-        /// PostCotent 控制項。
+        /// btnDeletePost 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea PostCotent;
+        protected global::System.Web.UI.WebControls.Button btnDeletePost;
 
         /// <summary>
-        /// btnSend 控制項。
+        /// lblMember 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSend;
+        protected global::System.Web.UI.WebControls.Label lblMember;
 
         /// <summary>
-        /// ltlmsg 控制項。
+        /// lblFloor 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlmsg;
+        protected global::System.Web.UI.WebControls.Label lblFloor;
+
+        /// <summary>
+        /// lblCotent 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCotent;
     }
 }
