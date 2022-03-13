@@ -11,7 +11,7 @@ namespace MKForum
 {
 
 
-    public partial class CreatePostv2
+    public partial class CreatePost
     {
 
         /// <summary>

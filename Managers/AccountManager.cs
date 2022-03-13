@@ -34,7 +34,7 @@ namespace MKForum.Managers
                             {
                                 MemberID = (Guid)reader["MemberID"],
                                 Account = reader["Account"] as string,
-                                Password = reader["PWD"] as string,
+                                Password = reader["Password"] as string,
                                 Email = reader["Email"] as string
                             };
 
@@ -75,7 +75,7 @@ namespace MKForum.Managers
                             {
                                 MemberID = (Guid)reader["MemberID"],
                                 Account = reader["Account"] as string,
-                                Password = reader["PWD"] as string
+                                Password = reader["Password"] as string
                             };
 
                             return member;

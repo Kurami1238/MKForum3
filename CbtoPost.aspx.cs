@@ -9,24 +9,17 @@ using System.Web.UI.WebControls;
 
 namespace MKForum
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class WebForm2 : System.Web.UI.Page
     {
         PostManager _pmgr = new PostManager();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string cboards = this.Request.QueryString["Cboard"];
-            int cboard;
-
-            if (int.TryParse(cboards, out cboard))
-                this.lblMsg.Text = "查無此子版";
-            else
-            {
-                cboard = 2;
-                // 先測試 假設有cboardid
-                this.DisplayPost(cboard);
-            }
-               
+            string cboardsText = this.Request.QueryString["Cboard"];
+            int cboard = (string.IsNullOrWhiteSpace(cboardsText))
+                            ? 2 : Convert.ToInt32(cboardsText);
+            // 先測試 假設有cboardid
+            this.DisplayPost(cboard);
         }
 
         protected void btnPostEdit_Click(object sender, EventArgs e)
@@ -38,6 +31,11 @@ namespace MKForum
             List<Post> postList = this._pmgr.GetPostList(cboard);
             this.rptcBtoP.DataSource = postList;
             this.rptcBtoP.DataBind();
+        }
+
+        protected void btnCreatePost_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

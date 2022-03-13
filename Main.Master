@@ -188,7 +188,7 @@
 
             <div class="container-fluid">
                 <div class="row">
-<%--                    <div class="col-lg-3 col-md-12">
+                    <%--                    <div class="col-lg-3 col-md-12">
                         <ul>
                             <li>音樂討論區</li>
                             <li>動畫討論區</li>
@@ -198,10 +198,12 @@
                     </div>--%>
 
                     <div class="col-lg-8 col-md-12">
-                        <div class="row">
-                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                            </asp:ContentPlaceHolder>
-                        </div>
+                        <form id="form1" runat="server">
+                            <div class="row">
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-lg-4 hidden-md">
                         <ul>
