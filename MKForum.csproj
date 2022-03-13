@@ -112,7 +112,6 @@
     <Content Include="Register.aspx" />
     <Content Include="SearchEngine.aspx" />
     <Content Include="Web.config" />
-    <Content Include="CbtoPost.aspx" />
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -250,13 +249,6 @@
     </Compile>
     <Compile Include="SearchEngine.aspx.designer.cs">
       <DependentUpon>SearchEngine.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CbtoPost.aspx.cs">
-      <DependentUpon>CbtoPost.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CbtoPost.aspx.designer.cs">
-      <DependentUpon>CbtoPost.aspx</DependentUpon>
     </Compile>
     <Compile Include="DisplayPost.aspx.cs">
       <DependentUpon>DisplayPost.aspx</DependentUpon>
