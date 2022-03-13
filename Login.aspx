@@ -29,7 +29,8 @@
         </asp:PlaceHolder>
         <asp:PlaceHolder runat="server" ID="plcUserInfo" >
             <asp:Literal ID="ltlAccount" runat="server" /><br />
-            前往 <a href="CbtoPost.aspx">子版</a>
+            前往 <a href="CbtoPost.aspx">子版</a><br />
+            前往 <a href="CreatePost.aspx">新增文章</a>
 
         </asp:PlaceHolder>
     </form>

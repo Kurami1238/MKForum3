@@ -18,9 +18,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, CboardID, Title, PostCotent)
+                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage)
                     VALUES
-                    (@postID, @memberID, @cboardID, @postView, @title, @postCotent)
+                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage)
                     ";
             try
             {
@@ -36,6 +36,8 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", post.Title);
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"postView", 0);
+                        command.Parameters.AddWithValue(@"floor", 1);
+                        command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
@@ -60,9 +62,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor)
+                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor, CoverImage)
                     VALUES
-                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor)
+                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor, @coverimage)
                     ";
             try
             {
@@ -80,6 +82,7 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", pointpost.Title);
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"floor", floor);
+                        command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
@@ -414,17 +417,22 @@ namespace MKForum.Managers
             _msgList = new List<string>();
             List<string> msgList = new List<string>();
 
+            if (titletext.Length < 1)
+                msgList.Add("請輸入標題。");
+            if (postcotenttext.Length < 1)
+                msgList.Add("請輸入內文。");
             if (titletext.Length > 100)
                 msgList.Add("標題字數請小於一百中文字。");
             if (postcotenttext.Length > 4096)
                 msgList.Add("內文字數請小於兩千中文字。");
-            if (KinkiNoKotoba(titletext, postcotenttext) == true)
-                _msgList = msgList;
-            else
-                // 失敗就額外加禁字提示 還沒完成
-                _msgList = msgList;
+            //if (KinkiNoKotoba(titletext, postcotenttext) == true)
+            //    _msgList = msgList;
+            //else
+            //    // 失敗就額外加禁字提示 還沒完成
+            //    _msgList = msgList;
             if (msgList.Count > 0)
             {
+                _msgList = msgList;
                 return false;
             }
             return true;

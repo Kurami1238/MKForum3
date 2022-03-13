@@ -6,7 +6,11 @@
         <asp:Repeater ID="rptcBtoP" runat="server">
             <ItemTemplate>
                 <div class="post" runat="server">
-                    <div class="postP"></div>
+                    <div class="postP">
+                        <asp:PlaceHolder runat="server" Visible='<%# !string.IsNullOrWhiteSpace(Eval("CoverImage") as string)%>'>
+                        <img ID="imgPostP" src="<%# Eval("CoverImage")%>" width="200" height="200"/>
+                            </asp:PlaceHolder>
+                    </div>
                     <div class="postT">
                         <asp:Literal ID="ltlPostT" runat="server" Text='<%# Eval("Title")%>'></asp:Literal>
                         
