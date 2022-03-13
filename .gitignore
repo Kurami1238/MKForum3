@@ -14,7 +14,7 @@ bin/
 
 *.dll
 
-*.csproj
+*.csproj.user
 
 *.pdb
 
