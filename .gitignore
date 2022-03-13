@@ -1,0 +1,28 @@
+﻿################################################################################
+# 這個 .gitignore 檔案由 Microsoft(R) Visual Studio 自動建立。
+################################################################################
+
+.vs/
+
+obj/
+
+slnx.sqlite/
+
+Logs/
+
+bin/
+
+*.dll
+
+*.csproj
+
+*.pdb
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+# 專案客製
+FileDownload/

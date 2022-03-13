@@ -1,0 +1,236 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="MKForum.Main" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script>
+        //  展開/收合按鈕
+        $(document).ready(function () {
+
+            $("#collapse").on("click", function () {
+
+                $("#sidebar").toggleClass("active");
+                $(".fa-align-left").toggleClass("fa-chevron-circle-right");
+            })
+        })</script>
+    <style>
+        div {
+            border: 1px solid #000;
+        }
+
+        .container-all {
+            display: flex;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            width: 250px;
+            height: 100%;
+            background-color: indigo;
+            color: white;
+            transition: 1s;
+        }
+
+            #sidebar.active {
+                margin-left: -250px;
+            }
+
+        .container-right {
+            background-color: lavender;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .collapse-btn {
+            position: relative;
+            top: 1%;
+            left: 260px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            font-size: 30px;
+            padding: 5px;
+        }
+
+            .collapse-btn:hover {
+                background-color: rgb(120, 5, 203);
+                transition: 0.4s;
+            }
+
+        #sidebar p {
+            text-align: center;
+            font-size: 30px;
+            font-style: italic;
+            padding: 10px;
+        }
+
+        #sidebar ul li a {
+            padding: 10px;
+            font-size: 20px;
+            display: block;
+            text-decoration: none;
+            color: white;
+        }
+
+            #sidebar ul li a:hover {
+                color: indigo;
+                background: #fff;
+            }
+
+        .fas,
+        .far,
+        .fab {
+            float: right;
+        }
+
+        ul ul li a {
+            background-color: rgb(203, 142, 247);
+            font-size: 20px;
+            font-style: italic;
+        }
+
+        @media (max-width:700px) {
+            #sidebar {
+                margin-left: -150px;
+                width: 150px;
+                font-size: 20px;
+            }
+
+            .collapse-btn {
+                position: relative;
+                top: 1%;
+                left: 160px;
+            }
+
+            #sidebar.active {
+                margin-left: 0px;
+            }
+
+            #sidebar ul p {
+                font-size: 18px;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-all">
+        <!-- 左邊 -->
+        <div class="container-left">
+            <!-- 導覽列 -->
+            <nav id="sidebar">
+                <!-- 展往/縮起來 按鈕 -->
+                <button type="button" id="collapse" class="collapse-btn">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <!-- List 列表 -->
+                <ul class="list-unstyled">
+                    <p>母版塊列表 </p>
+                    <li>
+                        <a href="#">首頁Home <i class="fas fa-home"></i></a>
+                    </li>
+                    <li>
+                        <a href="#">音樂討論區<i class="fab fa-youtube"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#sublist" data-bs-toggle="collapse" id="dropdown">遊戲討論區 <i class="far fa-file-video"></i></a>
+                        <!-- 子連結列表  -->
+                        <ul id="sublist" class="list-unstyled collapse">
+                            <li>
+                                <a href="#">PC</a>
+                            </li>
+                            <li>
+                                <a href="#">PlayStation</a>
+                            </li>
+                            <li>
+                                <a href="#">Switch</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">生活討論區 <i class="fas fa-briefcase"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container-fluid bg-dark text-white">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <a href="index.html" class="d-none d-sm-block">
+                        <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                    <form action="這邊輸入搜尋結果的.aspx" class="d-flex d-none d-sm-block">
+                        <input type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+
+                <div class="col-lg-5 col-md-4 col-sm-4 h3 text-center">
+                    <a href="index.html" class="d-block d-sm-none">
+                        <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                    MKForun
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 text-center d-none d-sm-block">使用者狀態區</div>
+            </div>
+
+
+
+            <div class="container-fluid">
+                <div class="row">
+<%--                    <div class="col-lg-3 col-md-12">
+                        <ul>
+                            <li>音樂討論區</li>
+                            <li>動畫討論區</li>
+                            <li>漫畫討論區</li>
+                            <li>遊戲討論區</li>
+                        </ul>
+                    </div>--%>
+
+                    <div class="col-lg-8 col-md-12">
+                        <div class="row">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 hidden-md">
+                        <ul>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                            <li>空白區</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
