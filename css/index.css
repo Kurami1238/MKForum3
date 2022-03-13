@@ -1,0 +1,98 @@
+.hot-cboards {
+    padding: 20px;
+    border: none;
+    margin-bottom: 50px
+}
+
+    .hot-cboards .title {
+        border: none;
+        padding-left: 20px;
+    }
+
+        .hot-cboards .title img {
+            float: left;
+        }
+
+        .hot-cboards .title h1 {
+            line-height: 70px;
+            margin-left: 60px;
+        }
+    /* -------------------------- */
+
+    .hot-cboards .content {
+        display: flex;
+        padding: 0px 30px;
+    }
+
+        .hot-cboards .content h1 {
+            margin: 20px;
+            text-align: center;
+            line-height: 80px;
+            font-size: 20px;
+            padding: 10px;
+            background: red;
+            color: #fff;
+            border-radius: 10px;
+            margin: 25px auto;
+            width: 20%;
+        }
+/* ======================= */
+
+.hot-posts {
+    padding: 20px;
+    border: none;
+}
+
+    .hot-posts .title img {
+        float: left;
+    }
+
+    .hot-posts .title {
+        font-size: 28px;
+        padding-left: 20px;
+        border: none;
+        margin-bottom: 30px;
+    }
+
+    .hot-posts .content {
+        padding: 10px;
+        border: none;
+    }
+
+        .hot-posts .content .article {
+            padding: 10px;
+            margin: 0px 0px 20px auto;
+        }
+
+
+            .hot-posts .content .article h1 {
+                font-size: 20px;
+            }
+
+        .hot-posts .content h2 {
+            margin-bottom: 0px;
+            text-align: center;
+            padding: 3px;
+            background: #4d4d4d;
+            color: #fff;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .hot-posts .content .article p {
+            font-size: 20px;
+            background-color: gray;
+            line-height: 60px;
+            height: 100px;
+            width: 70%;
+        }
+
+        .hot-posts .content .article h3 {
+            font-size: 20px;
+            float: left;
+        }
+
+        .hot-posts .content .article h4 {
+            font-size: 20px;
+            float: right;
+            margin-right:30px;
+        }
