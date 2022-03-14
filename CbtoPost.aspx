@@ -6,24 +6,25 @@
     <table border="1">
         <asp:Repeater ID="rptcBtoP" runat="server">
             <ItemTemplate>
-                <div class="post" runat="server">
-                    <div class="postP">
-                        <asp:PlaceHolder runat="server" Visible='<%# !string.IsNullOrWhiteSpace(Eval("CoverImage") as string)%>'>
-                            <img id="imgPostP" src="<%# Eval("CoverImage") as string%>" width="300" height="300" />
-                        </asp:PlaceHolder>
-                        <%--<img ID="imgPostP" src="<%# (!string.IsNullOrWhiteSpace(Eval("CoverImage") as string))?Eval("CoverImage"):""%>" width="200" height="200"/>--%>
+                <a href="DisplayPost.aspx?CboardID=<%# Eval("CboardID")%>&PostID=<%# Eval("PostID")%>" title="前往：<%# Eval("Title")%>">
+                    <div class="post" runat="server">
+                        <div class="postP">
+                            <asp:PlaceHolder runat="server" Visible='<%# !string.IsNullOrWhiteSpace(Eval("CoverImage") as string)%>'>
+                                <img id="imgPostP" src="<%# Eval("CoverImage") as string%>" width="300" height="300" />
+                            </asp:PlaceHolder>
+                            <%--<img ID="imgPostP" src="<%# (!string.IsNullOrWhiteSpace(Eval("CoverImage") as string))?Eval("CoverImage"):""%>" width="200" height="200"/>--%>
+                        </div>
+                        <div class="postT">
+                            <asp:Literal ID="ltlPostT" runat="server" Text='<%# Eval("Title")%>'></asp:Literal>
+                        </div>
+                        <div class="postC">
+                            <asp:Literal ID="ltlPostC" runat="server" Text='<%# Eval("PostCotent")%>'></asp:Literal>
+                        </div>
+                        <div class="postB" runat="server">
+                            <asp:Button ID="btnPostEdit" runat="server" OnClick="btnPostEdit_Click" Text="編輯" />
+                        </div>
                     </div>
-                    <div class="postT">
-                        <asp:Literal ID="ltlPostT" runat="server" Text='<%# Eval("Title")%>'></asp:Literal>
-
-                    </div>
-                    <div class="postC">
-                        <asp:Literal ID="ltlPostC" runat="server" Text='<%# Eval("PostCotent")%>'></asp:Literal>
-                    </div>
-                    <div class="postB" runat="server">
-                        <asp:Button ID="btnPostEdit" runat="server" OnClick="btnPostEdit_Click" Text="編輯" />
-                    </div>
-                </div>
+                </a>
             </ItemTemplate>
         </asp:Repeater>
     </table>
