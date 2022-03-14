@@ -135,6 +135,13 @@
     <Compile Include="BackAdmin\test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BlackMember.aspx.cs">
+      <DependentUpon>BlackMember.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlackMember.aspx.designer.cs">
+      <DependentUpon>BlackMember.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CreatePost.aspx.cs">
       <DependentUpon>CreatePost.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -181,6 +188,7 @@
     <Compile Include="Managers\MemberFollowManager.cs" />
     <Compile Include="Managers\MemberManager.cs" />
     <Compile Include="Managers\ModeratorManager.cs" />
+    <Compile Include="Managers\ParentBoardManager.cs" />
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />

@@ -20,7 +20,7 @@
             <ItemTemplate>
                 <asp:Label ID="Label2" runat="server" Text="Label">
                     <%#Eval("Account") %><br />    <!--被黑會員帳號-->
-                    <!--%#Eval("NickName") %>   忘了怎麼一下子合併兩個表-->
+                    <%#Eval("NickName") %>  <br />
                     <%#Eval("ReleaseDate") %><br />
                 </asp:Label>
             </ItemTemplate>

@@ -15,16 +15,16 @@ namespace MKForum
         private BlackManager _Blkmgr = new BlackManager();
 
         // 從Session取得當前子板塊ID
-        int cboardid = 2;
+        int cboardid = 2;//這個數字是暫時拿來跑執行用的
         //int cboardid = this.Session["CboradID"] as int;
 
         //宣告要顯示在頁面上的黑名單
-        private List<MemberBlack> DisplayBlcked = new List<MemberBlack>();
+        private List<MemberModerator> DisplayBlcked = new List<MemberModerator>();
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DisplayBlcked = this._Blkmgr.getBlackedList(cboardid);
+            //DisplayBlcked = this._Blkmgr.getBlackedList(cboardid);
 
             this.Repeater1.DataSource = DisplayBlcked;
             this.Repeater1.DataBind();

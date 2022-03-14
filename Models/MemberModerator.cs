@@ -7,7 +7,7 @@ namespace MKForum.Models
 {
     public class MemberModerator
     {
-        public int MemberID { get; set; }
+        public Guid MemberID { get; set; }
         public int CboardID { get; set; }
     }
 }
