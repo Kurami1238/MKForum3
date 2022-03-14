@@ -18,9 +18,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, CboardID, Title, PostCotent)
+                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage)
                     VALUES
-                    (@postID, @memberID, @cboardID, @postView, @title, @postCotent)
+                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage)
                     ";
             try
             {
@@ -36,6 +36,8 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", post.Title);
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"postView", 0);
+                        command.Parameters.AddWithValue(@"floor", 1);
+                        command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
@@ -60,9 +62,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor)
+                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor, CoverImage)
                     VALUES
-                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor)
+                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor, @coverimage)
                     ";
             try
             {
@@ -80,6 +82,7 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", pointpost.Title);
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"floor", floor);
+                        command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
@@ -288,16 +291,7 @@ namespace MKForum.Managers
 
                         while (reader.Read())
                         {
-                            Post po = new Post()
-                            {
-                                PostID = (Guid)reader["PostID"],
-                                MemberID = (Guid)reader["MemberID"],
-                                PostDate = (DateTime)reader["PostDate"],
-                                PostView = (int)reader["PostView"],
-                                PostCotent = (string)reader["PostCotent"],
-                                LastEditTime = reader["LastEditTime"] as DateTime?,
-                                Title = (string)reader["Title"]
-                            };
+                            Post po = this.BuildPostContent(reader);
                             postList.Add(po);
                         }
                         return postList;
@@ -328,18 +322,7 @@ namespace MKForum.Managers
                         SqlDataReader reader = command.ExecuteReader();
                         if (reader.Read())
                         {
-                            Post post = new Post()
-                            {
-                                PostID = (Guid)reader["PostID"],
-                                MemberID = (Guid)reader["MemberID"],
-                                CboardID = (int)reader["CboardID"],
-                                PointID = (Guid?)reader["PointID"],
-                                PostDate = (DateTime)reader["PostDate"],
-                                PostView = (int)reader["PostView"],
-                                Title = (string)reader["Title"],
-                                PostCotent = (string)reader["PostCotent"],
-                                LastEditTime = (DateTime?)reader["LastEditTime"]
-                            };
+                            Post post = this.BuildPostContent(reader);
                             return post;
                         }
                         return null;
@@ -352,7 +335,26 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public void UpdatePost(Guid postid, string title, string postcotent)
+
+        private Post BuildPostContent(SqlDataReader reader)
+        {
+            return new Post()
+            {
+                PostID = (Guid)reader["PostID"],
+                MemberID = (Guid)reader["MemberID"],
+                CboardID = (int)reader["CboardID"],
+                PointID = reader["PointID"] as Guid?,
+                PostDate = (DateTime)reader["PostDate"],
+                PostView = (int)reader["PostView"],
+                Title = (string)reader["Title"],
+                PostCotent = (string)reader["PostCotent"],
+                LastEditTime = reader["LastEditTime"] as DateTime?,
+                Floor = (int)reader["Floor"],
+                CoverImage = reader["CoverImage"] as string
+            };
+        }
+
+        public void UpdatePost(Post post)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -370,9 +372,9 @@ namespace MKForum.Managers
                     {
                         connection.Open();
 
-                        command.Parameters.AddWithValue(@"postID", postid);
-                        command.Parameters.AddWithValue(@"title", title);
-                        command.Parameters.AddWithValue(@"postcotent", postcotent);
+                        command.Parameters.AddWithValue(@"postID", post.PostID);
+                        command.Parameters.AddWithValue(@"title", post.Title);
+                        command.Parameters.AddWithValue(@"postcotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"lastedittime", DateTime.Now.ToString());
                         command.ExecuteNonQuery();
                     }
@@ -414,17 +416,22 @@ namespace MKForum.Managers
             _msgList = new List<string>();
             List<string> msgList = new List<string>();
 
+            if (titletext.Length < 1)
+                msgList.Add("請輸入標題。");
+            if (postcotenttext.Length < 1)
+                msgList.Add("請輸入內文。");
             if (titletext.Length > 100)
                 msgList.Add("標題字數請小於一百中文字。");
             if (postcotenttext.Length > 4096)
                 msgList.Add("內文字數請小於兩千中文字。");
-            if (KinkiNoKotoba(titletext, postcotenttext) == true)
-                _msgList = msgList;
-            else
-                // 失敗就額外加禁字提示 還沒完成
-                _msgList = msgList;
+            //if (KinkiNoKotoba(titletext, postcotenttext) == true)
+            //    _msgList = msgList;
+            //else
+            //    // 失敗就額外加禁字提示 還沒完成
+            //    _msgList = msgList;
             if (msgList.Count > 0)
             {
+                _msgList = msgList;
                 return false;
             }
             return true;

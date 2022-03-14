@@ -93,14 +93,16 @@
     <Content Include="bin\roslyn\vbc.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="BlackMember.aspx" />
+    <Content Include="CbtoPost.aspx" />
     <Content Include="CreatePost.aspx" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
-    <Content Include="EditPost-mae.aspx" />
+    <Content Include="EditPost.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
     <Content Include="images\logo.png" />
     <Content Include="images\MENU.png" />
+    <Content Include="Index.aspx" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="Login.aspx" />
@@ -111,7 +113,7 @@
     <Content Include="Register.aspx" />
     <Content Include="SearchEngine.aspx" />
     <Content Include="Web.config" />
-    <Content Include="CbtoPost.aspx" />
+    <Content Include="DisplayPost.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackAdmin\MemberEditor.aspx.cs">
@@ -135,12 +137,12 @@
     <Compile Include="BackAdmin\test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
     </Compile>
-    <Compile Include="BlackMember.aspx.cs">
-      <DependentUpon>BlackMember.aspx</DependentUpon>
+    <Compile Include="CbtoPost.aspx.cs">
+      <DependentUpon>CbtoPost.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="BlackMember.aspx.designer.cs">
-      <DependentUpon>BlackMember.aspx</DependentUpon>
+    <Compile Include="CbtoPost.aspx.designer.cs">
+      <DependentUpon>CbtoPost.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreatePost.aspx.cs">
       <DependentUpon>CreatePost.aspx</DependentUpon>
@@ -149,12 +151,12 @@
     <Compile Include="CreatePost.aspx.designer.cs">
       <DependentUpon>CreatePost.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EditPost-mae.aspx.cs">
-      <DependentUpon>EditPost-mae.aspx</DependentUpon>
+    <Compile Include="EditPost.aspx.cs">
+      <DependentUpon>EditPost.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EditPost-mae.aspx.designer.cs">
-      <DependentUpon>EditPost-mae.aspx</DependentUpon>
+    <Compile Include="EditPost.aspx.designer.cs">
+      <DependentUpon>EditPost.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -167,6 +169,13 @@
     </Compile>
     <Compile Include="HomePage.aspx.designer.cs">
       <DependentUpon>HomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -188,7 +197,6 @@
     <Compile Include="Managers\MemberFollowManager.cs" />
     <Compile Include="Managers\MemberManager.cs" />
     <Compile Include="Managers\ModeratorManager.cs" />
-    <Compile Include="Managers\ParentBoardManager.cs" />
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
@@ -250,12 +258,12 @@
     <Compile Include="SearchEngine.aspx.designer.cs">
       <DependentUpon>SearchEngine.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CbtoPost.aspx.cs">
-      <DependentUpon>CbtoPost.aspx</DependentUpon>
+    <Compile Include="DisplayPost.aspx.cs">
+      <DependentUpon>DisplayPost.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CbtoPost.aspx.designer.cs">
-      <DependentUpon>CbtoPost.aspx</DependentUpon>
+    <Compile Include="DisplayPost.aspx.designer.cs">
+      <DependentUpon>DisplayPost.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

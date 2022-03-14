@@ -12,34 +12,37 @@ using System.Web.UI.WebControls;
 
 namespace MKForum
 {
-    public partial class CreatePost : System.Web.UI.Page
+    public partial class EditPost1 : System.Web.UI.Page
     {
         private PostManager _pmgr = new PostManager();
-        private AccountManager _Amgr = new AccountManager();
-
+        private AccountManager _amgr = new AccountManager();
         private Member _member;
-        //private Member _member = new Member()
-        //{
-        //    Account = "a123234",
-        //    Password = "12345678"
-        //};
-        // 先測試 直接輸入
-
+        private Post _post;
         protected void Page_Load(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
-            if (this._Amgr.IsLogined())
+            if (this._amgr.IsLogined())
             {
-                Member account = this._Amgr.GetCurrentUser();
+                Member account = this._amgr.GetCurrentUser();
                 _member = account;
             }
+            // 取得文章資訊
+            Guid postid;
+            string spostid = HttpContext.Current.Session["PostID"] as string;
+            if (Guid.TryParse(spostid, out postid))
+                _post = this._pmgr.GetPost(postid);
+            this.DisplayPost(_post);
+        }
+        private void DisplayPost(Post post)
+        {
+            this.txtTitle.Text = post.Title;
+            this.txtPostCotent.Text = post.PostCotent;
+
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
             string TitleText = this.txtTitle.Text.Trim();
             string PostCotentText = this.txtPostCotent.Text.Trim();
-
-            //Guid memberid = this.Session["MemberID"] as Guid;
 
             // 從Session取得當前子板塊ID
             int cboardid = (int)HttpContext.Current.Session["CboardID"];
@@ -65,7 +68,7 @@ namespace MKForum
             };
             if (this.fuCoverImage.HasFile)
             {
-               
+
                 System.Threading.Thread.Sleep(3);
                 Random random = new Random((int)DateTime.Now.Ticks);
 
@@ -77,7 +80,7 @@ namespace MKForum
                     Directory.CreateDirectory(folderPath);
                 string newFilePath = Path.Combine(folderPath, fileName);
                 this.fuCoverImage.SaveAs(newFilePath);
-                post.CoverImage = "/FileDownload/PostContent/" + fileName;
+                post.CoverImage = "/FileDownload/MapContent/" + fileName;
             }
 
             // 新建一筆Post

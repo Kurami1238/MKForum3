@@ -11,8 +11,8 @@ namespace MKForum
 {
     public partial class WebForm2 : System.Web.UI.Page
     {
-        PostManager _pmgr = new PostManager();
-
+        private PostManager _pmgr = new PostManager();
+        private int _cboardid;
         protected void Page_Load(object sender, EventArgs e)
         {
             string cboardsText = this.Request.QueryString["Cboard"];
@@ -20,6 +20,7 @@ namespace MKForum
                             ? 2 : Convert.ToInt32(cboardsText);
             // 先測試 假設有cboardid
             this.DisplayPost(cboard);
+            _cboardid = cboard;
         }
 
         protected void btnPostEdit_Click(object sender, EventArgs e)
@@ -35,7 +36,8 @@ namespace MKForum
 
         protected void btnCreatePost_Click(object sender, EventArgs e)
         {
-
+            HttpContext.Current.Session["CboardID"] = _cboardid;
+            Response.Redirect("CreatePost.aspx",true);
         }
     }
 }

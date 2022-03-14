@@ -1,0 +1,167 @@
+* {
+    background-color: skyblue;
+}
+
+div {
+    border: 1px solid #000;
+}
+
+.container-all {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: indigo;
+    color: white;
+    transition: 1s;
+}
+
+    #sidebar.active {
+        margin-left: -250px;
+    }
+
+.container-right {
+    background-color: lavender;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    padding: 30px;
+}
+
+.collapse-btn {
+    position: relative;
+    top: 1%;
+    left: 260px;
+    background-color: indigo;
+    color: white;
+    border: none;
+    font-size: 30px;
+    padding: 5px;
+}
+
+    .collapse-btn:hover {
+        background-color: rgb(120, 5, 203);
+        transition: 0.4s;
+    }
+
+#sidebar p {
+    text-align: center;
+    font-size: 30px;
+    font-style: italic;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 20px;
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+    #sidebar ul li a:hover {
+        color: indigo;
+        background: #fff;
+    }
+
+.fas,
+.far,
+.fab {
+    float: right;
+}
+
+ul ul li a {
+    background-color: rgb(203, 142, 247);
+    font-size: 20px;
+    font-style: italic;
+}
+
+@media (max-width:700px) {
+    #sidebar {
+        margin-left: -150px;
+        width: 150px;
+        font-size: 20px;
+    }
+
+    .collapse-btn {
+        position: relative;
+        top: 1%;
+        left: 160px;
+    }
+
+    #sidebar.active {
+        margin-left: 0px;
+    }
+
+    #sidebar ul p {
+        font-size: 18px;
+        text-align: left;
+    }
+}
+
+
+/*=====================¶Â¦W³æ====================*/
+.blacklist {
+    /*border: none;*/
+}
+
+    .blacklist .BLsearch {
+        margin: 60px 30px;
+        border: none;
+    }
+
+
+        .blacklist .BLsearch #txtBLsearch {
+            width: 100%;
+            height: 60px;
+            margin: 20px auto;
+            background-color: white;
+            font-size: 28px;
+        }
+
+::placeholder {
+    text-align: center;
+    font-size: 28px;
+}
+
+
+.blacklist .BLsearch #btnBLsearch {
+    float: right;
+    height:40px;
+    width:100px;
+    background-color:gainsboro;
+    font-size:24px;
+}
+
+/*--------------------------------*/
+
+.blacklist .BLmember {
+    border: none;
+    margin-top: 100px;
+    border-top: dashed red;
+    padding-top:30px;
+}
+
+
+
+.blacklist .BLmember h1{
+    text-align:center;
+    margin-bottom: 30px;
+}
+
+    .blacklist .BLmember span {
+        margin:0px 45px 0px 50px;
+        font-size:32px;
+        color:black;
+    }
+
+    .blacklist .BLmember input {
+        height: 40px;
+        width: 60px;
+        background-color: gainsboro;
+        margin-bottom: 30px;
+        font-size: 20px;
+    }
