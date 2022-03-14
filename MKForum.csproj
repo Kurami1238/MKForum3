@@ -93,10 +93,13 @@
     <Content Include="bin\roslyn\vbc.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="BlackMember.aspx" />
+    <Content Include="CboardsPage.aspx" />
     <Content Include="CbtoPost.aspx" />
     <Content Include="CreatePost.aspx" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\CboardsPage.css" />
+    <Content Include="css\index.css" />
     <Content Include="EditPost.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
@@ -136,6 +139,13 @@
     </Compile>
     <Compile Include="BackAdmin\test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CboardsPage.aspx.cs">
+      <DependentUpon>CboardsPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CboardsPage.aspx.designer.cs">
+      <DependentUpon>CboardsPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="CbtoPost.aspx.cs">
       <DependentUpon>CbtoPost.aspx</DependentUpon>
