@@ -100,6 +100,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\CboardsPage.css" />
     <Content Include="css\index.css" />
+    <Content Include="css\PboardtoCboard.css" />
     <Content Include="EditPost.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
@@ -112,6 +113,7 @@
     <Content Include="MemberFollowList.aspx" />
     <Content Include="MemberList.aspx" />
     <Content Include="MemberStatus.aspx" />
+    <Content Include="PboardtoCboard.aspx" />
     <Content Include="Ranking.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="SearchEngine.aspx" />
@@ -246,6 +248,13 @@
     <Compile Include="Models\PostImgList.cs" />
     <Compile Include="Models\PostStamp.cs" />
     <Compile Include="Models\SearchResult.cs" />
+    <Compile Include="PboardtoCboard.aspx.cs">
+      <DependentUpon>PboardtoCboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PboardtoCboard.aspx.designer.cs">
+      <DependentUpon>PboardtoCboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ranking.aspx.cs">
       <DependentUpon>Ranking.aspx</DependentUpon>

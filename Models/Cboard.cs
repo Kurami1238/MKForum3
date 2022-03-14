@@ -12,5 +12,7 @@ namespace MKForum.Models
         public string Cname { get; set; }
         public DateTime CboardDate { get; set; }
         public string CboardCotent { get; set; }
+        public string Pname { get; set; }
+        
     }
 }
