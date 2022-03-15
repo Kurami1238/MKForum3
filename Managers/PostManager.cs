@@ -278,7 +278,7 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     SELECT * FROM Posts
-                    WHERE CboardID = @cboardID AND PointID IS NULL;
+                    WHERE CboardID = @cboardID AND PointID IS NULL
                 ";
             try
             {
@@ -398,7 +398,7 @@ namespace MKForum.Managers
                     SET 
                         Title = @title,
                         PostCotent = @postcotent,
-                        LastEditTime = @lastedittime,
+                        LastEditTime = @lastedittime
                     WHERE PostID = @postid ";
             try
             {

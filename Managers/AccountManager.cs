@@ -285,7 +285,9 @@ namespace MKForum.Managers
             {
                 // 為避免任何BUG，導致SESSION流出，先把密碼清除
                 member.Password = null;
-                HttpContext.Current.Session["MemberID"] = member;
+                HttpContext.Current.Session["Member"] = member;
+                HttpContext.Current.Session["MemberID"] = member.MemberID;
+
             }
             return result;
         }
@@ -296,7 +298,7 @@ namespace MKForum.Managers
         }
         public Member GetCurrentUser()
         {
-            Member account = HttpContext.Current.Session["MemberID"] as Member;
+            Member account = HttpContext.Current.Session["Member"] as Member;
             return account;
         }
     }

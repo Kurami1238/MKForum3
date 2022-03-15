@@ -12,9 +12,17 @@ namespace MKForum
     public partial class WebForm2 : System.Web.UI.Page
     {
         private PostManager _pmgr = new PostManager();
+        private AccountManager _amgr = new AccountManager();
+        private Member _member;
         private int _cboardid;
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
+            // 從Session取得登錄者ID
+            if (this._amgr.IsLogined())
+            {
+                Member account = this._amgr.GetCurrentUser();
+                _member = account;
+            }
             string cboardsText = this.Request.QueryString["Cboard"];
             int cboard = (string.IsNullOrWhiteSpace(cboardsText))
                             ? 2 : Convert.ToInt32(cboardsText);
@@ -22,8 +30,7 @@ namespace MKForum
             this.DisplayPost(cboard);
             _cboardid = cboard;
         }
-
-        protected void btnPostEdit_Click(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
 
         }
@@ -38,6 +45,20 @@ namespace MKForum
         {
             HttpContext.Current.Session["CboardID"] = _cboardid;
             Response.Redirect("CreatePost.aspx",true);
+        }
+
+        protected void rptcBtoP_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "btnEditNmpost":
+                    string cboardid = this.Request.QueryString["CboardID"];
+                    string editpostid = e.CommandArgument.ToString();
+                    Member member = this._member;
+                    HttpContext.Current.Session["EditPostMember"] = member;
+                    Response.Redirect($"editpost.aspx?Cboard={cboardid}&PostID={editpostid}", true);
+                    break;
+            }
         }
     }
 }
