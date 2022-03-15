@@ -12,7 +12,7 @@ namespace MKForum
     public partial class Main : System.Web.UI.MasterPage
     {
         //引用SearchManager
-        private SearchManager _srchMgr = new SearchManager();
+        private SearchManager _srchMng = new SearchManager();
         private CheckInputManager _chkInpMgr = new CheckInputManager();
 
         //顯示母列表 (!=IsPostBack)
@@ -21,7 +21,15 @@ namespace MKForum
         //如果網址列為子板塊，則依會員權限 顯示板主名單 (!=IsPostBack)
         protected void Page_Load(object sender, EventArgs e)
         {
+            //從網址列取得URL的當前頁面
+            string srchCurrent = System.IO.Path.GetFileName(Request.PhysicalPath);  //取得當前頁面含副檔名
+            string currentPage = this._srchMng.GetCurrentPage(srchCurrent);
 
+            //bool isInPBoard = _srchMng.IsInPBoard(currentPage);   方法未完成暫時先註解
+            //bool isInCBoard = _srchMng.IsInCBoard(currentPage);
+            ////當前位於母版塊或子板塊內，第二個選項變為可使用
+            //if (isInPBoard || isInCBoard)
+                //this.srchDrop.Items[1].disabled = true;
         }
 
 
@@ -29,17 +37,21 @@ namespace MKForum
         protected void btnSearh_Click(object sender, EventArgs e)
         {
             string srchText = this.txtSearch.Text.Trim();   //使用者輸入的關鍵字
-            string drowValue = this.srchDrow.SelectedValue.Trim();      //搜尋範圍
+            string drowValue = this.srchDrop.SelectedValue.Trim();      //搜尋範圍搜尋範圍下拉選單
+            string srchCurrent = System.IO.Path.GetFileName(Request.PhysicalPath);  //取得當前所在的母版塊/子板塊
 
-            //確認搜尋的關鍵字不可為屏蔽字
-            bool IsBanWord = _chkInpMgr.IncludeBanWord(srchText);
 
-            //如果搜尋關鍵字不為空，則藉由url導向搜尋結果頁面
-            if (!string.IsNullOrWhiteSpace(this.txtSearch.Text) && !IsBanWord)
+            bool IsBanWord = _chkInpMgr.IncludeBanWord(srchText);   //確認搜尋的關鍵字是否包含屏蔽字
+
+            //如果搜尋關鍵字不為空，且不含禁字，則藉由url導向搜尋結果頁面
+            if (!string.IsNullOrWhiteSpace(this.txtSearch.Text)/* && !IsBanWord*/)
             {
-                //組成搜尋的url
-                string url = this.Request.Url.LocalPath + "SearchEngine.aspx" + "?keyword=" + srchText + "&&" + drowValue;
-                this.Response.Redirect(url);    //導向目標網址
+                if(drowValue != "srchCurrent")
+                //導向SearchPage.aspx
+                this.Response.Redirect("SearchPage.aspx" + "?keyword=" + srchText + "&searcharea=" + drowValue);
+                else
+                    this.Response.Redirect("SearchPage.aspx" + "?keyword=" + srchText + "&srchCurrent=" + srchCurrent + "&searcharea=" + drowValue);
+
             }
         }
 

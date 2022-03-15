@@ -85,9 +85,9 @@
                             <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
                         <div action="連結到搜尋結果的.aspx" class="d-flex d-none d-sm-block">
                         <asp:TextBox runat="server" ID="txtSearch" Text="搜尋" class="form-control"></asp:TextBox>
-                            <asp:DropDownList ID="srchDrow" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                  <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
-                                 <asp:ListItem Selected="false" Value="srchCBoard"> 當前板塊 </asp:ListItem>
+                                 <asp:ListItem id="A" Selected="false" Value="srchCurrent" disabled="false"> 當前板塊搜尋 </asp:ListItem>
                                  <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
                             </asp:DropDownList>
                             <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>

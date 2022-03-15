@@ -116,6 +116,7 @@
     <Content Include="PboardtoCboard.aspx" />
     <Content Include="Ranking.aspx" />
     <Content Include="Register.aspx" />
+    <Content Include="SearchPage.aspx" />
     <Content Include="Web.config" />
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
@@ -277,6 +278,13 @@
     </Compile>
     <Compile Include="DisplayPost.aspx.designer.cs">
       <DependentUpon>DisplayPost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPage.aspx.cs">
+      <DependentUpon>SearchPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchPage.aspx.designer.cs">
+      <DependentUpon>SearchPage.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
