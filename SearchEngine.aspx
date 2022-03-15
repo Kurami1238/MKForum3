@@ -9,13 +9,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-       <asp:TextBox ID="SearchBox" runat="server"></asp:TextBox>
-        <asp:DropDownList ID="srchAreaList" runat="server">
-            <asp:ListItem Value="srchAllSite">全站</asp:ListItem>
-            <asp:ListItem Value="srchPosts">當前子板塊</asp:ListItem>
-            <asp:ListItem Value="srchWriter">作者</asp:ListItem>
-        </asp:DropDownList>
-        <asp:Button ID="btnSearch" runat="server" Text="搜尋" OnClick="btnSearch_Click" />
+
         <br />
 
         <asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible="false">

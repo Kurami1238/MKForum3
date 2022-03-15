@@ -9,13 +9,13 @@ using System.Web;
 
 namespace MKForum.Managers
 {
-
+    //還需要一個討論區的排行
     public class RankingManager
     {
         /// <summary>
         /// 排行榜：合併瀏覽紀錄和文章的表，並取得7天內的瀏覽量前5筆
         /// </summary>
-        /// <returns></returns>
+        /// <returns>回傳值為List</returns>
         public List<Post> GetRankingList()
         {
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";            //連線字串

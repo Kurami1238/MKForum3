@@ -111,7 +111,6 @@
     <Content Include="MemberStatus.aspx" />
     <Content Include="Ranking.aspx" />
     <Content Include="Register.aspx" />
-    <Content Include="SearchEngine.aspx" />
     <Content Include="Web.config" />
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
@@ -136,6 +135,13 @@
     </Compile>
     <Compile Include="BackAdmin\test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BlackMember.aspx.cs">
+      <DependentUpon>BlackMember.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlackMember.aspx.designer.cs">
+      <DependentUpon>BlackMember.aspx</DependentUpon>
     </Compile>
     <Compile Include="CbtoPost.aspx.cs">
       <DependentUpon>CbtoPost.aspx</DependentUpon>
@@ -194,9 +200,11 @@
     <Compile Include="Managers\AccountManager.cs" />
     <Compile Include="Managers\BlackManager.cs" />
     <Compile Include="Managers\CboardManager.cs" />
+    <Compile Include="Managers\CheckInputManager.cs" />
     <Compile Include="Managers\MemberFollowManager.cs" />
     <Compile Include="Managers\MemberManager.cs" />
     <Compile Include="Managers\ModeratorManager.cs" />
+    <Compile Include="Managers\ParentBoardManager.cs" />
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
@@ -250,13 +258,6 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SearchEngine.aspx.cs">
-      <DependentUpon>SearchEngine.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SearchEngine.aspx.designer.cs">
-      <DependentUpon>SearchEngine.aspx</DependentUpon>
     </Compile>
     <Compile Include="DisplayPost.aspx.cs">
       <DependentUpon>DisplayPost.aspx</DependentUpon>

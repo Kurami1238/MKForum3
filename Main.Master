@@ -26,94 +26,114 @@
 
 </head>
 <body>
+    <!--asp.net:搜尋/用戶狀態/黑名單/母列表??????-->
+
+
     <form id="form1" runat="server">
+
+        <!--左拉式選單-->
         <div class="container-all">
-            <!-- 左邊 -->
-            <div class="container-left">
-                <!-- 導覽列 -->
-                <nav id="sidebar">
-                    <!-- 展往/縮起來 按鈕 -->
-                    <button type="button" id="collapse" class="collapse-btn">
-                        <i class="fas fa-align-left"></i>
-                    </button>
-                    <!-- List 列表 -->
-                    <ul class="list-unstyled">
-                        <p>母版塊列表 </p>
-                        <li>
-                            <a href="#">首頁Home <i class="fas fa-home"></i></a>
-                        </li>
-                        <li>
-                            <a href="#">音樂討論區<i class="fab fa-youtube"></i> </a>
-                        </li>
-                        <li>
-                            <a href="#sublist" data-bs-toggle="collapse" id="dropdown">遊戲討論區 <i class="far fa-file-video"></i></a>
-                            <!-- 子連結列表  -->
-                            <ul id="sublist" class="list-unstyled collapse">
-                                <li>
-                                    <a href="#">PC</a>
-                                </li>
-                                <li>
-                                    <a href="#">PlayStation</a>
-                                </li>
-                                <li>
-                                    <a href="#">Switch</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">生活討論區 <i class="fas fa-briefcase"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+            <!--xs以下顯示，md以上不顯示 -->
+            <div class="d-xs-block d-md-none">
+                <!-- 左邊 -->
+                <div class="container-left">
+                    <!-- 導覽列 -->
+                    <nav id="sidebar">
+                        <!-- 展往/縮起來 按鈕 -->
+                        <button type="button" id="collapse" class="collapse-btn">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+                        <!-- List 列表 -->
+                        <ul class="list-unstyled">
+                            <p>母版塊列表 </p>
+                            <li>
+                                <a href="/index.aspx">首頁Home <i class="fas fa-home"></i></a>
+                            </li>
+                            <li>
+                                <a href="#">音樂討論區<i class="fab fa-youtube"></i> </a>
+                            </li>
+                            <li>
+                                <a href="#sublist" data-bs-toggle="collapse" id="dropdown">遊戲討論區 <i class="far fa-file-video"></i></a>
+                                <!-- 子連結列表/下拉式選單  -->
+                                <ul id="sublist" class="list-unstyled collapse">
+                                    <li>
+                                        <a href="#">PC</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">PlayStation</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Switch</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">生活討論區 <i class="fas fa-briefcase"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
+
+            <!-- 上區塊 -->
             <div class="container-fluid bg-dark text-white">
                 <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-4">
+                    <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
+                    <!-- sm為4格，md為4格，lg為4格，置中-->
+                    <div class="col-sm-4 col-md-4 col-lg-3">
                         <a href="index.html" class="d-none d-sm-block">
                             <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                        <form action="這邊輸入搜尋結果的.aspx" class="d-flex d-none d-sm-block">
-                            <input type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        <div action="連結到搜尋結果的.aspx" class="d-flex d-none d-sm-block">
+                        <asp:TextBox runat="server" ID="txtSearch" Text="搜尋" class="form-control"></asp:TextBox>
+                            <asp:DropDownList ID="srchDrow" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                 <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
+                                 <asp:ListItem Selected="false" Value="srchCBoard"> 當前板塊 </asp:ListItem>
+                                 <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
+                            </asp:DropDownList>
+                            <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
+                        </div>
                     </div>
 
-                    <div class="col-lg-5 col-md-4 col-sm-4 h3 text-center">
-                        <a href="index.html" class="d-block d-sm-none">
+                    <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
+                    <!-- sm為4格，md為4格，lg為4格，置中-->
+                    <div class="col-sm-4 col-md-4 col-lg-5 h3 text-center">
+                        <a href="/index.aspx" class="d-block d-sm-none">
                             <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
                         MKForun
                     </div>
-
-                    <div class="col-lg-4 col-md-4 col-sm-4 text-center d-none d-sm-block">使用者狀態區</div>
+                    <!-- 上區塊內的右上區塊(使用者狀態區) -->
+                    <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
+                    <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">使用者狀態區</div>
                 </div>
 
 
-
+                <!-- 固定母版塊 -->
                 <div class="container-fluid">
                     <div class="row">
-                        <%--                    <div class="col-lg-3 col-md-12">
-                        <ul>
-                            <li>音樂討論區</li>
-                            <li>動畫討論區</li>
-                            <li>漫畫討論區</li>
-                            <li>遊戲討論區</li>
-                        </ul>
-                    </div>--%>
-
-                        <div class="col-lg-8 col-md-12">
-
+                        <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
+                        <div class="d-none d-md-block col-md-2">
+                            <ul>
+                                <li><a class="btn btn-outline-info" href="#">音樂討論區<i class="fab fa-youtube"></i> </a></li>
+                                <li><a class="btn" href="#">遊戲討論區<i class="fab fa-youtube"></i> </a></li>
+                                <li><a class="btn" href="#">生活討論區<i class="fab fa-youtube"></i> </a></li>
+                            </ul>
+                        </div>
+                        <!--主內容區，sm為12格，md為8格 -->
+                        <div class="col-sm-12 col-md-8">
                             <div class="row">
                                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                                 </asp:ContentPlaceHolder>
                             </div>
                         </div>
-                        <div class="col-lg-4 hidden-md">
 
+                        <%--黑名單，xs.sm時隱藏，md以上顯示，md為2格--%>
+                        <div class="d-none d-md-block col-md-2">
                             <div class="blacklist">
                                 <div class="BLsearch">
                                     <asp:TextBox ID="txtBLsearch" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
                                     <asp:Button ID="btnBLsearch" runat="server" Text="確認" />
                                 </div>
-                                
+
                                 <div class="BLmember">
                                     <h1>懲罰中名單</h1>
                                     <asp:Label ID="lblBlmember" runat="server" Text="Luck333gaga"></asp:Label>
@@ -125,10 +145,7 @@
                                     <asp:Label ID="Label2" runat="server" Text="Luck333gaga"></asp:Label>
                                     <asp:Button ID="Button2" runat="server" Text="解除" />
                                 </div>
-                                </div>
-
-
-
+                            </div>
                         </div>
                     </div>
                 </div>

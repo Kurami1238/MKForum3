@@ -6,6 +6,13 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <asp:Repeater ID="Repeater1" runat="server">
+        <itemtemplate>
+              <asp:Label runat="server"><%# Eval("Title") %></asp:Label>
+              <asp:Label runat="server"><%# Eval("PostCotent") %></asp:Label>
+        </itemtemplate>
+    </asp:Repeater>
+
     <div class="hot-cboards">
         <div class="title">
             <img src="./images/HOT.png">
