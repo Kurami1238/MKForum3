@@ -28,8 +28,8 @@ namespace MKForum
             }
             // 取得文章資訊
             Guid postid;
-            string spostid = HttpContext.Current.Session["PostID"] as string;
-            if (Guid.TryParse(spostid, out postid))
+            string postidtext = this.Request.QueryString["PostID"];
+            if (Guid.TryParse(postidtext, out postid))
                 _post = this._pmgr.GetPost(postid);
             this.DisplayPost(_post);
         }
@@ -43,13 +43,6 @@ namespace MKForum
         {
             string TitleText = this.txtTitle.Text.Trim();
             string PostCotentText = this.txtPostCotent.Text.Trim();
-
-            // 從Session取得當前子板塊ID
-            int cboardid = (int)HttpContext.Current.Session["CboardID"];
-
-            //string cboardsText = this.Request.QueryString["Cboard"];
-            //int cboardid = (string.IsNullOrWhiteSpace(cboardsText))
-            //                ? 2 : Convert.ToInt32(cboardsText);
 
             //檢查必填欄位及關鍵字
 
@@ -83,13 +76,12 @@ namespace MKForum
                 post.CoverImage = "/FileDownload/MapContent/" + fileName;
             }
 
-            // 新建一筆Post
+            // 更新Post
 
-            Guid postid;
-            this._pmgr.CreatePost(_member.MemberID, cboardid, post, out postid);
+            this._pmgr.UpdatePost(post);
 
             //提示使用者成功
-            this.lblMsg.Text = "新增成功！";
+            this.lblMsg.Text = "更新成功！";
 
         }
 

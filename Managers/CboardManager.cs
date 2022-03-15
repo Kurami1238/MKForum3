@@ -132,5 +132,59 @@ namespace MKForum.Managers
             }
         }
 
+
+        //======================================================
+        public static List<Cboard> GetCPboardtoCboard(int PboardID)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT 
+	                Cboards.CboardID,
+	                Cboards.PboardID,
+	                Cboards.Cname,
+	                Cboards.CboardDate,
+	                Cboards.CboardCotent,
+	                Pboards.Pname
+                    FROM Cboards 
+                    JOIN Pboards
+                    ON Cboards.PboardID = Pboards.PboardID
+                    WHERE Cboards.PboardID = @PboardID;
+                ";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        command.Parameters.AddWithValue("@PboardID", PboardID);
+                        conn.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        List<Cboard> cboards = new List<Cboard>();
+                        while (reader.Read())
+                        {
+                            Cboard cboard = new Cboard()
+                            {
+                                CboardID = (int)reader["CboardID"],
+                                PboardID = (int)reader["PboardID"],
+                                Cname = (string)reader["Cname"],
+                                CboardDate = (DateTime)reader["CboardDate"],
+                                CboardCotent = (string)reader["CboardCotent"],
+                                Pname = (string)reader["Pname"],
+                            };
+                            cboards.Add(cboard);
+                        }
+                        return cboards;
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("CboardManager.GetCPboardtoCboard", ex);
+                throw;
+            }
+        }
+
     }
 }

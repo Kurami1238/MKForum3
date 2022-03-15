@@ -1,0 +1,57 @@
+.Pboard {
+    padding: 60px;
+    margin: 50px;
+    border: none;
+}
+
+    .Pboard h1 {
+        margin-left: 50px;
+        font-size: 50px
+    }
+
+    .Pboard .content {
+        padding: 30px;
+        margin: 40px;
+        margin-top: 20px;
+        margin-right: 120px;
+        
+    }
+
+        .Pboard .content .article {
+            margin: 20px auto;
+            width: auto;
+            height: 200px;
+        }
+
+            .Pboard .content .article .t {
+                float: left;
+                width: 30%;
+                height: 100%;
+                background-color: #eeeeee;
+                padding: 80px 0;
+                border: none;
+            }
+
+            .Pboard .content .article .t h6 {
+                background-color: #eeeeee;
+                Color: black;
+                font-size: 40px;
+                text-align: center;
+            }
+
+
+            .Pboard .content .article .p {
+                float: left;
+                width: 70%;
+                height: 100%;
+                background-color: #eeeeee;
+                padding: 50px 0;
+                border: none;
+            }
+
+                .Pboard .content .article .p p {
+                    background-color: #eeeeee;
+                    color: black;
+                    text-align: center;
+                    font-size:20px;
+                }

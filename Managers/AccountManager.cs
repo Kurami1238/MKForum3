@@ -91,6 +91,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        
         public void CreateAccount(Member member, MemberRegister memberRegister)
         {
             // 1. 判斷資料庫是否有相同的 Account
@@ -284,7 +285,7 @@ namespace MKForum.Managers
             {
                 // 為避免任何BUG，導致SESSION流出，先把密碼清除
                 member.Password = null;
-                HttpContext.Current.Session["MemberAccount"] = member;
+                HttpContext.Current.Session["MemberID"] = member;
             }
             return result;
         }
@@ -295,7 +296,7 @@ namespace MKForum.Managers
         }
         public Member GetCurrentUser()
         {
-            Member account = HttpContext.Current.Session["MemberAccount"] as Member;
+            Member account = HttpContext.Current.Session["MemberID"] as Member;
             return account;
         }
     }

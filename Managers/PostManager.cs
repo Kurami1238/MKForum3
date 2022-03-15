@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Linq;
 
 namespace MKForum.Managers
 {
     public class PostManager
     {
         private static List<string> _msgList = new List<string>();
-        public void CreatePost(Guid member, int cboard, Post post,out Guid postid)
+        public void CreatePost(Guid member, int cboard, Post post, out Guid postid)
         {
 
             string connectionString = ConfigHelper.GetConnectionString();
@@ -55,16 +56,16 @@ namespace MKForum.Managers
             List<Post> pointpostlist = this.GetPostpointNowFloor(pointtid); // 搜那篇回文數有多少
             int floor;
             if (pointpostlist.Count > 0)
-                floor = pointpostlist.Count + 1;
+                floor = pointpostlist.Count + 2;
             else
-                floor = 1;
+                floor = 2;
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor, CoverImage)
+                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor)
                     VALUES
-                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor, @coverimage)
+                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor)
                     ";
             try
             {
@@ -82,14 +83,15 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", pointpost.Title);
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"floor", floor);
-                        command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
                 }
                 CreateInMemberFollows(member, pointtid);  // 增加至會員的追蹤表
-                List<MemberFollow> followlist = GetMemberFollowsMemberID(pointtid); 
-                RepliedtoNO(followlist,pointtid); // 讓追蹤原文的會員狀態都改為未讀
+                List<MemberFollow> followlist = GetMemberFollowsMemberID(pointtid);
+                var fl = followlist.Select((x, index) => { return new { Index = index }; });
+                if (fl.Count() > 0)
+                    RepliedtoNO(followlist, pointtid); // 讓追蹤原文的會員狀態都改為未讀
             }
             catch (Exception ex)
             {
@@ -132,7 +134,7 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     SELECT * FROM Posts
-                    WHERE PointID = @pointID;
+                    WHERE PointID = @pointID
                 ";
             try
             {
@@ -233,7 +235,7 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     SELECT * FROM MemberFollows
-                    WHERE PostID = @postID;
+                    WHERE PostID = @postID
                 ";
             try
             {
@@ -315,7 +317,7 @@ namespace MKForum.Managers
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand command = new SqlCommand(commandText,conn))
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
                     {
                         command.Parameters.AddWithValue("@postID", postid);
                         conn.Open();
@@ -332,6 +334,40 @@ namespace MKForum.Managers
             catch (Exception ex)
             {
                 Logger.WriteLog("PostManager.GetPost", ex);
+                throw;
+            }
+        }
+        public List<Post> GetPostListwithPoint(Guid pointID)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT *
+                    FROM Posts
+                    WHERE PointID = @pointID
+                    ORDER BY Floor
+                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        command.Parameters.AddWithValue("@pointID", pointID);
+                        conn.Open();
+                        List<Post> pointList = new List<Post>();
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Post po = this.BuildPostContent(reader);
+                            pointList.Add(po);
+                        }
+                        return pointList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPostwithPoint", ex);
                 throw;
             }
         }
