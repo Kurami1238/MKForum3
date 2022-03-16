@@ -13,10 +13,10 @@ namespace MKForum
 
     public partial class Main : System.Web.UI.MasterPage
     {
-        //引用hManager
-        private SearchManager _srchMng = new SearchManager();
-        private CheckInputManager _chkInpMgr = new CheckInputManager();
-        private ParentBoardManager _pBrdMgr = new ParentBoardManager();
+        private SearchManager _srchMng = new SearchManager();           //搜尋
+        private CheckInputManager _chkInpMgr = new CheckInputManager(); //確認輸入值
+        private ParentBoardManager _pBrdMgr = new ParentBoardManager(); //母版塊
+        private AccountManager _amgr = new AccountManager();            //帳號
 
         //未做:
         //HomePage.aspx
@@ -26,7 +26,9 @@ namespace MKForum
         //如果網址列為子板塊，則依會員權限 顯示板主名單 (!=IsPostBack)
         protected void Page_Load(object sender, EventArgs e)
         {
-            //搜尋功能
+            int memberStatus = 1;//用來測試不同身分別的
+            #region//搜尋區
+
             string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
             string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
 
@@ -37,6 +39,13 @@ namespace MKForum
             var aaa = this.srchDrop.Items[1].Attributes;
             aaa.Remove("disable");
             }*/
+            #endregion
+
+            #region//母版塊區
+            if (_amgr.IsLogined())
+            {
+                memberStatus = _pBrdMgr.GetMemberStatus();
+            }
 
             if (!this.IsPostBack)
             {
@@ -45,13 +54,21 @@ namespace MKForum
                 this.Repeater1.DataBind();
                 this.Repeater2.DataSource = dt;
                 this.Repeater2.DataBind();
+
+                if (memberStatus == 3)
+                {
+                    btnPBMode1.Visible = true;
+                    btnPBMode2.Visible = true;
+                }
             }
+
+            #endregion
 
 
         }
 
 
-        //搜尋按鈕( 負責組成URL並導向搜尋葉面 )
+        //搜尋按鈕( 負責組成URL並導向搜尋頁面 )
         protected void btnSearh_Click(object sender, EventArgs e)
         {
             string srchText = this.txtSearch.Text.Trim();                   //使用者輸入的關鍵字
@@ -88,23 +105,32 @@ namespace MKForum
             }
         }
 
+        //母版塊編輯模式切換按鈕事件
+        protected void btnPBMode_Click(object sender, EventArgs e)
+        {
+            this.plhPBMode1.Visible = false;
+            this.plhPBMode2.Visible = false;
+            this.plhPBEdit1.Visible = true;
+            this.plhPBEdit2.Visible = true;
+        }
 
-        //<%--<ul class="list-unstyled">--%>
+        //儲存編輯後的母版塊按鈕事件
+        protected void btnPBSave_Click(object sender, EventArgs e)
+        {
+            List<Pboard> newPBData = new List<Pboard>();
+            //取得新的母版塊資料(待補)
 
-        //<%--                <a href = "#" > 音樂討論區 < i class="fab fa-youtube"></i> </a>
-        //    </li>
-        //    <li>
-        //        <a href = "#sublist" data-bs-toggle="collapse" id="dropdown">遊戲討論區<i class="far fa-file-video"></i></a>
-        //        <!-- 子連結列表/下拉式選單  -->
-        //        <ul id = "sublist" class="list-unstyled collapse">
-        //            <li><a href = "#" > PC </ a ></ li >
-        //            < li >< a href="#">PlayStation</a></li>
-        //            <li><a href = "#" > Switch </ a ></ li >
-        //        </ ul >
-        //    </ li >
-        //    < li >< a href="#">生活討論區<i class="fas fa-briefcase"></i></a></li>--%>
-        //<%--</ul>--%>
+            //寫入資料庫
+            _pBrdMgr.SetPBoardStatus(newPBData);
 
-
+        }
+        //取消編輯母版塊按鈕事件
+        protected void btnPBCancel_Click(object sender, EventArgs e)
+        {
+            this.plhPBMode1.Visible = true;
+            this.plhPBMode2.Visible = true;
+            this.plhPBEdit1.Visible = false;
+            this.plhPBEdit2.Visible = false;
+        }
     }
 }

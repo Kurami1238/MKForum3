@@ -37,6 +37,7 @@ namespace MKForum.Managers
 
             return dt;
         }
+
         //GetMemberStatus()，藉由Session的會員id導入local db(SQL)判斷身分別的方法，回傳身份別(int:MemberStatus)
         public int GetMemberStatus()
         {

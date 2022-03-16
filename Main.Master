@@ -38,15 +38,33 @@
                         <button type="button" id="collapse" class="collapse-btn">
                             <i class="fas fa-align-left"></i>
                         </button>
-                        <!-- List 列表 -->
-                        <p>母版塊列表 </p>
-                        <a href="/index.aspx">首頁Home <i class="fas fa-home"></i></a><br>
-                        <asp:Repeater ID="Repeater1" runat="server">
-                          <ItemTemplate>
-                            <%--<a href="Pboard.aspx?PboardID=<%# Eval("PboardID")%>" title="<%# Eval("Pname") %>">--%>
-                                <asp:Label runat="server"><%# Eval("Pname") %></asp:Label><br>
-                            </ItemTemplate>
-                        </asp:Repeater>
+                        <div>
+                            <!-- List 列表 -->
+                            <p>母版塊列表 </p>
+                            <a href="/index.aspx">首頁Home <i class="fas fa-home"></i></a>
+                            <br>
+                            <asp:Repeater ID="Repeater1" runat="server">
+                                <ItemTemplate>
+                                    <%--<a href="Pboard.aspx?PboardID=<%# Eval("PboardID")%>" title="<%# Eval("Pname") %>">--%>
+                                    <asp:Label runat="server"><%# Eval("Pname") %></asp:Label><br>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        
+                        <%--後台人員才能看到--%>
+                        <asp:PlaceHolder ID="plhPBMode1" runat="server" Visible="false">
+                            <asp:Button ID="btnPBMode1" runat="server" Text="編輯母版塊" OnClick="btnPBMode_Click" />
+                        </asp:PlaceHolder>
+                        <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
+                            <div>
+                                <asp:Button ID="btnPBUp1" runat="server" Text="上移" />
+                                <asp:Button ID="btnPBDown1" runat="server" Text="下移" />
+                            </div>
+                            <div>
+                                <asp:Button ID="btnPBSave1" runat="server" Text="儲存" OnClick="btnPBSave_Click" />
+                                <asp:Button ID="btnPBCancel" runat="server" Text="取消" OnClick="btnPBCancel_Click" />
+                            </div>
+                        </asp:PlaceHolder>
+                            </div>
                     </nav>
                 </div>
             </div>
@@ -93,13 +111,29 @@
                     <div class="row">
                         <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
                         <div class="d-none d-md-block col-md-2">
-                        <a href="/index.aspx">首頁Home <i class="fas fa-home"></i></a><br>
+                            <a href="/index.aspx">首頁Home <i class="fas fa-home"></i></a>
+                            <br>
                             <asp:Repeater ID="Repeater2" runat="server">
-                            <ItemTemplate>
-                            <%--<a href="Pboard.aspx?PboardID=<%# Eval("PboardID")%>" title="<%# Eval("Pname") %>">--%>
-                                <asp:Label runat="server"><%# Eval("Pname") %></asp:Label><br>
-                            </ItemTemplate>
+                                <ItemTemplate>
+                                    <%--<a href="Pboard.aspx?PboardID=<%# Eval("PboardID")%>" title="<%# Eval("Pname") %>">--%>
+                                    <asp:Label runat="server"><%# Eval("Pname") %></asp:Label><br>
+                                </ItemTemplate>
                             </asp:Repeater>
+                            <%--後台人員才能看到--%>
+                            <asp:PlaceHolder ID="plhPBMode2" runat="server">
+                                <asp:Button ID="btnPBMode2" runat="server" Text="Button" OnClick="btnPBMode_Click"/>
+                            </asp:PlaceHolder>
+                            <asp:PlaceHolder ID="plhPBEdit2" runat="server" Visible="false">
+                                <div>
+                                    <asp:Button ID="btnPBUp2" runat="server" Text="上移" />
+                                    <asp:Button ID="btnPBDown2" runat="server" Text="下移"/>
+                                </div>
+                                <div>
+                                    <asp:Button ID="btnPBSave2" runat="server" Text="儲存" OnClick="btnPBSave_Click"/>
+                                    <asp:Button ID="btnPBCancel2" runat="server" Text="取消" OnClick="btnPBCancel_Click"/>
+                                </div>
+                            </asp:PlaceHolder>
+
                         </div>
                         <!--主內容區，sm為12格，md為8格 -->
                         <div class="col-sm-12 col-md-8">
