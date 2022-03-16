@@ -33,6 +33,15 @@ namespace MKForum
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// Repeater1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater Repeater1;
+
+        /// <summary>
         /// txtSearch 控制項。
         /// </summary>
         /// <remarks>
@@ -51,15 +60,6 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.DropDownList srchDrop;
 
         /// <summary>
-        /// A 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListItem A;
-
-        /// <summary>
         /// btnSearh 控制項。
         /// </summary>
         /// <remarks>
@@ -67,6 +67,15 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearh;
+
+        /// <summary>
+        /// Repeater2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater Repeater2;
 
         /// <summary>
         /// ContentPlaceHolder1 控制項。

@@ -2,6 +2,7 @@
 using MKForum.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -20,8 +21,22 @@ namespace MKForum.Managers
 
     public class ParentBoardManager
     {
-        // private static List<string> _memberStatusList = new List<string>();
+        public DataTable GetDataTable()
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT *
+                    FROM [MKForum].[dbo].[PBoards]
+                    
+                    ";//取得目前有哪些母板塊
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("Pname", typeof(string)));
 
+            DataRow dataRow = dt.NewRow();
+            dataRow["Pname"] = "Pboard";
+
+            return dt;
+        }
         //GetMemberStatus()，藉由Session的會員id導入local db(SQL)判斷身分別的方法，回傳身份別(int:MemberStatus)
         public int GetMemberStatus()
         {
@@ -64,13 +79,12 @@ namespace MKForum.Managers
         }
 
         //GetPBoardStatus()，取得板塊名稱(string)，編號(int)，順序(List index)方法，回傳list class
-        public List<Pboard> GetPBoardStatus()//取得目前全部有哪些母板塊的list
+        public DataTable GetPBoardStatus()//取得目前全部有哪些母板塊的DataTable
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
-                @"  SELECT *
-                    FROM [MKForum].[dbo].[PBoards]
-                    
+                @"  SELECT [Pname]
+                    FROM [MKForum].[dbo].[Pboards]
                     ";//取得目前有哪些母板塊
             try
             {
@@ -82,19 +96,10 @@ namespace MKForum.Managers
                         connection.Open();
                         SqlDataReader reader = command.ExecuteReader();
 
-                        while (reader.Read())
-                        {
-                            Pboard bp = new Pboard()
-                            {
-                                PboardID = (int)reader["PboardID"],
-                                Pname = (string)reader["Pname"],
-                                Porder = (int)reader["Porder"],
-                                Pshow = (bool)reader["Pshow"],
-                            };
-                            boardPropertyList.Add(bp);
-                        }
-                        return boardPropertyList;
+                        DataTable dt = new DataTable();
+                        dt.Load(reader);
 
+                        return dt;
                     }
                 }
             }
