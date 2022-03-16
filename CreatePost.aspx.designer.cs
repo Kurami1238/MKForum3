@@ -24,13 +24,13 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.TextBox txtTitle;
 
         /// <summary>
-        /// lsbPostStamp 控制項。
+        /// dpdlPostStamp 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lsbPostStamp;
+        protected global::System.Web.UI.WebControls.DropDownList dpdlPostStamp;
 
         /// <summary>
         /// fuCoverImage 控制項。
@@ -85,6 +85,15 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPostCotent;
+
+        /// <summary>
+        /// txtPostHashtag 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPostHashtag;
 
         /// <summary>
         /// lblMsg 控制項。

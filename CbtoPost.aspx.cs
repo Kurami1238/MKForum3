@@ -23,10 +23,12 @@ namespace MKForum
                 Member account = this._amgr.GetCurrentUser();
                 _member = account;
             }
+            // 從QS取得 子版ID
             string cboardsText = this.Request.QueryString["Cboard"];
             int cboard = (string.IsNullOrWhiteSpace(cboardsText))
                             ? 2 : Convert.ToInt32(cboardsText);
             // 先測試 假設有cboardid
+            
             this.DisplayPost(cboard);
             _cboardid = cboard;
         }

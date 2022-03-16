@@ -19,9 +19,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage)
+                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage, Stamp)
                     VALUES
-                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage)
+                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage, @stamp)
                     ";
             try
             {
@@ -33,12 +33,13 @@ namespace MKForum.Managers
                         connection.Open();
                         command.Parameters.AddWithValue(@"postID", post.PostID);
                         command.Parameters.AddWithValue(@"memberID", member);
+                        command.Parameters.AddWithValue(@"postView", 0);
                         command.Parameters.AddWithValue(@"cboardID", cboard);
                         command.Parameters.AddWithValue(@"title", post.Title);
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
-                        command.Parameters.AddWithValue(@"postView", 0);
                         command.Parameters.AddWithValue(@"floor", 1);
                         command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
+                        command.Parameters.AddWithValue(@"stamp", post.Stamp);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
@@ -389,6 +390,45 @@ namespace MKForum.Managers
                 CoverImage = reader["CoverImage"] as string
             };
         }
+        public List<PostStamp> GetPostStampList(int cboardid)
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT * FROM PostStamps
+                    WHERE CboardID = @cboardID
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<PostStamp> stampList = new List<PostStamp>();
+                        connection.Open();
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            PostStamp ps = new PostStamp()
+                            {
+                                SortID = (int)reader["SortID"],
+                                CboardID = (int)reader["CboardID"],
+                                PostSort = reader["PostSort"] as string
+                            };
+                            stampList.Add(ps);
+                        }
+                        return stampList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPostStampList", ex);
+                throw;
+            }
+        }
 
         public void UpdatePost(Post post)
         {
@@ -488,5 +528,35 @@ namespace MKForum.Managers
             return true;
         }
 
+        //----------------Htag--------------------
+        public void CreateHashtag(Guid postid,string htag)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    INSERT INTO PostHashtags
+                    (PostID, Naiyo)
+                    VALUES
+                    (@postID, @naiyo)
+                    ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.Parameters.AddWithValue(@"naiyo", htag);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.CreateHashtag", ex);
+                throw;
+            }
+        }
     }
 }

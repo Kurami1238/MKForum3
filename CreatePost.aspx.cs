@@ -25,7 +25,7 @@ namespace MKForum
         //};
         // 先測試 直接輸入
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
             if (this._Amgr.IsLogined())
@@ -33,21 +33,26 @@ namespace MKForum
                 Member account = this._Amgr.GetCurrentUser();
                 _member = account;
             }
+            // 從Session取得當前子板塊ID
+            int cboardid = (int)HttpContext.Current.Session["CboardID"];
+            // 繫結PostStamp
+            List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
+            this.dpdlPostStamp.DataSource = psList;
+            this.dpdlPostStamp.DataTextField = "PostSort";
+            this.dpdlPostStamp.DataValueField = "SortID";
+            this.dpdlPostStamp.DataBind();
         }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
         protected void btnSend_Click(object sender, EventArgs e)
         {
             string TitleText = this.txtTitle.Text.Trim();
             string PostCotentText = this.txtPostCotent.Text.Trim();
-
-            //Guid memberid = this.Session["MemberID"] as Guid;
-
             // 從Session取得當前子板塊ID
             int cboardid = (int)HttpContext.Current.Session["CboardID"];
-
-            //string cboardsText = this.Request.QueryString["Cboard"];
-            //int cboardid = (string.IsNullOrWhiteSpace(cboardsText))
-            //                ? 2 : Convert.ToInt32(cboardsText);
-
             //檢查必填欄位及關鍵字
 
             if (!this._pmgr.CheckInput(TitleText, PostCotentText))
@@ -57,11 +62,15 @@ namespace MKForum
             }
             // 處理類型
 
-            // 儲存圖片
+            //this.dpdlPostStamp.DataSource = psList;
+            string postSorttext = this.dpdlPostStamp.Text;
+            int? postSort = Convert.ToInt32(postSorttext);
+            // 處理並儲存圖片
             Post post = new Post()
             {
                 Title = TitleText,
-                PostCotent = PostCotentText
+                PostCotent = PostCotentText,
+                Stamp = postSort
             };
             if (this.fuCoverImage.HasFile)
             {
@@ -79,15 +88,24 @@ namespace MKForum
                 this.fuCoverImage.SaveAs(newFilePath);
                 post.CoverImage = "/FileDownload/PostContent/" + fileName;
             }
+            if (post.CoverImage == null)
+            {
+                post.CoverImage = "/FileDownload/PostContent/" + "mokunin.jpg";
+            }
+            // 處理#tag
+            string htagtext = this.txtPostHashtag.Text;
+            string[] htagarr = htagtext.Split('/');
+            List<string> htaglist = new List<string>();
+            foreach (var x in htagarr)
+            {
+                htaglist.Add(x);
+            }
 
             // 新建一筆Post
 
             Guid postid;
             this._pmgr.CreatePost(_member.MemberID, cboardid, post, out postid);
-
-            //提示使用者成功
-            this.lblMsg.Text = "新增成功！";
-
+            Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
         }
 
         protected void btnPostImage_Click(object sender, EventArgs e)
