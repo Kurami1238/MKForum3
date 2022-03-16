@@ -8,12 +8,13 @@
         <div>
             <asp:Label ID="lblTitle" runat="server" Text="標題"></asp:Label>
         </div>
-        <asp:PlaceHolder runat="server" Visible='<%# this.lblMember.ID == HttpContext.Current.Session["MemberID"] as string%>'>
+        <asp:PlaceHolder ID="phl" runat="server" Visible='<%# !(string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"] as string) != 0) %>'>
+            <asp:HiddenField runat="server" ID="hfMemberID" />
             <div>
                 <asp:Button ID="btnEditPost" runat="server" Text="編輯文章" OnClick="btnEditPost_Click" />
             </div>
             <div>
-                <asp:Button ID="btnDeletePost" runat="server" Text="刪除文章" OnClick="btnDeletePost_Click" />
+                <asp:Button ID="btnDeletePost" runat="server" Text="刪除文章" OnClick="btnDeletePost_Click" OnClientClick="dela();" />
             </div>
         </asp:PlaceHolder>
         <div>
@@ -27,14 +28,14 @@
         </div>
     </div>
     <div class="NomainPost">
-        <asp:Repeater ID="rptNmP" runat="server">
+        <asp:Repeater ID="rptNmP" runat="server" OnItemCommand="rptNmP_ItemCommand">
             <ItemTemplate>
-                <asp:PlaceHolder runat="server" Visible='<%# Eval("MemberID") == HttpContext.Current.Session["MemberID"]%>'>
+                <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# !(string.Compare(Eval("MemberID") as string, HttpContext.Current.Session["MemberID"] as string) != 0)%>'>
                     <div>
-                        <asp:Button ID="btnEditNmPost" runat="server" Text="編輯回覆" OnClick="btnEditNmPost_Click" />
+                        <asp:Button ID="btnEditNmPost"  runat="server" Text="編輯回覆" CommandName="btnEditNmpost"  CommandArgument='<%# Eval("PostID") %>' />
                     </div>
                     <div>
-                        <asp:Button ID="btnDeleteNmPost" runat="server" Text="刪除回覆" OnClick="btnDeleteNmPost_Click" />
+                        <asp:Button ID="btnDeleteNmPost" CommandName="btnDeleteNmPost" runat="server" Text="刪除回覆" CommandArgument='<%# Eval("PostID")%>' OnClientClick="dela();" />
                     </div>
                 </asp:PlaceHolder>
                 <asp:HiddenField runat="server" ID="hfNmPID" Value='<%# Eval("PostID")%>' />
@@ -54,6 +55,10 @@
     </div>
     <div class="CNNmPost">
         <asp:TextBox runat="server" ID="txtCNNmPost" placeholder="請輸入回覆訊息"></asp:TextBox>
-        <asp:Button runat="server" ID="btnCNNmPost" onclick="btnCNNmPost_Click" Text="新增回覆"/>
+        <asp:Button runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" OnClientClick="NmCreatePosta();" />
     </div>
+    <script>
+        function dela() { alert('刪除成功') }
+        function NmCreatePosta() { alert("回覆成功") }
+    </script>
 </asp:Content>

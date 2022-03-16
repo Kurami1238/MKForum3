@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <table border="1">
-        <asp:Repeater ID="rptcBtoP" runat="server">
+        <asp:Repeater ID="rptcBtoP" runat="server" OnItemCommand="rptcBtoP_ItemCommand">
             <ItemTemplate>
                 <a href="DisplayPost.aspx?CboardID=<%# Eval("CboardID")%>&PostID=<%# Eval("PostID")%>" title="前往：<%# Eval("Title")%>">
                     <div class="post" runat="server">
@@ -21,7 +21,7 @@
                             <asp:Literal ID="ltlPostC" runat="server" Text='<%# Eval("PostCotent")%>'></asp:Literal>
                         </div>
                         <div class="postB" runat="server">
-                            <asp:Button ID="btnPostEdit" runat="server" OnClick="btnPostEdit_Click" Text="編輯" />
+                            <asp:Button ID="btnPostEdit" runat="server" Text="編輯" CommandName="btnEditNmpost"  CommandArgument='<%# Eval("PostID") %>'/>
                         </div>
                     </div>
                 </a>

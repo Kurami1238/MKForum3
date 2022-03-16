@@ -26,12 +26,24 @@ namespace MKForum
                 Member account = this._amgr.GetCurrentUser();
                 _member = account;
             }
+            // 如果登錄者ID與EditPostID不符則回列表頁
+            if (this._member != HttpContext.Current.Session["EditPostMember"])
+                this.BackToListPage();
+
             // 取得文章資訊
             Guid postid;
             string postidtext = this.Request.QueryString["PostID"];
             if (Guid.TryParse(postidtext, out postid))
                 _post = this._pmgr.GetPost(postid);
             this.DisplayPost(_post);
+        }
+        private void BackToListPage()
+        {
+            // 從QS取得當前子板塊ID
+            string CboardidText = this.Request.QueryString["CboardID"];
+            int cboardid;
+            if (int.TryParse(CboardidText, out cboardid))
+                Response.Redirect($"CbtoPost.aspx?CboardID={CboardidText}", true);
         }
         private void DisplayPost(Post post)
         {

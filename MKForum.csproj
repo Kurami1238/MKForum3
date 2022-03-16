@@ -175,6 +175,7 @@
     </Compile>
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="HomePage.aspx.cs">
       <DependentUpon>HomePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -247,6 +248,7 @@
     <Compile Include="Models\MemberScan.cs" />
     <Compile Include="Models\Pboard.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\PostHashtag.cs" />
     <Compile Include="Models\PostImgList.cs" />
     <Compile Include="Models\PostStamp.cs" />
     <Compile Include="Models\SearchResult.cs" />
