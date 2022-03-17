@@ -10,21 +10,33 @@ namespace MKForum
 {
     public partial class SearchPage : System.Web.UI.Page
     {
+        //搜尋頁面負責從RUL抓搜尋的內容
         SearchManager _srchMng = new SearchManager();
         protected void Page_Load(object sender, EventArgs e)
         {
-
             //從網址列取得URL的querystring
             string keyword = this.Request.QueryString["keyword"];           //搜尋關鍵字
             string searchArea = this.Request.QueryString["searcharea"];     //下拉選項
-            string srchCurrent = this.Request.QueryString["srchCurrent"];   //當前板塊
-            string currentUrl = this._srchMng.GetCurrentPage(srchCurrent);
+            string srchCurrent = "";
+            string PorCBoard = "";
 
-            //若關鍵字為空則跳回首頁
+            //若關鍵字為空則跳出警告訊息
             if (string.IsNullOrWhiteSpace(keyword))
             {
-                this.Response.Redirect("HomePge.aspx"); //跳轉回首頁
+                //跳出警告訊息
                 return;
+            }
+
+            //如果沒有指定子板塊，就搜尋母版塊
+            if (string.IsNullOrWhiteSpace(this.Request.QueryString["srchCboardID"]))
+            { 
+                srchCurrent = this.Request.QueryString["srchPboardID"];   //當前母板塊
+                PorCBoard = "p";
+            }
+            else
+            {
+                srchCurrent = this.Request.QueryString["srchCboardID"];   //當前子板塊
+                PorCBoard = "c";
             }
 
             //依指定的搜尋範圍導向function
@@ -34,42 +46,12 @@ namespace MKForum
                     _srchMng.GetAllSrchList(keyword);   //全站搜尋
                     break;
                 case "srchCBoard":
-                    _srchMng.GetPboardSrchList(keyword, currentUrl);   //當前板塊搜尋(可能需要視情況合併方法)
+                    _srchMng.GetboardSrchList(keyword, srchCurrent, PorCBoard);   //當前板塊搜尋(可能需要視情況合併方法)
                     break;
                 default:
-                    _srchMng.GetWriterSrchList(keyword);   //全站搜尋
+                    _srchMng.GetWriterSrchList(keyword);   //作者搜尋
                     break;
             }
-
-
-
-
-            //int totalRows = 0;
-            //var list = this._mgr.GetMapList(keyword, _pageSize, pageIndex, out totalRows);
-            //this.ProcessPager(keyword, pageIndex, totalRows);
-
-            //this.ucPager.TotalRows = totalRows;
-            //this.ucPager.PageIndex = pageIndex;
-            //this.ucPager.Bind("keyword", keyword);
-
-            //if (list.Count == 0)
-            //{
-            //    this.plcEmpty.Visible = true;
-            //    this.rptList.Visible = false;
-            //}
-            //else
-            //{
-            //    this.plcEmpty.Visible = false;
-            //    this.rptList.Visible = true;
-
-            //    this.rptList.DataSource = list;
-            //    this.rptList.DataBind();
-            //}
-
-
-
-
-
         }
     }
 }
