@@ -452,7 +452,7 @@ namespace MKForum.Managers
                 PostView = (int)reader["PostView"],
                 Title = (string)reader["Title"],
                 PostCotent = (string)reader["PostCotent"],
-                LastEditTime = (DateTime)reader["LastEditTime"],
+                LastEditTime = reader["LastEditTime"] as DateTime?,
                 Floor = (int)reader["Floor"],
                 CoverImage = reader["CoverImage"] as string
             };

@@ -42,13 +42,15 @@ namespace MKForum.Managers
         public int GetMemberStatus()
         {
             int memberStatus = 0;
-            Guid _memberID = (Guid)HttpContext.Current.Session["MemberAccount"];
+            Member mmmember = HttpContext.Current.Session["Member"] as Member;
+            Guid memberID = mmmember.MemberID;
+            //string memberID = mmmember.MemberID.ToString();
+            //Guid _memberID = (Guid)HttpContext.Current.Session["MemberAccount"];
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
-                    SELECT [MemberStatus]
-                    FROM [MKForum].[dbo].[Members]
-                    WHERE MemberID='@memberID'
+                    SELECT MemberStatus FROM Members
+                    WHERE MemberID = @memberID
                     ";//取得SQL會員id
             try
             {
@@ -57,13 +59,12 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
                         connection.Open();
+                        command.Parameters.AddWithValue("@memberID", memberID);
                         SqlDataReader reader = command.ExecuteReader();
 
                         if (reader.Read())
                         {
                             Member member = new Member();
-                            command.Parameters.AddWithValue("@memberID", _memberID);
-
                             memberStatus = (int)reader["MemberStatus"]; //身份別由Guid轉型為int
                             
                         }
