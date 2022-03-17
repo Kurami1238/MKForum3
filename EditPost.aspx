@@ -12,7 +12,7 @@
             <tr>
                 <th>類型 </th>
                 <td>
-                    <asp:ListBox ID="lsbPostStamp" runat="server"></asp:ListBox></td>
+                    <asp:DropDownList ID="ddlPostStamp" runat="server"></asp:DropDownList></td>
             </tr>
             <tr>
                 <th>封面圖</th>
@@ -33,6 +33,11 @@
                 <th>內文 *</th>
                 <td>
                     <asp:TextBox ID="txtPostCotent" runat="server" TextMode="MultiLine" cols="20" Rows="5"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <th>#tag (用/分隔)</th>
+                <td>
+                    <asp:TextBox ID="txtPostHashtag" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <td colspan="2">

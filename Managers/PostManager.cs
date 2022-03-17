@@ -40,7 +40,7 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"floor", 1);
                         command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
-                        command.Parameters.AddWithValue(@"stamp", post.Stamp);
+                        command.Parameters.AddWithValue(@"stamp", post.SortID);
                         command.Parameters.AddWithValue(@"lastedittime", time);
                         command.Parameters.AddWithValue(@"postdate", time);
                         command.ExecuteNonQuery();
@@ -454,47 +454,9 @@ namespace MKForum.Managers
                 PostCotent = (string)reader["PostCotent"],
                 LastEditTime = reader["LastEditTime"] as DateTime?,
                 Floor = (int)reader["Floor"],
-                CoverImage = reader["CoverImage"] as string
+                CoverImage = reader["CoverImage"] as string,
+                SortID = reader["SortID"] as int?            
             };
-        }
-        public List<PostStamp> GetPostStampList(int cboardid)
-        {
-            string connectionStr = ConfigHelper.GetConnectionString();
-            string commandText =
-                @"
-                    SELECT * FROM PostStamps
-                    WHERE CboardID = @cboardID
-                ";
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionStr))
-                {
-                    using (SqlCommand command = new SqlCommand(commandText, connection))
-                    {
-                        List<PostStamp> stampList = new List<PostStamp>();
-                        connection.Open();
-                        command.Parameters.AddWithValue("@cboardID", cboardid);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            PostStamp ps = new PostStamp()
-                            {
-                                SortID = (int)reader["SortID"],
-                                CboardID = (int)reader["CboardID"],
-                                PostSort = reader["PostSort"] as string
-                            };
-                            stampList.Add(ps);
-                        }
-                        return stampList;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog("PostManager.GetPostStampList", ex);
-                throw;
-            }
         }
 
         public void UpdatePost(Post post)
@@ -622,6 +584,81 @@ namespace MKForum.Managers
             catch (Exception ex)
             {
                 Logger.WriteLog("PostManager.CreateHashtag", ex);
+                throw;
+            }
+        }
+        //----------------Stamp-------------------
+        public List<PostStamp> GetPostStampList(int cboardid)
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT * FROM PostStamps
+                    WHERE CboardID = @cboardID
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<PostStamp> stampList = new List<PostStamp>();
+                        connection.Open();
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            PostStamp ps = new PostStamp()
+                            {
+                                SortID = (int)reader["SortID"],
+                                CboardID = (int)reader["CboardID"],
+                                PostSort = reader["PostSort"] as string
+                            };
+                            stampList.Add(ps);
+                        }
+                        return stampList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPostStampList", ex);
+                throw;
+            }
+        }
+
+        public List<Post> GetPostListwithStamp(int sortid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT *
+                    FROM Posts
+                    WHERE Stamp = @stamp
+                    ORDER BY LastEditTime DESC
+                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        command.Parameters.AddWithValue("@stamp", sortid);
+                        conn.Open();
+                        List<Post> pointList = new List<Post>();
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Post po = this.BuildPostContent(reader);
+                            pointList.Add(po);
+                        }
+                        return pointList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPostListwithStamp", ex);
                 throw;
             }
         }
