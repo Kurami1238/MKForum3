@@ -61,8 +61,6 @@ namespace MKForum
                 return;
             }
             // 處理類型
-
-            //this.dpdlPostStamp.DataSource = psList;
             string postSorttext = this.dpdlPostStamp.Text;
             int? postSort = Convert.ToInt32(postSorttext);
             // 處理並儲存圖片
@@ -70,7 +68,7 @@ namespace MKForum
             {
                 Title = TitleText,
                 PostCotent = PostCotentText,
-                Stamp = postSort
+                SortID = postSort
             };
             if (this.fuCoverImage.HasFile)
             {

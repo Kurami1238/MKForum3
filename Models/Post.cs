@@ -19,7 +19,6 @@ namespace MKForum.Models
         public bool Replied { get; set; }
         public int Floor { get; set; }
         public string CoverImage { get; set; }
-        public int? Stamp { get; set; }
-
+        public int? SortID { get; set; }
     }
 }

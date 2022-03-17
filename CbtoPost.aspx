@@ -5,6 +5,13 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="StampButton">
+        <asp:Repeater ID="rptStamp" runat="server" OnItemCommand="rptStamp_ItemCommand">
+            <ItemTemplate>
+                <asp:Button runat="server" ID="btnStamp" Text='<%# Eval("PostSort") %>' CommandName="btnStamp"  CommandArgument='<%# Eval("SortID") %>' />
+            </ItemTemplate>
+        </asp:Repeater>
+    </div>
     <div class="Cboard">
         <h1>J-POP </h1>
         <div class="content">

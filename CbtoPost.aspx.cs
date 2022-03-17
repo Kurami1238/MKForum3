@@ -32,8 +32,7 @@ namespace MKForum
             this.DisplayPost(cboard);
             _cboardid = cboard;
 
-            // 取得子版文章類型按鈕
-            //List<PostStamp> 
+            
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -41,7 +40,15 @@ namespace MKForum
         }
         private void DisplayPost(int cboard)
         {
-            List<Post> postList = this._pmgr.GetPostListmoto(cboard);
+            List<Post> postList = new List<Post>();
+            // 如果有點文章類型按鈕
+            string stamp = this.Request.QueryString["Stamp"];
+            if (int.TryParse(stamp, out int sortid))
+                postList = this._pmgr.GetPostListwithStamp(sortid);
+            else
+                postList = this._pmgr.GetPostListmoto(cboard);
+            // 取得子版文章類型按鈕
+            this.rptStamp.DataSource = this._pmgr.GetPostStampList(cboard);
             this.rptcBtoP.DataSource = postList;
             this.rptcBtoP.DataBind();
         }
@@ -49,7 +56,7 @@ namespace MKForum
         protected void btnCreatePost_Click(object sender, EventArgs e)
         {
             HttpContext.Current.Session["CboardID"] = _cboardid;
-            Response.Redirect("CreatePost.aspx",true);
+            Response.Redirect("CreatePost.aspx", true);
         }
 
         protected void rptcBtoP_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -66,9 +73,17 @@ namespace MKForum
             }
         }
 
-        protected void rptStampbutton_ItemCommand(object source, RepeaterCommandEventArgs e)
-        {
 
+        protected void rptStamp_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "btnStamp":
+                    string cboardid = this.Request.QueryString["CboardID"];
+                    string sortid = e.CommandArgument.ToString();
+                    Response.Redirect($"CbtoPost.aspx?Cboard={cboardid}&Stamp={sortid}", true);
+                    break;
+            }
         }
     }
 }
