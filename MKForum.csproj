@@ -117,6 +117,8 @@
     <Content Include="Ranking.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="SearchPage.aspx" />
+    <Content Include="ShareControls\Mugen.ascx" />
+    <Content Include="test.aspx" />
     <Content Include="Web.config" />
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
@@ -287,6 +289,20 @@
     </Compile>
     <Compile Include="SearchPage.aspx.designer.cs">
       <DependentUpon>SearchPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShareControls\Mugen.ascx.cs">
+      <DependentUpon>Mugen.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShareControls\Mugen.ascx.designer.cs">
+      <DependentUpon>Mugen.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

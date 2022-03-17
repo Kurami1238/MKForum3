@@ -8,7 +8,7 @@
         <div>
             <asp:Label ID="lblTitle" runat="server" Text="標題"></asp:Label>
         </div>
-        <asp:PlaceHolder ID="phl" runat="server" Visible='<%# !(string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"] as string) != 0) %>'>
+        <asp:PlaceHolder ID="phl" runat="server" Visible='<%# (string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"].ToString()) == 0) %>'>
             <asp:HiddenField runat="server" ID="hfMemberID" />
             <div>
                 <asp:Button ID="btnEditPost" runat="server" Text="編輯文章" OnClick="btnEditPost_Click" />
@@ -30,7 +30,7 @@
     <div class="NomainPost">
         <asp:Repeater ID="rptNmP" runat="server" OnItemCommand="rptNmP_ItemCommand">
             <ItemTemplate>
-                <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# !(string.Compare(Eval("MemberID") as string, HttpContext.Current.Session["MemberID"] as string) != 0)%>'>
+                <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
                     <div>
                         <asp:Button ID="btnEditNmPost"  runat="server" Text="編輯回覆" CommandName="btnEditNmpost"  CommandArgument='<%# Eval("PostID") %>' />
                     </div>

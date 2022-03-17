@@ -19,9 +19,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage, Stamp)
+                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage, Stamp, LastEditTime, PostDate)
                     VALUES
-                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage, @stamp)
+                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage, @stamp, @lastedittime, @postdate)
                     ";
             try
             {
@@ -30,6 +30,7 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
                         post.PostID = Guid.NewGuid();
+                        DateTime time = DateTime.Now;
                         connection.Open();
                         command.Parameters.AddWithValue(@"postID", post.PostID);
                         command.Parameters.AddWithValue(@"memberID", member);
@@ -40,6 +41,8 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"floor", 1);
                         command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
                         command.Parameters.AddWithValue(@"stamp", post.Stamp);
+                        command.Parameters.AddWithValue(@"lastedittime", time);
+                        command.Parameters.AddWithValue(@"postdate", time);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
@@ -273,13 +276,77 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public List<Post> GetPostList(int cboardid)
+        public List<Post> GetPostList(int cboardid, int pageSize, int pageIndex, out int totalRows)
+        {
+            int skip = pageSize * (pageIndex - 1); // 計算跳頁數
+            if (skip < 0)
+                skip = 0;
+            string whereCondition = "AND Cboard ID = '%'+@cboardid+'%'";
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@"
+                    SELECT TOP {pageSize} * 
+                    FROM Posts
+                    WHERE 
+                        PointID IS NULL AND 
+                        CboardID NOT IN 
+                            ( 
+                            SELECT TOP {skip} PostID
+                            FROM Posts
+                            WHERE PointID IS NULL
+                            ORDER BY LastEditTime DESC
+                            )
+                        {whereCondition}
+                        ORDER BY LastEditTime DESC
+                ";
+            string commandCountText =
+                $@"  SELECT COUNT(PostID)
+                    FROM MapContents
+                    WHERE PointID IS NULL 
+                    {whereCondition}";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<Post> postList = new List<Post>();
+                        connection.Open();
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Post po = this.BuildPostContent(reader);
+                            postList.Add(po);
+                        }
+                        reader.Close();
+                        
+                        // 取得總筆數
+                        command.CommandText = commandCountText;
+                        command.Parameters.Clear();
+                        // 因為使用同一個command，不同的查詢，必須使用不同的參數集合
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        totalRows = (int)command.ExecuteScalar();
+                        // command.ExecuteScalar 只會回傳一個資料 為Object
+                        return postList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPostList", ex);
+                throw;
+            }
+        }
+        public List<Post> GetPostListmoto(int cboardid)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
             string commandText =
-                @"
-                    SELECT * FROM Posts
-                    WHERE CboardID = @cboardID AND PointID IS NULL
+                $@"
+                    SELECT * 
+                    FROM Posts
+                    WHERE  PointID IS NULL AND CboardID = @cboardID 
                 ";
             try
             {
@@ -385,7 +452,7 @@ namespace MKForum.Managers
                 PostView = (int)reader["PostView"],
                 Title = (string)reader["Title"],
                 PostCotent = (string)reader["PostCotent"],
-                LastEditTime = reader["LastEditTime"] as DateTime?,
+                LastEditTime = (DateTime)reader["LastEditTime"],
                 Floor = (int)reader["Floor"],
                 CoverImage = reader["CoverImage"] as string
             };

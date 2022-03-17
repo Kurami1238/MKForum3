@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace MKForum
 {
+    
     public partial class WebForm1 : System.Web.UI.Page
     {
         private PostManager _pmgr = new PostManager();
@@ -62,18 +63,18 @@ namespace MKForum
                 memberList.Add(me);
             }
             // 合併兩表連接rpt
-            // BUG 重複的會員回復的話 會重複顯示回文 需解決
+            // BUG 重複會員回復的話 會重複顯示回文 已解決
             var pLML = from p in pointList
                        join m in memberList on p.MemberID equals m.MemberID
                        into tempPM
-                       from g in tempPM.DefaultIfEmpty().Distinct()
+                       //from g in tempPM.DefaultIfEmpty().Distinct()
                        select new
                        {
                            PostID = p.PostID,
                            Floor = p.Floor,
-                           MemberAccount = g.Account,
+                           MemberAccount = (tempPM.FirstOrDefault() != null) ? tempPM.FirstOrDefault().Account : "無", 
                            PostCotent = p.PostCotent,
-                           MemberID = g.MemberID,
+                           MemberID = p.MemberID,
                            CboardID = p.CboardID
                        };
             this.rptNmP.DataSource = pLML;
@@ -165,8 +166,8 @@ namespace MKForum
                 };
                 Guid NmpostID = Guid.Empty;
                 this._pmgr.CreatePost(member.MemberID, point, post, out NmpostID);
-                Response.Redirect(Request.RawUrl);
                 // Js alert 提示回覆成功
+                Response.Redirect(Request.RawUrl);
             }
             else
                 Response.Redirect("Login.aspx", true);

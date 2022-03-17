@@ -15,6 +15,8 @@ namespace MKForum
         private AccountManager _amgr = new AccountManager();
         private Member _member;
         private int _cboardid;
+        private const int _pageSize = 10;
+
         protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
@@ -23,14 +25,15 @@ namespace MKForum
                 Member account = this._amgr.GetCurrentUser();
                 _member = account;
             }
-            // 從QS取得 子版ID
+            // 從QS取得 子版ID 先測試 假設有cboardid
             string cboardsText = this.Request.QueryString["Cboard"];
             int cboard = (string.IsNullOrWhiteSpace(cboardsText))
                             ? 2 : Convert.ToInt32(cboardsText);
-            // 先測試 假設有cboardid
-            
             this.DisplayPost(cboard);
             _cboardid = cboard;
+
+            // 取得子版文章類型按鈕
+            //List<PostStamp> 
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,7 +41,7 @@ namespace MKForum
         }
         private void DisplayPost(int cboard)
         {
-            List<Post> postList = this._pmgr.GetPostList(cboard);
+            List<Post> postList = this._pmgr.GetPostListmoto(cboard);
             this.rptcBtoP.DataSource = postList;
             this.rptcBtoP.DataBind();
         }
@@ -61,6 +64,11 @@ namespace MKForum
                     Response.Redirect($"editpost.aspx?Cboard={cboardid}&PostID={editpostid}", true);
                     break;
             }
+        }
+
+        protected void rptStampbutton_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+
         }
     }
 }
