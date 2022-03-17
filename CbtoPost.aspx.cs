@@ -66,9 +66,18 @@ namespace MKForum
             }
         }
 
-        protected void rptStampbutton_ItemCommand(object source, RepeaterCommandEventArgs e)
+        protected void rptStamptoP_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-
+            switch (e.CommandName)
+            {
+                case "btnStamp":
+                    string cboardid = this.Request.QueryString["CboardID"];
+                    string editpostid = e.CommandArgument.ToString();
+                    Member member = this._member;
+                    HttpContext.Current.Session["EditPostMember"] = member;
+                    Response.Redirect($"editpost.aspx?Cboard={cboardid}&PostID={editpostid}", true);
+                    break;
+            }
         }
     }
 }

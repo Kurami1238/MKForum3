@@ -42,11 +42,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -238,6 +246,20 @@
     <Compile Include="MemberStatus.aspx.designer.cs">
       <DependentUpon>MemberStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MKForum_ORM\Cboard.cs" />
+    <Compile Include="MKForum_ORM\ContextModel.cs" />
+    <Compile Include="MKForum_ORM\Member.cs" />
+    <Compile Include="MKForum_ORM\MemberBlack.cs" />
+    <Compile Include="MKForum_ORM\MemberFollow.cs" />
+    <Compile Include="MKForum_ORM\MemberIP.cs" />
+    <Compile Include="MKForum_ORM\MemberRecord.cs" />
+    <Compile Include="MKForum_ORM\MemberRegister.cs" />
+    <Compile Include="MKForum_ORM\MemberScan.cs" />
+    <Compile Include="MKForum_ORM\Pboard.cs" />
+    <Compile Include="MKForum_ORM\Post.cs" />
+    <Compile Include="MKForum_ORM\PostHashtag.cs" />
+    <Compile Include="MKForum_ORM\PostImgList.cs" />
+    <Compile Include="MKForum_ORM\PostStamp.cs" />
     <Compile Include="Models\Cboard.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\MemberBlack.cs" />
