@@ -42,7 +42,7 @@ namespace MKForum
         {
             List<Post> postList = new List<Post>();
             // 如果有點文章類型按鈕
-            string stamp = this.Request.QueryString["Stamp"];
+            string stamp = this.Request.QueryString["Sort"];
             if (int.TryParse(stamp, out int sortid))
                 postList = this._pmgr.GetPostListwithStamp(sortid);
             else
@@ -83,7 +83,7 @@ namespace MKForum
                 case "btnStamp":
                     string cboardid = this.Request.QueryString["CboardID"];
                     string sortid = e.CommandArgument.ToString();
-                    Response.Redirect($"CbtoPost.aspx?Cboard={cboardid}&Stamp={sortid}", true);
+                    Response.Redirect($"CbtoPost.aspx?Cboard={cboardid}&Sort={sortid}", true);
                     break;
             }
         }

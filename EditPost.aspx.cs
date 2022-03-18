@@ -29,9 +29,12 @@ namespace MKForum
             if (this._member != HttpContext.Current.Session["EditPostMember"])
                 this.BackToListPage();
             // 從Session取得當前子板塊ID
-            int cboardid = (int)HttpContext.Current.Session["CboardID"];
-            // 繫結PostStamp
+            string cboard = this.Request.QueryString["CboardID"];
+            int cboardid = 0;
+            int.TryParse(cboard, out cboardid);
             List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
+            // 繫結PostStamp
+
             this.ddlPostStamp.DataSource = psList;
             this.ddlPostStamp.DataTextField = "PostSort";
             this.ddlPostStamp.DataValueField = "SortID";
@@ -56,8 +59,11 @@ namespace MKForum
         }
         private void DisplayPost(Post post)
         {
+            int sort = (int)post.SortID;
             this.txtTitle.Text = post.Title;
             this.txtPostCotent.Text = post.PostCotent;
+            // 讀取Post裡的sortID  沒辦法塞回DropDownList
+            //this.ddlPostStamp.;
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {

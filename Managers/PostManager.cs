@@ -19,9 +19,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage, Stamp, LastEditTime, PostDate)
+                    (PostID, MemberID, PostView, CboardID, Title, PostCotent, Floor, CoverImage, SortID, LastEditTime, PostDate)
                     VALUES
-                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage, @stamp, @lastedittime, @postdate)
+                    (@postID, @memberID, @postView, @cboardID, @title, @postCotent, @floor, @coverimage, @sortID, @lastedittime, @postdate)
                     ";
             try
             {
@@ -40,7 +40,7 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"floor", 1);
                         command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
-                        command.Parameters.AddWithValue(@"stamp", post.SortID);
+                        command.Parameters.AddWithValue(@"sortID", post.SortID);
                         command.Parameters.AddWithValue(@"lastedittime", time);
                         command.Parameters.AddWithValue(@"postdate", time);
                         command.ExecuteNonQuery();
