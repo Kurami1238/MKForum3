@@ -15,6 +15,7 @@
         <div class="content">
             <asp:Repeater ID="rptpbtocb" runat="server">
                 <ItemTemplate>
+                    <a href="CbtoPost.aspx?Cboard=<%# Eval("CboardID") %>">
                     <div class="article">
                         <div class="t">
                             <h6><%# Eval("Cname") %></h6>
@@ -26,6 +27,7 @@
                             </p>
                         </div>
                     </div>
+                        </a>
                 </ItemTemplate>
             </asp:Repeater>
         </div>

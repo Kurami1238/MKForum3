@@ -115,8 +115,10 @@
                             <br>
                             <asp:Repeater ID="Repeater2" runat="server">
                                 <ItemTemplate>
-                                    <%--<a href="Pboard.aspx?PboardID=<%# Eval("PboardID")%>" title="<%# Eval("Pname") %>">--%>
-                                    <asp:Label runat="server"><%# Eval("Pname") %></asp:Label><br>
+                                    <a href="PboardtoCboard.aspx?PboardID=<%# Eval("PboardID")%>">
+                                    <asp:Label runat="server"><%# Eval("Pname") %></asp:Label>
+                                        </a>
+                                        <br>
                                 </ItemTemplate>
                             </asp:Repeater>
                             <%--後台人員才能看到--%>

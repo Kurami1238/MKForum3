@@ -34,6 +34,7 @@ namespace MKForum.Managers
 
             DataRow dataRow = dt.NewRow();
             dataRow["Pname"] = "Pboard";
+            dataRow["PboardID"] = "PboardID";
 
             return dt;
         }
@@ -85,7 +86,7 @@ namespace MKForum.Managers
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
-                @"  SELECT [Pname]
+                @"  SELECT [Pname],PboardID
                     FROM [MKForum].[dbo].[Pboards]
                     ";//取得目前有哪些母板塊
             try
