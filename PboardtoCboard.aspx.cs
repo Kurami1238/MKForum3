@@ -15,9 +15,18 @@ namespace MKForum
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<Cboard> cboards = CboardManager.GetCPboardtoCboard(1);
-            this.rptpbtocb.DataSource = cboards;
-            this.rptpbtocb.DataBind();
+            string pboarqs = this.Request.QueryString["PboardID"];
+            if (int.TryParse(pboarqs, out int a))
+            {
+                int intpboarqs = Convert.ToInt32(pboarqs);
+
+                List<Cboard> cboards = CboardManager.GetCPboardtoCboard(intpboarqs);
+                this.rptpbtocb.DataSource = cboards;
+                this.rptpbtocb.DataBind();
+            }
+
+
+
         }
     }
 }
