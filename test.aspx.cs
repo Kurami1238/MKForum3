@@ -8,63 +8,88 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Services;  //*** Web Service 會用到 ***
 using System.Web.Configuration;
+using MKForum.Managers;
+using MKForum.Models;
 
 namespace MKForum
 {
     public partial class test : System.Web.UI.Page
     {
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
-        //    if (!IsPostBack)  // 第一次執行
-        //    {   // 自己寫的副程式，從第一頁開始。
-        //        Repeater1.DataSource = MIS2000Lab_GetPageData(1);
-        //        Repeater1.DataBind();
-        //    }
-        //}
+        private PostManager _pmgr = new PostManager();
+        private AccountManager _amgr = new AccountManager();
+        private Member _member;
+        private int _cboardid;
+        private const int _pageSize = 10;
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            // 從Session取得登錄者ID
+            if (this._amgr.IsLogined())
+            {
+                Member account = this._amgr.GetCurrentUser();
+                _member = account;
+            }
+            // 從QS取得 子版ID 先測試 假設有cboardid
+            string cboardsText = this.Request.QueryString["Cboard"];
+            int cboard = (string.IsNullOrWhiteSpace(cboardsText))
+                            ? 2 : Convert.ToInt32(cboardsText);
+            this.DisplayPost(cboard);
+            _cboardid = cboard;
 
 
-        //// ***** 分頁。使用SQL指令進行分頁 *****
-        //public static DataSet MIS2000Lab_GetPageData(int currentPage)
-        //{
-        //    SqlConnection Conn = new SqlConnection("資料庫的連結字串");
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
 
-        //    String SqlStr = "Select * from Customers ORDER BY [CustomerID] ASC ";
-        //    SqlStr += " OFFSET @A ROWS FETCH NEXT 10 ROWS ONLY";
-        //    // 為了配合前端的jQeury，這裡的第一頁不可以是"零"，需是一。程式改成 ((currentPage-1) * 10)
-        //    //==SQL 2012 指令的 Offset...Fetch。參考資料： http://sharedderrick.blogspot.tw/2012/06/t-sql-offset-fetch.html  
+        }
+        private void DisplayPost(int cboard)
+        {
+            List<Post> postList = new List<Post>();
+            // 如果有點文章類型按鈕
+            string stamp = this.Request.QueryString["Sort"];
+            if (int.TryParse(stamp, out int sortid))
+                postList = this._pmgr.GetPostListwithStamp(sortid);
+            else
+                postList = this._pmgr.GetPostListmoto(cboard);
+            // 取得子版文章類型按鈕
+            this.rptStamp.DataSource = this._pmgr.GetPostStampList(cboard);
+            this.rptStamp.DataBind();
+            this.rptcBtoP.DataSource = postList;
+            this.rptcBtoP.DataBind();
+        }
 
-        //    SqlDataAdapter myAdapter = new SqlDataAdapter(SqlStr, Conn);
-        //    myAdapter.SelectCommand.Parameters.AddWithValue("@A", ((currentPage - 1) * 10));
+        protected void btnCreatePost_Click(object sender, EventArgs e)
+        {
+            HttpContext.Current.Session["CboardID"] = _cboardid;
+            Response.Redirect("CreatePost.aspx", true);
+        }
 
-        //    SqlDataAdapter myAdapter = new SqlDataAdapter(SqlStr, Conn);
-        //    DataSet ds = new DataSet();
-        //    myAdapter.Fill(ds, "Customers");
-
-        //    //-- 用來計算分頁的「總頁數」 ---      
-        //    SqlCommand cmd = new SqlCommand("select Count(CustomerID) from Customers", Conn);
-        //    Conn.Open();
-        //    int myTotalCount = (int)cmd.ExecuteScalar();
-
-        //    DataTable dt = new DataTable("PageCount");
-        //    dt.Columns.Add("PageCount");
-        //    dt.Rows.Add();
-        //    dt.Rows[0][0] = myTotalCount;
-        //    ds.Tables.Add(dt);
-
-        //    if (Conn.State == ConnectionState.Open)
-        //    {
-        //        Conn.Close();
-        //        Conn.Dispose();
-        //    }
-
-        //    return ds;
-        //}
+        protected void rptcBtoP_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "btnEditNmpost":
+                    string cboardid = this.Request.QueryString["CboardID"];
+                    string editpostid = e.CommandArgument.ToString();
+                    Member member = this._member;
+                    HttpContext.Current.Session["EditPostMember"] = member;
+                    HttpContext.Current.Session["CboardID"] = cboardid;
+                    Response.Redirect($"editpost.aspx?Cboard={cboardid}&PostID={editpostid}", true);
+                    break;
+            }
+        }
 
 
-        //[WebMethod]
-        //public static string GetCustomers(int pageIndex)
-        //{
-        //    return MIS2000Lab_GetPageData(pageIndex).GetXml();
-        //}
+        protected void rptStamp_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "btnStamp":
+                    string cboardid = this.Request.QueryString["CboardID"];
+                    string sortid = e.CommandArgument.ToString();
+                    Response.Redirect($"CbtoPost.aspx?Cboard={cboardid}&Sort={sortid}", true);
+                    break;
+            }
+        }
     }
 }

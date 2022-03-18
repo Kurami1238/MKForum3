@@ -47,6 +47,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -123,6 +126,9 @@
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\MugenHandler.ashx.cs">
+      <DependentUpon>MugenHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="BackAdmin\MemberEditor.aspx.cs">
       <DependentUpon>MemberEditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -319,6 +325,7 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="API\MugenHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
