@@ -634,7 +634,7 @@ namespace MKForum.Managers
             string commandText =
                 @"  SELECT *
                     FROM Posts
-                    WHERE Stamp = @stamp
+                    WHERE SortID = @sortID
                     ORDER BY LastEditTime DESC
                 ";
             try
@@ -643,7 +643,7 @@ namespace MKForum.Managers
                 {
                     using (SqlCommand command = new SqlCommand(commandText, conn))
                     {
-                        command.Parameters.AddWithValue("@stamp", sortid);
+                        command.Parameters.AddWithValue("@sortID", sortid);
                         conn.Open();
                         List<Post> pointList = new List<Post>();
                         SqlDataReader reader = command.ExecuteReader();

@@ -49,6 +49,7 @@ namespace MKForum
                 postList = this._pmgr.GetPostListmoto(cboard);
             // 取得子版文章類型按鈕
             this.rptStamp.DataSource = this._pmgr.GetPostStampList(cboard);
+            this.rptStamp.DataBind();
             this.rptcBtoP.DataSource = postList;
             this.rptcBtoP.DataBind();
         }
@@ -68,6 +69,7 @@ namespace MKForum
                     string editpostid = e.CommandArgument.ToString();
                     Member member = this._member;
                     HttpContext.Current.Session["EditPostMember"] = member;
+                    HttpContext.Current.Session["CboardID"] = cboardid;
                     Response.Redirect($"editpost.aspx?Cboard={cboardid}&PostID={editpostid}", true);
                     break;
             }

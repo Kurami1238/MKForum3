@@ -5,15 +5,16 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="StampButton">
+    
+    <div class="Cboard">
+        <h1>J-POP </h1>
+        <div class="StampButton">
         <asp:Repeater ID="rptStamp" runat="server" OnItemCommand="rptStamp_ItemCommand">
             <ItemTemplate>
-                <asp:Button runat="server" ID="btnStamp" Text='<%# Eval("PostSort") %>' CommandName="btnStamp"  CommandArgument='<%# Eval("SortID") %>' />
+                <asp:Button class="Sbtn" runat="server" ID="btnStamp" Text='<%# Eval("PostSort") %>' CommandName="btnStamp"  CommandArgument='<%# Eval("SortID") %>' />
             </ItemTemplate>
         </asp:Repeater>
     </div>
-    <div class="Cboard">
-        <h1>J-POP </h1>
         <div class="content">
             <asp:Repeater ID="rptcBtoP" runat="server" OnItemCommand="rptcBtoP_ItemCommand">
                 <ItemTemplate>
@@ -21,7 +22,7 @@
                         <div class="article" runat="server">
                             <div class="postP">
                                 <asp:PlaceHolder runat="server" Visible='<%# !string.IsNullOrWhiteSpace(Eval("CoverImage") as string)%>'>
-                                    <img id="imgPostP" src="<%# Eval("CoverImage") as string%>" width="300" height="300" />
+                                    <img id="imgPostP" class="imgPostP" src="<%# Eval("CoverImage") as string%>" width="300" height="300" />
                                 </asp:PlaceHolder>
                             </div>
                             <h6>
