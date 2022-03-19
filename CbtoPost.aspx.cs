@@ -29,10 +29,13 @@ namespace MKForum
             string cboardsText = this.Request.QueryString["Cboard"];
             int cboard = (string.IsNullOrWhiteSpace(cboardsText))
                             ? 2 : Convert.ToInt32(cboardsText);
+            Cboard cboardd = CboardManager.GetCboard(cboard);
+            this.ltlCbn.Text = cboardd.Cname;
+            //this.hfcbid.Value = cboard.ToString();
+
             this.DisplayPost(cboard);
             _cboardid = cboard;
 
-            
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -46,11 +49,38 @@ namespace MKForum
             if (int.TryParse(stamp, out int sortid))
                 postList = this._pmgr.GetPostListwithStamp(sortid);
             else
-                postList = this._pmgr.GetPostListmoto(cboard);
+                postList = this._pmgr.GetPostList(cboard,5,1,out int totalrows);
+                //postList = this._pmgr.GetPostListmoto(cboard);
             // 取得子版文章類型按鈕
+            // 分離memberID，然後用memberID查出 memberAccount
+            var memberListwithpoint = postList.Select(P => P.MemberID);
+            List<Member> memberList = new List<Member>();
+            foreach (var x in memberListwithpoint)
+            {
+                Member me = this._amgr.GetAccount(x);
+                memberList.Add(me);
+            }
+            // 合併兩表連接rpt
+            // BUG 重複會員回復的話 會重複顯示回文 已解決
+            var pLML = from p in postList
+                       join m in memberList on p.MemberID equals m.MemberID
+                       into tempPM
+                       //from g in tempPM.DefaultIfEmpty().Distinct()
+                       select new
+                       {
+                           PostID = p.PostID,
+                           MemberAccount = (tempPM.FirstOrDefault() != null) ? tempPM.FirstOrDefault().Account : "無",
+                           PostCotent = p.PostCotent,
+                           MemberID = p.MemberID,
+                           CboardID = p.CboardID,
+                           Title = p.Title,
+                           LastEditTime = p.LastEditTime,
+                           PostDate = p.PostDate,
+                           CoverImage = p.CoverImage,
+                       };
             this.rptStamp.DataSource = this._pmgr.GetPostStampList(cboard);
             this.rptStamp.DataBind();
-            this.rptcBtoP.DataSource = postList;
+            this.rptcBtoP.DataSource = pLML;
             this.rptcBtoP.DataBind();
         }
 

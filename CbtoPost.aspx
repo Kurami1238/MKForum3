@@ -7,7 +7,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="Cboard">
-        <h1>J-POP </h1>
+        <h1>
+            <asp:Literal runat="server" ID="ltlCbn"></asp:Literal></h1>
         <div class="StampButton">
             <asp:Repeater ID="rptStamp" runat="server" OnItemCommand="rptStamp_ItemCommand">
                 <ItemTemplate>
@@ -15,28 +16,27 @@
                 </ItemTemplate>
             </asp:Repeater>
         </div>
-        <div class="content">
+        <div class="content" id="PostHazimari">
             <asp:Repeater ID="rptcBtoP" runat="server" OnItemCommand="rptcBtoP_ItemCommand">
                 <ItemTemplate>
-                    <a href="DisplayPost.aspx?CboardID=<%# Eval("CboardID")%>&PostID=<%# Eval("PostID")%>" title="前往：<%# Eval("Title")%>">
+                    <a class="PostA" id="PostA" href="DisplayPost.aspx?CboardID=<%# Eval("CboardID")%>&PostID=<%# Eval("PostID")%>" title="前往：<%# Eval("Title")%>">
                         <div class="article" runat="server">
-                            <div class="postP">
                                 <asp:PlaceHolder runat="server" Visible='<%# !string.IsNullOrWhiteSpace(Eval("CoverImage") as string)%>'>
                                     <img id="imgPostP" class="imgPostP" src="<%# Eval("CoverImage") as string%>" width="300" height="300" />
                                 </asp:PlaceHolder>
-                            </div>
-                            <h6>
+                            <h6 class="PostT">
                                 <asp:Literal ID="ltlPostT" runat="server" Text='<%# Eval("Title")%>'></asp:Literal>
                             </h6>
-                            <p>
+                            <p class="PostC">
                                 <asp:Literal ID="ltlPostC" runat="server" Text='<%# Eval("PostCotent")%>'></asp:Literal>
                             </p>
-                            <h3>
-                                <asp:Literal ID="ltlPostM" runat="server" Text='<%# Eval("MemberID") %>'></asp:Literal>
+                            <h3 class="PostM">
+                                <asp:Literal ID="ltlPostM" runat="server" Text='<%# Eval("MemberAccount") %>'></asp:Literal>
                             </h3>
-                            <h4>
+                            <h4 class="PostD">
                                 <asp:Literal ID="ltlPostD" runat="server" Text='<%# (Eval("LastEditTime") != null)? "最後編輯： " + Eval("LastEditTime") : Eval("PostDate") %>'></asp:Literal>
                             </h4>
+                            <input type="hidden" name="hfcbid" class="hfcbid" value="<%# Eval("CboardID")%>" />
                             <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
                                 <asp:Button ID="btnPostEdit" runat="server" Text="編輯" CommandName="btnEditNmpost" CommandArgument='<%# Eval("PostID") %>' />
                             </asp:PlaceHolder>
@@ -54,7 +54,7 @@
     <script>
         var pageIndex = 1;
         var pageCount;
-
+        var hf = document.getElementsByName('hfcbid');
         //------------------------------
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() - $(window).height()) {
@@ -62,61 +62,55 @@
             }
         });
         //------------------------------
-
         function GetRecords() {
             pageIndex++;
             if (pageIndex == 2 || pageIndex <= pageCount) {
-                $("#loader").show();
+                //$("#loader").show();
+                
+                console.log(hf.val);
                 var postData = {
                     "PageIndex": pageIndex,
-                    "PageSize": 10,
+                    "PageSize": 5,
                     "CboardID": 2,
                 }
                 $.ajax({
-                    url: "/API/MugenHandler.ashx?Action=PageCount",
+                    url: "/API/MugenHandler.ashx?Action=Mugen",
                     method: "POST",
                     data: postData,
                     //contentType: "application/json;charset=utf-8",
                     dataType: "json",
-                    success: KeisanPageCount,
-                    error: function (kazu) {
-                        console.log(kazu);
-                        alert("通訊失敗，請聯絡管理員。")
-                    }
-                });
-                $.ajax({
-                    url: "/API/MugenHandler.ashx?Action=Mugen",
-                    method: "GET",
-                    //contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    success: Kuron,
-                    error: function (objDataList) {
-                        console.log(objDataList);
+                    success: Mugen,
+                    error: function (henzi) {
+                        console.log(henzi);
                         alert("通訊失敗，請聯絡管理員。")
                     }
                 });
             }
         }
-        function KeisanPageCount(kazu) {
-            console.log(kazu);
-            pageCount = parseInt(kazu);
-        }
-        function Kuron(objDataList) {
-            console.log(objDataList);
-            var customers = objDataList;
-            customers.each(function () {
-                var customer = $(this);
-                var rpt = $("#content").eq(0).clone(true);
-
-                $(".imgPostP", rpt).html(customer.find("CoverImage").text());
-                $(".ltlPostT", rpt).html(customer.find("Title").text());
-                $(".ltlPostC", rpt).html(customer.find("PostCotent").text());
-                $(".ltlPostM", rpt).html(customer.find("MemberID").text());
-                $(".ltlPostD", rpt).html(customer.find("LastEditTime").text());
-                $("#content").append(rpt);
-            });
-            $("#loader").hide();
-        }
+        function Mugen(henzi) {
+            console.log(henzi);
+            var count = henzi.PageCount;
+            pageCount = count;
+            var list = henzi.SourceList;
+            var customer = $(this);
+            console.log(list);
+            for (var i = 0; i < list.length; i++) {
+                var rpt = $("#PostHazimari a").eq(0).clone(true);
+                console.log($(".PostA").attr("href"));
+                var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
+                var titlex = "前往：" + list[i].Title;
+                $("#PostA").attr({ "href": url, "title": titlex });
+                $("#imgPostP").attr({ "src": list[i].Coverimage });
+                $(".PostT", rpt).text(list[i].Title);
+                $(".PostC", rpt).text(list[i].PostCotent);
+                $(".PostM", rpt).text(list[i].MemberID);
+                $(".PostD", rpt).text(list[i].LastEditTime);
+                $("btnPostEdit").attr({ "CommandArgument": list[i].PostID });
+                //$("#Nmphl").text(list[i].LastEditTime);
+                $(".content").append(rpt);
+            }
+        };
+        //$("#loader").hide();
 
     </script>
 </asp:Content>

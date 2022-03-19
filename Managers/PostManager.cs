@@ -281,7 +281,7 @@ namespace MKForum.Managers
             int skip = pageSize * (pageIndex - 1); // 計算跳頁數
             if (skip < 0)
                 skip = 0;
-            string whereCondition = "AND CboardID = '%'+@cboardID+'%'";
+            string whereCondition = "AND CboardID = @cboardID";
             string connectionStr = ConfigHelper.GetConnectionString();
             string commandText =
                 $@"
@@ -323,10 +323,10 @@ namespace MKForum.Managers
                         reader.Close();
 
                         // 取得總筆數
-                        command.Parameters.AddWithValue("@cboardID", cboardid);
                         // 因為使用同一個command，不同的查詢，必須使用不同的參數集合
                         command.Parameters.Clear();
                         command.CommandText = commandCountText;
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
 
                         totalRows = (int)command.ExecuteScalar();
                         // command.ExecuteScalar 只會回傳一個資料 為Object

@@ -10,7 +10,7 @@ namespace MKForum.Managers
 {
     public class CboardManager
     {
-        public static void CreateCboard(Pboard pboardid, string cname, string cboardcotent)
+        public void CreateCboard(Pboard pboardid, string cname, string cboardcotent)
         {
 
             string connectionString = ConfigHelper.GetConnectionString();
@@ -49,7 +49,7 @@ namespace MKForum.Managers
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand command = new SqlCommand(commandText))
+                    using (SqlCommand command = new SqlCommand(commandText,conn))
                     {
                         command.Parameters.AddWithValue("@cboardID", cboardid);
                         conn.Open();
@@ -76,7 +76,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public static void UpdateCboard(int cboardid, string cname, string cboardcotent)
+        public void UpdateCboard(int cboardid, string cname, string cboardcotent)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -106,7 +106,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public static void DeleteCboard(int cboardid)
+        public void DeleteCboard(int cboardid)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
