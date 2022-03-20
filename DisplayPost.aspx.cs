@@ -72,6 +72,7 @@ namespace MKForum
                        {
                            PostID = p.PostID,
                            Floor = p.Floor,
+                           // 問問原理
                            MemberAccount = (tempPM.FirstOrDefault() != null) ? tempPM.FirstOrDefault().Account : "無", 
                            PostCotent = p.PostCotent,
                            MemberID = p.MemberID,

@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="css/CboardsPage.css" />
-
+    <link href="css/bootstrap.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -16,7 +16,7 @@
                 </ItemTemplate>
             </asp:Repeater>
         </div>
-        <div class="content" id="PostHazimari">
+        <div class="content col-sm-11 col-md-11 col-lg-11" id="PostHazimari">
             <asp:Repeater ID="rptcBtoP" runat="server" OnItemCommand="rptcBtoP_ItemCommand">
                 <ItemTemplate>
                     <a class="PostA" id="PostA" href="DisplayPost.aspx?CboardID=<%# Eval("CboardID")%>&PostID=<%# Eval("PostID")%>" title="前往：<%# Eval("Title")%>">
@@ -37,9 +37,9 @@
                                 <asp:Literal ID="ltlPostD" runat="server" Text='<%# (Eval("LastEditTime") != null)? "最後編輯： " + Eval("LastEditTime") : Eval("PostDate") %>'></asp:Literal>
                             </h4>
                             <input type="hidden" name="hfcbid" class="hfcbid" value="<%# Eval("CboardID")%>" />
-                            <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
+                            <%--<asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
                                 <asp:Button ID="btnPostEdit" runat="server" Text="編輯" CommandName="btnEditNmpost" CommandArgument='<%# Eval("PostID") %>' />
-                            </asp:PlaceHolder>
+                            </asp:PlaceHolder>--%>
                             <h5>
                                 <br />
                             </h5>
@@ -54,6 +54,7 @@
     <script>
         var pageIndex = 1;
         var pageCount;
+        // 抓不到HF
         var hf = document.getElementsByName('hfcbid');
         //------------------------------
         $(window).scroll(function () {
@@ -92,13 +93,13 @@
             var count = henzi.PageCount;
             pageCount = count;
             var list = henzi.SourceList;
-            var customer = $(this);
             console.log(list);
             for (var i = 0; i < list.length; i++) {
                 var rpt = $("#PostHazimari a").eq(0).clone(true);
                 console.log($(".PostA").attr("href"));
                 var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
                 var titlex = "前往：" + list[i].Title;
+                // 會出現 attribute修正晚一個序列的現象
                 $("#PostA").attr({ "href": url, "title": titlex });
                 $("#imgPostP").attr({ "src": list[i].Coverimage });
                 $(".PostT", rpt).text(list[i].Title);

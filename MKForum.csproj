@@ -102,6 +102,7 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\CboardsPage.css" />
+    <Content Include="css\Display.css" />
     <Content Include="css\index.css" />
     <Content Include="css\PboardtoCboard.css" />
     <Content Include="EditPost.aspx" />
@@ -318,6 +319,8 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="API\MugenHandler.ashx" />
+    <Content Include="css\Brush.woff" />
+    <Content Include="css\Brush.ttf" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -1,0 +1,35 @@
+@font-face{
+    font-family:'moubi';
+    src:url('Brush.woff') format("woff"),
+        url('Brush.ttf') format("truetype");
+}
+a{
+    text-decoration:none;
+}
+a:link{
+    background-color:#ffffff;
+    text-decoration:none;
+
+    }
+a:visited {
+    color:#ffffff;
+    background-color:red;
+    }
+a:active {
+    text-decoration:none;
+    background-color:gray;
+    color:#fafafa;
+    }
+.MainPost{
+    padding: 20px;
+    margin: 5px;
+    border: none;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+    border: 1px double #e76c25;
+    box-shadow: 2px 2px 6px #e76c25;line-height: 100px;text-align: left;
+}
+.MainPost .PostT{
+
+
+}

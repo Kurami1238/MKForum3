@@ -1,3 +1,8 @@
+@font-face{
+    font-family:'moubi';
+    src:url('Brush.woff') format("woff"),
+        url('Brush.ttf') format("truetype");
+}
 a{
     text-decoration:none;
 }
@@ -10,21 +15,39 @@ a:visited {
     color:#ffffff;
     background-color:red;
     }
-a:hover {
-    text-decoration:underline;
-    color:gray;
-    }
+
+.PostA:hover{
+    color:#ffffff;
+    text-shadow: 2px 2px 2px #941a12;
+    text-decoration:none;
+}
+.PostA:hover img{
+    transform:  scale(1.03);
+    -webkit-filter: brightness(105%); /* Safari */
+    filter: brightness(105%);
+}
 a:active {
     text-decoration:none;
     background-color:gray;
     color:#fafafa;
     }
-.Cboard {
-    padding: 30px;
-    margin: 10px;
-    border: none;
+img{
+    transform: 2s;
 }
+.Cboard {
+    padding: 20px;
+    margin: 5px;
+    border: none;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
 
+}
+.Cboard .content {
+    margin: 5px;
+    margin-top: 20px;
+    float: left;
+    
+}
     .Cboard .StampButton{
         font-size: 33px;
        
@@ -33,7 +56,8 @@ a:active {
         color: antiquewhite; border:0;
         background-color:#181717;
         color:#fff;
-        border: 2px solid #ca672e;
+        border: 1px ridge #e76c25;
+        box-shadow: 2px 1px 4px #e76c25;line-height: 40px;text-align: center;
         border-radius:10px;
         cursor:pointer;}
       
@@ -41,32 +65,29 @@ a:active {
         color:#fff;
         background-color:rgb(22, 21, 21);
         border:2px #851a1a solid;
+        text-shadow: 2px 2px 2px #941a12;
         }
     .Cboard h1 {
         margin-left: 50px;
-        font-size: 50px
+        font-size: 55px
     }
 
     .Cboard .imgPostP{
         height: 50%;
     }
 
-    .Cboard .content {
-        padding: 20px;
-        margin: 20px;
-        margin-top: 20px;
-        margin-right: 20px;
-        float: left;
-    }
-
         .Cboard .content .article {
             padding: 10px;
-            margin: 20px 20px;
+            margin: 15px;
+            border: 1px double #e76c25;
+            box-shadow: 2px 2px 6px #e76c25;line-height: 100px;text-align: left;
+
+
         }
 
 
             .Cboard .content .article h6 {
-                font-size: 36px;
+                font-size: 44px;
             }
 
             .Cboard .content .article p {
@@ -74,7 +95,7 @@ a:active {
                 background-color: rgb(44, 44, 44);
                 line-height: 60px;
                 height: 100px;
-                width: 70%;
+                width: 70%; 
             }
 
             .Cboard .content .article h3 {
@@ -87,5 +108,5 @@ a:active {
                 float: right;
                 margin-top: 5px;
 
-                margin-right: 30px;
+                margin-right: 10px;
             }
