@@ -3,6 +3,51 @@
     src:url('Brush.woff') format("woff"),
         url('Brush.ttf') format("truetype");
 }
+.btncreatep{
+    position: fixed;
+    top:550px;
+    right: 45px;
+    background:#e76c25;
+    border-radius: 50%;
+    box-shadow: 2px 1px 4px #e76c25;
+    transition: 1.2s;
+    -webkit-filter: opacity(30%); /* Safari */
+    filter: opacity(30%);
+}
+@media screen and (min-width:576px){
+    .btncreatep{
+        top:550px;
+        right: 100px;
+    }
+}
+@media screen and (min-width:630px){
+    .btncreatep{
+        top:550px;
+        right: 150px;
+    }
+}
+@media screen and (min-width:768px){
+    .btncreatep{
+        top:550px;
+        right: 210px;
+    }
+}
+@media screen and (min-width:992px){
+    .btncreatep{
+        top:550px;
+        right: 300px;
+    }
+}
+@media screen and (min-width:1200px){
+    .btncreatep{
+        top:550px;
+        right: 350px;
+    }
+}
+.btncreatep:hover{
+    -webkit-filter: opacity(30%); /* Safari */
+    filter: opacity(100%);
+}
 a{
     text-decoration:none;
 }
@@ -34,10 +79,10 @@ a:active {
 img{
     transform: 2s;
 }
+
 .Cboard {
     padding: 20px;
     margin: 5px;
-    border: none;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
 

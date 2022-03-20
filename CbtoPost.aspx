@@ -49,7 +49,7 @@
             </asp:Repeater>
         </div>
     </div>
-    <asp:Button ID="btnCreatePost" runat="server" Text="新增文章" OnClick="btnCreatePost_Click" />
+    <asp:ImageButton class="btncreatep" ID="btnCreatePostB" runat="server" Text="新增文章" OnClick="btnCreatePost_Click" ImageUrl="css/pen.png" Height="50px" Width="50px"/>
     <asp:Label ID="lblMsg" runat="server" ForeColor="Red"></asp:Label>
     <script>
         var pageIndex = 1;

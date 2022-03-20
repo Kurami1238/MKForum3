@@ -50,8 +50,8 @@ namespace MKForum
         {
             this.lblTitle.Text = post.Title;
             Member member = this._amgr.GetAccount(post.MemberID);
-            this.lblMember.Text = member.Account;
-            this.lblFloor.Text = post.Floor.ToString();
+            this.lblMember.Text = "作者：" +member.Account;
+            this.lblFloor.Text = post.Floor.ToString() + "F";
             this.lblCotent.Text = post.PostCotent;
             this.hfMemberID.Value = post.MemberID.ToString();
             this.phl.DataBind();
@@ -168,25 +168,25 @@ namespace MKForum
         }
         private void MemberFollowFirst(string memberID,string postID)
         {
-            if (this._mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
-                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
-            else
-                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+        //    if (this._mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
+        //        this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+        //    else
+        //        this.lblMemberFollow_FollowStatus.Text = "未追蹤";
         }
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
             // 從QS取得文章id 不能就回子版
-            string postidText = this.Request.QueryString["PostID"];
-            if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
-            {
-                this._mfmsg.Updatetrack(this._member.MemberID.ToString(), postidText, 0);
-                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
-            }
-            else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
-            {
-                this._mfmsg.Updatetrack(this._member.MemberID.ToString(), postidText, 1);
-                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
-            }
+            //string postidText = this.Request.QueryString["PostID"];
+            //if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
+            //{
+            //    this._mfmsg.Updatetrack(this._member.MemberID.ToString(), postidText, 0);
+            //    this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+            //}
+            //else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
+            //{
+            //    this._mfmsg.Updatetrack(this._member.MemberID.ToString(), postidText, 1);
+            //    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            //}
 
         }
 

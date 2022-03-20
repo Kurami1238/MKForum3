@@ -105,6 +105,7 @@
     <Content Include="css\Display.css" />
     <Content Include="css\index.css" />
     <Content Include="css\PboardtoCboard.css" />
+    <Content Include="css\pen.png" />
     <Content Include="EditPost.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />

@@ -9,7 +9,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:Label ID="lblMemberFollow_FollowStatus" runat="server"></as>
+        <asp:Label ID="lblMemberFollow_FollowStatus" runat="server"></asp:Label>
         <asp:Button ID="btnMemberFollow_FollowStatus" runat="server" Text="追蹤" Onclick="btnMemberFollow_FollowStatus_Click"/>
     </form>
 </body>
