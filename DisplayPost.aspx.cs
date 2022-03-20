@@ -17,6 +17,8 @@ namespace MKForum
         private AccountManager _amgr = new AccountManager();
         private Member _member;
         private SessionHelper _shlp = new SessionHelper();
+        private MemberFollowManager _mfmsg = new MemberFollowManager();
+
         protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
@@ -37,6 +39,7 @@ namespace MKForum
             if (post == null)
                 this.BackToListPage();
             this.DisplayPost(post);
+            this.MemberFollowFirst(this._member.MemberID.ToString(), postidText);
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -116,39 +119,6 @@ namespace MKForum
             if (int.TryParse(CboardidText, out cboardid))
                 Response.Redirect($"CbtoPost.aspx?CboardID={CboardidText}", true);
         }
-
-        //protected void btnDeleteNmPost_Click(object sender, EventArgs e)
-        //{
-        //    Guid postID = Guid.Empty;
-        //    foreach (RepeaterItem item in this.rptNmP.Items)
-        //    {
-        //        HiddenField hf = item.FindControl("hfNmPID") as HiddenField;
-        //        if (hf.HasControls())
-        //        {
-        //            if (Guid.TryParse(hf.Value, out postID))
-        //            {
-        //                this._pmgr.DeletePost(postID);
-        //                // Js alert 提示刪除成功
-        //                this.BackToListPage();
-        //            }
-        //        }
-        //    }
-        //}
-
-        //protected void btnEditNmPost_Click(object sender, EventArgs e)
-        //{
-        //    string postID = string.Empty;
-        //    foreach (RepeaterItem item in this.rptNmP.Items)
-        //    {
-        //        // 怎麼找動態生成的控制項ID 
-        //        HiddenField hf = item.FindControl("hfNmPID") as HiddenField;
-        //        if (hf.HasControls())
-        //            postID = hf.Value.ToString();
-
-        //    }
-        //    Response.Redirect($"EditPost.aspx?PostID={postID}", true);
-        //}
-
         protected void btnCNNmPost_Click(object sender, EventArgs e)
         {
             // 從session 取得member
@@ -195,6 +165,29 @@ namespace MKForum
                     }
                     break;
             }
+        }
+        private void MemberFollowFirst(string memberID,string postID)
+        {
+            if (this._mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
+                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            else
+                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+        }
+        protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
+        {
+            // 從QS取得文章id 不能就回子版
+            string postidText = this.Request.QueryString["PostID"];
+            if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
+            {
+                this._mfmsg.Updatetrack(this._member.MemberID.ToString(), postidText, 0);
+                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+            }
+            else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
+            {
+                this._mfmsg.Updatetrack(this._member.MemberID.ToString(), postidText, 1);
+                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            }
+
         }
 
         //protected void rptNmP_ItemCommand(object source, RepeaterCommandEventArgs e)

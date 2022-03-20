@@ -29,7 +29,30 @@ a:active {
     border: 1px double #e76c25;
     box-shadow: 2px 2px 6px #e76c25;line-height: 100px;text-align: left;
 }
-.MainPost .PostT{
+        .MainPost .mpostall{
+            padding: 20px;
+            margin: 20px;
+        }
+        .MainPost .PostT{
+            font-size: 44px;
+        }
+        .MainPost .Postbtn{
+            color: antiquewhite; border:0;
+            background-color:#181717;
+            color:#fff;
+            border: 1px ridge #e76c25;
+            box-shadow: 2px 1px 4px #e76c25;line-height: 40px;text-align: center;
+            border-radius:10px;
+            cursor:pointer;
+            float: right;
+        }
+        .MainPost .Postbtn:hover{
+            color:#fff;
+            background-color:rgb(22, 21, 21);
+            border:2px #851a1a solid;
+            text-shadow: 2px 2px 2px #941a12;
+        }
+        .MainPost 
 
 
-}
+
