@@ -33,6 +33,13 @@ namespace MKForum
             this.ltlCbn.Text = cboardd.Cname;
             //this.hfcbid.Value = cboard.ToString();
 
+            this.hftest.Value = cboard.ToString();
+            // 假如有文章類型 則取值，沒有則固定為0
+            string stamp = this.Request.QueryString["Sort"];
+            if (!string.IsNullOrWhiteSpace(stamp))
+                this.sortid.Value = stamp;
+            else
+                this.sortid.Value = "0";
             this.DisplayPost(cboard);
             _cboardid = cboard;
 
@@ -49,8 +56,8 @@ namespace MKForum
             if (int.TryParse(stamp, out int sortid))
                 postList = this._pmgr.GetPostListwithStamp(sortid);
             else
-                postList = this._pmgr.GetPostList(cboard,5,1,out int totalrows);
-                //postList = this._pmgr.GetPostListmoto(cboard);
+                postList = this._pmgr.GetPostList(cboard, 5, 1, out int totalrows);
+            //postList = this._pmgr.GetPostListmoto(cboard);
             // 取得子版文章類型按鈕
             // 分離memberID，然後用memberID查出 memberAccount
             var memberListwithpoint = postList.Select(P => P.MemberID);

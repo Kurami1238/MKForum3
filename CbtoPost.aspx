@@ -17,6 +17,8 @@
             </asp:Repeater>
         </div>
         <div class="content col-sm-11 col-md-11 col-lg-11" id="PostHazimari">
+            <input type="hidden" id="sortid" class="sortid" runat="server"/>
+            <input type="hidden" id="hftest" class="hftest" runat="server"/>
             <asp:Repeater ID="rptcBtoP" runat="server" OnItemCommand="rptcBtoP_ItemCommand">
                 <ItemTemplate>
                     <div class="test">
@@ -37,8 +39,8 @@
                                 <h4 class="PostD">
                                     <asp:Literal ID="ltlPostD" runat="server" Text='<%# (Eval("LastEditTime") != null)? "最後編輯： " + Eval("LastEditTime") : Eval("PostDate") %>'></asp:Literal>
                                 </h4>
-                                <input type="hidden" name="hfcbid" class="hfcbid" value="<%# Eval("CboardID")%>" />
-                            <%--    <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
+                                <input type="hidden" id="hf" name="hfcbid" class="hfcbid" value="<%# Eval("CboardID")%>" />
+                                <%--    <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
                                 <asp:Button ID="btnPostEdit" runat="server" Text="編輯" CommandName="btnEditNmpost" CommandArgument='<%# Eval("PostID") %>' />
                             </asp:PlaceHolder>--%>
                                 <h5>
@@ -56,8 +58,13 @@
     <script>
         var pageIndex = 1;
         var pageCount;
-        // 抓不到HF
-        var hf = document.getElementsByName('hfcbid');
+        //var hf = document.getElementsByName('hfcbid');
+        //var hf = document.getElementsByClassName('hfcbid');
+        //var hf = document.getElementById("hftest");
+        //var hf = document.getElementsByClassName("hftest");
+        var hf = $(".hftest").val();
+        var sort = $(".sortid").val();
+        console.log(hf)
         //------------------------------
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() - $(window).height()) {
@@ -70,11 +77,12 @@
             if (pageIndex == 2 || pageIndex <= pageCount) {
                 //$("#loader").show();
 
-                console.log(hf.val);
+                console.log(hf);
                 var postData = {
                     "PageIndex": pageIndex,
                     "PageSize": 5,
-                    "CboardID": 2,
+                    "CboardID": hf,
+                    "SortID": sort,
                 }
                 $.ajax({
                     url: "/API/MugenHandler.ashx?Action=Mugen",
@@ -104,8 +112,8 @@
                 var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
                 var titlex = "前往：" + list[i].Title;
                 // 會出現 attribute修正晚一個序列的現象
-                $(".PostA",rpt).attr({ "href": url, "title": titlex });
-                $(".imgPostP",rpt).attr({ "src": list[i].Coverimage });
+                $(".PostA", rpt).attr({ "href": url, "title": titlex });
+                $(".imgPostP", rpt).attr({ "src": list[i].Coverimage });
                 $(".PostT", rpt).text(list[i].Title);
                 $(".PostC", rpt).text(list[i].PostCotent);
                 $(".PostM", rpt).text(list[i].MemberAccount);

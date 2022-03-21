@@ -24,12 +24,17 @@ namespace MKForum.API
                 string PageIndexs = context.Request.Form["PageIndex"];
                 string PageSizes = context.Request.Form["PageSize"];
                 string CboardIDs = context.Request.Form["CboardID"];
+                string SortIDs = context.Request.Form["SortID"];
                 int cboardid = Convert.ToInt32(CboardIDs);
                 int pagesize = Convert.ToInt32(PageSizes);
                 int pageindex = Convert.ToInt32(PageIndexs);
+                int sortid = Convert.ToInt32(SortIDs);
                 int totalrow = 0;
-
-                List<Post> postlist = this._pmgr.GetPostList(cboardid, pagesize, pageindex, out totalrow);
+                List<Post> postlist = new List<Post>();
+                if (sortid == 0)
+                    postlist = this._pmgr.GetPostList(cboardid, pagesize, pageindex, out totalrow);
+                else
+                    postlist = this._pmgr.GetPostList(cboardid, pagesize, pageindex, sortid, out totalrow);
                 int pagecount = (totalrow / pagesize) + 1;
                 //分離memberid，然後用memberid查出 memberaccount
                 var memberlistwithpoint = postlist.Select(p => p.MemberID);
@@ -58,11 +63,12 @@ namespace MKForum.API
                                CoverImage = p.CoverImage,
                            };
 
-                MugenList<Temp> mugen = new MugenList<Temp>() {
+                MugenList<Temp> mugen = new MugenList<Temp>()
+                {
                     PageCount = pagecount,
                     SourceList = pLML.ToList(),
                     //SourceList = postlist,
-                }; 
+                };
 
                 //string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(mugen);
                 context.Response.ContentType = "application/json";
@@ -77,15 +83,15 @@ namespace MKForum.API
         }
         public class Temp
         {
-           public Guid  PostID             {get;set;}
-           public string  MemberAccount    {get;set;}
-           public string  PostCotent       {get;set;}
-           public Guid  MemberID           {get;set;}
-           public int  CboardID            {get;set;}
-           public string  Title            {get;set;}
-           public DateTime?  LastEditTime  {get;set;}
-           public DateTime  PostDate       {get;set;}
-           public string CoverImage { get; set; }
+            public Guid PostID { get; set; }
+            public string MemberAccount { get; set; }
+            public string PostCotent { get; set; }
+            public Guid MemberID { get; set; }
+            public int CboardID { get; set; }
+            public string Title { get; set; }
+            public DateTime? LastEditTime { get; set; }
+            public DateTime PostDate { get; set; }
+            public string CoverImage { get; set; }
         }
 
         public bool IsReusable
