@@ -10,17 +10,74 @@ namespace MKForum.Managers
 {
     public class ModeratorManager
     {
+        private AccountManager _amgr = new AccountManager();
+        private Member _currentmember;
+        /// <summary>
+        /// 判斷會員是否是當前版主
+        /// </summary>
+        /// <returns>回傳值為bool</returns>
+        public bool IsCurrentModerator()
+        {
+            bool isCurrentModerator=false;
+            //string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
+            string currentCboard = "2"; //測試用
+
+            //如果有登入
+            if (/*this._amgr.IsLogined()*/ true)        //測試用鮮註解
+            {
+                //取得登入帳號
+                //string currentmember = HttpContext.Current.Session["MemberID"] ;
+                string currentmember = "d5f7f8dc-0c02-42d9-8e92-ba6421f29020";
+
+                //寫入 當前板塊 會員ID  (SQL已測試OK)
+                string connStr = ConfigHelper.GetConnectionString();
+                string commandText = $@"
+                SELECT MemberID
+                FROM  [MKForum].[dbo].[MemberModerators]
+                WHERE [CboardID] = @CboardID
+                ";
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(connStr))
+                    {
+                        using (SqlCommand command = new SqlCommand(commandText, conn))
+                        {
+                            conn.Open();
+
+                            command.Parameters.AddWithValue(@"CboardID", currentCboard);
+                            command.ExecuteNonQuery();
+                            SqlDataReader reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                string MemberID = reader["MemberID"]as string;  //這粒不知道為什麼取失敗
+                                if (MemberID == currentmember)
+                                    isCurrentModerator = true;
+                            }
+                            return isCurrentModerator;
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    Logger.WriteLog("ModeratorManager.AddModeratorsList", ex);
+                    throw;
+                }
+            }
+            return isCurrentModerator;
+        }
+
         /// <summary>
         /// 增加版主
         /// </summary>
         /// <param name="strModeratorAcc">由版主輸入的會員資料</param>
         /// <param name="cboardid">當前子板塊</param>
-        public void AddModeratorsList(string strModeratorAcc,int cboardid)
+        public void AddModeratorsList(string strModeratorAcc, int cboardid)
         {
 
-                //寫入 當前板塊 會員ID  (SQL已測試OK)
-                string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
-                string commandText = $@"
+            //寫入 當前板塊 會員ID  (SQL已測試OK)
+            string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
+            string commandText = $@"
                 INSERT INTO [MKForum].[dbo].[MemberModerators]
                 (CboardID,MemberID)
                 VALUES  ('@cboardid','@strModeratorAcc')
