@@ -61,8 +61,6 @@ namespace MKForum
                 return;
             }
             // 處理類型
-
-            //this.dpdlPostStamp.DataSource = psList;
             string postSorttext = this.dpdlPostStamp.Text;
             int? postSort = Convert.ToInt32(postSorttext);
             // 處理並儲存圖片
@@ -70,7 +68,7 @@ namespace MKForum
             {
                 Title = TitleText,
                 PostCotent = PostCotentText,
-                Stamp = postSort
+                SortID = postSort
             };
             if (this.fuCoverImage.HasFile)
             {
@@ -92,6 +90,11 @@ namespace MKForum
             {
                 post.CoverImage = "/FileDownload/PostContent/" + "mokunin.jpg";
             }
+
+            // 新建一筆Post
+            Guid postid;
+            this._pmgr.CreatePost(_member.MemberID, cboardid, post, out postid);
+
             // 處理#tag
             string htagtext = this.txtPostHashtag.Text;
             string[] htagarr = htagtext.Split('/');
@@ -100,12 +103,12 @@ namespace MKForum
             {
                 htaglist.Add(x);
             }
-
-            // 新建一筆Post
-
-            Guid postid;
-            this._pmgr.CreatePost(_member.MemberID, cboardid, post, out postid);
+            for (int i = 0; i < htaglist.Count; i++)
+            {
+                this._pmgr.CreateHashtag(postid, htaglist[i]);
+            }
             Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
+
         }
 
         protected void btnPostImage_Click(object sender, EventArgs e)

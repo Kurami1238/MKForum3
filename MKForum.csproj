@@ -102,8 +102,10 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\CboardsPage.css" />
+    <Content Include="css\Display.css" />
     <Content Include="css\index.css" />
     <Content Include="css\PboardtoCboard.css" />
+    <Content Include="css\pen.png" />
     <Content Include="EditPost.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
@@ -120,10 +122,14 @@
     <Content Include="Ranking.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="SearchPage.aspx" />
+    <Content Include="ShareControls\Mugen.ascx" />
     <Content Include="Web.config" />
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\MugenHandler.ashx.cs">
+      <DependentUpon>MugenHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="BackAdmin\MemberEditor.aspx.cs">
       <DependentUpon>MemberEditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -294,6 +300,13 @@
     <Compile Include="SearchPage.aspx.designer.cs">
       <DependentUpon>SearchPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ShareControls\Mugen.ascx.cs">
+      <DependentUpon>Mugen.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShareControls\Mugen.ascx.designer.cs">
+      <DependentUpon>Mugen.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logs\Log.log" />
@@ -309,6 +322,9 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="API\MugenHandler.ashx" />
+    <Content Include="css\Brush.woff" />
+    <Content Include="css\Brush.ttf" />
     <None Include="packages.config" />
     <Content Include="API\PBoardInMain.ashx" />
     <None Include="Web.Debug.config">

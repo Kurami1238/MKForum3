@@ -32,6 +32,7 @@ namespace MKForum.Managers
 
             DataRow dataRow = dt.NewRow();
             dataRow["Pname"] = "Pboard";
+            dataRow["PboardID"] = "PboardID";
 
             return dt;
         }
@@ -43,8 +44,10 @@ namespace MKForum.Managers
         public int GetMemberStatus()
         {
             int memberStatus = 0;
-            //Guid memberID = (Guid)HttpContext.Current.Session["MemberAccount"];
-            string memberID = "d5f7f8dc-0c02-42d9-8e92-ba6421f29020"; //測試用假資料
+            Member mmmember = HttpContext.Current.Session["Member"] as Member;
+            Guid memberID = mmmember.MemberID;
+            //string memberID = mmmember.MemberID.ToString();
+            //Guid _memberID = (Guid)HttpContext.Current.Session["MemberAccount"];
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
@@ -205,7 +208,7 @@ namespace MKForum.Managers
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
-                @"  SELECT [Pname]
+                @"  SELECT [Pname],PboardID
                     FROM [MKForum].[dbo].[Pboards]
                     ";//取得目前有哪些母板塊
             try

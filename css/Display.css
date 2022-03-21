@@ -1,0 +1,177 @@
+@font-face{
+    font-family:'moubi';
+    src:url('Brush.woff') format("woff"),
+        url('Brush.ttf') format("truetype");
+}
+hr{
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #333, #ccc, #333);
+}
+a{
+    text-decoration:none;
+}
+a:link{
+    background-color:#ffffff;
+    text-decoration:none;
+
+    }
+a:visited {
+    color:#ffffff;
+    background-color:red;
+    }
+a:active {
+    text-decoration:none;
+    background-color:gray;
+    color:#fafafa;
+    }
+div{
+    /* border: 2px solid rgb(194, 194, 194); */
+}
+.MainPost{
+    padding: 10px;
+    margin: 5px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+    border-bottom: 1px double #e76c25;
+    box-shadow: 2px 2px 4px #e76c25;text-align: left;
+}
+        .MainPost .mpostall{
+            padding: 20px;
+            margin: 20px;
+            margin-top: 0px;
+        }
+        .MainPost .PostT{
+            font-size: 60px;
+            float: left;
+            width: 90%;
+            line-height: 66px;
+        }
+        .MainPost .PostF{
+            font-size: 17px;
+            float: right;
+            width: 10%;
+            line-height: 66px;
+            text-align: center;
+
+        }
+        .MainPost .Postbtn{
+            margin-left: 130px;
+        }
+        .MainPost .Postbtn div{
+            color: antiquewhite; border:0;
+            background-color:#181717;
+            border: 1px ridge #e76c25;
+            box-shadow: 2px 1px 4px #e76c25;line-height: 25px;text-align: center;
+            border-radius:10px;
+            cursor:pointer;
+            float: right;
+        }
+        .MainPost .Postbtn div input{
+            color:#fff;
+        }
+        .MainPost .Postbtn div:hover{
+            color:#fff;
+            background-color:rgb(22, 21, 21);
+            border:2px #851a1a solid;
+            text-shadow: 2px 2px 2px #941a12;
+        }
+        
+        .MainPost .PostM{
+            font-size: 17px;
+            width: 42%;
+            line-height: 30px;
+        }
+        .MainPost .PostC{
+            font-size: 22px;
+            width: 100%;
+            margin-top: 30px;
+            float: left;
+            margin-bottom: 10px;
+        }
+.nomainPost{
+    padding: 10px;
+    margin: 5px;
+    margin-top: 20px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+    border-bottom: 1px double #e76c25;
+    box-shadow: 2px 2px 3px #e76c25;text-align: left;
+}
+        .nomainPost .nmpostall{
+            padding: 20px;
+            margin: 22px;
+            margin-bottom: 10px;
+        }
+        .nomainPost .nmF{
+            font-size: 17px;
+            float: right;
+            width: 10%;
+            line-height: 25px;
+            text-align: center;
+            margin-left: 10px;
+
+        }
+        .nomainPost .nmbtn{
+            margin-left: 120px;
+            margin-right: -5px;
+        }
+        .nomainPost .nmbtn div{
+            color: antiquewhite; border:0;
+            background-color:#181717;
+            border: 1px ridge #e76c25;
+            box-shadow: 2px 1px 4px #e76c25;line-height: 25px;text-align: center;
+            border-radius:10px;
+            cursor:pointer;
+            float: right;
+            margin-top: -5px;
+        }
+        .nomainPost .nmbtn div input{
+            color:#fff;
+            cursor:pointer;
+        }
+        .nomainPost .nmbtn div:hover{
+            color:#fff;
+            background-color:rgb(22, 21, 21);
+            border:2px #851a1a solid;
+            text-shadow: 2px 2px 2px #941a12;
+        }
+        
+        .nomainPost .nmM{
+            font-size: 17px;
+            width: 42%;
+            line-height: 25px;
+        }
+        .nomainPost .nmC{
+            font-size: 22px;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            float: left;
+        }
+.CNNmPost{
+    padding: 10px;
+    margin: 5px;
+    margin-top: 20px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+    border-bottom: 1px double #e76c25;
+    box-shadow: 2px 2px 3px #e76c25;
+    
+}
+        .CNNmPost input{
+            color:#fafafa;
+        }
+        .CNNmPost .CNNmT{
+            width: 70%;
+            line-height: 28px;
+        }
+        .CNNmPost .CNNmB{
+            margin-left: 20px;
+            font-size: 22px;
+            border: 1px ridge #e76c25;
+            box-shadow: 2px 1px 4px #e76c25;line-height: 40px;text-align: center;
+            border-radius:10px;
+            cursor:pointer;
+        }

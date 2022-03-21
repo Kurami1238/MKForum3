@@ -1,39 +1,146 @@
-.Cboard {
-    padding: 60px;
-    margin: 50px;
-    border: none;
+@font-face{
+    font-family:'moubi';
+    src:url('Brush.woff') format("woff"),
+        url('Brush.ttf') format("truetype");
 }
+.btncreatep{
+    position: fixed;
+    top:550px;
+    right: 45px;
+    background:#e76c25;
+    border-radius: 50%;
+    box-shadow: 2px 1px 4px #e76c25;
+    transition: 1.2s;
+    -webkit-filter: opacity(30%); /* Safari */
+    filter: opacity(30%);
+}
+@media screen and (min-width:576px){
+    .btncreatep{
+        top:550px;
+        right: 100px;
+    }
+}
+@media screen and (min-width:630px){
+    .btncreatep{
+        top:550px;
+        right: 150px;
+    }
+}
+@media screen and (min-width:768px){
+    .btncreatep{
+        top:550px;
+        right: 210px;
+    }
+}
+@media screen and (min-width:992px){
+    .btncreatep{
+        top:550px;
+        right: 300px;
+    }
+}
+@media screen and (min-width:1200px){
+    .btncreatep{
+        top:550px;
+        right: 350px;
+    }
+}
+.btncreatep:hover{
+    -webkit-filter: opacity(30%); /* Safari */
+    filter: opacity(100%);
+}
+a{
+    text-decoration:none;
+}
+a:link{
+    background-color:#ffffff;
+    text-decoration:none;
 
-    .Cboard h1 {
-        margin-left: 50px;
-        font-size: 50px
+    }
+a:visited {
+    color:#ffffff;
+    background-color:red;
     }
 
-    .Cboard .content {
-        padding: 20px;
-        margin: 40px;
-        margin-top: 20px;
-        margin-right: 120px;
+.PostA:hover{
+    color:#ffffff;
+    text-shadow: 2px 2px 2px #941a12;
+    text-decoration:none;
+}
+.PostA:hover img{
+    transform:  scale(1.03);
+    -webkit-filter: brightness(105%); /* Safari */
+    filter: brightness(105%);
+}
+a:active {
+    text-decoration:none;
+    background-color:gray;
+    color:#fafafa;
+    }
+img{
+    transform: 2s;
+}
+
+.Cboard {
+    padding: 20px;
+    margin: 5px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+
+}
+.Cboard .content {
+    margin: 5px;
+    margin-top: 20px;
+    float: left;
+    
+}
+    .Cboard .StampButton{
+        font-size: 33px;
+       
+    }
+    .Cboard .Sbtn{
+        color: antiquewhite; border:0;
+        background-color:#181717;
+        color:#fff;
+        border: 1px ridge #e76c25;
+        box-shadow: 2px 1px 4px #e76c25;line-height: 40px;text-align: center;
+        border-radius:10px;
+        cursor:pointer;}
+      
+        .Cboard .Sbtn:hover{
+        color:#fff;
+        background-color:rgb(22, 21, 21);
+        border:2px #851a1a solid;
+        text-shadow: 2px 2px 2px #941a12;
+        }
+    .Cboard h1 {
+        margin-left: 50px;
+        font-size: 55px
+    }
+
+    .Cboard .imgPostP{
+        height: 50%;
     }
 
         .Cboard .content .article {
             padding: 10px;
-            margin: 20px 20px;
+            margin: 15px;
+            border: 1px double #e76c25;
+            box-shadow: 2px 2px 6px #e76c25;line-height: 100px;text-align: left;
+
+
         }
 
 
             .Cboard .content .article h6 {
-                font-size: 40px;
+                font-size: 44px;
             }
-
-
 
             .Cboard .content .article p {
                 font-size: 20px;
-                background-color: gray;
+                background-color: rgb(44, 44, 44);
                 line-height: 60px;
                 height: 100px;
-                width: 70%;
+                width: 70%; 
             }
 
             .Cboard .content .article h3 {
@@ -42,7 +149,9 @@
             }
 
             .Cboard .content .article h4 {
-                font-size: 20px;
+                font-size: 14px;
                 float: right;
-                margin-right: 30px;
+                margin-top: 5px;
+
+                margin-right: 10px;
             }
