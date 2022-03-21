@@ -31,37 +31,37 @@ namespace MKForum.API
 
                 List<Post> postlist = this._pmgr.GetPostList(cboardid, pagesize, pageindex, out totalrow);
                 int pagecount = (totalrow / pagesize) + 1;
-                // 分離memberID，然後用memberID查出 memberAccount
-                //var memberListwithpoint = postlist.Select(P => P.MemberID);
-                //List<Member> memberList = new List<Member>();
-                //foreach (var x in memberListwithpoint)
-                //{
-                //    Member me = this._amgr.GetAccount(x);
-                //    memberList.Add(me);
-                //}
-                // 合併兩表連接rpt
-                // BUG 重複會員回復的話 會重複顯示回文 已解決
-                // 另外一個詭異的問題
-                //var pLML = from p in postlist
-                //           join m in memberList on p.MemberID equals m.MemberID
-                //           into tempPM
-                //           //from g in tempPM.DefaultIfEmpty().Distinct()
-                //           select new Temp
-                //           {
-                //               PostID = p.PostID,
-                //               MemberAccount = (tempPM.FirstOrDefault() != null) ? tempPM.FirstOrDefault().Account : "無",
-                //               PostCotent = p.PostCotent,
-                //               MemberID = p.MemberID,
-                //               CboardID = p.CboardID,
-                //               Title = p.Title,
-                //               LastEditTime = p.LastEditTime,
-                //               PostDate = p.PostDate,
-                //               CoverImage = p.CoverImage,
-                //           };
+                //分離memberid，然後用memberid查出 memberaccount
+                var memberlistwithpoint = postlist.Select(p => p.MemberID);
+                List<Member> memberlist = new List<Member>();
+                foreach (var x in memberlistwithpoint)
+                {
+                    Member me = this._amgr.GetAccount(x);
+                    memberlist.Add(me);
+                }
+                //合併兩表連接rpt
+                //另外一個詭異的問題 IEnumerable 無法轉型成 Generic
+                var pLML = from p in postlist
+                           join m in memberlist on p.MemberID equals m.MemberID
+                           into temppm
+                           //from g in temppm.defaultifempty().distinct()
+                           select new Temp
+                           {
+                               PostID = p.PostID,
+                               MemberAccount = (temppm.FirstOrDefault() != null) ? temppm.FirstOrDefault().Account : "無",
+                               PostCotent = p.PostCotent,
+                               MemberID = p.MemberID,
+                               CboardID = p.CboardID,
+                               Title = p.Title,
+                               LastEditTime = p.LastEditTime,
+                               PostDate = p.PostDate,
+                               CoverImage = p.CoverImage,
+                           };
 
-                MugenList<Post> mugen = new MugenList<Post>() {
+                MugenList<Temp> mugen = new MugenList<Temp>() {
                     PageCount = pagecount,
-                    SourceList = postlist,
+                    SourceList = pLML.ToList(),
+                    //SourceList = postlist,
                 }; 
 
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(mugen);
