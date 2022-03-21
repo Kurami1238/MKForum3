@@ -75,7 +75,7 @@ namespace MKForum.Managers
             }
         }
 
-        public MemberFollow GetMemberFollowThisPost(string MemberID, string PostID)
+        public MemberFollow GetMemberFollowThisPost(Guid MemberID, Guid PostID)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
             string commandText =
@@ -117,7 +117,7 @@ namespace MKForum.Managers
             }
         }
 
-        public void Updatetrack(string MemberID, string PostID, int FollowStatus)
+        public void Updatetrack(Guid MemberID, Guid PostID, int FollowStatus)
         {
             string connStr = ConfigHelper.GetConnectionString();
             string commandText =

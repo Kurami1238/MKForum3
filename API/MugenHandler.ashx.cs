@@ -64,9 +64,9 @@ namespace MKForum.API
                     //SourceList = postlist,
                 }; 
 
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(mugen);
+                //string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(mugen);
                 context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                //context.Response.Write(jsonText);
                 return;
             }
         }
