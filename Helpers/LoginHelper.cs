@@ -30,13 +30,31 @@ namespace MKForum.Helpers
             string encryptedText = FormsAuthentication.Encrypt(ticket);
             HttpCookie loginCookie = new HttpCookie(cookieName, encryptedText);
             loginCookie.HttpOnly = true;
+            loginCookie.Expires = DateTime.Now.Add(timeOut);
             HttpContext.Current.Request.Cookies.Add(loginCookie);
 
             // 設定目前登入者至 Current User
             FormsIdentity identity = new FormsIdentity(ticket);
             GenericPrincipal gp = new GenericPrincipal(identity, new string[] { });
             HttpContext.Current.User = gp;
-
         }
+
+        public static void Logout()
+        {
+            FormsAuthentication.SignOut();
+        }
+
+        public static bool dentityLogined()
+        {
+            return HttpContext.Current.User.Identity.IsAuthenticated;
+        }
+
+        public static void GetIdentityData()
+        {
+            string UserAccount = HttpContext.Current.User.Identity.Name;
+            var identity = HttpContext.Current.User.Identity as FormsIdentity;
+        }
+
+
     }
 }

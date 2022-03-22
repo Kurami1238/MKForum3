@@ -1,10 +1,12 @@
-﻿using MKForum.Managers;
+﻿using MKForum.Helpers;
+using MKForum.Managers;
 using MKForum.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -17,6 +19,9 @@ namespace MKForum
         private CheckInputManager _chkInpMgr = new CheckInputManager(); //確認輸入值
         private ParentBoardManager _pBrdMgr = new ParentBoardManager(); //母版塊
         private AccountManager _amgr = new AccountManager();            //帳號
+        private LoginHelper _lgihp = new LoginHelper();
+        private AccountManager _Amgr = new AccountManager();
+
 
         //未做:
         //HomePage.aspx
@@ -26,47 +31,91 @@ namespace MKForum
         //如果網址列為子板塊，則依會員權限 顯示板主名單 (!=IsPostBack)
         protected void Page_Load(object sender, EventArgs e)
         {
-            int memberStatus = 1;//用來測試不同身分別的
-            #region//搜尋區
 
-            string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
-            string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
+#if(DEBUG)
+            this.ckbskip.Visible = true;
+#endif
 
 
-            /*當前位於母版塊或子板塊內，第二個選項變為可使用
-            if (currentPboard != null || currentCboard != null)
+            if (!_amgr.IsLogined())
             {
-            var aaa = this.srchDrop.Items[1].Attributes;
-            aaa.Remove("disable");
-            }*/
-            #endregion
-
-            #region//母版塊區
-            if (_amgr.IsLogined())
-            {
-                memberStatus = _pBrdMgr.GetMemberStatus();
+                this.plhLogin.Visible = false;
+                this.plhLogined.Visible = true;
             }
 
-            if (!this.IsPostBack)
+            else if (_amgr.IsLogined())
             {
-                DataTable dt = _pBrdMgr.GetPBoardStatus();
-                this.Repeater1.DataSource = dt;
-                this.Repeater1.DataBind();
-                this.Repeater2.DataSource = dt;
-                this.Repeater2.DataBind();
+                this.plhLogin.Visible = false;
+                this.plhLogined.Visible = true;
+                int memberStatus = 1;//用來測試不同身分別的
+                #region//搜尋區
 
-                if (memberStatus == 3)
+                string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
+                string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
+
+
+                /*當前位於母版塊或子板塊內，第二個選項變為可使用
+                if (currentPboard != null || currentCboard != null)
                 {
-                    btnPBMode1.Visible = true;
-                    btnPBMode2.Visible = true;
+                var aaa = this.srchDrop.Items[1].Attributes;
+                aaa.Remove("disable");
+                }*/
+                #endregion
+
+                #region//母版塊區
+                if (_amgr.IsLogined())
+                {
+                    memberStatus = _pBrdMgr.GetMemberStatus();
                 }
+
+                if (!this.IsPostBack)
+                {
+                    DataTable dt = _pBrdMgr.GetPBoardStatus();
+                    this.Repeater1.DataSource = dt;
+                    this.Repeater1.DataBind();
+                    this.Repeater2.DataSource = dt;
+                    this.Repeater2.DataBind();
+
+                    if (memberStatus == 3)
+                    {
+                        btnPBMode1.Visible = true;
+                        btnPBMode2.Visible = true;
+                    }
+                }
+
+                #endregion
+
             }
-
-            #endregion
-
-
         }
 
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            string account = this.txtAccount.Text.Trim();
+            string pwd = this.txtPassword.Text.Trim();
+            if (this.ckbskip.Checked)
+            {
+                if (this._Amgr.TryLogin("a123234", "12345678"))
+                {
+                    Response.Redirect(Request.RawUrl);
+                }
+            }
+            else if (this._Amgr.TryLogin(account, pwd))
+            {
+                Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                this.ltlMessage.Text = "登錄失敗，請檢察帳號密碼。";
+            }
+            
+
+        }
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            LoginHelper.Logout();
+            Response.Redirect(Request.RawUrl);
+            
+        }
 
         //搜尋按鈕( 負責組成URL並導向搜尋頁面 )
         protected void btnSearh_Click(object sender, EventArgs e)

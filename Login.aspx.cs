@@ -14,6 +14,7 @@ namespace MKForum
         private AccountManager _Amgr = new AccountManager();
         protected void Page_Load(object sender, EventArgs e)
         {
+
 #if(DEBUG)
             this.ckbskip.Visible = true;
 #endif

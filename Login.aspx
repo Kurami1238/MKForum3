@@ -27,6 +27,8 @@
 
             <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
         </asp:PlaceHolder>
+
+
         <asp:PlaceHolder runat="server" ID="plcUserInfo" >
             <asp:Literal ID="ltlAccount" runat="server" /><br />
             前往 <a href="CbtoPost.aspx">子版</a><br />
