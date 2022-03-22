@@ -13,6 +13,8 @@ namespace MKForum.API
     /// </summary>
     public class MugenHandler : IHttpHandler
     {
+        // 如果要讓API讀session，
+        // 讓上面實作 ,System.Web.SessionState.IReadOnlySessionState 的介面，但會讓ajax失去非同步效果
         private AccountManager _amgr = new AccountManager();
         private PostManager _pmgr = new PostManager();
         private List<Post> _postlist = new List<Post>();
@@ -67,12 +69,11 @@ namespace MKForum.API
                 {
                     PageCount = pagecount,
                     SourceList = pLML.ToList(),
-                    //SourceList = postlist,
                 };
 
-                //string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(mugen);
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(mugen);
                 context.Response.ContentType = "application/json";
-                //context.Response.Write(jsonText);
+                context.Response.Write(jsonText);
                 return;
             }
         }

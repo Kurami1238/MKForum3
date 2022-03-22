@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="CreatePost.aspx.cs" Inherits="MKForum.CreatePost" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/CreatePost.css" rel="stylesheet" />
+    <script src="js/showdown.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
@@ -13,8 +15,10 @@
             <tr class="S">
                 <th>類型 </th>
                 <td>
-                    <asp:DropDownList ID="dpdlPostStamp" runat="server" Width="100px"><asp:ListItem Value="無"></asp:ListItem></asp:DropDownList>
-            </tr>   
+                    <asp:DropDownList ID="dpdlPostStamp" runat="server" Width="100px">
+                        <asp:ListItem Value="無"></asp:ListItem>
+                    </asp:DropDownList>
+            </tr>
             <tr class="Cv">
                 <th>封面圖</th>
                 <td>
@@ -27,13 +31,14 @@
                 <td>
                     <asp:FileUpload class="button" ID="fuPostImage" runat="server" />
                     <asp:Image ID="imgPostImage" runat="server" />
-                    <asp:Button class="button" ID="btnPostImage" runat="server" Text="確定上傳" onclick="btnPostImage_Click"    />
+                    <asp:Button class="button" ID="btnPostImage" runat="server" Text="確定上傳" OnClick="btnPostImage_Click" />
                 </td>
             </tr>
             <tr class="C">
                 <th>內文 *</th>
                 <td>
-                    <asp:TextBox ID="txtPostCotent" runat="server" TextMode="MultiLine" cols="20" Rows="5"></asp:TextBox></td>
+                    <textarea id="txtarea" rows="8" cols="40"></textarea>
+                </td>
             </tr>
             <tr class="tag">
                 <th>#tag (用/分隔)</th>
@@ -46,9 +51,26 @@
                 </td>
             </tr>
         </table>
-        <asp:Button ID="btnSend" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();"/>
+        <asp:Button ID="btnSend" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
     </div>
-     <script>
+    <div>
+        <table class="kobi col-sm-11 col-md-11 col-lg-11">
+            <tr class="T">
+                <th>預覽 </th>
+                <td>
+                    <div class="result" id="result"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        $('#content').on('keyup', function () {
+            var text = $("#content").val();
+            var converter = new showdown.Converter();
+            var html = converter.makeHtml(text);
+            $('.result').html(html);
+            $('.result>table').addClass('layui-table');
+        });
         function Createa() { alert('新增文章成功') }
-     </script>
+    </script>
 </asp:Content>

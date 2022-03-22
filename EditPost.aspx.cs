@@ -35,10 +35,10 @@ namespace MKForum
             List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
             // 繫結PostStamp
 
-            this.ddlPostStamp.DataSource = psList;
-            this.ddlPostStamp.DataTextField = "PostSort";
-            this.ddlPostStamp.DataValueField = "SortID";
-            this.ddlPostStamp.DataBind();
+            this.dpdlPostStamp.DataSource = psList;
+            this.dpdlPostStamp.DataTextField = "PostSort";
+            this.dpdlPostStamp.DataValueField = "SortID";
+            this.dpdlPostStamp.DataBind();
 
             // 取得文章資訊
             Guid postid;
