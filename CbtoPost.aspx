@@ -56,6 +56,9 @@
     <asp:ImageButton class="btncreatep" ID="btnCreatePostB" runat="server" Text="新增文章" OnClick="btnCreatePost_Click" ImageUrl="css/pen.png" Height="50px" Width="50px" />
     <asp:Label ID="lblMsg" runat="server" ForeColor="Red"></asp:Label>
     <script>
+        $("#StampButton").on("click", "#Sbtn", function () {
+            pageIndex = 1;
+        });
         var pageIndex = 1;
         var pageCount;
         //var hf = document.getElementsByName('hfcbid');
@@ -104,24 +107,24 @@
             pageCount = count;
             var list = henzi.SourceList;
             console.log(list);
-
-            for (var i = 0; i < list.length; i++) {
-                var rpt = $("#PostHazimari .test").eq(0).clone(true);
-                //console.log($("#PostA").attr("href"));
-                console.log(rpt.html());
-                var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
-                var titlex = "前往：" + list[i].Title;
-                // 會出現 attribute修正晚一個序列的現象
-                $(".PostA", rpt).attr({ "href": url, "title": titlex });
-                $(".imgPostP", rpt).attr({ "src": list[i].Coverimage });
-                $(".PostT", rpt).text(list[i].Title);
-                $(".PostC", rpt).text(list[i].PostCotent);
-                $(".PostM", rpt).text(list[i].MemberAccount);
-                $(".PostD", rpt).text(list[i].LastEditTime);
-                //$("btnPostEdit").attr({ "CommandArgument": list[i].PostID });
-                console.log(rpt.html());
-                //$("#Nmphl").text(list[i].LastEditTime);
-                $(".content").append(rpt);
+            if (pageIndex <= pageCount) {
+                for (var i = 0; i < list.length; i++) {
+                    var rpt = $("#PostHazimari .test").eq(0).clone(true);
+                    //console.log($("#PostA").attr("href"));
+                    console.log(rpt.html());
+                    var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
+                    var titlex = "前往：" + list[i].Title;
+                    $(".PostA", rpt).attr({ "href": url, "title": titlex });
+                    $(".imgPostP", rpt).attr({ "src": list[i].Coverimage });
+                    $(".PostT", rpt).text(list[i].Title);
+                    $(".PostC", rpt).text(list[i].PostCotent);
+                    $(".PostM", rpt).text(list[i].MemberAccount);
+                    $(".PostD", rpt).text(list[i].LastEditTime);
+                    //$("btnPostEdit").attr({ "CommandArgument": list[i].PostID });
+                    console.log(rpt.html());
+                    //$("#Nmphl").text(list[i].LastEditTime);
+                    $(".content").append(rpt);
+                }
             }
         };
         //$("#loader").hide();

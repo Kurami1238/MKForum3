@@ -3,6 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/CreatePost.css" rel="stylesheet" />
     <script src="js/showdown.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <link href="css/github-markdown.css" rel="stylesheet" />
+    <link href="css/github-markdown-dark.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
@@ -37,7 +40,7 @@
             <tr class="C">
                 <th>內文 *</th>
                 <td>
-                    <textarea id="txtarea" rows="8" cols="40"></textarea>
+                    <textarea class="content" id="content" rows="6" cols="20" runat="server"></textarea>
                 </td>
             </tr>
             <tr class="tag">
@@ -58,18 +61,25 @@
             <tr class="T">
                 <th>預覽 </th>
                 <td>
-                    <div class="result" id="result"></div>
+                    <div class="result" id="result">
+                       
+                    </div>
+                    <div>
+                         <%--<asp:TextBox class="result2" ID="result2" runat="server" TextMode="MultiLine" ></asp:TextBox>--%>
+                         <%--ValidateRequestMode="Disabled"--%>
+                        <%--這裡會學習hackMD的XSS防禦函數庫 npm/XSS 以及開啟CSP來解決 XSS問題--%>
+                    </div>
                 </td>
             </tr>
         </table>
     </div>
     <script>
-        $('#content').on('keyup', function () {
-            var text = $("#content").val();
+        $('.content').on('keyup', function () {
+            var text = $(".content").val();
             var converter = new showdown.Converter();
             var html = converter.makeHtml(text);
             $('.result').html(html);
-            $('.result>table').addClass('layui-table');
+            $('.result2').html(html);
         });
         function Createa() { alert('新增文章成功') }
     </script>

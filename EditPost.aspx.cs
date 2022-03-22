@@ -29,7 +29,7 @@ namespace MKForum
             if (this._member != HttpContext.Current.Session["EditPostMember"])
                 this.BackToListPage();
             // 從Session取得當前子板塊ID
-            string cboard = this.Request.QueryString["Cboard"];
+            string cboard = this.Request.QueryString["CboardID"];
             int cboardid = 0;
             int.TryParse(cboard, out cboardid);
             List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);

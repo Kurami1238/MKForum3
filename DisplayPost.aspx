@@ -2,6 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/Display.css" rel="stylesheet" />
+    <script src="js/showdown.js"></script>
+    <link href="css/github-markdown-dark.css" rel="stylesheet" />
+    <link href="css/github-markdown.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -32,7 +35,10 @@
                 <asp:Label ID="lblMember" runat="server" Text="作者"></asp:Label>
             </div>
             <div class="PostC">
-                <asp:Label ID="lblCotent" runat="server" Text="內文"></asp:Label>
+                    <div class="result" id="result">
+                     </div>
+            <input type="hidden" id="sortid" class="content" runat="server"/>
+                <%--<asp:Label ID="lblCotent" runat="server" Text="內文" ></asp:Label>--%>
             <hr />
             </div>
         </div>
@@ -75,7 +81,17 @@
         <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" OnClientClick="NmCreatePosta();"/>
     </div>
     <script>
+        $(document).ready(function () {
+
+            var text = $(".content").val();
+            var converter = new showdown.Converter();
+            var html = converter.makeHtml(text);
+            $('.result').html(html);
+
+        });
+        
         function dela() { alert('刪除成功') }
         function NmCreatePosta() { alert("回覆成功") }
+        
     </script>
 </asp:Content>

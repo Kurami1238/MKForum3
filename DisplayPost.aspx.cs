@@ -52,7 +52,7 @@ namespace MKForum
             Member member = this._amgr.GetAccount(post.MemberID);
             this.lblMember.Text = "作者：" +member.Account;
             this.lblFloor.Text = post.Floor.ToString() + "F";
-            this.lblCotent.Text = post.PostCotent;
+            this.sortid.Value = post.PostCotent;
             this.hfMemberID.Value = post.MemberID.ToString();
             this.phl.DataBind();
 
@@ -123,6 +123,8 @@ namespace MKForum
         {
             // 從session 取得member
             Member member = this._member;
+            if (string.IsNullOrWhiteSpace(this.txtCNNmPost.Text))
+                return;
             if (member != null)
             {
                 string cboardid = this.Request.QueryString["CboardID"];

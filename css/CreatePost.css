@@ -68,3 +68,16 @@ input{
         .zenbu #txtPostCotent{
             color: #fafafaea;
         }
+    textarea{
+        color: #fafafaea;
+    }
+.kobi{
+    padding: 10px;
+    margin: 5px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+    border-bottom: 1px double #e76c25;
+    box-shadow: 2px 2px 4px #e76c25;text-align: left;
+    font-size: 22px;
+    color: #fafafaea;
+}

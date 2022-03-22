@@ -32,14 +32,16 @@ namespace MKForum.API
                 int pageindex = Convert.ToInt32(PageIndexs);
                 int sortid = Convert.ToInt32(SortIDs);
                 int totalrow = 0;
-                List<Post> postlist = new List<Post>();
+                List<Post> postList = new List<Post>();
                 if (sortid == 0)
-                    postlist = this._pmgr.GetPostList(cboardid, pagesize, pageindex, out totalrow);
+                    postList = this._pmgr.GetPostList(cboardid, pagesize, pageindex, out totalrow);
                 else
-                    postlist = this._pmgr.GetPostList(cboardid, pagesize, pageindex, sortid, out totalrow);
+                    postList = this._pmgr.GetPostList(cboardid, pagesize, pageindex, sortid, out totalrow);
                 int pagecount = (totalrow / pagesize) + 1;
+                // 文章若長度大於二十個字，後面則隱藏
+                List<Post> seripost = PostContentSeri(postList);
                 //分離memberid，然後用memberid查出 memberaccount
-                var memberlistwithpoint = postlist.Select(p => p.MemberID);
+                var memberlistwithpoint = postList.Select(p => p.MemberID);
                 List<Member> memberlist = new List<Member>();
                 foreach (var x in memberlistwithpoint)
                 {
@@ -48,7 +50,7 @@ namespace MKForum.API
                 }
                 //合併兩表連接rpt
                 //另外一個詭異的問題 IEnumerable 無法轉型成 Generic
-                var pLML = from p in postlist
+                var pLML = from p in postList
                            join m in memberlist on p.MemberID equals m.MemberID
                            into temppm
                            //from g in temppm.defaultifempty().distinct()
@@ -64,11 +66,26 @@ namespace MKForum.API
                                PostDate = p.PostDate,
                                CoverImage = p.CoverImage,
                            };
-
+                // 第二次合併把文章內容大於二十字的替換掉
+                var pLMLS = from p in pLML
+                            join s in seripost on p.PostID equals s.PostID
+                            into tempPS
+                            select new Temp
+                            {
+                                PostID = p.PostID,
+                                MemberAccount = p.MemberAccount,
+                                PostCotent = (tempPS.FirstOrDefault() != null) ? tempPS.FirstOrDefault().PostCotent : p.PostCotent,
+                                MemberID = p.MemberID,
+                                CboardID = p.CboardID,
+                                Title = p.Title,
+                                LastEditTime = p.LastEditTime,
+                                PostDate = p.PostDate,
+                                CoverImage = p.CoverImage,
+                            };
                 MugenList<Temp> mugen = new MugenList<Temp>()
                 {
                     PageCount = pagecount,
-                    SourceList = pLML.ToList(),
+                    SourceList = pLMLS.ToList(),
                 };
 
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(mugen);
@@ -76,6 +93,27 @@ namespace MKForum.API
                 context.Response.Write(jsonText);
                 return;
             }
+        }
+        private static List<Post> PostContentSeri(List<Post> postList)
+        {
+            var postcontent = postList.Select((x, index) => { return new { PostCotent = x.PostCotent, PostID = x.PostID }; });
+            List<Post> seripost = new List<Post>();
+            foreach (var x in postcontent)
+            {
+                char[] pccarr = x.PostCotent.ToCharArray();
+                if (pccarr.Length > 20)
+                {
+                    string newpc = string.Empty;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        newpc += pccarr[i];
+                    }
+                    newpc += "...(點擊後觀看)";
+                    seripost.Add(new Post() { PostID = x.PostID, PostCotent = newpc });
+                }
+            }
+
+            return seripost;
         }
         public class MugenList<T>
         {

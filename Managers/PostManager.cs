@@ -461,6 +461,7 @@ namespace MKForum.Managers
                         if (reader.Read())
                         {
                             Post post = this.BuildPostContent(reader);
+                            this.UpdatePostView(post.PostID, post.PostView + 1);
                             return post;
                         }
                         return null;
@@ -526,7 +527,34 @@ namespace MKForum.Managers
                 SortID = reader["SortID"] as int?            
             };
         }
+        public void UpdatePostView(Guid postid,int postview)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  UPDATE Posts
+                    SET 
+                        PostView = @postview
+                    WHERE PostID = @postid ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
 
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.Parameters.AddWithValue(@"postview", postview);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.UpdatePostView", ex);
+                throw;
+            }
+        }
         public void UpdatePost(Post post)
         {
             string connectionString = ConfigHelper.GetConnectionString();
