@@ -113,11 +113,11 @@ namespace MKForum
             {
                 if (this._MMmgr.IsCurrentModerator(currentCboard) || memberStatus == 3)
                 {
-                    this.plhBlk.Visible = true;
+                    //this.plhBlk.Visible = true;
 
-                    BlckMbrDT = _blkmgr.getBlacked(currentCboard);
-                    this.RptrBlk.DataSource = BlckMbrDT;
-                    this.RptrBlk.DataBind();
+                    //BlckMbrDT = _blkmgr.getBlackedList(Convert.ToInt32(currentCboard));
+                    //this.RptrBlk.DataSource = BlckMbrDT;
+                    //this.RptrBlk.DataBind();
                 }
             }
             else
