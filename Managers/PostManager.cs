@@ -479,6 +479,43 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        public Post GetPost(Guid postid,Guid memberid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT *
+                    FROM Posts
+                    WHERE PostID = @postID";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        command.Parameters.AddWithValue("@postID", postid);
+                        conn.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            Post post = this.BuildPostContent(reader);
+                            this.UpdatePostView(post.PostID, post.PostView + 1);
+                            MemberScan ms = this.GetMemberScan(postid, memberid);
+                            if (ms == null)
+                                this.CreateMemberScan(postid, memberid);
+                            else
+                                this.UpdateMemberScan(ms.ScanID);
+                            return post;
+                        }
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPost", ex);
+                throw;
+            }
+        }
         public List<Post> GetPostListwithPoint(Guid pointID)
         {
             string connectionString = ConfigHelper.GetConnectionString();
@@ -840,5 +877,106 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        //----------------Scans-------------------
+
+        public void CreateMemberScan (Guid postid, Guid memberid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    INSERT INTO MemberScans
+                    (MemberID, PostID, ScanDate)
+                    VALUES
+                    (@memberID, @postID, @scandate)
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        DateTime time = DateTime.Now;
+                        connection.Open();
+                        command.Parameters.AddWithValue(@"memberID", memberid);
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.Parameters.AddWithValue(@"scandate", time);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.CreateMemberScan", ex);
+                throw;
+            }
+        }
+        public MemberScan GetMemberScan(Guid postid, Guid memberid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT *
+                    FROM MemberScans
+                    WHERE PostID = @postID AND MemberID = @memberid
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue(@"memberID", memberid);
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            MemberScan ms = new MemberScan()
+                            {
+                                ScanID = (int)reader["ScanID"],
+
+                            };
+                            return ms;
+                        }
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetMemberScan", ex);
+                throw;
+            }
+        }
+        public void UpdateMemberScan(int scanid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  UPDATE MemberScans
+                    SET 
+                        ScanDate = @scandate
+                    WHERE ScanID = @scanID ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        DateTime time = DateTime.Now;
+                        connection.Open();
+
+                        command.Parameters.AddWithValue(@"scanID", scanid);
+                        command.Parameters.AddWithValue(@"scandate", time);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.UpdateMemberScan", ex);
+                throw;
+            }
+        }
+
     }
 }
