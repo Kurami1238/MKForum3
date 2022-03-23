@@ -105,19 +105,24 @@ namespace MKForum
                 }
             }
             #endregion
+
+
+
+
+
             int intcurrentCboard;
             DataTable BlckMbrDT;
             #region//顯示黑名單的功能
             //如果當前在子板塊內，且為該子版版主，則顯示黑名單
             if (currentCboard != null || memberStatus != 1)
             {
-                if (this._MMmgr.IsCurrentModerator(currentCboard) || memberStatus == 3)
-                {
-                    this.plhBlk.Visible = true;
-                    BlckMbrDT = _blkmgr.getBlacked(currentCboard);
-                    this.RptrBlk.DataSource = BlckMbrDT;
-                    this.RptrBlk.DataBind();
-                }
+                //if (/*this._MMmgr.IsCurrentModerator(currentCboard) ||*/ memberStatus == 3)
+                //{
+                //    this.plhBlk.Visible = true;
+                //    BlckMbrDT = _blkmgr.getBlacked(currentCboard);
+                //    this.RptrBlk.DataSource = BlckMbrDT;
+                //    this.RptrBlk.DataBind();
+                //}
             }
             else
             { }
@@ -155,6 +160,13 @@ namespace MKForum
             }
             #endregion
         }
+        protected void btnwebLogin_Click(object sender, EventArgs e)
+        {
+            this.plhLogin.Visible = true;
+            this.plhLogined.Visible = false;
+        }
+
+
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             string account = this.txtAccount.Text.Trim();
@@ -317,6 +329,61 @@ namespace MKForum
 
 
 
+        //儲存板主
+        protected void btnMMSave_Click(object sender, EventArgs e)
+        {
+            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+            string inpModerator = this.txtBlkAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
 
+            if (inpModerator == "")
+            {
+                string msg = "請輸入新增的版主帳號";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+
+            string outModerator = "";
+            if (!_chkInpMgr.IsNumAndEG(inpModerator, out outModerator))
+            {
+                string msg = "輸入的帳號不得有英文及數字以外的字元";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+
+            }
+            if (!_blkmgr.HasMember(outModerator))
+            {
+                string msg = "輸入的帳號不存在";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+
+
+            if (this._blkmgr.IsCurrentModerator(currentCboard, outModerator) == true || this._pBrdMgr.CheckMemberStatus(outModerator) == 3)
+            {
+                string msg = $"輸入帳號為管理員，或已經是該板板主。";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+
+            }
+            //如果已經在黑名單表，不能被提升為板主
+            if (_blkmgr.IsBlacked(outModerator, currentCboard))
+            {
+                string msg = $"黑名單中的帳號不能被提升為板主，請先解除黑名單。";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+            else
+            {
+                this._MMmgr.AddModeratorsList(outModerator, currentCboard);
+                string msg = $"已加入{outModerator}至版主。";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+
+            }
+        }
+        protected void btnMMDelete_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
