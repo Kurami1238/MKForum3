@@ -170,11 +170,9 @@ namespace MKForum
         {
             string postidText = this.Request.QueryString["PostID"];
             Guid postid = Guid.Empty;
-            if (!Guid.TryParse(postidText, out postid))
+            if (Guid.TryParse(postidText, out postid))
             {
                 this._pmgr.DeletePost(postid);
-                // JS Alert 提示刪除成功
-                Response.Write("<script language='javascipt'>alert('刪除成功')</script>");
                 this.BackToListPage();
             }
         }

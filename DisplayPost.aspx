@@ -17,7 +17,7 @@
                 <asp:Label ID="lblFloor" runat="server" Text="樓層數"></asp:Label>
             </div>
             <div class="Postbtn">
-                <asp:Label ID="lblMemberFollow_FollowStatus" runat="server"></asp:Label>
+                <asp:Label CssClass="btnl" ID="lblMemberFollow_FollowStatus" runat="server"></asp:Label>
                 <div>
                     <asp:Button class="btn" ID="btnMemberFollow_FollowStatus" runat="server" Text="追蹤" OnClick="btnMemberFollow_FollowStatus_Click" />
                 </div>

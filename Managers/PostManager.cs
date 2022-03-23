@@ -67,9 +67,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                     INSERT INTO Posts
-                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor)
+                    (PostID, MemberID, PointID, CboardID, PostView, Title, PostCotent, Floor, LastEditTime, PostDate)
                     VALUES
-                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor)
+                    (@postID, @memberID, @pointID, @cboardID, @postView, @title, @postCotent, @floor, @lastedittime, @postdate)
                     ";
             try
             {
@@ -78,6 +78,7 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
                         post.PostID = Guid.NewGuid();
+                        DateTime time = DateTime.Now;
                         connection.Open();
                         command.Parameters.AddWithValue(@"postID", post.PostID);
                         command.Parameters.AddWithValue(@"memberID", member);
@@ -87,6 +88,10 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", pointpost.Title);
                         command.Parameters.AddWithValue(@"postCotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"floor", floor);
+                        command.Parameters.AddWithValue(@"postdate", time);
+                        command.Parameters.AddWithValue(@"lastedittime", time);
+
+
                         command.ExecuteNonQuery();
                         postid = post.PostID;
                     }
@@ -696,7 +701,7 @@ namespace MKForum.Managers
             string commandText =
                 $@"
                     SELECT * 
-                    FROM MemberBlacks
+                    FROM MemberModerators
                     WHERE CboardID = @cboardid
                 ";
             try

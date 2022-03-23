@@ -188,11 +188,14 @@ namespace MKForum
         private void CheckCanCreatePost()
         {
             List<MemberBlack> blist = this._pmgr.GetCboardBlackList(this._cboardid);
-            var blistAcc = blist.Select(x => x.Account);
-            foreach (var x in blistAcc)
+            if (blist.Count > 0 && this._member != null)
             {
-                if (string.Compare(x,this._member.Account)== 0)
-                    this.btnCreatePostB.Visible = false;
+                var blistAcc = blist.Select(x => x.Account);
+                foreach (var x in blistAcc)
+                {
+                    if (string.Compare(x, this._member.Account) == 0)
+                        this.btnCreatePostB.Visible = false;
+                }
             }
         }
     }
