@@ -20,34 +20,52 @@ namespace MKForum
         protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
-            if (this._amgr.IsLogined())
-            {
-                Member account = this._amgr.GetCurrentUser();
-                _member = account;
-            }
+            this.CheckLogin();
             // 從QS取得 子版ID 先測試 假設有cboardid
-            string cboardsText = this.Request.QueryString["Cboard"];
-            int cboard = (string.IsNullOrWhiteSpace(cboardsText))
-                            ? 2 : Convert.ToInt32(cboardsText);
-            Cboard cboardd = CboardManager.GetCboard(cboard);
-            this.ltlCbn.Text = cboardd.Cname;
-            //this.hfcbid.Value = cboard.ToString();
-
-            this.hftest.Value = cboard.ToString();
+            int cboard = this.GetCboardID();
             // 假如有文章類型 則取值，沒有則固定為0
-            string stamp = this.Request.QueryString["Sort"];
-            if (!string.IsNullOrWhiteSpace(stamp))
-                this.sortid.Value = stamp;
-            else
-                this.sortid.Value = "0";
+            this.CheckSort();
+            // 展示文章列表
             this.DisplayPost(cboard);
-            _cboardid = cboard;
+            // 若被ban則看不到小按鈕
+            this.CheckCanCreatePost();
 
         }
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
+
+        private void CheckSort()
+        {
+            string stamp = this.Request.QueryString["Sort"];
+            if (!string.IsNullOrWhiteSpace(stamp))
+                this.sortid.Value = stamp;
+            else
+                this.sortid.Value = "0";
+        }
+
+        private int GetCboardID()
+        {
+            string cboardsText = this.Request.QueryString["Cboard"];
+            int cboard = (string.IsNullOrWhiteSpace(cboardsText))
+                            ? 2 : Convert.ToInt32(cboardsText);
+            Cboard cboardd = CboardManager.GetCboard(cboard);
+            _cboardid = cboard;
+            this.ltlCbn.Text = cboardd.Cname;
+            this.hftest.Value = cboard.ToString();
+            return cboard;
+        }
+
+        private void CheckLogin()
+        {
+            if (this._amgr.IsLogined())
+            {
+                Member account = this._amgr.GetCurrentUser();
+                _member = account;
+            }
+        }
+
         private void DisplayPost(int cboard)
         {
             List<Post> postList = new List<Post>();
@@ -131,8 +149,13 @@ namespace MKForum
 
         protected void btnCreatePost_Click(object sender, EventArgs e)
         {
-            HttpContext.Current.Session["CboardID"] = _cboardid;
-            Response.Redirect("CreatePost.aspx", true);
+            if (this._member != null)
+            {
+                HttpContext.Current.Session["CboardID"] = _cboardid;
+                Response.Redirect("CreatePost.aspx", true);
+            }
+            else
+                Response.Redirect("Login.aspx", true);
         }
 
         protected void rptcBtoP_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -160,6 +183,16 @@ namespace MKForum
                     string sortid = e.CommandArgument.ToString();
                     Response.Redirect($"CbtoPost.aspx?Cboard={cboardid}&Sort={sortid}", true);
                     break;
+            }
+        }
+        private void CheckCanCreatePost()
+        {
+            List<MemberBlack> blist = this._pmgr.GetCboardBlackList(this._cboardid);
+            var blistAcc = blist.Select(x => x.Account);
+            foreach (var x in blistAcc)
+            {
+                if (x == this._member.Account)
+                    this.btnCreatePostB.Visible = false;
             }
         }
     }

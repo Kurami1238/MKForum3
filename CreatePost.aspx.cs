@@ -134,5 +134,16 @@ namespace MKForum
                     this._pmgr.CreatePostImageList(_member.MemberID, imgpath);
             }
         }
+
+        protected void btnback_Click(object sender, EventArgs e)
+        {
+            this.BackToListPage();
+        }
+        private void BackToListPage()
+        {
+            // 從Session取得當前子板塊ID
+            int cboardid = (int)HttpContext.Current.Session["CboardID"];
+                Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
+        }
     }
 }

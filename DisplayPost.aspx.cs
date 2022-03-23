@@ -22,31 +22,67 @@ namespace MKForum
         protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
-            if (this._amgr.IsLogined())
-            {
-                Member account = this._amgr.GetCurrentUser();
-                _member = account;
-            }
+            this.CheckLogin();
             // 從QS取得文章id 不能就回子版
+            Guid postid = this.GetPostID();
+            // 取得文章資訊 順便驗證是否有追蹤
+            this.GetPost(postid);
+            // 判斷是不是遊客及是否為作者and版主就全開放
+            this.CheckDare();
+
+            //string memberid = string.Empty;
+            //memberid = HttpContext.Current.Session["MemberID"].ToString();
+            //if (!string.IsNullOrEmpty(memberid))
+            //    phl.Visible = (string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"].ToString()) == 0);
+            //else
+            //    phl.Visible = false;
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckDare()
+        {
+            if (Session["MemberID"] == null)
+                phl.Visible = false;
+            else
+            {
+                phl.Visible = (string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"].ToString()) == 0);
+            }
+        }
+
+        private void GetPost(Guid postid)
+        {
+            Post post = this._pmgr.GetPost(postid);
+            if (post == null)
+                this.BackToListPage();
+            this.DisplayPost(post);
+            if (this._member != null)
+                if (this._member.MemberID != null)
+                    this.MemberFollowFirst(this._member.MemberID, postid);
+        }
+
+        private Guid GetPostID()
+        {
             string postidText = this.Request.QueryString["PostID"];
             if (string.IsNullOrWhiteSpace(postidText))
                 this.BackToListPage();
             Guid postid;
             if (!Guid.TryParse(postidText, out postid))
                 this.BackToListPage();
-            // 取得文章資訊
-            Post post = this._pmgr.GetPost(postid);
-            if (post == null)
-                this.BackToListPage();
-            this.DisplayPost(post);
-            if (this._member.MemberID != null)
-                this.MemberFollowFirst(this._member.MemberID, postid);
+            return postid;
         }
 
-        protected void Page_Load(object sender, EventArgs e)
+        private void CheckLogin()
         {
-
+            if (this._amgr.IsLogined())
+            {
+                Member account = this._amgr.GetCurrentUser();
+                _member = account;
+            }
         }
+
         private void DisplayPost(Post post)
         {
             this.lblTitle.Text = post.Title;
@@ -86,6 +122,25 @@ namespace MKForum
             this.rptNmP.DataBind();
 
         }
+        private void BackToListPage()
+        {
+            // 從QS取得當前子板塊ID
+            string CboardidText = this.Request.QueryString["CboardID"];
+            int cboardid;
+            if (int.TryParse(CboardidText, out cboardid))
+                Response.Redirect($"CbtoPost.aspx?CboardID={CboardidText}", true);
+        }
+        private void MemberFollowFirst(Guid memberID, Guid postID)
+        {
+            if (_mfmsg.GetMemberFollowThisPost(memberID, postID) != null)
+                if (_mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
+                    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+                else
+                    this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+            else
+                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+        }
+
         protected void btnEditPost_Click(object sender, EventArgs e)
         {
             string postidText = this.Request.QueryString["PostID"];
@@ -111,14 +166,6 @@ namespace MKForum
                 Response.Write("<script language='javascipt'>alert('刪除成功')</script>");
                 this.BackToListPage();
             }
-        }
-        private void BackToListPage()
-        {
-            // 從QS取得當前子板塊ID
-            string CboardidText = this.Request.QueryString["CboardID"];
-            int cboardid;
-            if (int.TryParse(CboardidText, out cboardid))
-                Response.Redirect($"CbtoPost.aspx?CboardID={CboardidText}", true);
         }
         protected void btnCNNmPost_Click(object sender, EventArgs e)
         {
@@ -169,16 +216,7 @@ namespace MKForum
                     break;
             }
         }
-        private void MemberFollowFirst(Guid memberID, Guid postID)
-        {
-            if (_mfmsg.GetMemberFollowThisPost(memberID, postID) != null)
-                if (_mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
-                    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
-                else
-                    this.lblMemberFollow_FollowStatus.Text = "未追蹤";
-            else
-                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
-        }
+       
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
             //從QS取得文章id 不能就回子版

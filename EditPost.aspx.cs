@@ -59,7 +59,9 @@ namespace MKForum
         }
         private void DisplayPost(Post post)
         {
-            int sort = (int)post.SortID;
+            int sort = 0;
+            if (post.SortID != null)
+            sort = (int)post.SortID;
             this.txtTitle.Text = post.Title;
             this.txtPostCotent.Text = post.PostCotent;
             // 讀取Post裡的sortID  沒辦法塞回DropDownList

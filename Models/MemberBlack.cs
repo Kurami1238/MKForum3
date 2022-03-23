@@ -7,8 +7,8 @@ namespace MKForum.Models
 {
     public class MemberBlack
     {
-        public Guid MemberID { get; set; }
-        public Guid CboardID { get; set; }
+        public string Account { get; set; }
+        public int CboardID { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime ReleaseDate { get; set; }
     }

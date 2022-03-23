@@ -95,49 +95,51 @@ namespace MKForum.Managers
         /// </summary>
         /// <param name="cboardid">session當前子板塊</param>
         /// <returns></returns>
-        public List<MemberBlack> getBlackedList(int cboardid)
-        {
-            List<MemberBlack> DisplayBlcked = new List<MemberBlack>();
+        //public List<MemberBlack> getBlackedList(int cboardid)
+        //{
+        //    List<MemberBlack> DisplayBlcked = new List<MemberBlack>();
 
-            //更新 取得當前子板塊尚未解除懲處的名單 (SQL已測試OK)
-            string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
-            string commandText = $@"
-                SELECT [MemberID], [ReleaseDate]
-                FROM [MKForum].[dbo].[MemberBlacks]
-                WHERE CboardID= '@currountCB' AND getdate() < [ReleaseDate];";
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connStr))
-                {
-                    using (SqlCommand command = new SqlCommand(commandText, conn))
-                    {
-                        command.Parameters.AddWithValue("@currountCB", cboardid);
+        //    //更新 取得當前子板塊尚未解除懲處的名單 (SQL已測試OK)
+        //    string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
+        //    string commandText = $@"
+        //        SELECT [MemberID], [ReleaseDate]
+        //        FROM [MKForum].[dbo].[MemberBlacks]
+        //        WHERE CboardID= '@currountCB' AND getdate() < [ReleaseDate];";
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connStr))
+        //        {
+        //            using (SqlCommand command = new SqlCommand(commandText, conn))
+        //            {
+        //                command.Parameters.AddWithValue("@currountCB", cboardid);
 
-                        conn.Open();
-                        SqlDataReader reader = command.ExecuteReader();
+        //                conn.Open();
+        //                SqlDataReader reader = command.ExecuteReader();
 
-                        //把取得的資料放進陣列
-                        while (reader.Read())
-                        {
-                            MemberBlack BlackedData = new MemberBlack()
-                            {
-                                MemberID = (Guid)reader["MemberID"],
-                                ReleaseDate = (DateTime)reader["ReleaseDate"]
-                            };
-                            DisplayBlcked.Add(BlackedData);
+        //                //把取得的資料放進陣列
+        //                while (reader.Read())
+        //                {
+        //                    MemberBlack BlackedData = new MemberBlack()
+        //                    {
+        //                        MemberID = (Guid)reader["MemberID"],
+        //                        ReleaseDate = (DateTime)reader["ReleaseDate"]
+        //                    };
+        //                    DisplayBlcked.Add(BlackedData);
 
-                        }
-                        return DisplayBlcked;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog("BlackManager.getBlackedList", ex);
-                throw;
-            }
+        //                }
+        //                return DisplayBlcked;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.WriteLog("BlackManager.getBlackedList", ex);
+        //        throw;
+        //    }
 
-        }
+        //}
+
+
 
     }
 }

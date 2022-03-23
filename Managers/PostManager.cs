@@ -652,6 +652,44 @@ namespace MKForum.Managers
             // 比對標題及內文與禁字表是否有重疊
             return true;
         }
+        public List<MemberBlack> GetCboardBlackList(int cboardid)
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@"
+                    SELECT * 
+                    FROM MemberBlacks
+                    WHERE ReleaseDate > GETDATE() AND CboardID = @cboardid
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<MemberBlack> blackList = new List<MemberBlack>();
+                        connection.Open();
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            MemberBlack bl = new MemberBlack()
+                            {
+                                Account = (string)reader["Account"],
+                            };
+                            blackList.Add(bl);
+                        }
+                        return blackList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetCboardBlackList", ex);
+                throw;
+            }
+        }
 
         //----------------Htag--------------------
         public void CreateHashtag(Guid postid,string htag)
