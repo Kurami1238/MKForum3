@@ -171,8 +171,11 @@ namespace MKForum
         }
         private void MemberFollowFirst(Guid memberID, Guid postID)
         {
-            if (_mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
-                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            if (_mfmsg.GetMemberFollowThisPost(memberID, postID) != null)
+                if (_mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
+                    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+                else
+                    this.lblMemberFollow_FollowStatus.Text = "未追蹤";
             else
                 this.lblMemberFollow_FollowStatus.Text = "未追蹤";
         }
