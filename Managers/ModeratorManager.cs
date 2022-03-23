@@ -74,7 +74,7 @@ namespace MKForum.Managers
         /// </summary>
         /// <param name="strModeratorAcc">由版主輸入的會員資料</param>
         /// <param name="cboardid">當前子板塊</param>
-        public void AddModeratorsList(string strModeratorAcc, int cboardid)
+        public void AddModeratorsList(string strModeratorAcc, string cboardid)
         {
 
             //寫入 當前板塊 會員ID  (SQL已測試OK)
