@@ -182,20 +182,20 @@ namespace MKForum
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
             //從QS取得文章id 不能就回子版
-            string postidText = this.Request.QueryString["PostID"];
-            Guid postid;
-            if (!Guid.TryParse(postidText, out postid))
-                this.BackToListPage();
-            if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
-            {
-                this._mfmsg.Updatetrack(this._member.MemberID, postid, 0);
-                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
-            }
-            else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
-            {
-                this._mfmsg.Updatetrack(this._member.MemberID, postid, 1);
-                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
-            }
+            //string postidText = this.Request.QueryString["PostID"];
+            //Guid postid;
+            //if (!Guid.TryParse(postidText, out postid))
+            //    this.BackToListPage();
+            //if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
+            //{
+            //    this._mfmsg.Updatetrack(this._member.MemberID, postid, 0);
+            //    this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+            //}
+            //else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
+            //{
+            //    this._mfmsg.Updatetrack(this._member.MemberID, postid, 1);
+            //    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            //}
 
         }
 
