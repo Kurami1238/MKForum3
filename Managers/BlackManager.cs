@@ -258,32 +258,39 @@ namespace MKForum.Managers
         /// </summary>
         /// <param name="cboardid">session當前子板塊</param>
         /// <returns></returns>
-        public DataTable getBlacked(string currentCboard)
+        public List<MemberBlack> getBlackedList(int cboardid)
         {
-            string connStr = ConfigHelper.GetConnectionString();
+            List<MemberBlack> DisplayBlcked = new List<MemberBlack>();
+
+            //更新 取得當前子板塊尚未解除懲處的名單 (SQL已測試OK)
+            string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
             string commandText = $@"
-                SELECT  [ReleaseDate],[Account]
+                SELECT [MemberID], [ReleaseDate]
                 FROM [MKForum].[dbo].[MemberBlacks]
-                WHERE CboardID= @currontCB AND getdate() < [ReleaseDate];";
+                WHERE CboardID= '@currountCB' AND getdate() < [ReleaseDate];";
             try
             {
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     using (SqlCommand command = new SqlCommand(commandText, conn))
                     {
+                        command.Parameters.AddWithValue("@currountCB", cboardid);
 
                         conn.Open();
-                        command.Parameters.AddWithValue("@currontCB", currentCboard);
-                        command.ExecuteNonQuery();
-
                         SqlDataReader reader = command.ExecuteReader();
 
-                        DataTable dt = new DataTable();
+                        //把取得的資料放進陣列
+                        while (reader.Read())
+                        {
+                            MemberBlack BlackedData = new MemberBlack()
+                            {
+                                MemberID = (Guid)reader["MemberID"],
+                                ReleaseDate = (DateTime)reader["ReleaseDate"]
+                            };
+                            DisplayBlcked.Add(BlackedData);
 
-                        dt.Load(reader);
-
-                        return dt;
-
+                        }
+                        return DisplayBlcked;
                     }
                 }
             }
@@ -293,7 +300,6 @@ namespace MKForum.Managers
                 throw;
             }
 
-        }
 
 
 
