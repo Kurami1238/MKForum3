@@ -917,7 +917,8 @@ namespace MKForum.Managers
                 @"
                     SELECT *
                     FROM MemberScans
-                    WHERE PostID = @postID AND MemberID = @memberid
+                    WHERE PostID = @postID AND MemberID = @memberid 
+                            AND DATEADD(day,1,ScanDate) > GETDATE()
                 ";
             try
             {
