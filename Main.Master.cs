@@ -31,20 +31,15 @@ namespace MKForum
         private ParentBoardManager _pBrdMgr = new ParentBoardManager(); //母版塊
         private AccountManager _amgr = new AccountManager();            //帳號
         private LoginHelper _lgihp = new LoginHelper();
-        private AccountManager _Amgr = new AccountManager();
+        private BlackManager _blkmgr = new BlackManager();              //黑名單
+        private ModeratorManager _MMmgr = new ModeratorManager();      //版主
         private MemberManager _mmgr = new MemberManager();
-        
 
-        //未做:
-        //HomePage.aspx
-        //顯示母列表 (!=IsPostBack)
-        //顯示個人資料 (!=IsPostBack)
-        //如果網址列為子板塊，則依會員權限 顯示黑名單 (!=IsPostBack)
-        //如果網址列為子板塊，則依會員權限 顯示板主名單 (!=IsPostBack)
+        private int memberStatus = 0;//預設會員等級為0
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-#if(DEBUG)
+#if (DEBUG)
             this.ckbskip.Visible = true;
 #endif
 
@@ -77,17 +72,8 @@ namespace MKForum
                     this.lblMember_MemberStatus.Text = "管理員";
 
 
+            }
 
-                int memberStatus = 1;//用來測試不同身分別的
-                #region//搜尋區
-
-                string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
-                string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
-
-        private int memberStatus = 3;//用來測試不同身分別的
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
             string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
 
             #region//母版塊區的功能
@@ -155,7 +141,6 @@ namespace MKForum
             #endregion
 
         }
-
         protected void Page_Prerender(object sender, EventArgs e)
         {
             //string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前PboardID
@@ -168,19 +153,21 @@ namespace MKForum
             if (currentPboard != null || currentCboard != null)
             {
                 this.srchDrop.Items[1].Attributes.Remove("disabled");
-
+            }
+            #endregion
+        }
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             string account = this.txtAccount.Text.Trim();
             string pwd = this.txtPassword.Text.Trim();
             if (this.ckbskip.Checked)
             {
-                if (this._Amgr.TryLogin("a123234", "12345678"))
+                if (this._amgr.TryLogin("a123234", "12345678"))
                 {
                     Response.Redirect(Request.RawUrl);
                 }
             }
-            else if (this._Amgr.TryLogin(account, pwd))
+            else if (this._amgr.TryLogin(account, pwd))
             {
                 Response.Redirect(Request.RawUrl);
             }
@@ -190,11 +177,12 @@ namespace MKForum
             }
         }
 
+
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             _lgihp.Logout();
             Response.Redirect(Request.RawUrl);
-            
+
         }
 
         //搜尋按鈕( 負責組成URL並導向搜尋頁面 )
@@ -299,7 +287,7 @@ namespace MKForum
 
             string outDate = dtDate.ToString("yyyy-MM-dd");
 
-            if (this._blkmgr.IsCurrentModerator(currentCboard, inpAccount)==true || this._pBrdMgr.CheckMemberStatus(inpAccount) == 3)
+            if (this._blkmgr.IsCurrentModerator(currentCboard, inpAccount) == true || this._pBrdMgr.CheckMemberStatus(inpAccount) == 3)
             {
                 string msg = $"輸入帳號不能為該板板主或管理員。";
                 Response.Write($"<script>alert('{msg}')</script>");
@@ -312,7 +300,7 @@ namespace MKForum
                 if (_blkmgr.IsBlacked(inpAccount, currentCboard))
                 {
                     this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);      //無效
-                    string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";    
+                    string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";
                     Response.Write($"<script>alert('{msg}')</script>");
                     return;
                 }
