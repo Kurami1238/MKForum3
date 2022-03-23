@@ -102,7 +102,11 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\CboardsPage.css" />
+    <Content Include="css\CreatePost.css" />
     <Content Include="css\Display.css" />
+    <Content Include="css\EditPost.css" />
+    <Content Include="css\github-markdown-dark.css" />
+    <Content Include="css\github-markdown.css" />
     <Content Include="css\index.css" />
     <Content Include="css\PboardtoCboard.css" />
     <Content Include="css\pen.png" />
@@ -114,6 +118,8 @@
     <Content Include="Index.aspx" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\showdown.js" />
     <Content Include="Login.aspx" />
     <Content Include="MemberFollowList.aspx" />
     <Content Include="MemberList.aspx" />
@@ -121,6 +127,8 @@
     <Content Include="PboardtoCboard.aspx" />
     <Content Include="Ranking.aspx" />
     <Content Include="Register.aspx" />
+    <Content Include="Scripts\showdown.js" />
+    <Content Include="Scripts\showdown.min.js" />
     <Content Include="SearchPage.aspx" />
     <Content Include="ShareControls\Mugen.ascx" />
     <Content Include="Web.config" />
@@ -184,6 +192,7 @@
     </Compile>
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="HomePage.aspx.cs">
       <DependentUpon>HomePage.aspx</DependentUpon>

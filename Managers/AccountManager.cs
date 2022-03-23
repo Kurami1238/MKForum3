@@ -259,7 +259,8 @@ namespace MKForum.Managers
         }
 
 
-        
+        private LoginHelper _lgihp = new LoginHelper();
+
         public bool TryLogin(string account, string password)
         {
             bool isAccountRight = false;
@@ -287,19 +288,23 @@ namespace MKForum.Managers
                 member.Password = null;
                 HttpContext.Current.Session["Member"] = member;
                 HttpContext.Current.Session["MemberID"] = member.MemberID;
+                _lgihp.Login(member.Account, member.MemberID.ToString());
 
             }
             return result;
-        }
-        public bool IsLogined()
-        {
-            Member account = GetCurrentUser();
-            return (account != null);
         }
         public Member GetCurrentUser()
         {
             Member account = HttpContext.Current.Session["Member"] as Member;
             return account;
         }
+
+        public bool IsLogined()
+        {
+            Member account = GetCurrentUser();
+            bool dentitylogined = _lgihp.dentityLogined();
+            return (account != null && dentitylogined);
+        }
+
     }
 }

@@ -29,16 +29,16 @@ namespace MKForum
             if (this._member != HttpContext.Current.Session["EditPostMember"])
                 this.BackToListPage();
             // 從Session取得當前子板塊ID
-            string cboard = this.Request.QueryString["Cboard"];
+            string cboard = this.Request.QueryString["CboardID"];
             int cboardid = 0;
             int.TryParse(cboard, out cboardid);
             List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
             // 繫結PostStamp
 
-            this.ddlPostStamp.DataSource = psList;
-            this.ddlPostStamp.DataTextField = "PostSort";
-            this.ddlPostStamp.DataValueField = "SortID";
-            this.ddlPostStamp.DataBind();
+            this.dpdlPostStamp.DataSource = psList;
+            this.dpdlPostStamp.DataTextField = "PostSort";
+            this.dpdlPostStamp.DataValueField = "SortID";
+            this.dpdlPostStamp.DataBind();
 
             // 取得文章資訊
             Guid postid;

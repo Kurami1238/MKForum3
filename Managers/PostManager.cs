@@ -340,6 +340,73 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        public List<Post> GetPostList(int cboardid, int pageSize, int pageIndex, int sortid, out int totalRows)
+        {
+            int skip = pageSize * (pageIndex - 1); // 計算跳頁數
+            if (skip < 0)
+                skip = 0;
+            string whereCondition = "AND CboardID = @cboardID AND SortID = @sortID";
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@"
+                    SELECT TOP {pageSize} * 
+                    FROM Posts
+                    WHERE 
+                        PointID IS NULL AND 
+                        PostID NOT IN 
+                            ( 
+                            SELECT TOP {skip} PostID
+                            FROM Posts
+                            WHERE PointID IS NULL
+                            ORDER BY LastEditTime DESC
+                            )
+                        {whereCondition}
+                        ORDER BY LastEditTime DESC
+                ";
+            string commandCountText =
+                $@"  SELECT COUNT(PostID)
+                    FROM Posts
+                    WHERE PointID IS NULL 
+                    {whereCondition}";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<Post> postList = new List<Post>();
+                        connection.Open();
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        command.Parameters.AddWithValue("@sortID", sortid);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Post po = this.BuildPostContent(reader);
+                            postList.Add(po);
+                        }
+                        reader.Close();
+
+                        // 取得總筆數
+                        // 因為使用同一個command，不同的查詢，必須使用不同的參數集合
+                        command.Parameters.Clear();
+                        command.CommandText = commandCountText;
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        command.Parameters.AddWithValue("@sortID", sortid);
+
+                        totalRows = (int)command.ExecuteScalar();
+                        // command.ExecuteScalar 只會回傳一個資料 為Object
+                        return postList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPostList", ex);
+                throw;
+            }
+        }
+
         public List<Post> GetPostListmoto(int cboardid)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
@@ -394,6 +461,7 @@ namespace MKForum.Managers
                         if (reader.Read())
                         {
                             Post post = this.BuildPostContent(reader);
+                            this.UpdatePostView(post.PostID, post.PostView + 1);
                             return post;
                         }
                         return null;
@@ -459,7 +527,34 @@ namespace MKForum.Managers
                 SortID = reader["SortID"] as int?            
             };
         }
+        public void UpdatePostView(Guid postid,int postview)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  UPDATE Posts
+                    SET 
+                        PostView = @postview
+                    WHERE PostID = @postid ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
 
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.Parameters.AddWithValue(@"postview", postview);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.UpdatePostView", ex);
+                throw;
+            }
+        }
         public void UpdatePost(Post post)
         {
             string connectionString = ConfigHelper.GetConnectionString();

@@ -1,0 +1,70 @@
+@font-face{
+    font-family:'moubi';
+    src:url('Brush.woff') format("woff"),
+        url('Brush.ttf') format("truetype");
+}
+hr{
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #333, #ccc, #333);
+}
+a{
+    text-decoration:none;
+}
+a:link{
+    background-color:#ffffff;
+    text-decoration:none;
+
+    }
+a:visited {
+    color:#ffffff;
+    background-color:red;
+    }
+a:active {
+    text-decoration:none;
+    background-color:gray;
+    color:#fafafa;
+    }
+.zenbu{
+    padding: 10px;
+    margin: 5px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+    border-bottom: 1px double #e76c25;
+    box-shadow: 2px 2px 4px #e76c25;text-align: left;
+    font-size: 22px;
+    color: #fafafaea;
+}
+        .zenbu td{
+            width: 50%;
+        }
+        .zenbu td input{
+            width: 80%;
+        }
+        .zenbu td .button{
+            width: 40%;
+        }
+input{
+    color: #fafafaea;
+    font-family:'moubi';
+    font-size: 22px;
+    text-shadow: 2px 2px 2px #270c0c;
+    cursor:pointer;
+    border-radius:10px;
+    width: 20%;
+}
+        .zenbu select{
+          color: #fafafaea;
+          border-radius:10px;
+        }
+        .zenbu input{
+            width: 40%;
+            color: #fafafaea;
+        }
+        .zenbu .T{
+            width: 80%;
+        }
+        .zenbu #txtPostCotent{
+            color: #fafafaea;
+        }

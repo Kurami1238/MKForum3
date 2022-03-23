@@ -50,7 +50,7 @@ namespace MKForum
         protected void btnSend_Click(object sender, EventArgs e)
         {
             string TitleText = this.txtTitle.Text.Trim();
-            string PostCotentText = this.txtPostCotent.Text.Trim();
+            string PostCotentText = this.content.Value.Trim();
             // 從Session取得當前子板塊ID
             int cboardid = (int)HttpContext.Current.Session["CboardID"];
             //檢查必填欄位及關鍵字

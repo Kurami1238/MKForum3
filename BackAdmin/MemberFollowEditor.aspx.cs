@@ -11,11 +11,15 @@ namespace MKForum.BackAdmin
     public partial class MemberFollowEditor : System.Web.UI.Page
     {
         private MemberFollowManager _mfmsg = new MemberFollowManager();
-        private string memberID = "c8142d85-68c2-4483-ab51-e7d3fc366b89";
-        private string postID = "b1234463-5433-487f-8a75-a54abaa4017e";
+        private Guid memberID = (Guid)HttpContext.Current.Session["MemberID"];
+
+        //private string memberID = "52524a17-45ab-4c49-8f0a-3a66d4a72e48";
+        //private string postID = "3e9d0f09-0634-4bab-bfce-bb104084c3c6";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Guid postID = Guid.Parse(Request.QueryString["postID"]);
+
             if (_mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
                 this.lblMemberFollow_FollowStatus.Text = "追蹤中";
             else
@@ -24,7 +28,9 @@ namespace MKForum.BackAdmin
 
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
-            
+            Guid postID = Guid.Parse(Request.QueryString["postID"]);
+
+
             if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
             {
                 _mfmsg.Updatetrack(memberID, postID, 0);

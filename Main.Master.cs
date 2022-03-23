@@ -1,10 +1,12 @@
-﻿using MKForum.Managers;
+﻿using MKForum.Helpers;
+using MKForum.Managers;
 using MKForum.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -28,11 +30,59 @@ namespace MKForum
         private CheckInputManager _chkInpMgr = new CheckInputManager(); //確認輸入值
         private ParentBoardManager _pBrdMgr = new ParentBoardManager(); //母版塊
         private AccountManager _amgr = new AccountManager();            //帳號
-        private BlackManager _blkmgr = new BlackManager();              //黑名單
-        private ModeratorManager _MMmgr = new ModeratorManager();      //版主
+        private LoginHelper _lgihp = new LoginHelper();
+        private AccountManager _Amgr = new AccountManager();
+        private MemberManager _mmgr = new MemberManager();
+        
+
+        //未做:
+        //HomePage.aspx
+        //顯示母列表 (!=IsPostBack)
+        //顯示個人資料 (!=IsPostBack)
+        //如果網址列為子板塊，則依會員權限 顯示黑名單 (!=IsPostBack)
+        //如果網址列為子板塊，則依會員權限 顯示板主名單 (!=IsPostBack)
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+#if(DEBUG)
+            this.ckbskip.Visible = true;
+#endif
+
+
+            if (!_amgr.IsLogined())
+            {
+                this.plhLogin.Visible = false;
+                this.plhLogined.Visible = true;
+                this.plgMemberStatus.Visible = false;
+            }
+
+            else if (_amgr.IsLogined())
+            {
+                this.btnwebLogin.Visible = false;
+                this.plhLogin.Visible = false;
+                this.plhLogined.Visible = true;
+                Member account = _amgr.GetCurrentUser();
+                string memberID = account.MemberID.ToString();
+                Member memberInfo = _mmgr.GetMember(memberID);
+
+                this.imgMember_PicPath.ImageUrl = memberInfo.PicPath;
+                this.lblMember_NickName.Text = memberInfo.NickName;
+                this.lblMember_Account.Text = memberInfo.Account;
+
+                if (memberInfo.MemberStatus == 1)
+                    this.lblMember_MemberStatus.Text = "一般會員";
+                else if (memberInfo.MemberStatus == 2)
+                    this.lblMember_MemberStatus.Text = "版主";
+                else if (memberInfo.MemberStatus == 3)
+                    this.lblMember_MemberStatus.Text = "管理員";
 
 
 
+                int memberStatus = 1;//用來測試不同身分別的
+                #region//搜尋區
+
+                string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
+                string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
 
         private int memberStatus = 3;//用來測試不同身分別的
 
@@ -119,9 +169,32 @@ namespace MKForum
             {
                 this.srchDrop.Items[1].Attributes.Remove("disabled");
 
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            string account = this.txtAccount.Text.Trim();
+            string pwd = this.txtPassword.Text.Trim();
+            if (this.ckbskip.Checked)
+            {
+                if (this._Amgr.TryLogin("a123234", "12345678"))
+                {
+                    Response.Redirect(Request.RawUrl);
+                }
             }
-            #endregion
+            else if (this._Amgr.TryLogin(account, pwd))
+            {
+                Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                this.ltlMessage.Text = "登錄失敗，請檢察帳號密碼。";
+            }
+        }
 
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            _lgihp.Logout();
+            Response.Redirect(Request.RawUrl);
+            
         }
 
         //搜尋按鈕( 負責組成URL並導向搜尋頁面 )

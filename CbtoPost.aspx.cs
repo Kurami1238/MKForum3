@@ -15,7 +15,7 @@ namespace MKForum
         private AccountManager _amgr = new AccountManager();
         private Member _member;
         private int _cboardid;
-        private const int _pageSize = 10;
+        private const int _pageSize = 5;
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -33,6 +33,13 @@ namespace MKForum
             this.ltlCbn.Text = cboardd.Cname;
             //this.hfcbid.Value = cboard.ToString();
 
+            this.hftest.Value = cboard.ToString();
+            // 假如有文章類型 則取值，沒有則固定為0
+            string stamp = this.Request.QueryString["Sort"];
+            if (!string.IsNullOrWhiteSpace(stamp))
+                this.sortid.Value = stamp;
+            else
+                this.sortid.Value = "0";
             this.DisplayPost(cboard);
             _cboardid = cboard;
 
@@ -49,9 +56,9 @@ namespace MKForum
             if (int.TryParse(stamp, out int sortid))
                 postList = this._pmgr.GetPostListwithStamp(sortid);
             else
-                postList = this._pmgr.GetPostList(cboard,5,1,out int totalrows);
-                //postList = this._pmgr.GetPostListmoto(cboard);
-            // 取得子版文章類型按鈕
+                postList = this._pmgr.GetPostList(cboard, _pageSize, 1, out int totalrows);
+            // 文章若長度大於二十個字，後面則隱藏
+            List<Post> seripost = PostContentSeri(postList);
             // 分離memberID，然後用memberID查出 memberAccount
             var memberListwithpoint = postList.Select(P => P.MemberID);
             List<Member> memberList = new List<Member>();
@@ -61,7 +68,6 @@ namespace MKForum
                 memberList.Add(me);
             }
             // 合併兩表連接rpt
-            // BUG 重複會員回復的話 會重複顯示回文 已解決
             var pLML = from p in postList
                        join m in memberList on p.MemberID equals m.MemberID
                        into tempPM
@@ -78,10 +84,49 @@ namespace MKForum
                            PostDate = p.PostDate,
                            CoverImage = p.CoverImage,
                        };
+            // 第二次合併把文章內容大於二十字的替換掉
+            var pLMLS = from p in pLML
+                        join s in seripost on p.PostID equals s.PostID
+                        into tempPS
+                        select new
+                        {
+                            PostID = p.PostID,
+                            MemberAccount = p.MemberAccount,
+                            PostCotent = (tempPS.FirstOrDefault() != null) ? tempPS.FirstOrDefault().PostCotent : p.PostCotent,
+                            MemberID = p.MemberID,
+                            CboardID = p.CboardID,
+                            Title = p.Title,
+                            LastEditTime = p.LastEditTime,
+                            PostDate = p.PostDate,
+                            CoverImage = p.CoverImage,
+                        };
+            this.rptcBtoP.DataSource = pLMLS;
+            this.rptcBtoP.DataBind();
+            // 取得子版文章類型按鈕
             this.rptStamp.DataSource = this._pmgr.GetPostStampList(cboard);
             this.rptStamp.DataBind();
-            this.rptcBtoP.DataSource = pLML;
-            this.rptcBtoP.DataBind();
+        }
+
+        private static List<Post> PostContentSeri(List<Post> postList)
+        {
+            var postcontent = postList.Select((x, index) => { return new { PostCotent = x.PostCotent, PostID = x.PostID }; });
+            List<Post> seripost = new List<Post>();
+            foreach (var x in postcontent)
+            {
+                char[] pccarr = x.PostCotent.ToCharArray();
+                if (pccarr.Length > 20)
+                {
+                    string newpc = string.Empty;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        newpc += pccarr[i];
+                    }
+                    newpc += "...(點擊後觀看)";
+                    seripost.Add(new Post() { PostID = x.PostID, PostCotent = newpc });
+                }
+            }
+
+            return seripost;
         }
 
         protected void btnCreatePost_Click(object sender, EventArgs e)
