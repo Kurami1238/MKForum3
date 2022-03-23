@@ -156,6 +156,11 @@ namespace MKForum
             }
             #endregion
         }
+        protected void btnwebLogin_Click(object sender, EventArgs e)
+        {
+            this.plhLogin.Visible = true;
+            this.plhLogined.Visible = false;
+        }
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             string account = this.txtAccount.Text.Trim();

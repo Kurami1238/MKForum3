@@ -12,7 +12,6 @@
         <div class="StampButton">
             <asp:Repeater ID="rptStamp" runat="server" OnItemCommand="rptStamp_ItemCommand">
                 <ItemTemplate>
-                    <asp:Button class="Sbtn" runat="server" ID="btnStamp" Text='<%# Eval("PostSort") %>' CommandName="btnStamp" CommandArgument='<%# Eval("SortID") %>' />
                 </ItemTemplate>
             </asp:Repeater>
         </div>
@@ -61,10 +60,6 @@
         });
         var pageIndex = 1;
         var pageCount;
-        //var hf = document.getElementsByName('hfcbid');
-        //var hf = document.getElementsByClassName('hfcbid');
-        //var hf = document.getElementById("hftest");
-        //var hf = document.getElementsByClassName("hftest");
         var hf = $(".hftest").val();
         var sort = $(".sortid").val();
         console.log(hf)

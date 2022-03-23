@@ -65,7 +65,7 @@
 
 
         </asp:PlaceHolder>
-        
+
 
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
             <div class="container-all">
@@ -110,24 +110,24 @@
                     </div>
                 </div>
 
-            <!-- 上區塊 -->
-            <div class="container-fluid bg-dark text-white">
-                <div class="row">
-                    <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
-                    <!-- sm為4格，md為4格，lg為4格，置中-->
-                    <div class="col-sm-4 col-md-4 col-lg-3">
-                        <a href="HomePage.html" class="d-none d-sm-block">
-                            <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                        <div action="連結到搜尋結果的.aspx" class="d-flex d-none d-sm-block">
-                            <asp:TextBox runat="server" ID="txtSearch" Text="搜尋" class="form-control"></asp:TextBox>
-                            <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
-                                <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
-                                <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
-                            </asp:DropDownList>
-                            <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
+                <!-- 上區塊 -->
+                <div class="container-fluid bg-dark text-white">
+                    <div class="row">
+                        <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
+                        <!-- sm為4格，md為4格，lg為4格，置中-->
+                        <div class="col-sm-4 col-md-4 col-lg-3">
+                            <a href="HomePage.html" class="d-none d-sm-block">
+                                <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                            <div action="連結到搜尋結果的.aspx" class="d-flex d-none d-sm-block">
+                                <asp:TextBox runat="server" ID="txtSearch" Text="搜尋" class="form-control"></asp:TextBox>
+                                <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
+                                    <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
+                                    <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
+                                </asp:DropDownList>
+                                <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
+                            </div>
                         </div>
-                    </div>
 
                         <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
@@ -164,19 +164,19 @@
                                         <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
 
                                     </div>
-                            </asp:PlaceHolder>
+                                </asp:PlaceHolder>
 
-                    </div>
-                </div>
-                <!-- 下方 -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- 固定母版塊 -->
-                        <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
-                        <div class="d-none d-md-block col-md-2" id="PBArea">
-                            <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
-                            <br>
-                            <div id="PBDataList"></div>
+                            </div>
+                        </div>
+                        <!-- 下方 -->
+                        <div class="container-fluid">
+                            <div class="row">
+                                <!-- 固定母版塊 -->
+                                <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
+                                <div class="d-none d-md-block col-md-2" id="PBArea">
+                                    <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
+                                    <br>
+                                    <div id="PBDataList"></div>
 
                                 </div>
                                 <!--主內容區，sm為12格，md為8格 -->
@@ -187,46 +187,50 @@
                                     </div>
                                 </div>
 
-                        <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
-                        <div class="d-none d-md-block col-md-2">
-                            <div class="BLmember">
-                                <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
-                                    <h3>黑名單</h3>
-                                    <asp:TextBox ID="txtBlkAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
-                                    <asp:TextBox ID= "txtBlkDate" runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
-                                    <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
-                                    <p runat="server" Text="黑單列表"/><br />
-                                    <asp:Repeater ID="RptrBlk" runat="server">
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltlBlkID" runat="server" Text='<%# Eval("Account") %>' /><br />
-                                            <asp:Literal ID="ltlDate" runat="server" Text='<%# Eval("ReleaseDate")%>' />
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </asp:PlaceHolder>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="MMlist">
-                                <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
-                                    <h3>版主名單</h3>
-                                    <asp:TextBox ID="txtMMAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox><br />
-                                    <button type="button" class="btn btn-sm btn-outline-light text-white bg-dark" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號，點擊新增使其就任板主職位；點擊解除使其卸任板主職位。 新增板主不得為管理員，亦不得為黑名單中的會員。">?</button><br />
-                                    <asp:Button ID="btnMMUpdate" runat="server" Text="加入" OnClick="btnMMUpdate_Click" /><br />
-                                    <asp:Button ID="btnMMDelete" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
-                                    <p runat="server" Text="板主列表"/><br />
-                                    <asp:Repeater ID="RptrMM" runat="server">
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltlMMID" runat="server" Text='<%# Eval("MemberID") %>' />
+                                <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
+                                <div class="d-none d-md-block col-md-2">
+                                    <div class="BLmember">
+                                        <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
+                                            <h3>黑名單</h3>
+                                            <asp:TextBox ID="txtBlkAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
+                                            <asp:TextBox ID="txtBlkDate" runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
+                                            <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
+                                            <p runat="server" text="黑單列表" />
                                             <br />
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </asp:PlaceHolder>
+                                            <asp:Repeater ID="RptrBlk" runat="server">
+                                                <ItemTemplate>
+                                                    <asp:Literal ID="ltlBlkID" runat="server" Text='<%# Eval("Account") %>' /><br />
+                                                    <asp:Literal ID="ltlDate" runat="server" Text='<%# Eval("ReleaseDate")%>' />
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </asp:PlaceHolder>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="MMlist">
+                                        <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
+                                            <h3>版主名單</h3>
+                                            <asp:TextBox ID="txtMMAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox><br />
+                                            <button type="button" class="btn btn-sm btn-outline-light text-white bg-dark" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號，點擊新增使其就任板主職位；點擊解除使其卸任板主職位。 新增板主不得為管理員，亦不得為黑名單中的會員。">?</button><br />
+                                            <asp:Button ID="btnMMUpdate" runat="server" Text="加入" OnClick="btnMMUpdate_Click" /><br />
+                                            <asp:Button ID="btnMMDelete" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
+                                            <p runat="server" text="板主列表" />
+                                            <br />
+                                            <asp:Repeater ID="RptrMM" runat="server">
+                                                <ItemTemplate>
+                                                    <asp:Literal ID="ltlMMID" runat="server" Text='<%# Eval("MemberID") %>' />
+                                                    <br />
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </asp:PlaceHolder>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </asp:PlaceHolder>
     </form>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.js"></script>
@@ -236,7 +240,7 @@
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
         })
-      </script>
+    </script>
     <script>
         //  展開/收合按鈕
         $(document).ready(function () {
