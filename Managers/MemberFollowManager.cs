@@ -107,13 +107,13 @@ namespace MKForum.Managers
                         };
                         return Follow;
                     }
+                    
                 }
-
             }
             catch (Exception ex)
             {
                 Logger.WriteLog("MemberFollowManager.GetMemberFollows", ex);
-                throw;
+                return null; //null代表沒追蹤
             }
         }
 
