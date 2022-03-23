@@ -1,9 +1,10 @@
 * {
     background-color: #181717;
+    /*background-color: blue;*/
 }
 
 div {
-    /* border: 1px solid rgb(255, 255, 255); */
+     /*border: 1px solid rgb(255, 255, 255);*/ 
 }
 
 .container-all {
@@ -165,3 +166,40 @@ ul ul li a {
         margin-bottom: 30px;
         font-size: 20px;
     }
+
+/*--------------------------------*/
+#btnwebLogin {
+    background-color: white;
+}
+
+
+#imgMember_PicPath {
+    border-radius: 50%;
+    border: 1px solid white;
+    width: 40px;
+    height: 40px;
+}
+
+.MemberStatus {
+    float: inherit;
+    margin: 0 auto;
+    width: auto;
+    height: 100%
+}
+.memberstatusleft {
+    float: left;
+    width: 60%;
+    height: 100%;
+}
+    .memberstatusleft span {
+        float: right;
+    }
+.memberstatusright {
+    padding-top:10px;
+    float: left;
+    width: 40%;
+    height: 100%;
+}
+.MemberStatus input {
+    background-color: white;
+}

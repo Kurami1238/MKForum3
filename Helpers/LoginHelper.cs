@@ -10,7 +10,7 @@ namespace MKForum.Helpers
 {
     public class LoginHelper
     {
-        public static void Login(string account, string userID)
+        public void Login(string account, string userID)
         {
             bool isPersistance = false;
             TimeSpan timeOut = new TimeSpan(3, 0, 0);
@@ -39,21 +39,27 @@ namespace MKForum.Helpers
             HttpContext.Current.User = gp;
         }
 
-        public static void Logout()
+        public string[] GetIdentityData()
+        {
+            var identity = HttpContext.Current.User.Identity as FormsIdentity; //取ID
+            var UserID = identity.Ticket.UserData;
+            string UserAccount = HttpContext.Current.User.Identity.Name; //取Account
+            string[] userinfo = new string[] { UserAccount, UserID };
+            return userinfo;
+        }
+
+
+        public void Logout()
         {
             FormsAuthentication.SignOut();
         }
 
-        public static bool dentityLogined()
+        public bool dentityLogined()
         {
             return HttpContext.Current.User.Identity.IsAuthenticated;
         }
 
-        public static void GetIdentityData()
-        {
-            string UserAccount = HttpContext.Current.User.Identity.Name;
-            var identity = HttpContext.Current.User.Identity as FormsIdentity;
-        }
+
 
 
     }

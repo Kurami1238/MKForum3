@@ -21,7 +21,8 @@ namespace MKForum
         private AccountManager _amgr = new AccountManager();            //帳號
         private LoginHelper _lgihp = new LoginHelper();
         private AccountManager _Amgr = new AccountManager();
-
+        private MemberManager _mmgr = new MemberManager();
+        
 
         //未做:
         //HomePage.aspx
@@ -41,12 +42,31 @@ namespace MKForum
             {
                 this.plhLogin.Visible = false;
                 this.plhLogined.Visible = true;
+                this.plgMemberStatus.Visible = false;
             }
 
             else if (_amgr.IsLogined())
             {
+                this.btnwebLogin.Visible = false;
                 this.plhLogin.Visible = false;
                 this.plhLogined.Visible = true;
+                Member account = _amgr.GetCurrentUser();
+                string memberID = account.MemberID.ToString();
+                Member memberInfo = _mmgr.GetMember(memberID);
+
+                this.imgMember_PicPath.ImageUrl = memberInfo.PicPath;
+                this.lblMember_NickName.Text = memberInfo.NickName;
+                this.lblMember_Account.Text = memberInfo.Account;
+
+                if (memberInfo.MemberStatus == 1)
+                    this.lblMember_MemberStatus.Text = "一般會員";
+                else if (memberInfo.MemberStatus == 2)
+                    this.lblMember_MemberStatus.Text = "版主";
+                else if (memberInfo.MemberStatus == 3)
+                    this.lblMember_MemberStatus.Text = "管理員";
+
+
+
                 int memberStatus = 1;//用來測試不同身分別的
                 #region//搜尋區
 
@@ -87,6 +107,13 @@ namespace MKForum
 
             }
         }
+        
+        protected void btnwebLogin_Click(object sender, EventArgs e)
+        {
+            this.plhLogin.Visible = true;
+            this.plhLogined.Visible = false;
+        }
+
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
@@ -107,12 +134,11 @@ namespace MKForum
             {
                 this.ltlMessage.Text = "登錄失敗，請檢察帳號密碼。";
             }
-            
-
         }
+
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            LoginHelper.Logout();
+            _lgihp.Logout();
             Response.Redirect(Request.RawUrl);
             
         }
