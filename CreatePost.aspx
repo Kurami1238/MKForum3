@@ -54,21 +54,20 @@
                 </td>
             </tr>
         </table>
-        <asp:Button ID="btnSend" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
+        <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
+        <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"    />
     </div>
     <div>
-        <table class="kobi col-sm-11 col-md-11 col-lg-11">
+        <table class="kobi col-sm-8 col-md-11 col-lg-11">
             <tr class="T">
                 <th>預覽 </th>
                 <td>
                     <div class="result" id="result">
                        
                     </div>
-                    <div>
                          <%--<asp:TextBox class="result2" ID="result2" runat="server" TextMode="MultiLine" ></asp:TextBox>--%>
                          <%--ValidateRequestMode="Disabled"--%>
                         <%--這裡會學習hackMD的XSS防禦函數庫 npm/XSS 以及開啟CSP來解決 XSS問題--%>
-                    </div>
                 </td>
             </tr>
         </table>
