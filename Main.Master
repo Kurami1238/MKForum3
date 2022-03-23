@@ -187,7 +187,7 @@
                                     </div>
                                 </div>
 
-                        <%--黑名單，xs.sm時隱藏，md以上顯示，md為2格--%>
+                        <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
                         <div class="d-none d-md-block col-md-2">
                             <div class="BLmember">
                                 <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
