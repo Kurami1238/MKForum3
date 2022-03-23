@@ -14,6 +14,9 @@ namespace MKForum
     //目前整理到有bug的地方:
     //版主Manager裡面的IsCurrentModerator有錯誤
 
+    //目前整理到需要改的地方:
+    //搜尋功能改成複數關鍵字
+
     //未做:
     //HomePage.aspx
     //母列表 (ajax有錯)
@@ -28,16 +31,14 @@ namespace MKForum
         private BlackManager _blkmgr = new BlackManager();              //黑名單
         private ModeratorManager _MMmgr = new ModeratorManager();      //版主
 
-        //string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前PboardID
-        string currentPboard = "2";           //用來測試
 
-        //string currentCboard = this.Request.QueryString["CboardID"];   //從URL取得當前CboardID
-        private string currentCboard = "2";           //用來測試
+
 
         private int memberStatus = 3;//用來測試不同身分別的
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
 
             #region//母版塊區的功能
             if (_amgr.IsLogined())
@@ -74,19 +75,19 @@ namespace MKForum
             //如果當前在子板塊內，且為該子版版主，則顯示黑名單
             if (currentCboard != null || memberStatus != 1)
             {
-                if (this._MMmgr.IsCurrentModerator())
+                if (this._MMmgr.IsCurrentModerator(currentCboard) || memberStatus == 3)
                 {
                     this.plhBlk.Visible = true;
 
-                    intcurrentCboard = int.Parse(currentCboard);
-                    BlckMbrDT = _blkmgr.getBlacked(intcurrentCboard);
+                    BlckMbrDT = _blkmgr.getBlacked(currentCboard);
                     this.RptrBlk.DataSource = BlckMbrDT;
                     this.RptrBlk.DataBind();
                 }
             }
             else
+            { }
 
-                #endregion
+            #endregion
             #region//顯示版主名單的功能(資料庫沒資料無法測試)
             //如果當前在子板塊內，且為後台人員(身分別為3)，則顯示板主名單
             if (currentCboard != null)
@@ -94,20 +95,23 @@ namespace MKForum
                 if (this._pBrdMgr.GetMemberStatus() == 3)
                 {
                     this.plhMM.Visible = true;
-                    intcurrentCboard = int.Parse(currentCboard);
-                    DataTable MMDT = _blkmgr.getBlacked(intcurrentCboard);
+                    DataTable MMDT = _MMmgr.getModerators(currentCboard);
                     this.RptrMM.DataSource = MMDT;
                     this.RptrMM.DataBind();
 
                 }
 
             }
-#endregion
+            #endregion
 
         }
 
         protected void Page_Prerender(object sender, EventArgs e)
         {
+            //string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前PboardID
+            string currentPboard = "2";           //用來測試
+            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+
             #region//搜尋區的功能
 
             //當前位於母版塊或子板塊內，第二個選項變為可使用
@@ -187,20 +191,68 @@ namespace MKForum
 
         protected void btnBlk_Click(object sender, EventArgs e)
         {
-            string account = this.txtBlkAcc.Text;   //輸入的帳號
-            string dt = this.txtBlkDate.Text;       //輸入的日期
+            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+            string inpAccount = this.txtBlkAcc.Text.Trim();   //輸入的黑名單帳號，並去掉空白字元
+            string dt = this.txtBlkDate.Text.Trim();       //輸入的黑名單日期
 
-            //去掉輸入的空白及沒有輸入的值
+            if (inpAccount == "" || dt == null)
+            {
+                string msg = "輸入的帳號或日期為空";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
 
-            //檢查輸入的帳號是否正在被黑名單
-            bool isBlacked = _blkmgr.IsBlacked(account, currentCboard);
+            string outAccount = "";
+            if (!_blkmgr.IsNumAndEG(inpAccount, out outAccount))
+            {
+                string msg = "輸入的帳號不得有英文及數字以外的字元";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
 
-            //如果已經在黑名單中，就更新他的資訊，否則就新增一筆資料
-            if (isBlacked)
-                this._blkmgr.UpdateBlackedList(account, dt, currentCboard);
+            }
+            if (!_blkmgr.HasMember(inpAccount))
+            {
+                string msg = "輸入的帳號不存在";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+            DateTime dtDate;
+            if (!DateTime.TryParse(dt, out dtDate))
+            {
+                string msg = "輸入的日期格式有誤";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+
+            string outDate = dtDate.ToString("yyyy-MM-dd");
+
+            if (this._blkmgr.IsCurrentModerator(currentCboard, inpAccount)==true || this._pBrdMgr.CheckMemberStatus(inpAccount) == 3)
+            {
+                string msg = $"輸入帳號不能為該板板主或管理員。";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+
+            }
             else
-                this._blkmgr.AddBlackedList(account, dt, currentCboard);
+            {
+                //如果已經在黑名單表
+                if (_blkmgr.IsBlacked(inpAccount, currentCboard))
+                {
+                    this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);      //無效
+                    string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";    
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
+                //如果還未被黑單過
+                else
+                {
 
+                    this._blkmgr.AddBlackedList(inpAccount, dt, currentCboard);      //無效
+                    string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
+            }
         }
     }
 }

@@ -83,6 +83,44 @@ namespace MKForum.Managers
             }
         }
 
+        public int CheckMemberStatus(string Account)
+        {
+            int memberStatus = 0;
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT [MemberStatus]
+                    FROM [MKForum].[dbo].[Members]
+                    WHERE Account= @account
+                    ";//取得SQL會員id
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@account", Account);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Member member = new Member();
+
+                            memberStatus = (int)reader["MemberStatus"]; //身份別由Guid轉型為int
+                        }
+                        return memberStatus;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("ParentBoardManager.GetMemberStatus", ex);
+                throw;
+            }
+        }
+
 
         /// <summary>
         /// 寫入板塊名稱(string)，編號(int)，順序(List index)方法

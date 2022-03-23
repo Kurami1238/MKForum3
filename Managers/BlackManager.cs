@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace MKForum.Managers
@@ -19,6 +21,122 @@ namespace MKForum.Managers
     public class BlackManager
     {
         /// <summary>
+        /// 判斷是否有該帳號存在
+        /// </summary>
+        /// <param name="currentCboard">當前板塊</param>
+        /// <param name="inpAccount">輸入的帳號</param>
+        /// <returns>回傳值為boolean</returns>
+        public bool HasMember(string inpAccount)
+        {
+            bool hasMember = false;
+
+            string connStr = ConfigHelper.GetConnectionString();
+            string commandText = $@"
+                SELECT Account
+                FROM  [MKForum].[dbo].[Members]
+                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        conn.Open();
+
+                        command.ExecuteNonQuery();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Member MM = new Member()
+                            {
+                                Account = reader["Account"] as string,
+                            };
+                            if (MM.Account == inpAccount)
+                                hasMember = true;
+                        }
+                        return hasMember;
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLog("BlackManager.IsCurrentModerator", ex);
+                throw;
+            }
+        }
+
+
+        /// <summary>
+        /// 判斷字串文字是否皆為英數
+        /// </summary>
+        /// <param name="str">檢測的字串</param>
+        /// <param name="outAccount">可用於輸出alert的字串，若boolean結果為false，輸出值將為空字串</param>
+        /// <returns></returns>
+        public bool IsNumAndEG(string str, out string outAccount)
+        {
+            Regex NumandEG = new Regex("[^A-Za-z0-9]");
+            bool result = !NumandEG.IsMatch(str);
+
+            outAccount = "";
+            if (result)
+                outAccount = str;
+            return result;
+        }
+
+        /// <summary>
+        /// 判斷輸入的帳號是否為當前板主
+        /// </summary>
+        /// <param name="currentCboard">當前板塊</param>
+        /// <param name="inpAccount">輸入的帳號</param>
+        /// <returns>回傳值為boolean</returns>
+        public bool IsCurrentModerator(string currentCboard, string inpAccount)
+        {
+            bool isCurrentModerator = false;
+
+            string connStr = ConfigHelper.GetConnectionString();
+            string commandText = $@"
+                SELECT Account
+                FROM  [MKForum].[dbo].[MemberModerators]
+				INNER JOIN [Members]
+                ON [MKForum].[dbo].[Members].[MemberID] = [MKForum].[dbo].[MemberModerators].[MemberID]
+                WHERE [CboardID] = @CboardID
+                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        conn.Open();
+
+                        command.Parameters.AddWithValue("@CboardID", currentCboard);
+                        command.ExecuteNonQuery();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Member MM = new Member()
+                            {
+                                Account = reader["Account"] as string,
+                            };
+                            if (MM.Account == inpAccount)
+                                isCurrentModerator = true;
+                        }
+                        return isCurrentModerator;
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLog("BlackManager.IsCurrentModerator", ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// 增加黑名單
         /// </summary>
         /// <param name="strBlackedAcc">由版主輸入的會員資料</param>
@@ -27,12 +145,11 @@ namespace MKForum.Managers
         public void AddBlackedList(string strBlackedAcc, string strRealseDate, string cboardid)
         {
 
-            //寫入 當前板塊 會員ID 當前日期 解黑日期 (SQL已測試OK)
             string connStr = ConfigHelper.GetConnectionString();
             string commandText = $@"
                 INSERT INTO [MKForum].[dbo].[MemberBlacks]
-                (CboardID,MemberID, CreateDate, ReleaseDate)
-                VALUES  ('@cboardid','@strBlackedAcc', GETDATE(),'@strRealseDate')
+                (CboardID,Account, CreateDate, ReleaseDate)
+                VALUES  (@cboardid,@strBlackedAcc, GETDATE(),'@strRealseDate')
                 ";
             try
             {
@@ -57,7 +174,7 @@ namespace MKForum.Managers
         }
 
         /// <summary>
-        /// 判斷會員是否已存在於黑名單的方法(包含已經解黑的會員)
+        /// 判斷會員是否已存在於黑名單的方法(不包含已經解黑的會員)
         /// </summary>
         /// <param name="strBlackedAcc">欲比對的會員帳號</param>
         /// <param name="cboardid"></param>
@@ -70,9 +187,8 @@ namespace MKForum.Managers
             string commandText = $@"
                 SELECT [Account]
                 FROM [MKForum].[dbo].[MemberBlacks]
-                INNER JOIN [Members]
-                ON [MKForum].[dbo].[Members].[MemberID] = [MKForum].[dbo].[MemberBlacks].[MemberID]
-                WHERE CboardID= @currontCB ;
+
+                WHERE CboardID= @currontCB AND getdate() < [ReleaseDate] ;
                 ";
             try
             {
@@ -94,7 +210,7 @@ namespace MKForum.Managers
                         }
                     }
                 }
-                    return isBlacked=false;
+                return isBlacked = false;
             }
             catch (Exception ex)
             {
@@ -111,12 +227,11 @@ namespace MKForum.Managers
         /// <param name="cboardid">當前子板塊</param>
         public void UpdateBlackedList(string strBlackedAcc, string strRealseDate, string cboardid)
         {
-            //修改當前日期.解黑日期，依照當前板塊.會員ID (SQL未測試)
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
             string commandText = $@"
                 UPDATE [MKForum].[dbo].[MemberBlacks]
-                SET [CreateDate]=' GETDATE()',[ReleaseDate]=@strRealseDate
-                WHERE [CboardID]=@cboardid AND [MemberID]=@strBlackedAcc
+                SET [CreateDate]= GETDATE(),[ReleaseDate]=@strRealseDate
+                WHERE [CboardID]=@cboardid AND Account=@strBlackedAcc
                 ";
             try
             {
@@ -143,17 +258,12 @@ namespace MKForum.Managers
         /// </summary>
         /// <param name="cboardid">session當前子板塊</param>
         /// <returns></returns>
-        public DataTable getBlacked(int cboardid)
+        public DataTable getBlacked(string currentCboard)
         {
-            string strcboardid = cboardid.ToString();
-
-            //更新 取得當前子板塊尚未解除懲處的名單 (SQL已測試OK)
             string connStr = ConfigHelper.GetConnectionString();
             string commandText = $@"
                 SELECT  [ReleaseDate],[Account]
                 FROM [MKForum].[dbo].[MemberBlacks]
-                INNER JOIN [Members]
-                ON [MKForum].[dbo].[Members].[MemberID] = [MKForum].[dbo].[MemberBlacks].[MemberID]
                 WHERE CboardID= @currontCB AND getdate() < [ReleaseDate];";
             try
             {
@@ -162,9 +272,8 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, conn))
                     {
 
-                        List<MemberBlack> DisplayBlcked = new List<MemberBlack>();
                         conn.Open();
-                        command.Parameters.AddWithValue("@currontCB", strcboardid);
+                        command.Parameters.AddWithValue("@currontCB", currentCboard);
                         command.ExecuteNonQuery();
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -172,7 +281,7 @@ namespace MKForum.Managers
                         DataTable dt = new DataTable();
 
                         dt.Load(reader);
-                        
+
                         return dt;
 
                     }
