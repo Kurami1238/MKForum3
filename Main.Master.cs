@@ -249,7 +249,7 @@ namespace MKForum
             //this.plhPBEdit2.Visible = false;
         }
 
-
+        //黑名單儲存按鈕
         protected void btnBlk_Click(object sender, EventArgs e)
         {
             string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
@@ -264,7 +264,7 @@ namespace MKForum
             }
 
             string outAccount = "";
-            if (!_blkmgr.IsNumAndEG(inpAccount, out outAccount))
+            if (!_chkInpMgr.IsNumAndEG(inpAccount, out outAccount))
             {
                 string msg = "輸入的帳號不得有英文及數字以外的字元";
                 Response.Write($"<script>alert('{msg}')</script>");
@@ -315,5 +315,9 @@ namespace MKForum
                 }
             }
         }
+
+
+
+
     }
 }

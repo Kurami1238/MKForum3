@@ -68,25 +68,9 @@ namespace MKForum.Managers
         }
 
 
-        /// <summary>
-        /// 判斷字串文字是否皆為英數
-        /// </summary>
-        /// <param name="str">檢測的字串</param>
-        /// <param name="outAccount">可用於輸出alert的字串，若boolean結果為false，輸出值將為空字串</param>
-        /// <returns></returns>
-        public bool IsNumAndEG(string str, out string outAccount)
-        {
-            Regex NumandEG = new Regex("[^A-Za-z0-9]");
-            bool result = !NumandEG.IsMatch(str);
-
-            outAccount = "";
-            if (result)
-                outAccount = str;
-            return result;
-        }
 
         /// <summary>
-        /// 判斷輸入的帳號是否為當前板主
+        /// 判斷輸入的帳號是否為當前板主(輸入黑名單帳號時使用)
         /// </summary>
         /// <param name="currentCboard">當前板塊</param>
         /// <param name="inpAccount">輸入的帳號</param>
@@ -178,7 +162,7 @@ namespace MKForum.Managers
         /// </summary>
         /// <param name="strBlackedAcc">欲比對的會員帳號</param>
         /// <param name="cboardid"></param>
-        /// <returns></returns>
+        /// <returns>回傳值為boolean</returns>
         public bool IsBlacked(string account, string currontCB)
         {
             bool isBlacked = false;
@@ -257,7 +241,7 @@ namespace MKForum.Managers
         /// 顯示黑名單
         /// </summary>
         /// <param name="cboardid">session當前子板塊</param>
-        /// <returns></returns>
+        /// <returns>回傳值為DataTable</returns>
         public DataTable getBlacked(string currentCboard)
         {
             string connStr = ConfigHelper.GetConnectionString();
