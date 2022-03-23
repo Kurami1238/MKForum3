@@ -191,7 +191,7 @@ namespace MKForum
             var blistAcc = blist.Select(x => x.Account);
             foreach (var x in blistAcc)
             {
-                if (x == this._member.Account)
+                if (string.Compare(x,this._member.Account)== 0)
                     this.btnCreatePostB.Visible = false;
             }
         }

@@ -690,6 +690,45 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        public List<MemberModerator> GetModeratorList(int cboardid)
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@"
+                    SELECT * 
+                    FROM MemberBlacks
+                    WHERE CboardID = @cboardid
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<MemberModerator> MrList = new List<MemberModerator>();
+                        connection.Open();
+                        command.Parameters.AddWithValue("@cboardID", cboardid);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            MemberModerator mr = new MemberModerator()
+                            {
+                                MemberID = (Guid)reader["MemberID"],
+                            };
+                            MrList.Add(mr);
+                        }
+                        return MrList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetModeratorList", ex);
+                throw;
+            }
+        }
+        
 
         //----------------Htag--------------------
         public void CreateHashtag(Guid postid,string htag)

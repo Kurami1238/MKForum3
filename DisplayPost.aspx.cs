@@ -44,11 +44,22 @@ namespace MKForum
 
         private void CheckDare()
         {
+            string cboardsText = this.Request.QueryString["Cboard"];
+            int cboard = (string.IsNullOrWhiteSpace(cboardsText))
+                            ? 2 : Convert.ToInt32(cboardsText);
+            Cboard cboardd = CboardManager.GetCboard(cboard);
+            List<MemberModerator> ml = this._pmgr.GetModeratorList(cboard);
+            var mlm = ml.Select(x => x.MemberID);
             if (Session["MemberID"] == null)
                 phl.Visible = false;
             else
             {
                 phl.Visible = (string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"].ToString()) == 0);
+            }
+            foreach (var x in mlm)
+            {
+                if (string.Compare(x.ToString(), this._member.MemberID.ToString()) == 0)
+                    phl.Visible = true;
             }
         }
 
