@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace MKForum
 {
-    
+
     public partial class WebForm1 : System.Web.UI.Page
     {
         private PostManager _pmgr = new PostManager();
@@ -39,7 +39,8 @@ namespace MKForum
             if (post == null)
                 this.BackToListPage();
             this.DisplayPost(post);
-            this.MemberFollowFirst(this._member.MemberID, postid);
+            if (this._member.MemberID != null)
+                this.MemberFollowFirst(this._member.MemberID, postid);
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -50,7 +51,7 @@ namespace MKForum
         {
             this.lblTitle.Text = post.Title;
             Member member = this._amgr.GetAccount(post.MemberID);
-            this.lblMember.Text = "作者：" +member.Account;
+            this.lblMember.Text = "作者：" + member.Account;
             this.lblFloor.Text = post.Floor.ToString() + "F";
             this.sortid.Value = post.PostCotent;
             this.hfMemberID.Value = post.MemberID.ToString();
@@ -76,7 +77,7 @@ namespace MKForum
                            PostID = p.PostID,
                            Floor = p.Floor,
                            // 問問原理
-                           MemberAccount = (tempPM.FirstOrDefault() != null) ? tempPM.FirstOrDefault().Account : "無", 
+                           MemberAccount = (tempPM.FirstOrDefault() != null) ? tempPM.FirstOrDefault().Account : "無",
                            PostCotent = p.PostCotent,
                            MemberID = p.MemberID,
                            CboardID = p.CboardID
@@ -168,30 +169,30 @@ namespace MKForum
                     break;
             }
         }
-        private void MemberFollowFirst(Guid memberID,Guid postID)
+        private void MemberFollowFirst(Guid memberID, Guid postID)
         {
-            //if (_mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
-            //    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
-            //else
-            //    this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+            if (_mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
+                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            else
+                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
         }
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
             //從QS取得文章id 不能就回子版
-            //string postidText = this.Request.QueryString["PostID"];
-            //Guid postid;
-            //if (!Guid.TryParse(postidText, out postid))
-            //    this.BackToListPage();
-            //if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
-            //{
-            //    this._mfmsg.Updatetrack(this._member.MemberID, postid, 0);
-            //    this.lblMemberFollow_FollowStatus.Text = "未追蹤";
-            //}
-            //else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
-            //{
-            //    this._mfmsg.Updatetrack(this._member.MemberID, postid, 1);
-            //    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
-            //}
+            string postidText = this.Request.QueryString["PostID"];
+            Guid postid;
+            if (!Guid.TryParse(postidText, out postid))
+                this.BackToListPage();
+            if (this.lblMemberFollow_FollowStatus.Text == "追蹤中")
+            {
+                this._mfmsg.Updatetrack(this._member.MemberID, postid, 0);
+                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+            }
+            else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
+            {
+                this._mfmsg.Updatetrack(this._member.MemberID, postid, 1);
+                this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            }
 
         }
 
