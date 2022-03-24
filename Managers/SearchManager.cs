@@ -292,9 +292,9 @@ namespace MKForum.Managers
             for (int i = 0; i < hosii.Count; i++)
             {
                 if (i != hosii.Count - 1)
-                    commandText += $"( MemberID = {hosii[i]} OR ";
+                    commandText += $" Posts.MemberID = @{hosii[i]} OR ";
                 else
-                    commandText += $"( MemberID = {hosii[i]} ";
+                    commandText += $" Posts.MemberID = @{hosii[i]} ";
             }
             try
             {

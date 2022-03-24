@@ -80,12 +80,12 @@ namespace MKForum
                 string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
 
 
-                /*當前位於母版塊或子板塊內，第二個選項變為可使用
+                //當前位於母版塊或子板塊內，第二個選項變為可使用
                 if (currentPboard != null || currentCboard != null)
                 {
-                var aaa = this.srchDrop.Items[1].Attributes;
-                aaa.Remove("disable");
-                }*/
+                    var aaa = this.srchDrop.Items[1].Attributes;
+                    aaa.Remove("disable");
+                }
                 #endregion
 
                 #region//母版塊區的功能
