@@ -33,7 +33,7 @@
                                     <asp:Literal ID="ltlPostC" runat="server" Text='<%# Eval("PostCotent")%>'></asp:Literal>
                                 </p>
                                 <h3 class="PostM">
-                                    <asp:Literal ID="ltlPostM" runat="server" Text='<%# Eval("MemberAccount") %>'></asp:Literal>
+                                    <asp:Literal ID="ltlPostM" runat="server" Text='<%# "作者： " + Eval("MemberAccount") %>'></asp:Literal>
                                 </h3>
                                 <h4 class="PostD">
                                     <asp:Literal ID="ltlPostD" runat="server" Text='<%# (Eval("LastEditTime") != null)? "最後編輯： " + Eval("LastEditTime") : Eval("PostDate") %>'></asp:Literal>
@@ -109,12 +109,13 @@
                     console.log(rpt.html());
                     var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
                     var titlex = "前往：" + list[i].Title;
+                    var postdd = "最後編輯：" + list[i].LastEditTime
                     $(".PostA", rpt).attr({ "href": url, "title": titlex });
                     $(".imgPostP", rpt).attr({ "src": list[i].Coverimage });
                     $(".PostT", rpt).text(list[i].Title);
                     $(".PostC", rpt).text(list[i].PostCotent);
                     $(".PostM", rpt).text(list[i].MemberAccount);
-                    $(".PostD", rpt).text(list[i].LastEditTime);
+                    $(".PostD", rpt).text(postdd);
                     //$("btnPostEdit").attr({ "CommandArgument": list[i].PostID });
                     console.log(rpt.html());
                     //$("#Nmphl").text(list[i].LastEditTime);

@@ -22,7 +22,6 @@ namespace MKForum.API
         {
             if (string.Compare("POST", context.Request.HttpMethod) == 0 && string.Compare("Mugen", context.Request.QueryString["Action"], true) == 0)
             {
-
                 string PageIndexs = context.Request.Form["PageIndex"];
                 string PageSizes = context.Request.Form["PageSize"];
                 string CboardIDs = context.Request.Form["CboardID"];
@@ -49,7 +48,6 @@ namespace MKForum.API
                     memberlist.Add(me);
                 }
                 //合併兩表連接rpt
-                //另外一個詭異的問題 IEnumerable 無法轉型成 Generic
                 var pLML = from p in postList
                            join m in memberlist on p.MemberID equals m.MemberID
                            into temppm
@@ -63,7 +61,7 @@ namespace MKForum.API
                                CboardID = p.CboardID,
                                Title = p.Title,
                                LastEditTime = p.LastEditTime,
-                               PostDate = p.PostDate,
+                               PostDate = p.PostDate.ToString("yyyy/MM/dd tt hh:mm:ss"),
                                CoverImage = p.CoverImage,
                            };
                 // 第二次合併把文章內容大於二十字的替換掉
@@ -129,7 +127,7 @@ namespace MKForum.API
             public int CboardID { get; set; }
             public string Title { get; set; }
             public DateTime? LastEditTime { get; set; }
-            public DateTime PostDate { get; set; }
+            public string PostDate { get; set; }
             public string CoverImage { get; set; }
         }
 

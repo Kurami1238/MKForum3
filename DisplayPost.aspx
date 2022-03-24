@@ -17,11 +17,10 @@
                 <asp:Label ID="lblFloor" runat="server" Text="樓層數"></asp:Label>
             </div>
             <div class="Postbtn">
-                <asp:Label CssClass="btnl" ID="lblMemberFollow_FollowStatus" runat="server"></asp:Label>
                 <div>
                     <asp:Button class="btn" ID="btnMemberFollow_FollowStatus" runat="server" Text="追蹤" OnClick="btnMemberFollow_FollowStatus_Click" />
                 </div>
-                <asp:PlaceHolder ID="phl" runat="server" >
+                <asp:PlaceHolder ID="phl" runat="server">
                     <asp:HiddenField runat="server" ID="hfMemberID" />
                     <div>
                         <asp:Button class="btn" ID="btnEditPost" runat="server" Text="編輯文章" OnClick="btnEditPost_Click" />
@@ -35,14 +34,16 @@
                 <asp:Label ID="lblMember" runat="server" Text="作者"></asp:Label>
             </div>
             <div class="PostC">
-                    <div class="result" id="result">
-                     </div>
-            <input type="hidden" id="sortid" class="content" runat="server"/>
+                <div class="result" id="result">
+                </div>
+                <input type="hidden" id="sortid" class="content" runat="server" />
                 <%--<asp:Label ID="lblCotent" runat="server" Text="內文" ></asp:Label>--%>
-            <hr />
+                <hr />
             </div>
         </div>
+        <asp:Label CssClass="btnl" ID="lblMemberFollow_FollowStatus" runat="server"></asp:Label>
     </div>
+
     <asp:Repeater ID="rptNmP" runat="server" OnItemCommand="rptNmP_ItemCommand">
         <ItemTemplate>
             <div class="nomainPost col-sm-11 col-md-11 col-lg-11">
@@ -70,7 +71,7 @@
 
                     <div class="nmC">
                         <asp:Label ID="lblNmPostcotent" runat="server" Text='<%# Eval("PostCotent") %>'></asp:Label>
-                    <hr />
+                        <hr />
                     </div>
                 </div>
             </div>
@@ -78,7 +79,7 @@
     </asp:Repeater>
     <div class="CNNmPost col-sm-11 col-md-11 col-lg-11">
         <asp:TextBox class="CNNmT" runat="server" ID="txtCNNmPost" placeholder="請輸入回覆訊息"></asp:TextBox>
-        <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" OnClientClick="NmCreatePosta();"/>
+        <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" OnClientClick="NmCreatePosta();" />
     </div>
     <script>
         $(document).ready(function () {
@@ -89,9 +90,9 @@
             $('.result').html(html);
 
         });
-        
+
         function dela() { alert('刪除成功') }
         function NmCreatePosta() { alert("回覆成功") }
-        
+
     </script>
 </asp:Content>
