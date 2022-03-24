@@ -33,8 +33,8 @@ namespace MKForum
             List<SearchResult> srl = new List<SearchResult>();
             if (string.Compare(searchArea, "srchWriter") ==0)
                 srl = this._srmgr.GetMemberSearchKekka(kwlist);
-            if (string.Compare(searchArea, "srchCurrent") == 0)
-                srl = "x";
+            //if (string.Compare(searchArea, "srchCurrent") == 0)
+            //    srl = "x";
             else        
                 srl = this._srmgr.GetAllSearchKekka(kwlist);
             this.rptcBtoP.DataSource = srl;

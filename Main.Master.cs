@@ -22,7 +22,7 @@ namespace MKForum
         private LoginHelper _lgihp = new LoginHelper();
         private MemberManager _mmgr = new MemberManager();
         private BlackManager _blkmgr = new BlackManager();
-        private ModeratorManager _Mmgr = new ModeratorManager();
+        private ModeratorManager _MMmgr = new ModeratorManager();
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -83,51 +83,52 @@ namespace MKForum
                 }*/
                 #endregion
 
-            #region//母版塊區的功能
-            if (_amgr.IsLogined())
-            {
-                //如果是管理員，顯示編輯按鈕
-                if (_pBrdMgr.GetMemberStatus() == 3)
+                #region//母版塊區的功能
+                if (_amgr.IsLogined())
                 {
-                    this.plhPBEdit1.Visible = true;
-                    this.plhPBEdit2.Visible = true;
+                    //如果是管理員，顯示編輯按鈕
+                    if (_pBrdMgr.GetMemberStatus() == 3)
+                    {
+                        this.plhPBEdit1.Visible = true;
+                        this.plhPBEdit2.Visible = true;
+                    }
                 }
-            }
-            #endregion
+                #endregion
 
-            int intcurrentCboard;
-            DataTable BlckMbrDT;
-            #region//顯示黑名單的功能
-            //如果當前在子板塊內，且為該子版版主，則顯示黑名單
-            if (currentCboard != null)
-            {
-                if (this._MMmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
+                int intcurrentCboard;
+                DataTable BlckMbrDT;
+                #region//顯示黑名單的功能
+                //如果當前在子板塊內，且為該子版版主，則顯示黑名單
+                if (currentCboard != null)
                 {
-                    this.plhBlk.Visible = true;
-                    BlckMbrDT = _blkmgr.getBlacked(currentCboard);
-                    this.RptrBlk.DataSource = BlckMbrDT;
-                    this.RptrBlk.DataBind();
+                    if (this._MMmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
+                    {
+                        this.plhBlk.Visible = true;
+                        BlckMbrDT = _blkmgr.getBlacked(currentCboard);
+                        this.RptrBlk.DataSource = BlckMbrDT;
+                        this.RptrBlk.DataBind();
+                    }
                 }
-            }
-            else
-            { }
+                else
+                { }
 
-            #endregion
+                #endregion
 
-            #region//顯示版主名單的功能(資料庫沒資料無法測試)
-            //如果當前在子板塊內，且為後台人員(身分別為3)，則顯示板主名單
-            if (currentCboard != null)
-            {
-                if (this._pBrdMgr.GetMemberStatus() == 3)
+                #region//顯示版主名單的功能(資料庫沒資料無法測試)
+                //如果當前在子板塊內，且為後台人員(身分別為3)，則顯示板主名單
+                if (currentCboard != null)
                 {
-                    this.plhMM.Visible = true;
-                    DataTable MMDT = _MMmgr.getModerators(currentCboard);
-                    this.RptrMM.DataSource = MMDT;
-                    this.RptrMM.DataBind();
+                    if (this._pBrdMgr.GetMemberStatus() == 3)
+                    {
+                        this.plhMM.Visible = true;
+                        DataTable MMDT = _MMmgr.getModerators(currentCboard);
+                        this.RptrMM.DataSource = MMDT;
+                        this.RptrMM.DataBind();
+                    }
                 }
+                #endregion
             }
-            #endregion
-
+        }
         protected void Page_Prerender(object sender, EventArgs e)
         {
             string currentPboard = this.Request.QueryString["PboardID"];    //當前母板塊
@@ -365,7 +366,7 @@ namespace MKForum
             }
             else
             {
-                this._Mmgr.AddModeratorsList(outModerator, currentCboard);
+                this._MMmgr.AddModeratorsList(outModerator, currentCboard);
                 string msg = $"已加入{outModerator}至版主。";
                 Response.Write($"<script>alert('{msg}')</script>");
                 return;
