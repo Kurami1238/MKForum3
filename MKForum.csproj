@@ -121,7 +121,6 @@
     <Content Include="js\jquery.min.js" />
     <Content Include="js\showdown.js" />
     <Content Include="Login.aspx" />
-    <Content Include="MemberEditor.aspx" />
     <Content Include="MemberFollowList.aspx" />
     <Content Include="MemberList.aspx" />
     <Content Include="MemberRegister.aspx" />
@@ -131,6 +130,7 @@
     <Content Include="Register.aspx" />
     <Content Include="Scripts\showdown.js" />
     <Content Include="Scripts\showdown.min.js" />
+    <Content Include="SearchKekka.aspx" />
     <Content Include="SearchPage.aspx" />
     <Content Include="ShareControls\Mugen.ascx" />
     <Content Include="Web.config" />
@@ -139,6 +139,9 @@
   <ItemGroup>
     <Compile Include="API\MugenHandler.ashx.cs">
       <DependentUpon>MugenHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="API\PBoardHandler.ashx.cs">
+      <DependentUpon>PBoardHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="BackAdmin\MemberFollowEditor.aspx.cs">
       <DependentUpon>MemberFollowEditor.aspx</DependentUpon>
@@ -211,13 +214,6 @@
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -236,13 +232,6 @@
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
-    <Compile Include="MemberEditor.aspx.cs">
-      <DependentUpon>MemberEditor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MemberEditor.aspx.designer.cs">
-      <DependentUpon>MemberEditor.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MemberFollowList.aspx.cs">
       <DependentUpon>MemberFollowList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -288,9 +277,6 @@
     <Compile Include="Models\PostStamp.cs" />
     <Compile Include="Models\RankingDATA.cs" />
     <Compile Include="Models\SearchResult.cs" />
-    <Compile Include="API\PBoardInMain.ashx.cs">
-      <DependentUpon>PBoardInMain.ashx</DependentUpon>
-    </Compile>
     <Compile Include="PboardtoCboard.aspx.cs">
       <DependentUpon>PboardtoCboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -319,6 +305,13 @@
     </Compile>
     <Compile Include="DisplayPost.aspx.designer.cs">
       <DependentUpon>DisplayPost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchKekka.aspx.cs">
+      <DependentUpon>SearchKekka.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchKekka.aspx.designer.cs">
+      <DependentUpon>SearchKekka.aspx</DependentUpon>
     </Compile>
     <Compile Include="SearchPage.aspx.cs">
       <DependentUpon>SearchPage.aspx</DependentUpon>
@@ -352,8 +345,8 @@
     <Content Include="API\MugenHandler.ashx" />
     <Content Include="css\Brush.woff" />
     <Content Include="css\Brush.ttf" />
+    <Content Include="API\PBoardHandler.ashx" />
     <None Include="packages.config" />
-    <Content Include="API\PBoardInMain.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -39,6 +39,7 @@ namespace MKForum
             //    phl.Visible = (string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"].ToString()) == 0);
             //else
             //    phl.Visible = false;
+           
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -54,7 +55,10 @@ namespace MKForum
             List<MemberModerator> ml = this._pmgr.GetModeratorList(cboard);
             var mlm = ml.Select(x => x.MemberID);
             if (Session["MemberID"] == null)
+            {
                 phl.Visible = false;
+            }
+
             else
             {
                 phl.Visible = (string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"].ToString()) == 0);
