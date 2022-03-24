@@ -6,12 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:Repeater ID="Repeater1" runat="server">
-        <itemtemplate>
-              <asp:Label runat="server"><%# Eval("Title") %></asp:Label>
-              <asp:Label runat="server"><%# Eval("PostCotent") %></asp:Label>
-        </itemtemplate>
-    </asp:Repeater>
+
 
     <div class="hot-cboards">
         <div class="title">
@@ -35,7 +30,7 @@
         </div>
 
 
-        <div class="content">
+<%--        <div class="content">
             <h2>音樂討論區 </h2>
             <div class="article">
                 <h1>標題:神滅之刃OP Lisa</h1>
@@ -46,31 +41,27 @@
                     <br />
                 </h5>
             </div>
-        </div>
-        <div class="content">
+        </div>--%>
+            <asp:Repeater ID="Repeater1" runat="server">
+        <itemtemplate>
+
+            <div class="content">
             <h2>音樂討論區 </h2>
             <div class="article">
-                <h1>標題:神滅之刃OP Lisa</h1>
-                <p>The Last Take版本聽到我都哭了....(繼續閱讀)</p>
-                <h3>發文者:LoveLeeSA_666</h3>
-                <h4>日期:2022/02/12</h4>
+                <h1>標題:<%# Eval("Title") %></h1>
+                <p><%# Eval("PostCotent") %></p>
+                <h3>發文者:<%# Eval("PostCotent") %></h3>
+                <h4>日期:<%# Eval("PostDate") %></h4>
                 <h5>
                     <br />
                 </h5>
             </div>
         </div>
-        <div class="content">
-            <h2>音樂討論區 </h2>
-            <div class="article">
-                <h1>標題:神滅之刃OP Lisa</h1>
-                <p>The Last Take版本聽到我都哭了....(繼續閱讀)</p>
-                <h3>發文者:LoveLeeSA_666</h3>
-                <h4>日期:2022/02/12</h4>
-                <h5>
-                    <br />
-                </h5>
-            </div>
-        </div>
+
+<%--              <asp:Label runat="server"><%# Eval("Title") %></asp:Label>
+              <asp:Label runat="server"><%# Eval("PostCotent") %></asp:Label>--%>
+        </itemtemplate>
+    </asp:Repeater>
 
 
     </div>
