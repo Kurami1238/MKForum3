@@ -211,3 +211,12 @@ ul ul li a {
 .MemberStatus input {
     background-color: white;
 }
+
+/*--------------------------------*/
+.Notify {
+    position: relative;
+}
+
+.Notifytext {
+    position: fixed;
+}

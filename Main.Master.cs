@@ -23,6 +23,7 @@ namespace MKForum
         private MemberManager _mmgr = new MemberManager();
         private BlackManager _blkmgr = new BlackManager();
         private ModeratorManager _Mmgr = new ModeratorManager();
+        private MemberFollowManager _mfmgr = new MemberFollowManager();
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -49,6 +50,10 @@ namespace MKForum
 
             else if (_amgr.IsLogined())
             {
+                List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows("c8142d85-68c2-4483-ab51-e7d3fc366b89");
+                this.rptMemberFollows.DataSource = MemberFollows;
+                this.rptMemberFollows.DataBind();
+
                 this.btnwebLogin.Visible = false;
                 this.plhLogin.Visible = false;
                 this.plhLogined.Visible = true;
@@ -366,6 +371,8 @@ namespace MKForum
         {
 
         }
+
+
 
     }
 }

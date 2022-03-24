@@ -22,7 +22,9 @@
                 $("#sidebar").toggleClass("active");
                 $(".fa-align-left").toggleClass("fa-chevron-circle-right");
             })
-        })</script>
+        })
+    </script>
+
     <style>
         #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout {
             background-color: white;
@@ -41,15 +43,14 @@
             color: white;
             font-size: 16pt;
         }
+
     </style>
 
 </head>
 <body>
     <form id="form1" runat="server">
 
-
         <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
-
             <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
             <br />
             <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox><br />
@@ -64,89 +65,85 @@
             <asp:Label ID="lblTEXT" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
-
-
         </asp:PlaceHolder>
-        
 
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
             <asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible="true">
-            <div class="container-all">
-                <!--xs以下顯示，md以上不顯示 -->
-                <div class="d-xs-block d-md-none">
-                    <!--左拉式選單-->
-                    <div class="container-left">
-                        <!-- 導覽列 -->
-                        <nav id="sidebar">
-                            <!-- 展往/縮起來 按鈕 -->
-                            <button type="button" id="collapse" class="collapse-btn">
-                                <i class="fas fa-align-left"></i>
-                            </button>
-                            <div>
-                                <!-- List 列表 -->
-                                <p>母版塊列表 </p>
-                                <a href="/index.aspx">首頁Home <i class="fas fa-home"></i></a>
-                                <br>
-                                <asp:Repeater ID="Repeater1" runat="server">
-                                    <ItemTemplate>
-                                        <%--<a href="Pboard.aspx?PboardID=<%# Eval("PboardID")%>" title="<%# Eval("Pname") %>">--%>
-                                        <asp:Label runat="server"><%# Eval("Pname") %></asp:Label><br>
-                                    </ItemTemplate>
-                                </asp:Repeater>
+                <div class="container-all">
+                    <!--xs以下顯示，md以上不顯示 -->
+                    <div class="d-xs-block d-md-none">
+                        <!--左拉式選單-->
+                        <div class="container-left">
+                            <!-- 導覽列 -->
+                            <nav id="sidebar">
+                                <!-- 展往/縮起來 按鈕 -->
+                                <button type="button" id="collapse" class="collapse-btn">
+                                    <i class="fas fa-align-left"></i>
+                                </button>
+                                <div>
+                                    <!-- List 列表 -->
+                                    <p>母版塊列表 </p>
+                                    <a href="/index.aspx">首頁Home <i class="fas fa-home"></i></a>
+                                    <br>
+                                    <asp:Repeater ID="Repeater1" runat="server">
+                                        <ItemTemplate>
+                                            <%--<a href="Pboard.aspx?PboardID=<%# Eval("PboardID")%>" title="<%# Eval("Pname") %>">--%>
+                                            <asp:Label runat="server"><%# Eval("Pname") %></asp:Label><br>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
 
-                                <%--後台人員才能看到--%>
-                                <asp:PlaceHolder ID="plhPBMode1" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBMode1" runat="server" Text="編輯母版塊" OnClick="btnPBMode_Click" />
-                                </asp:PlaceHolder>
-                                <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
-                                    <div>
-                                        <asp:Button ID="btnPBUp1" runat="server" Text="上移" />
-                                        <asp:Button ID="btnPBDown1" runat="server" Text="下移" />
-                                    </div>
-                                    <div>
-                                        <asp:Button ID="btnPBSave1" runat="server" Text="儲存" OnClick="btnPBSave_Click" />
-                                        <asp:Button ID="btnPBCancel" runat="server" Text="取消" OnClick="btnPBCancel_Click" />
-                                    </div>
-                                </asp:PlaceHolder>
-                            </div>
-                        </nav>
+                                    <%--後台人員才能看到--%>
+                                    <asp:PlaceHolder ID="plhPBMode1" runat="server" Visible="false">
+                                        <asp:Button ID="btnPBMode1" runat="server" Text="編輯母版塊" OnClick="btnPBMode_Click" />
+                                    </asp:PlaceHolder>
+                                    <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
+                                        <div>
+                                            <asp:Button ID="btnPBUp1" runat="server" Text="上移" />
+                                            <asp:Button ID="btnPBDown1" runat="server" Text="下移" />
+                                        </div>
+                                        <div>
+                                            <asp:Button ID="btnPBSave1" runat="server" Text="儲存" OnClick="btnPBSave_Click" />
+                                            <asp:Button ID="btnPBCancel" runat="server" Text="取消" OnClick="btnPBCancel_Click" />
+                                        </div>
+                                    </asp:PlaceHolder>
+                                </div>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </asp:PlaceHolder>
-        <!-- 上區塊 -->
-        <div class="container-fluid bg-dark text-white">
-            <div class="row">
-                <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
-                <!-- sm為4格，md為4格，lg為4格，置中-->
-                <div class="col-sm-4 col-md-4 col-lg-3">
-                    <a href="HomePage.html" class="d-none d-sm-block">
-                        <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                    <div action="連結到搜尋結果的.aspx" class="d-flex d-none d-sm-block">
-                        <asp:TextBox runat="server" ID="txtSearch" Text="搜尋" class="form-control"></asp:TextBox>
-                        <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
-                            <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
-                            <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
-                        </asp:DropDownList>
-                        <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
+            </asp:PlaceHolder>
+
+            <!-- 上區塊 -->
+            <div class="container-fluid bg-dark text-white">
+
+                <div class="row">
+                    <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
+                    <!-- sm為4格，md為4格，lg為4格，置中-->
+                    <div class="col-sm-4 col-md-4 col-lg-3">
+                        <a href="HomePage.html" class="d-none d-sm-block">
+                            <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                        <div action="連結到搜尋結果的.aspx" class="d-flex d-none d-sm-block">
+                            <asp:TextBox runat="server" ID="txtSearch" Text="搜尋" class="form-control"></asp:TextBox>
+                            <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
+                                <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
+                                <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
+                            </asp:DropDownList>
+                            <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
-                <!-- sm為4格，md為4格，lg為4格，置中-->
-                <div class="col-sm-4 col-md-4 col-lg-5 h3 text-center">
-                    <a href="/index.aspx" class="d-block d-sm-none">
-                        <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                    MKForun
-                </div>
-                <!-- 上區塊內的右上區塊(使用者狀態區) -->
-                <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
-                <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
-                    使用者狀態區
-
-
-                            
+                    <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
+                    <!-- sm為4格，md為4格，lg為4格，置中-->
+                    <div class="col-sm-4 col-md-4 col-lg-5 h3 text-center">
+                        <a href="/index.aspx" class="d-block d-sm-none">
+                            <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                        MKForun
+                    </div>
+                    <!-- 上區塊內的右上區塊(使用者狀態區) -->
+                    <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
+                    <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
+                        使用者狀態區
                             <div class="MemberStatus">
                                 <asp:Button ID="btnwebLogin" runat="server" Text="登入" OnClick="btnwebLogin_Click" />
                                 <asp:PlaceHolder ID="plgMemberStatus" runat="server">
@@ -156,11 +153,37 @@
                                         <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
                                         <br />
                                         <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
-                                        &nbsp&nbsp&nbsp
+                                        &nbsp
                                         <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
+                                        &nbsp&nbsp
+                                        <div class="Notify">
+                                            <asp:Button ID="btnNotify" runat="server" Text="通知" />
+                                            <div class="Notifytext">
+                                                <asp:Repeater ID="rptMemberFollows" runat="server">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label1" runat="server"> 
+                                                        <%# !(bool)Eval("Replied")
+                                                                ? Eval("PointID") == null 
+
+                                                                   ? Eval("LastEditTime") == null 
+                                                                        ? string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("PostDate", "{0:yyyy/MM/dd}")) 
+                                                                        : string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("LastEditTime", "{0:yyyy/MM/dd}"))
+
+                                                                    : Eval("LastEditTime") == null 
+                                                                        ? string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("PostDate", "{0:yyyy/MM/dd}"))
+                                                                        : string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("LastEditTime", "{0:yyyy/MM/dd}")) 
+
+                                                                : ""
+                                                        %> 
+                                                        </asp:Label>
+                                                        <br />
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </div>
+                                        </div>
                                         <br />
                                         <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
-                                        
+
                                     </div>
 
                                     <div class="memberstatusright">
@@ -171,84 +194,99 @@
                                         <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
 
                                     </div>
-                            </asp:PlaceHolder>
-
-                            </div>
-                </div>
-                <!-- 下方 -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- 固定母版塊 -->
-                        <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
-                        <div class="d-none d-md-block col-md-2" id="PBArea">
-                            <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
-                            <br>
-                            <div id="PBDataList"></div>
-
-                        </div>
-                        <!--主內容區，sm為12格，md為8格 -->
-                        <div class="col-sm-12 col-md-8">
-                            <div class="row">
-                                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                                </asp:ContentPlaceHolder>
-                            </div>
-                        </div>
-
-                        <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
-                        <div class="d-none d-md-block col-md-2">
-                            <div class="BLmember">
-                                <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
-                                    <h3>黑名單</h3>
-                                    <asp:TextBox ID="txtBlkAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
-                                    <asp:TextBox ID="txtBlkDate" runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
-                                    <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
-                                    <p runat="server" text="黑單列表" />
-                                    <br />
-                                    <asp:Repeater ID="RptrBlk" runat="server">
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltlBlkID" runat="server" Text='<%# Eval("Account") %>' /><br />
-                                            <asp:Literal ID="ltlDate" runat="server" Text='<%# Eval("ReleaseDate")%>' />
-                                        </ItemTemplate>
-                                    </asp:Repeater>
                                 </asp:PlaceHolder>
+
                             </div>
-                            <br>
-                            <br>
-                            <div class="MMlist">
-                                <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
-                                    <h3>版主名單</h3>
-                                    <asp:TextBox ID="txtMMAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox><br />
-                                    <button type="button" class="btn btn-sm btn-outline-light text-white bg-dark" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號，點擊新增使其就任板主職位；點擊解除使其卸任板主職位。 新增板主不得為管理員，亦不得為黑名單中的會員。">?</button><br />
-                                    <asp:Button ID="btnMMUpdate" runat="server" Text="加入" OnClick="btnMMSave_Click" /><br />
-                                    <asp:Button ID="btnMMDelete" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
-                                    <p runat="server" text="板主列表" />
-                                    <br />
-                                    <asp:Repeater ID="RptrMM" runat="server">
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltlMMID" runat="server" Text='<%# Eval("MemberID") %>' />
-                                            <br />
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </asp:PlaceHolder>
+                    </div>
+                    </div>
+
+                    <!-- 下方 -->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <!-- 固定母版塊 -->
+                            <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
+                            <div class="d-none d-md-block col-md-2" id="PBArea">
+                                <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
+                                <br>
+                                <div id="PBDataList"></div>
+
+                            </div>
+                            <!--主內容區，sm為12格，md為8格 -->
+                            <div class="col-sm-12 col-md-8">
+                                <div class="row">
+                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </div>
+                            </div>
+
+                            <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
+                            <div class="d-none d-md-block col-md-2">
+                                <div class="BLmember">
+                                    <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
+                                        <h3>黑名單</h3>
+                                        <asp:TextBox ID="txtBlkAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
+                                        <asp:TextBox ID="txtBlkDate" runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
+                                        <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
+                                        <p runat="server" text="黑單列表" />
+                                        <br />
+                                        <asp:Repeater ID="RptrBlk" runat="server">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="ltlBlkID" runat="server" Text='<%# Eval("Account") %>' /><br />
+                                                <asp:Literal ID="ltlDate" runat="server" Text='<%# Eval("ReleaseDate")%>' />
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </asp:PlaceHolder>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="MMlist">
+                                    <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
+                                        <h3>版主名單</h3>
+                                        <asp:TextBox ID="txtMMAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox><br />
+                                        <button type="button" class="btn btn-sm btn-outline-light text-white bg-dark" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號，點擊新增使其就任板主職位；點擊解除使其卸任板主職位。 新增板主不得為管理員，亦不得為黑名單中的會員。">?</button><br />
+                                        <asp:Button ID="btnMMUpdate" runat="server" Text="加入" OnClick="btnMMSave_Click" /><br />
+                                        <asp:Button ID="btnMMDelete" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
+                                        <p runat="server" text="板主列表" />
+                                        <br />
+                                        <asp:Repeater ID="RptrMM" runat="server">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="ltlMMID" runat="server" Text='<%# Eval("MemberID") %>' />
+                                                <br />
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </asp:PlaceHolder>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
         </asp:PlaceHolder>
 
     </form>
-        <script src="js/popper.min.js"></script>
+    <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.min.js"></script>
-        <script>
-            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl)
-            })
-        </script>
     <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
+    <script>
+        //通知
+        //$('.Notifytext').hide();
+
+        var scrollVal = $('.Notifytext').prop('scrollHeight');
+        //var scrollVal = $(window).scrollTop();
+        console.log(scrollVal);
+        $(window).scroll(function () {
+            var scrollVal = $(this).scrollTop();
+            console.log(scrollVal);
+            if (scrollVal < 0) {
+                $('.Notifytext').hide();
+            }
+        }
+
         //  展開/收合按鈕
         $(document).ready(function () {
 

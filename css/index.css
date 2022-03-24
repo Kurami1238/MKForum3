@@ -65,6 +65,7 @@
         }
 
 
+
             .hot-posts .content .article h1 {
                 font-size: 20px;
             }
@@ -78,13 +79,23 @@
             border-radius: 10px 10px 0 0;
         }
 
-        .hot-posts .content .article p {
+        .hot-posts .content .article .ppd {
             font-size: 20px;
             background-color: gray;
             line-height: 60px;
             height: 100px;
             width: 70%;
+
         }
+            .hot-posts .content .article .ppd .ellipsis {
+                background-color: gray;
+                overflow: hidden;
+                display: -webkit-box;
+                text-overflow: ellipsis;
+                -webkit-line-clamp: 1; /*¦æ¼Æ*/
+                -webkit-box-orient: vertical;
+                white-space: normal;
+            }
 
         .hot-posts .content .article h3 {
             font-size: 20px;
@@ -96,3 +107,4 @@
             float: right;
             margin-right:30px;
         }
+

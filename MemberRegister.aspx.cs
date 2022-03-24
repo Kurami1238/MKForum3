@@ -25,7 +25,6 @@ namespace MKForum
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-
             string picpath = "PicPath/線條人.png";
             // 處理並儲存圖片
             if (this.fuCoverImage.HasFile)

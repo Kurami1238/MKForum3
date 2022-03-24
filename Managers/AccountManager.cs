@@ -37,7 +37,6 @@ namespace MKForum.Managers
                                 Password = reader["Password"] as string,
                                 Email = reader["Email"] as string,
                                 Salt = reader["Salt"] as byte[]
-
                             };
 
                             return member;
