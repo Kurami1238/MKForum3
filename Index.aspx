@@ -30,7 +30,7 @@
         </div>
 
 
-<%--        <div class="content">
+        <%--        <div class="content">
             <h2>音樂討論區 </h2>
             <div class="article">
                 <h1>標題:神滅之刃OP Lisa</h1>
@@ -42,26 +42,29 @@
                 </h5>
             </div>
         </div>--%>
-            <asp:Repeater ID="Repeater1" runat="server">
-        <itemtemplate>
+        <asp:Repeater ID="Repeater1" runat="server">
+            <ItemTemplate>
 
-            <div class="content">
-            <h2>音樂討論區 </h2>
-            <div class="article">
-                <h1>標題:<%# Eval("Title") %></h1>
-                <p><%# Eval("PostCotent") %></p>
-                <h3>發文者:<%# Eval("PostCotent") %></h3>
-                <h4>日期:<%# Eval("PostDate") %></h4>
-                <h5>
-                    <br />
-                </h5>
-            </div>
-        </div>
+                <div class="content">
+                    <%--<a href="DisplayPost.aspx?CboardID=2&PostID=d54c4cc3-5063-49ba-88f2-ce5aae83fc66"></a>--%>
+                    <h2>音樂討論區 </h2>
+                    <div class="article">
+                        <h1>標題:<%# Eval("Title") %></h1>
+                        <div class="ppd">
+                            <p class="ellipsis"><%# Eval("PostCotent") %></p>
+                        </div>
+                        <h3>發文者:<%# Eval("Account") %></h3>
+                        <h4>日期:<%# Eval("PostDate") %></h4>
+                        <h5>
+                            <br />
+                        </h5>
+                    </div>
+                </div>
 
-<%--              <asp:Label runat="server"><%# Eval("Title") %></asp:Label>
+                <%--              <asp:Label runat="server"><%# Eval("Title") %></asp:Label>
               <asp:Label runat="server"><%# Eval("PostCotent") %></asp:Label>--%>
-        </itemtemplate>
-    </asp:Repeater>
+            </ItemTemplate>
+        </asp:Repeater>
 
 
     </div>

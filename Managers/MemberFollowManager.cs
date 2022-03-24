@@ -27,7 +27,7 @@ namespace MKForum.Managers
                     WHERE MemberFollows.PostID in 
                     (
 	                    SELECT PostID FROM MemberFollows
-	                    WHERE MemberID = 'c8142d85-68c2-4483-ab51-e7d3fc366b89'
+	                    WHERE MemberID = @MemberID
 	                    AND Replied = 0
                     )
 
@@ -58,7 +58,7 @@ namespace MKForum.Managers
                                 PostView = (int)reader["PostView"],
                                 Title = reader["Title"] as string,
                                 PostCotent = reader["PostCotent"]as string,
-                                LastEditTime = (DateTime)reader["LastEditTime"],
+                                LastEditTime = reader["LastEditTime"] as DateTime?,
                                 Replied = (bool)reader["Replied"],
                                 Floor = (int)reader["Floor"]
                             };

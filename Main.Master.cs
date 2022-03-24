@@ -22,7 +22,8 @@ namespace MKForum
         private LoginHelper _lgihp = new LoginHelper();
         private MemberManager _mmgr = new MemberManager();
         private BlackManager _blkmgr = new BlackManager();
-        private ModeratorManager _MMmgr = new ModeratorManager();
+        private ModeratorManager _Mmgr = new ModeratorManager();
+        private MemberFollowManager _mfmgr = new MemberFollowManager();
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -49,6 +50,10 @@ namespace MKForum
 
             else if (_amgr.IsLogined())
             {
+                List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows("c8142d85-68c2-4483-ab51-e7d3fc366b89");
+                this.rptMemberFollows.DataSource = MemberFollows;
+                this.rptMemberFollows.DataBind();
+
                 this.btnwebLogin.Visible = false;
                 this.plhLogin.Visible = false;
                 this.plhLogined.Visible = true;
@@ -101,7 +106,7 @@ namespace MKForum
                 //如果當前在子板塊內，且為該子版版主，則顯示黑名單
                 if (currentCboard != null)
                 {
-                    if (this._MMmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
+                    if (this._Mmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
                     {
                         this.plhBlk.Visible = true;
                         BlckMbrDT = _blkmgr.getBlacked(currentCboard);
@@ -121,7 +126,7 @@ namespace MKForum
                     if (this._pBrdMgr.GetMemberStatus() == 3)
                     {
                         this.plhMM.Visible = true;
-                        DataTable MMDT = _MMmgr.getModerators(currentCboard);
+                        DataTable MMDT = _Mmgr.getModerators(currentCboard);
                         this.RptrMM.DataSource = MMDT;
                         this.RptrMM.DataBind();
                     }
@@ -366,7 +371,7 @@ namespace MKForum
             }
             else
             {
-                this._MMmgr.AddModeratorsList(outModerator, currentCboard);
+                this._Mmgr.AddModeratorsList(outModerator, currentCboard);
                 string msg = $"已加入{outModerator}至版主。";
                 Response.Write($"<script>alert('{msg}')</script>");
                 return;
@@ -402,13 +407,15 @@ namespace MKForum
             }
             else
             {
-                this._MMmgr.DeleteModeratorsList(outModerator, currentCboard);
+                this._Mmgr.DeleteModeratorsList(outModerator, currentCboard);
                 string msg = $"已從板主名單移除{outModerator}。";
                 Response.Write($"<script>alert('{msg}')</script>");
                 return;
             }
 
         }
+
+
 
     }
 }
