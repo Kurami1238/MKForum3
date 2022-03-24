@@ -47,7 +47,6 @@
     <asp:Repeater ID="rptNmP" runat="server" OnItemCommand="rptNmP_ItemCommand">
         <ItemTemplate>
             <div class="nomainPost col-sm-11 col-md-11 col-lg-11">
-
                 <div class="nmpostall">
                     <div class="nmF">
                         <asp:Label ID="lblNmFloor" runat="server" Text='<%# Eval("Floor")+"F" %>'></asp:Label>
