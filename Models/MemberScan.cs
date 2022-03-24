@@ -7,8 +7,9 @@ namespace MKForum.Models
 {
     public class MemberScan
     {
-        public int MemberID { get; set; }
-        public int PostID { get; set; }
+        public int ScanID { get; set; }
+        public Guid MemberID { get; set; }
+        public Guid PostID { get; set; }
         public DateTime ScanDate { get; set; }
     }
 }

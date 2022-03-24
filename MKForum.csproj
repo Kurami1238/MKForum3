@@ -289,6 +289,9 @@
     <Compile Include="Models\PostStamp.cs" />
     <Compile Include="Models\RankingDATA.cs" />
     <Compile Include="Models\SearchResult.cs" />
+    <Compile Include="API\PBoardInMain.ashx.cs">
+      <DependentUpon>PBoardInMain.ashx</DependentUpon>
+    </Compile>
     <Compile Include="PboardtoCboard.aspx.cs">
       <DependentUpon>PboardtoCboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -351,6 +354,7 @@
     <Content Include="css\Brush.woff" />
     <Content Include="css\Brush.ttf" />
     <None Include="packages.config" />
+    <Content Include="API\PBoardInMain.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
