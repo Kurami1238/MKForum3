@@ -68,7 +68,6 @@ namespace MKForum
                     this.lblMember_MemberStatus.Text = "管理員";
 
 
-
                 int memberStatus = 1;//用來測試不同身分別的
                 #region//搜尋區
 

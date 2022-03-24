@@ -273,7 +273,7 @@ namespace MKForum.Managers
             }
             catch (Exception ex)
             {
-                Logger.WriteLog("PostManager.GetMemberFollowsMemberID", ex);
+                Logger.WriteLog("PostManager.GetAllSearchKekka", ex);
                 throw;
             }
         }
@@ -337,7 +337,7 @@ namespace MKForum.Managers
             }
             catch (Exception ex)
             {
-                Logger.WriteLog("PostManager.GetMemberFollowsMemberID", ex);
+                Logger.WriteLog("PostManager.GetMemberSearchKekka", ex);
                 throw;
             }
         }
@@ -345,28 +345,46 @@ namespace MKForum.Managers
         {
             string connectionStr = ConfigHelper.GetConnectionString();
             string commandText = string.Empty;
+            string ruru = @"SELECT PostID 
+                            FROM Posts 
+                            WHERE ";
+            string pluszyouken = string.Empty;
+            for (int i = 0; i < hosii.Count; i++)
+            {
+                if (i != hosii.Count - 1)
+                    ruru += $" PostCotent LIKE '%'+@{hosii[i]}+'%' OR";
+                else
+                    ruru += $" PostCotent LIKE '%'+@{hosii[i]}+'%' ";
+            }
             if (string.Compare(pORc, "p") == 0)
             {
                 List<Cboard> cblist = this.GetPbnoCb(board);
+                for (int i = 0; i < cblist.Count; i++)
+                {
+                    if (i != cblist.Count - 1)
+                        pluszyouken += $" (CboardID = {cblist[i]} AND Post IN {ruru} ) OR ";
+                    else
+                        pluszyouken += $" (CboardID = {cblist[i]} AND {ruru} )";
+                }
                 commandText = $@"
                                 SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
                                     LastEditTime,PostView,Members.Account,CoverImage
                                 FROM Posts
-                ";
-
+                                WHERE {pluszyouken}
+                                ";
+                
             }
             if (string.Compare(pORc, "c") == 0)
             {
+                commandText = $@"
+                                SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
+                                    LastEditTime,PostView,Members.Account,CoverImage
+                                FROM Posts
+                                WHERE {pluszyouken}
+                                ";
 
             }
-           
-            for (int i = 0; i < hosii.Count; i++)
-            {
-                if (i != hosii.Count - 1)
-                    commandText += $"( MemberID = {hosii[i]} OR ";
-                else
-                    commandText += $"( MemberID = {hosii[i]} ";
-            }
+          
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionStr))
@@ -408,7 +426,7 @@ namespace MKForum.Managers
             }
             catch (Exception ex)
             {
-                Logger.WriteLog("PostManager.GetMemberFollowsMemberID", ex);
+                Logger.WriteLog("PostManager.GetboardSearchKekka", ex);
                 throw;
             }
         }
@@ -450,77 +468,77 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        //public List<SearchResult> GetMemberSearchKekka(List<string> hosii, Guid memberid)
-        //{
-        //    string pluszyouken = @"SELECT PostID 
-        //                           FROM Posts 
-        //                           WHERE ";
-        //    string connectionStr = ConfigHelper.GetConnectionString();
-        //    string commandText =
-        //        $@"
-        //            SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
-        //                    LastEditTime,PostView,Members.Account,CoverImage
-        //            FROM Posts
-        //            INNER JOIN Members
-        //            ON Posts.MemberID = Members.MemberID
-        //            WHERE PostsID.MemberID = @memberID AND 
-        //                  PostID IN
-        //                  ({pluszyouken}) 
-        //        ";
+        public List<SearchResult> GetMemberSearchKekkaUPUP(List<string> hosii, Guid memberid)
+        {
+            string pluszyouken = @"SELECT PostID 
+                                   FROM Posts 
+                                   WHERE ";
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@"
+                    SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
+                            LastEditTime,PostView,Members.Account,CoverImage
+                    FROM Posts
+                    INNER JOIN Members
+                    ON Posts.MemberID = Members.MemberID
+                    WHERE PostsID.MemberID = @memberID AND 
+                          PostID IN
+                          ({pluszyouken}) 
+                ";
 
-        //    for (int i = 0; i < hosii.Count; i++)
-        //    {
-        //        if (i != hosii.Count - 1)
-        //            pluszyouken += $" PostCotent LIKE '%'+@{hosii[i]}+'%' OR";
-        //        else
-        //            pluszyouken += $" PostCotent LIKE '%'+@{hosii[i]}+'%' ";
-        //    }
-        //    try
-        //    {
-        //        using (SqlConnection connection = new SqlConnection(connectionStr))
-        //        {
-        //            using (SqlCommand command = new SqlCommand(commandText, connection))
-        //            {
-        //                List<SearchResult> srl = new List<SearchResult>();
-        //                connection.Open();
-        //                for (int i = 0; i < hosii.Count; i++)
-        //                {
-        //                    command.Parameters.AddWithValue($"@{hosii[i]}", hosii[i]);
-        //                }
-        //                command.Parameters.AddWithValue($"@memberID", memberid);
+            for (int i = 0; i < hosii.Count; i++)
+            {
+                if (i != hosii.Count - 1)
+                    pluszyouken += $" PostCotent LIKE '%'+@{hosii[i]}+'%' OR";
+                else
+                    pluszyouken += $" PostCotent LIKE '%'+@{hosii[i]}+'%' ";
+            }
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<SearchResult> srl = new List<SearchResult>();
+                        connection.Open();
+                        for (int i = 0; i < hosii.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{hosii[i]}", hosii[i]);
+                        }
+                        command.Parameters.AddWithValue($"@memberID", memberid);
 
-        //                SqlDataReader reader = command.ExecuteReader();
+                        SqlDataReader reader = command.ExecuteReader();
 
-        //                while (reader.Read())
-        //                {
-        //                    SearchResult sr = new SearchResult()
-        //                    {
-        //                        PostID = (Guid)reader["PostID"],
-        //                        Title = (string)reader["Title"],
-        //                        PostCotent = (string)reader["PostCotent"],
-        //                        MemberID = (Guid)reader["MemberID"],
-        //                        CboardID = (int)reader["CboardID"],
-        //                        MemberAccount = (string)reader["Account"],
-        //                        LastEditTime = (DateTime)reader["LastEditTime"],
-        //                        PostView = (int)reader["PostView"],
-        //                        CoverImage = reader["CoverImage"] as string,
-        //                    };
-        //                    if (sr != null)
-        //                        srl.Add(sr);
-        //                    else
-        //                        return new List<SearchResult>();
-        //                }
-        //                return srl;
-        //            }
-        //        }
+                        while (reader.Read())
+                        {
+                            SearchResult sr = new SearchResult()
+                            {
+                                PostID = (Guid)reader["PostID"],
+                                Title = (string)reader["Title"],
+                                PostCotent = (string)reader["PostCotent"],
+                                MemberID = (Guid)reader["MemberID"],
+                                CboardID = (int)reader["CboardID"],
+                                MemberAccount = (string)reader["Account"],
+                                LastEditTime = (DateTime)reader["LastEditTime"],
+                                PostView = (int)reader["PostView"],
+                                CoverImage = reader["CoverImage"] as string,
+                            };
+                            if (sr != null)
+                                srl.Add(sr);
+                            else
+                                return new List<SearchResult>();
+                        }
+                        return srl;
+                    }
+                }
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.WriteLog("PostManager.GetMemberFollowsMemberID", ex);
-        //        throw;
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetMemberFollowsMemberID", ex);
+                throw;
+            }
+        }
 
     }
 }
