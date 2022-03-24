@@ -20,7 +20,6 @@ namespace MKForum
         private ParentBoardManager _pBrdMgr = new ParentBoardManager(); //母版塊
         private AccountManager _amgr = new AccountManager();            //帳號
         private LoginHelper _lgihp = new LoginHelper();
-        private AccountManager _Amgr = new AccountManager();
         private MemberManager _mmgr = new MemberManager();
         
 
@@ -102,9 +101,7 @@ namespace MKForum
                         btnPBMode2.Visible = true;
                     }
                 }
-
                 #endregion
-
             }
         }
         
@@ -121,12 +118,12 @@ namespace MKForum
             string pwd = this.txtPassword.Text.Trim();
             if (this.ckbskip.Checked)
             {
-                if (this._Amgr.TryLogin("a123234", "12345678"))
+                if (this._amgr.TryLogin("Text05", "12345678"))
                 {
                     Response.Redirect(Request.RawUrl);
                 }
             }
-            else if (this._Amgr.TryLogin(account, pwd))
+            else if (this._amgr.TryLogin(account, pwd))
             {
                 Response.Redirect(Request.RawUrl);
             }
@@ -134,6 +131,11 @@ namespace MKForum
             {
                 this.ltlMessage.Text = "登錄失敗，請檢察帳號密碼。";
             }
+        }
+
+        protected void btnRegister_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MemberRegister.aspx");
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
@@ -149,8 +151,6 @@ namespace MKForum
             string srchText = this.txtSearch.Text.Trim();                   //使用者輸入的關鍵字
             string drowValue = this.srchDrop.SelectedValue.Trim();          //搜尋範圍下拉選單
             bool IsBanWord = _chkInpMgr.IncludeBanWord(srchText);   //確認搜尋的關鍵字是否包含屏蔽字
-
-
 
 
             //驗證關鍵字不為空，且不含禁字，導向搜尋頁面
@@ -206,6 +206,11 @@ namespace MKForum
             this.plhPBMode2.Visible = true;
             this.plhPBEdit1.Visible = false;
             this.plhPBEdit2.Visible = false;
+        }
+
+        protected void lblMember_Change_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MemberEditor.aspx");
         }
     }
 }

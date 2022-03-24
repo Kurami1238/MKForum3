@@ -16,7 +16,7 @@ namespace MKForum.Models
         public DateTime Birthday { get; set; }
         public int Sex { get; set; }
         public string PicPath { get; set; }
-
+        public byte[] Salt { get; set; }
 
     }
 }

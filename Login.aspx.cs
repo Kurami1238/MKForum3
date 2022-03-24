@@ -38,7 +38,7 @@ namespace MKForum
             string pwd = this.txtPassword.Text.Trim();
             if (this.ckbskip.Checked)
             {
-                if (this._Amgr.TryLogin("a123234", "12345678"))
+                if (this._Amgr.TryLogin("Text05", "12345678"))
                 {
                     Response.Redirect(Request.RawUrl);
                 }
