@@ -8,7 +8,7 @@
         <div class="content col-sm-11 col-md-11 col-lg-11" id="PostHazimari">
             <input type="hidden" id="sortid" class="sortid" runat="server"/>
             <input type="hidden" id="hftest" class="hftest" runat="server"/>
-            <asp:Repeater ID="rptcBtoP" runat="server" OnItemCommand="rptcBtoP_ItemCommand">
+            <asp:Repeater ID="rptcBtoP" runat="server">
                 <ItemTemplate>
                     <div class="test">
                         <a class="PostA" href="DisplayPost.aspx?CboardID=<%# Eval("CboardID")%>&PostID=<%# Eval("PostID")%>" title="前往：<%# Eval("Title")%>">
@@ -29,9 +29,6 @@
                                     <asp:Literal ID="ltlPostD" runat="server" Text='<%# (Eval("LastEditTime") != null)? "最後編輯： " + Eval("LastEditTime") : Eval("PostDate") %>'></asp:Literal>
                                 </h4>
                                 <input type="hidden" id="hf" name="hfcbid" class="hfcbid" value="<%# Eval("CboardID")%>" />
-                                <%--    <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
-                                <asp:Button ID="btnPostEdit" runat="server" Text="編輯" CommandName="btnEditNmpost" CommandArgument='<%# Eval("PostID") %>' />
-                            </asp:PlaceHolder>--%>
                                 <h5>
                                     <br />
                                 </h5>

@@ -177,7 +177,6 @@ namespace MKForum
         protected void btnSearh_Click(object sender, EventArgs e)
         {
             string srchText = this.txtSearch.Text.Trim();                   //使用者輸入的關鍵字
-            //string[] srtarr = srchText.Split(' '); 
             string drowValue = this.srchDrop.SelectedValue.Trim();          //搜尋範圍下拉選單
             //bool IsBanWord = _chkInpMgr.IncludeBanWord(srchText);   //確認搜尋的關鍵字是否包含屏蔽字
 

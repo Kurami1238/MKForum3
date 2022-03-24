@@ -51,7 +51,7 @@
                     <div class="nmF">
                         <asp:Label ID="lblNmFloor" runat="server" Text='<%# Eval("Floor")+"F" %>'></asp:Label>
                     </div>
-                    <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0)%>'>
+                    <asp:PlaceHolder ID="Nmphl" runat="server"  Visible = '<%# (HttpContext.Current.Session["MemberID"] != null) ? (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0) : false%>'>
                         <div class="nmbtn">
                             <div>
                                 <asp:Button class="btn" ID="btnEditNmPost" runat="server" Text="編輯回覆" CommandName="btnEditNmpost" CommandArgument='<%# Eval("PostID") %>' />

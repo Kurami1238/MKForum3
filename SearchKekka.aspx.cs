@@ -16,15 +16,30 @@ namespace MKForum
         {
             string keyword = this.Request.QueryString["keyword"];           //搜尋關鍵字
             string searchArea = this.Request.QueryString["searcharea"];
-
+            
             var kwlist = new List<string>();
             string[] kwarr = keyword.Split(' ');
             foreach (var x in kwarr)
             {
+                for (int i = 0; i < kwlist.Count; i++)
+                {
+                    if (string.Compare(x, kwlist[i]) == 0)
+                    {
+                        kwlist.Remove(x);
+                    }
+                }
                 kwlist.Add(x);
             }
-            List<SearchResult> srl = this._srmgr.GetAllSearchKekka(kwlist);
-            
+            List<SearchResult> srl = new List<SearchResult>();
+            if (string.Compare(searchArea, "srchWriter") ==0)
+                srl = this._srmgr.GetMemberSearchKekka(kwlist);
+            if (string.Compare(searchArea, "srchCurrent") == 0)
+                srl = "x";
+            else        
+                srl = this._srmgr.GetAllSearchKekka(kwlist);
+            this.rptcBtoP.DataSource = srl;
+            this.rptcBtoP.DataBind();
         }
+
     }
 }
