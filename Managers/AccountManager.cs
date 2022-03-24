@@ -35,7 +35,9 @@ namespace MKForum.Managers
                                 MemberID = (Guid)reader["MemberID"],
                                 Account = reader["Account"] as string,
                                 Password = reader["Password"] as string,
-                                Email = reader["Email"] as string
+                                Email = reader["Email"] as string,
+                                Salt = reader["Salt"] as byte[]
+
                             };
 
                             return member;
@@ -92,35 +94,32 @@ namespace MKForum.Managers
             }
         }
         
-        public void CreateAccount(Member member, MemberRegister memberRegister)
+        public void CreateAccount(Member member)
         {
-            // 1. 判斷資料庫是否有相同的 Account
-            if (this.GetAccount(member.Account) != null)
-                throw new Exception("已存在相同的帳號");
 
-            // 2. 新增資料
             string connStr = ConfigHelper.GetConnectionString();
             string commandText =
                 @"  
-                INSERT INTO Members(MemberID,Account,PWD,Email)VALUES(@MemberID,@Account,@PWD,@Email)
-
-                INSERT INTO MemberRecords (MemberID)VALUES(@MemberID)
-
-                 INSERT INTO MemberRegisters(MemberID,Captcha)
-                  VALUES(@MemberID,@Captcha)
-                  ";
+                    INSERT INTO Members
+                        (MemberStatus, Account, Password, Email, NickName, Birthday, Sex, PicPath, Salt)
+                    VALUES
+                        (@MemberStatus, @Account, @Password, @Email, @NickName, @Birthday, @Sex, @PicPath, @Salt)
+                ";
             try
             {
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     using (SqlCommand command = new SqlCommand(commandText, conn))
                     {
-                        member.MemberID = Guid.NewGuid();
-                        command.Parameters.AddWithValue("@MemberID", member.MemberID);
+                        command.Parameters.AddWithValue("@MemberStatus", member.MemberStatus);
                         command.Parameters.AddWithValue("@Account", member.Account);
-                        command.Parameters.AddWithValue("@PWD", member.Password);
+                        command.Parameters.AddWithValue("@Password", member.Password);
                         command.Parameters.AddWithValue("@Email", member.Email);
-                        command.Parameters.AddWithValue("@Captcha", memberRegister.Captcha);
+                        command.Parameters.AddWithValue("@NickName", member.NickName);
+                        command.Parameters.AddWithValue("@Birthday", member.Birthday);
+                        command.Parameters.AddWithValue("@Sex", member.Sex);
+                        command.Parameters.AddWithValue("@PicPath", member.PicPath);
+                        command.Parameters.AddWithValue("@Salt", member.Salt);
 
                         conn.Open();
                         command.ExecuteNonQuery();
@@ -129,7 +128,7 @@ namespace MKForum.Managers
             }
             catch (Exception ex)
             {
-                Logger.WriteLog("AccountMember.CreateAccount(Member member)", ex);
+                Logger.WriteLog("AccountMember.CreateAccount", ex);
                 throw;
             }
         }
@@ -260,6 +259,7 @@ namespace MKForum.Managers
 
 
         private LoginHelper _lgihp = new LoginHelper();
+        private EncryptionHelper _encryption = new EncryptionHelper();
 
         public bool TryLogin(string account, string password)
         {
@@ -268,13 +268,21 @@ namespace MKForum.Managers
 
             Member member = this.GetAccount(account);
 
+            //雜湊
+            string key = _encryption.HashPasswordkey();
+            byte[] salt = member.Salt;
+
+            byte[] securitBytes = _encryption.GetHashPassword(password, key, salt);
+            string HashPassword = Convert.ToBase64String(securitBytes);
+
+
             if (member == null) // 找不到就代表登錄失敗
                 return false;
             if (string.Compare(member.Account, account, true) == 0)
             {
                 isAccountRight = true;
             }
-            if (member.Password == password)
+            if (member.Password == HashPassword)
             {
                 isPasswordRight = true;
             }

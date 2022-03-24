@@ -69,6 +69,15 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.Button btnLogin;
 
         /// <summary>
+        /// btnRegister 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRegister;
+
+        /// <summary>
         /// ckbskip 控制項。
         /// </summary>
         /// <remarks>
@@ -103,6 +112,15 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder plhLogined;
+
+        /// <summary>
+        /// PlaceHolder1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder1;
 
         /// <summary>
         /// Repeater1 控制項。
@@ -238,6 +256,15 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMember_Account;
+
+        /// <summary>
+        /// lblMember_Change 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button lblMember_Change;
 
         /// <summary>
         /// lblMember_MemberStatus 控制項。
