@@ -113,7 +113,7 @@ namespace MKForum.Managers
             catch (Exception ex)
             {
                 Logger.WriteLog("MemberFollowManager.GetMemberFollows", ex);
-                return null; //null代表沒追蹤
+                return null;
             }
         }
 
