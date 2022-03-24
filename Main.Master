@@ -335,7 +335,7 @@
                         <tr>
                             <td>
                               <div class="${item.PboardID}">
-                                  <a href="/CboardsPage.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">${item.Pname}</p>
+                                  <a href="/PboardtoCboard.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">${item.Pname}</p>
                               </div>
                             </td>
                         </tr>
