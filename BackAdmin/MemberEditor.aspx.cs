@@ -3,7 +3,6 @@ using MKForum.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,15 +12,14 @@ namespace MKForum.BackAdmin
     public partial class MemberEditor : System.Web.UI.Page
     {
         private MemberManager _mmgr = new MemberManager();
-        private AccountManager _amgr = new AccountManager(); 
+
+        private string SearchMemberID = "c8142d85-68c2-4483-ab51-e7d3fc366b89";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Member account = _amgr.GetCurrentUser();
-                string memberID = account.MemberID.ToString();
-                Models.Member memberInfo = _mmgr.GetMember(memberID);
+                Models.Member memberInfo = _mmgr.GetMember(SearchMemberID);
 
                 if (memberInfo == null)
                 {
@@ -65,8 +63,7 @@ namespace MKForum.BackAdmin
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Member account = _amgr.GetCurrentUser();
-            string memberID = account.MemberID.ToString();
+            
 
             int ? SexValue = null;
             if (rdbtnMember_SexList.Items[0].Selected == true)
@@ -86,7 +83,7 @@ namespace MKForum.BackAdmin
             {
                 Models.Member memberSet = new Models.Member()
                 {
-                    MemberID = Guid.Parse(memberID.Trim()),
+                    MemberID = Guid.Parse(SearchMemberID.Trim()),
                     NickName = this.txtMember_name.Text.Trim(),
                     Sex = (int)SexValue,
                     Birthday = Convert.ToDateTime(this.txtMember_Birthday.Text.Trim()),
@@ -111,11 +108,9 @@ namespace MKForum.BackAdmin
 
         public bool SaveCheck(int? SexValue, int? StatusValue)
         {
-            Member account = _amgr.GetCurrentUser();
-            string memberID = account.MemberID.ToString();
             List<string> msgList = new List<string>();
 
-            string MemberIDValue = memberID;
+            string MemberIDValue = SearchMemberID;
             string NickNameValue = this.txtMember_name.Text.Trim();
             string BirthdayValue = this.txtMember_Birthday.Text.Trim();
             string AccountValue = this.txtMember_Account.Text.Trim();
@@ -147,10 +142,6 @@ namespace MKForum.BackAdmin
             if (PassWordValue != PassWordValueCheck)
                 msgList.Add("密碼輸入不一致");
 
-            string pattern = @"^[A-Za-z0-9]+$";
-            Regex regex = new Regex(pattern);
-            if (!regex.IsMatch(PassWordValue))
-                msgList.Add("密碼請用英文及數字");
 
             if (SexValue == null)
                 msgList.Add("性別輸入錯誤");

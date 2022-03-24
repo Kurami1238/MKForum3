@@ -51,7 +51,6 @@ namespace MKForum.Helpers
 
         public void Logout()
         {
-            HttpContext.Current.Session.Abandon();
             FormsAuthentication.SignOut();
         }
 

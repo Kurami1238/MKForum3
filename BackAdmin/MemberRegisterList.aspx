@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BackAdmin/MemberPage.Master" AutoEventWireup="true" CodeBehind="MemberRegisterList.aspx.cs" Inherits="MKForum.BackAdmin.MemberRegisterList" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
