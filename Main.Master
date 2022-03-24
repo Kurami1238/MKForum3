@@ -283,7 +283,6 @@
                     $("#PBDataList_normal1").append("<table>" + rowsText + "</table>");
                     $("#PBDataList_normal2").append("<table>" + rowsText + "</table>");
                     console.log(jsonText);
-                    alert("成功載入前台母版塊");
                 },
                 error: function (msg) {
                     console.log(msg);
@@ -317,7 +316,6 @@
                     $("#PBDataList_Admin2").append("<table>" + rowsText + "</table>");
 
                     console.log(jsonText);
-                    alert("成功載入後台母版塊");
                 },
                 error: function (msg) {
                     console.log(msg);
