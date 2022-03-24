@@ -106,7 +106,7 @@ namespace MKForum
                 //如果當前在子板塊內，且為該子版版主，則顯示黑名單
                 if (currentCboard != null)
                 {
-                    if (this._MMmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
+                    if (this._Mmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
                     {
                         this.plhBlk.Visible = true;
                         BlckMbrDT = _blkmgr.getBlacked(currentCboard);
@@ -126,7 +126,7 @@ namespace MKForum
                     if (this._pBrdMgr.GetMemberStatus() == 3)
                     {
                         this.plhMM.Visible = true;
-                        DataTable MMDT = _MMmgr.getModerators(currentCboard);
+                        DataTable MMDT = _Mmgr.getModerators(currentCboard);
                         this.RptrMM.DataSource = MMDT;
                         this.RptrMM.DataBind();
                     }
@@ -371,7 +371,7 @@ namespace MKForum
             }
             else
             {
-                this._MMmgr.AddModeratorsList(outModerator, currentCboard);
+                this._Mmgr.AddModeratorsList(outModerator, currentCboard);
                 string msg = $"已加入{outModerator}至版主。";
                 Response.Write($"<script>alert('{msg}')</script>");
                 return;
@@ -407,7 +407,7 @@ namespace MKForum
             }
             else
             {
-                this._MMmgr.DeleteModeratorsList(outModerator, currentCboard);
+                this._Mmgr.DeleteModeratorsList(outModerator, currentCboard);
                 string msg = $"已從板主名單移除{outModerator}。";
                 Response.Write($"<script>alert('{msg}')</script>");
                 return;
