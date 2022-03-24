@@ -121,7 +121,6 @@
     <Content Include="js\jquery.min.js" />
     <Content Include="js\showdown.js" />
     <Content Include="Login.aspx" />
-    <Content Include="MemberEditor.aspx" />
     <Content Include="MemberFollowList.aspx" />
     <Content Include="MemberList.aspx" />
     <Content Include="MemberRegister.aspx" />
@@ -142,13 +141,6 @@
     </Compile>
     <Compile Include="API\PBoardHandler.ashx.cs">
       <DependentUpon>PBoardHandler.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="BackAdmin\MemberEditor.aspx.cs">
-      <DependentUpon>MemberEditor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BackAdmin\MemberEditor.aspx.designer.cs">
-      <DependentUpon>MemberEditor.aspx</DependentUpon>
     </Compile>
     <Compile Include="BackAdmin\MemberFollowEditor.aspx.cs">
       <DependentUpon>MemberFollowEditor.aspx</DependentUpon>
@@ -246,13 +238,6 @@
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
-    <Compile Include="MemberEditor.aspx.cs">
-      <DependentUpon>MemberEditor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MemberEditor.aspx.designer.cs">
-      <DependentUpon>MemberEditor.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MemberFollowList.aspx.cs">
       <DependentUpon>MemberFollowList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

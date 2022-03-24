@@ -11,9 +11,28 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <script src="js/popper.min.js"></script>
+    <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.min.js"></script>
+    <style>
+        #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout {
+            background-color: white;
+            color: black;
+            font-family: Consolas;
+            font-size: 22pt;
+        }
+
+
+        #lblTEXT {
+            color: white;
+            font-size: 42pt;
+        }
+
+        .span1 {
+            color: white;
+            font-size: 16pt;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -38,10 +57,9 @@
 
 
         </asp:PlaceHolder>
-        
+
 
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
-            <asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible="true">
             <div class="container-all">
                 <!--xs以下顯示，md以上不顯示 -->
                 <div class="d-xs-block d-md-none">
@@ -54,6 +72,8 @@
                                 <i class="fas fa-align-left"></i>
                             </button>
                             <div>
+                                <!-- List 列表 -->
+                                <p>母版塊列表 </p>
                                 <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
@@ -77,8 +97,6 @@
                         </nav>
                     </div>
                 </div>
-            </div>
-        </asp:PlaceHolder>
         <!-- 上區塊 -->
         <div class="container-fluid bg-dark text-white">
             <div class="row">
@@ -122,7 +140,7 @@
                                         <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
                                         <br />
                                         <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
-                                        
+
                                     </div>
 
                                     <div class="memberstatusright">
@@ -133,9 +151,10 @@
                                         <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
 
                                     </div>
-                            </asp:PlaceHolder>
+                                </asp:PlaceHolder>
 
                             </div>
+                </div>
                 </div>
                 <!-- 下方 -->
                 <div class="container-fluid">
@@ -215,6 +234,7 @@
                 </div>
             </div>
         </div>
+        </asp:PlaceHolder>
     </form>
     <script src="js/jquery.min.js"></script>
 
@@ -239,25 +259,7 @@
         });
 
     </script>
-        <style>
-        #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout {
-            background-color: white;
-            color: black;
-            font-family: Consolas;
-            font-size: 22pt;
-        }
 
-
-        #lblTEXT {
-            color: white;
-            font-size: 42pt;
-        }
-
-        .span1 {
-            color: white;
-            font-size: 16pt;
-        }
-    </style>
     <script>
         $(document).ready(function () {
             //取得母版，不含編輯按鈕
