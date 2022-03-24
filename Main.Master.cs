@@ -84,42 +84,54 @@ namespace MKForum
                 }*/
                 #endregion
 
-                #region//母版塊區
-                if (_amgr.IsLogined())
+            #region//母版塊區的功能
+            if (_amgr.IsLogined())
+            {
+                //如果是管理員，顯示編輯按鈕
+                if (_pBrdMgr.GetMemberStatus() == 3)
                 {
-                    memberStatus = _pBrdMgr.GetMemberStatus();
+                    this.plhPBEdit1.Visible = true;
+                    this.plhPBEdit2.Visible = true;
                 }
-
-                if (!this.IsPostBack)
-                {
-                    if (!this.IsPostBack)
-                    {
-                        var list = this._pBrdMgr.GetList();
-                        //this.gdvList.DataSource = list;
-                        //this.gdvList.DataBind();
-                    }
-
-                    DataTable dt = _pBrdMgr.GetPBoardStatus();
-                    this.Repeater1.DataSource = dt;
-                    this.Repeater1.DataBind();
-                    //this.Repeater2.DataSource = dt;
-                    //this.Repeater2.DataBind();
-
-
-                    if (memberStatus == 3)
-                    {
-                        btnPBMode1.Visible = true;
-                        //btnPBMode2.Visible = true;
-                    }
-                }
-                #endregion
             }
-        }
+            #endregion
+
+            int intcurrentCboard;
+            DataTable BlckMbrDT;
+            #region//顯示黑名單的功能
+            //如果當前在子板塊內，且為該子版版主，則顯示黑名單
+            if (currentCboard != null)
+            {
+                if (this._MMmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
+                {
+                    this.plhBlk.Visible = true;
+                    BlckMbrDT = _blkmgr.getBlacked(currentCboard);
+                    this.RptrBlk.DataSource = BlckMbrDT;
+                    this.RptrBlk.DataBind();
+                }
+            }
+            else
+            { }
+
+            #endregion
+
+            #region//顯示版主名單的功能(資料庫沒資料無法測試)
+            //如果當前在子板塊內，且為後台人員(身分別為3)，則顯示板主名單
+            if (currentCboard != null)
+            {
+                if (this._pBrdMgr.GetMemberStatus() == 3)
+                {
+                    this.plhMM.Visible = true;
+                    DataTable MMDT = _MMmgr.getModerators(currentCboard);
+                    this.RptrMM.DataSource = MMDT;
+                    this.RptrMM.DataBind();
+                }
+            }
+            #endregion
 
         protected void Page_Prerender(object sender, EventArgs e)
         {
-            //string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前PboardID
-            string currentPboard = "2";           //用來測試
+            string currentPboard = this.Request.QueryString["PboardID"];    //當前母板塊
             string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
 
             #region//搜尋區的功能
@@ -138,7 +150,6 @@ namespace MKForum
             this.plhLogin.Visible = true;
             this.plhLogined.Visible = false;
         }
-
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
@@ -172,6 +183,7 @@ namespace MKForum
             Response.Redirect(Request.RawUrl);
 
         }
+
 
         //搜尋按鈕( 負責組成URL並導向搜尋頁面 )
         protected void btnSearh_Click(object sender, EventArgs e)
@@ -208,33 +220,35 @@ namespace MKForum
             }
         }
 
-        //母版塊編輯模式切換按鈕事件
-        protected void btnPBMode_Click(object sender, EventArgs e)
+        //母版塊編輯按鈕
+        protected void btnPBEditMode_Click(object sender, EventArgs e)
         {
-            //this.plhPBMode1.Visible = false;
-            //this.plhPBMode2.Visible = false;
-            //this.plhPBEdit1.Visible = true;
-            //this.plhPBEdit2.Visible = true;
+            #region//第一組的顯示隱藏
+            this.plhPBEdit1.Visible = false;    //隱藏編輯按鈕
+            this.plhAPI1_normal.Visible = false;    //關閉顯示模式的ajax
+            this.plhAPI1_admin.Visible = true;    //換成有按鈕的ajax
+            this.plhPBDsplMode1.Visible = true;    //顯示儲存按鈕
+            #endregion
+
+            #region//第二組的顯示隱藏
+            this.plhPBEdit2.Visible = false;    //隱藏編輯按鈕
+            this.plhAPI2_normal.Visible = false;    //關閉顯示模式的ajax
+            this.plhAPI2_admin.Visible = true;    //換成有按鈕的ajax
+            this.plhPBDsplMode2.Visible = true;    //顯示儲存按鈕
+            #endregion
         }
 
-        //儲存編輯後的母版塊按鈕事件
+        //儲存母版塊按鈕
         protected void btnPBSave_Click(object sender, EventArgs e)
         {
-            List<Pboard> newPBData = new List<Pboard>();
-            //取得新的母版塊資料(待補)
-
-            //寫入資料庫
-            //_pBrdMgr.SetPBoardStatus(newPBData);
-
+            this.plhPBDsplMode2.Visible = false;    //隱藏儲存按鈕
+            this.plhAPI2_admin.Visible = false;    //關閉有按鈕的ajax
+            this.plhAPI2_normal.Visible = true;    //換成顯示模式的ajax
+            this.plhPBEdit2.Visible = true;    //顯示編輯按鈕
         }
-        //取消編輯母版塊按鈕事件
-        protected void btnPBCancel_Click(object sender, EventArgs e)
-        {
-            //this.plhPBMode1.Visible = true;
-            //this.plhPBMode2.Visible = true;
-            //this.plhPBEdit1.Visible = false;
-            //this.plhPBEdit2.Visible = false;
-        }
+
+
+
 
         protected void lblMember_Change_Click(object sender, EventArgs e)
         {
@@ -308,8 +322,6 @@ namespace MKForum
             }
         }
 
-
-
         //儲存板主
         protected void btnMMSave_Click(object sender, EventArgs e)
         {
@@ -344,7 +356,6 @@ namespace MKForum
                 string msg = $"輸入帳號為管理員，或已經是該板板主。";
                 Response.Write($"<script>alert('{msg}')</script>");
                 return;
-
             }
             //如果已經在黑名單表，不能被提升為板主
             if (_blkmgr.IsBlacked(outModerator, currentCboard))
@@ -362,8 +373,40 @@ namespace MKForum
 
             }
         }
+
         protected void btnMMDelete_Click(object sender, EventArgs e)
         {
+            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+            string inpModerator = this.txtBlkAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
+
+            if (inpModerator == "")
+            {
+                string msg = "請輸入刪除的版主帳號";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+
+            string outModerator = "";
+            if (!_chkInpMgr.IsNumAndEG(inpModerator, out outModerator))
+            {
+                string msg = "輸入的帳號不得有英文及數字以外的字元";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+
+            }
+            if (!this._blkmgr.IsCurrentModerator(currentCboard, outModerator))
+            {
+                string msg = "輸入的帳號不是本板板主";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+            else
+            {
+                this._MMmgr.DeleteModeratorsList(outModerator, currentCboard);
+                string msg = $"已從板主名單移除{outModerator}。";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
 
         }
 

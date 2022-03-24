@@ -132,9 +132,9 @@ namespace MKForum.Managers
             string commandText =
                 @"
                 UPDATE [MKForum].[dbo].[PBoards]
-                SET [Pname]='@Pname',[PboardDate]=GETDATE(),
-                    [Porder]='@Porder',[Pshow]='@Pshow',
-                WHERE [PboardID]='@PboardID'
+                SET [Pname]=@Pname,[PboardDate]=GETDATE(),
+                    [Porder]=@Porder,[Pshow]=@Pshow,
+                WHERE [PboardID]=@PboardID
                     ";//使用UPDATE更新母板塊
             try
             {
@@ -168,14 +168,15 @@ namespace MKForum.Managers
         /// <param name="pboardModel">傳入值為母版的Model</param>
         public void UpdatePBoardOrder(Pboard pboardModel)
         {
-            int order = pboardModel.Porder;
+            string strPboardID =pboardModel.PboardID.ToString();
+            string strorder = pboardModel.Porder.ToString();
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
                 UPDATE [MKForum].[dbo].[PBoards]
                 SET [PboardDate]=GETDATE(),
-                    [Porder]='@Porder'
-                WHERE [PboardID]='@PboardID'
+                    [Porder]=@Porder
+                WHERE [PboardID]=@PboardID
                     ";//使用UPDATE更新母板塊
             try
             {
@@ -185,8 +186,8 @@ namespace MKForum.Managers
                     {
                         connection.Open();
 
-                            command.Parameters.AddWithValue(@"PboardID", pboardModel.PboardID);
-                            command.Parameters.AddWithValue(@"Porder", pboardModel.Porder);
+                            command.Parameters.AddWithValue(@"PboardID", strPboardID);
+                            command.Parameters.AddWithValue(@"Porder", strorder);
                             command.ExecuteNonQuery();
                     }
                 }
@@ -205,13 +206,16 @@ namespace MKForum.Managers
         /// <returns>回傳母版ID(int)</returns>
         public int GetnPBoardOrder(Pboard pboardModel)
         {
-            int pboardID=0;
+            string strorder = pboardModel.Porder.ToString();
+
+            int pboardID =0;
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
                 SELECT [PboardID]
                 FROM [MKForum].[dbo].[PBoards]
-                WHERE [Porder]='@Porder'
+                WHERE [Porder]=@Porder
+
                     ";//使用UPDATE更新母板塊
             try
             {
@@ -220,10 +224,10 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
                         connection.Open();
+                        command.Parameters.AddWithValue(@"Porder", strorder);
                         SqlDataReader reader = command.ExecuteReader();
                         if (reader.Read())
                         {
-                            command.Parameters.AddWithValue(@"Porder", pboardModel.Porder);
                             pboardID = (int)reader["PboardID"];
                         }
                         return pboardID;
@@ -239,7 +243,7 @@ namespace MKForum.Managers
         }
 
         /// <summary>
-        /// 取得目前全部有哪些母板塊的DataTable(改成API之後應該會作廢)
+        /// 取得目前全部有哪些母板塊的DataTable(進入API前顯示用)
         /// </summary>
         /// <returns>回傳值為DataTable</returns>
         public DataTable GetPBoardStatus()
@@ -248,7 +252,7 @@ namespace MKForum.Managers
             string commandText =
                 @"  SELECT [Pname],PboardID
                     FROM [MKForum].[dbo].[Pboards]
-                    ";//取得目前有哪些母板塊
+                    ";
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -291,6 +295,7 @@ namespace MKForum.Managers
                 @"
                     SELECT PboardID,Pname,Porder,Pshow
                     FROM [MKForum].[dbo].[Pboards]
+                    ORDER BY [Porder]
                     ";//取得目前有哪些母板塊
             try
             {

@@ -62,8 +62,8 @@ namespace MKForum.Managers
         /// <summary>
         /// 判斷字串文字是否皆為英數
         /// </summary>
-        /// <param name="str">檢測的字串</param>
-        /// <param name="outAccount">可用於輸出alert的字串，若boolean結果為false，輸出值將為空字串</param>
+        /// <param name="str">(string)檢測的字串</param>
+        /// <param name="outAccount">(string)可用於輸出alert的字串，若boolean結果為false，輸出值將為空字串</param>
         /// <returns>回傳值為boolean</returns>
         public bool IsNumAndEG(string str, out string outAccount)
         {
