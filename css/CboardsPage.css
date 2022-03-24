@@ -138,13 +138,15 @@ img{
             .Cboard .content .article p {
                 font-size: 20px;
                 background-color: rgb(44, 44, 44);
-                line-height: 60px;
+                line-height: 40px;
+                padding: 8px;
                 height: 100px;
                 width: 70%; 
             }
 
             .Cboard .content .article h3 {
-                font-size: 20px;
+                margin-top: 5px;
+                font-size: 15px;
                 float: left;
             }
 

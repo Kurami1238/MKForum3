@@ -25,8 +25,11 @@ namespace MKForum
             this.CheckLogin();
             // 從QS取得文章id 不能就回子版
             Guid postid = this.GetPostID();
-            // 取得文章資訊 順便驗證是否有追蹤
-            this.GetPost(postid);
+            // 取得文章資訊 分流遊客與會員 並順便驗證是否有追蹤
+            if (this._member == null)
+                this.GetPost(postid);
+            else
+                this.GetPost(postid, this._member.MemberID);
             // 判斷是不是遊客及是否為作者and版主就全開放
             this.CheckDare();
 
@@ -44,17 +47,39 @@ namespace MKForum
 
         private void CheckDare()
         {
+            string cboardsText = this.Request.QueryString["Cboard"];
+            int cboard = (string.IsNullOrWhiteSpace(cboardsText))
+                            ? 2 : Convert.ToInt32(cboardsText);
+            Cboard cboardd = CboardManager.GetCboard(cboard);
+            List<MemberModerator> ml = this._pmgr.GetModeratorList(cboard);
+            var mlm = ml.Select(x => x.MemberID);
             if (Session["MemberID"] == null)
                 phl.Visible = false;
             else
             {
                 phl.Visible = (string.Compare(this.hfMemberID.Value, HttpContext.Current.Session["MemberID"].ToString()) == 0);
+                if (this._member != null)
+                {
+                    foreach (var x in mlm)
+                    {
+                        if (string.Compare(x.ToString(), this._member.MemberID.ToString()) == 0)
+                            phl.Visible = true;
+                    }
+                }
             }
+
         }
 
         private void GetPost(Guid postid)
         {
             Post post = this._pmgr.GetPost(postid);
+            if (post == null)
+                this.BackToListPage();
+            this.DisplayPost(post);
+        }
+        private void GetPost(Guid postid,Guid memberid)
+        {
+            Post post = this._pmgr.GetPost(postid,memberid);
             if (post == null)
                 this.BackToListPage();
             this.DisplayPost(post);
@@ -159,11 +184,9 @@ namespace MKForum
         {
             string postidText = this.Request.QueryString["PostID"];
             Guid postid = Guid.Empty;
-            if (!Guid.TryParse(postidText, out postid))
+            if (Guid.TryParse(postidText, out postid))
             {
                 this._pmgr.DeletePost(postid);
-                // JS Alert 提示刪除成功
-                Response.Write("<script language='javascipt'>alert('刪除成功')</script>");
                 this.BackToListPage();
             }
         }
@@ -216,7 +239,7 @@ namespace MKForum
                     break;
             }
         }
-       
+
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
             //從QS取得文章id 不能就回子版

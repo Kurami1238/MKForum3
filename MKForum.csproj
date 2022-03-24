@@ -68,8 +68,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BackAdmin\MemberEditor.aspx" />
     <Content Include="BackAdmin\MemberFollowEditor.aspx" />
+    <Content Include="BackAdmin\tryencryption.aspx" />
     <Content Include="BackAdmin\WebForm1.aspx" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
@@ -121,8 +121,10 @@
     <Content Include="js\jquery.min.js" />
     <Content Include="js\showdown.js" />
     <Content Include="Login.aspx" />
+    <Content Include="MemberEditor.aspx" />
     <Content Include="MemberFollowList.aspx" />
     <Content Include="MemberList.aspx" />
+    <Content Include="MemberRegister.aspx" />
     <Content Include="MemberStatus.aspx" />
     <Content Include="PboardtoCboard.aspx" />
     <Content Include="Ranking.aspx" />
@@ -162,6 +164,13 @@
     <Compile Include="BackAdmin\test.aspx.designer.cs">
       <DependentUpon>test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BackAdmin\tryencryption.aspx.cs">
+      <DependentUpon>tryencryption.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackAdmin\tryencryption.aspx.designer.cs">
+      <DependentUpon>tryencryption.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CboardsPage.aspx.cs">
       <DependentUpon>CboardsPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,6 +203,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ConfigHelper.cs" />
+    <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
@@ -236,6 +246,13 @@
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
+    <Compile Include="MemberEditor.aspx.cs">
+      <DependentUpon>MemberEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MemberEditor.aspx.designer.cs">
+      <DependentUpon>MemberEditor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MemberFollowList.aspx.cs">
       <DependentUpon>MemberFollowList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -249,6 +266,13 @@
     </Compile>
     <Compile Include="MemberList.aspx.designer.cs">
       <DependentUpon>MemberList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MemberRegister.aspx.cs">
+      <DependentUpon>MemberRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MemberRegister.aspx.designer.cs">
+      <DependentUpon>MemberRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="MemberStatus.aspx.cs">
       <DependentUpon>MemberStatus.aspx</DependentUpon>
@@ -272,6 +296,7 @@
     <Compile Include="Models\PostHashtag.cs" />
     <Compile Include="Models\PostImgList.cs" />
     <Compile Include="Models\PostStamp.cs" />
+    <Compile Include="Models\RankingDATA.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="PboardtoCboard.aspx.cs">
       <DependentUpon>PboardtoCboard.aspx</DependentUpon>

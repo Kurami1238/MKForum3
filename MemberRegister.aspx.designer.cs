@@ -11,124 +11,151 @@ namespace MKForum
 {
 
 
-    public partial class WebForm1
+    public partial class MemberRegister
     {
 
         /// <summary>
-        /// lblTitle 控制項。
+        /// form1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitle;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// lblFloor 控制項。
+        /// fuCoverImage 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloor;
+        protected global::System.Web.UI.WebControls.FileUpload fuCoverImage;
 
         /// <summary>
-        /// btnMemberFollow_FollowStatus 控制項。
+        /// imgCoverImage 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnMemberFollow_FollowStatus;
+        protected global::System.Web.UI.WebControls.Image imgCoverImage;
 
         /// <summary>
-        /// phl 控制項。
+        /// txtMember_name 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phl;
+        protected global::System.Web.UI.WebControls.TextBox txtMember_name;
 
         /// <summary>
-        /// hfMemberID 控制項。
+        /// rdbtnMember_SexList 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfMemberID;
+        protected global::System.Web.UI.WebControls.RadioButtonList rdbtnMember_SexList;
 
         /// <summary>
-        /// btnEditPost 控制項。
+        /// txtMember_Birthday 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEditPost;
+        protected global::System.Web.UI.WebControls.TextBox txtMember_Birthday;
 
         /// <summary>
-        /// btnDeletePost 控制項。
+        /// txtAccount 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeletePost;
+        protected global::System.Web.UI.WebControls.TextBox txtAccount;
 
         /// <summary>
-        /// lblMember 控制項。
+        /// btnAccountcheck 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMember;
+        protected global::System.Web.UI.WebControls.Button btnAccountcheck;
 
         /// <summary>
-        /// sortid 控制項。
+        /// ltlAccountcheckmsg 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden sortid;
+        protected global::System.Web.UI.WebControls.Literal ltlAccountcheckmsg;
 
         /// <summary>
-        /// lblMemberFollow_FollowStatus 控制項。
+        /// txtPassword 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMemberFollow_FollowStatus;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
         /// <summary>
-        /// rptNmP 控制項。
+        /// txtPassword_Check 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptNmP;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword_Check;
 
         /// <summary>
-        /// txtCNNmPost 控制項。
+        /// txtEmail 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCNNmPost;
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
-        /// btnCNNmPost 控制項。
+        /// txtCapt 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCNNmPost;
+        protected global::System.Web.UI.WebControls.TextBox txtCapt;
+
+        /// <summary>
+        /// btnSave 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave;
+
+        /// <summary>
+        /// btnCancel 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancel;
+
+        /// <summary>
+        /// lblMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsg;
     }
 }

@@ -26,6 +26,8 @@
             <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox><br />
             <br />
             <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="btnRegister" runat="server" Text="註冊" OnClick="btnRegister_Click" />
             <br />
             <span class="span1">測試版登入?</span>
             <asp:CheckBox runat="server" ID="ckbskip" Checked="true" Visible="false" /><br />
@@ -36,9 +38,10 @@
 
 
         </asp:PlaceHolder>
-
+        
 
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
+            <asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible="true">
             <div class="container-all">
                 <!--xs以下顯示，md以上不顯示 -->
                 <div class="d-xs-block d-md-none">
@@ -115,8 +118,11 @@
                                         <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
                                         <br />
                                         <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
+                                        &nbsp&nbsp&nbsp
+                                        <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
                                         <br />
                                         <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
+                                        
                                     </div>
 
                                     <div class="memberstatusright">
@@ -127,7 +133,7 @@
                                         <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
 
                                     </div>
-                                </asp:PlaceHolder>
+                            </asp:PlaceHolder>
 
                             </div>
                 </div>
