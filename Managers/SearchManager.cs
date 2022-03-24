@@ -341,14 +341,14 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public List<SearchResult> GetboardSearchKekka(List<string> hosii, int board, string pORc)
+        public List<SearchResult> GetboardSearchKekka(List<string> hosii, string board, string pORc)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
+            string pluszyouken = string.Empty;
             string commandText = string.Empty;
             string ruru = @"SELECT PostID 
                             FROM Posts 
                             WHERE ";
-            string pluszyouken = string.Empty;
             for (int i = 0; i < hosii.Count; i++)
             {
                 if (i != hosii.Count - 1)
@@ -380,11 +380,10 @@ namespace MKForum.Managers
                                 SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
                                     LastEditTime,PostView,Members.Account,CoverImage
                                 FROM Posts
-                                WHERE {pluszyouken}
+                                WHERE PostID IN {ruru} 
+                                AND CboardID = {board} 
                                 ";
-
             }
-          
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionStr))
@@ -397,9 +396,7 @@ namespace MKForum.Managers
                         {
                             command.Parameters.AddWithValue($"@{hosii[i]}", hosii[i]);
                         }
-
                         SqlDataReader reader = command.ExecuteReader();
-
                         while (reader.Read())
                         {
                             SearchResult sr = new SearchResult()
@@ -422,7 +419,6 @@ namespace MKForum.Managers
                         return srl;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -430,7 +426,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public List<Cboard> GetPbnoCb(int pbid)
+        public List<Cboard> GetPbnoCb(string pbid)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
             string commandText =

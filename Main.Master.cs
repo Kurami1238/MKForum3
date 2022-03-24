@@ -204,11 +204,11 @@ namespace MKForum
                     string srchPboardID = this.Request.QueryString["PboardID"];
                     string srchCurrent = "";
 
-                    if (srchPboardID != null)
-                        srchCurrent = "&srchPboardID=" + srchPboardID + "&srchCboardID=" + srchCboardID;
+                    if (srchCboardID != null)
+                        srchCurrent = "&srchCboardID=" + srchCboardID;
                     else
                     {
-                        srchCurrent = "&srchCboardID=" + srchCboardID;
+                        srchCurrent = "&srchPboardID=" + srchPboardID;
                     }
 
                     this.Response.Redirect("SearchKekka.aspx" + "?keyword=" + srchText + srchCurrent + " & searcharea=" + drowValue);

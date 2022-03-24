@@ -16,7 +16,7 @@ namespace MKForum
         {
             string keyword = this.Request.QueryString["keyword"];           //搜尋關鍵字
             string searchArea = this.Request.QueryString["searcharea"];
-            
+
             var kwlist = new List<string>();
             string[] kwarr = keyword.Split(' ');
             foreach (var x in kwarr)
@@ -31,11 +31,16 @@ namespace MKForum
                 kwlist.Add(x);
             }
             List<SearchResult> srl = new List<SearchResult>();
-            if (string.Compare(searchArea, "srchWriter") ==0)
+            if (string.Compare(searchArea, "srchWriter") == 0)
                 srl = this._srmgr.GetMemberSearchKekka(kwlist);
-            //if (string.Compare(searchArea, "srchCurrent") == 0)
-            //    srl = "x";
-            else        
+            if (string.Compare(searchArea, "srchCurrent") == 0)
+            {
+                if (this.Request.QueryString["Cboard"] != null)
+                    srl = this._srmgr.GetboardSearchKekka(kwlist, this.Request.QueryString["Cboard"], "c");
+                else
+                    srl = this._srmgr.GetboardSearchKekka(kwlist, this.Request.QueryString["Pboard"], "p");
+            }
+            else
                 srl = this._srmgr.GetAllSearchKekka(kwlist);
             this.rptcBtoP.DataSource = srl;
             this.rptcBtoP.DataBind();
