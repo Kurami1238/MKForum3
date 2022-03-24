@@ -191,14 +191,14 @@ namespace MKForum
         {
             string srchText = this.txtSearch.Text.Trim();                   //使用者輸入的關鍵字
             string drowValue = this.srchDrop.SelectedValue.Trim();          //搜尋範圍下拉選單
-            bool IsBanWord = _chkInpMgr.IncludeBanWord(srchText);   //確認搜尋的關鍵字是否包含屏蔽字
+            //bool IsBanWord = _chkInpMgr.IncludeBanWord(srchText);   //確認搜尋的關鍵字是否包含屏蔽字
 
 
             //驗證關鍵字不為空，且不含禁字，導向搜尋頁面
             if (!string.IsNullOrWhiteSpace(this.txtSearch.Text)/* && !IsBanWord*/)
             {
                 if (drowValue != "srchCurrent")  //如果使用者不是選擇搜尋當前頁面
-                    this.Response.Redirect("SearchPage.aspx" + "?keyword=" + srchText + "&searcharea=" + drowValue);
+                    this.Response.Redirect("SearchKekka.aspx" + "?keyword=" + srchText + "&searcharea=" + drowValue);
                 else
                 {
                     string srchCboardID = this.Request.QueryString["CboardID"];
@@ -212,7 +212,7 @@ namespace MKForum
                         srchCurrent = "&srchCboardID=" + srchCboardID;
                     }
 
-                    this.Response.Redirect("SearchPage.aspx" + "?keyword=" + srchText + srchCurrent + " & searcharea=" + drowValue);
+                    this.Response.Redirect("SearchKekka.aspx" + "?keyword=" + srchText + srchCurrent + " & searcharea=" + drowValue);
                 }
             }
             else

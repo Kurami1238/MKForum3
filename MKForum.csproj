@@ -130,6 +130,7 @@
     <Content Include="Register.aspx" />
     <Content Include="Scripts\showdown.js" />
     <Content Include="Scripts\showdown.min.js" />
+    <Content Include="SearchKekka.aspx" />
     <Content Include="SearchPage.aspx" />
     <Content Include="ShareControls\Mugen.ascx" />
     <Content Include="Web.config" />
@@ -212,13 +213,6 @@
     </Compile>
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
@@ -311,6 +305,13 @@
     </Compile>
     <Compile Include="DisplayPost.aspx.designer.cs">
       <DependentUpon>DisplayPost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchKekka.aspx.cs">
+      <DependentUpon>SearchKekka.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchKekka.aspx.designer.cs">
+      <DependentUpon>SearchKekka.aspx</DependentUpon>
     </Compile>
     <Compile Include="SearchPage.aspx.cs">
       <DependentUpon>SearchPage.aspx</DependentUpon>

@@ -155,7 +155,9 @@ namespace MKForum
                 Response.Redirect("CreatePost.aspx", true);
             }
             else
-                Response.Redirect("Login.aspx", true);
+                // 改為引導登陸 放張圖 讓他visible
+                //Main.plhLogined.Visible = true;
+                Response.Redirect("Index.aspx", true);
         }
 
         protected void rptcBtoP_ItemCommand(object source, RepeaterCommandEventArgs e)

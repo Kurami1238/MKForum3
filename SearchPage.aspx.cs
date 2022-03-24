@@ -39,19 +39,19 @@ namespace MKForum
                 PorCBoard = "c";
             }
 
-            //依指定的搜尋範圍導向function
-            switch (searchArea)
-            {
-                case "srchAll":
-                    _srchMng.GetAllSrchList(keyword);   //全站搜尋
-                    break;
-                case "srchCBoard":
-                    _srchMng.GetboardSrchList(keyword, srchCurrent, PorCBoard);   //當前板塊搜尋(可能需要視情況合併方法)
-                    break;
-                default:
-                    _srchMng.GetWriterSrchList(keyword);   //作者搜尋
-                    break;
-            }
+            ////依指定的搜尋範圍導向function
+            //switch (searchArea)
+            //{
+            //    case "srchAll":
+            //        _srchMng.GetAllSrchList(keyword);   //全站搜尋
+            //        break;
+            //    case "srchCBoard":
+            //        _srchMng.GetboardSrchList(keyword, srchCurrent, PorCBoard);   //當前板塊搜尋(可能需要視情況合併方法)
+            //        break;
+            //    default:
+            //        _srchMng.GetWriterSrchList(keyword);   //作者搜尋
+            //        break;
+            //}
         }
     }
 }

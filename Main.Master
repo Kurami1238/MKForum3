@@ -38,7 +38,7 @@
     <form id="form1" runat="server">
 
 
-        <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
+        <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true" >
 
             <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
             <br />

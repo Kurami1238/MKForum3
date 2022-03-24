@@ -34,7 +34,12 @@ namespace MKForum
                 _member = account;
             }
             // 從Session取得當前子板塊ID
-            int cboardid = (int)HttpContext.Current.Session["CboardID"];
+            int cboardid = 0;
+            if (HttpContext.Current.Session["CboardID"] != null)
+                cboardid = (int)HttpContext.Current.Session["CboardID"];
+            else
+                Response.Redirect($"Index.aspx", true);
+
             // 繫結PostStamp
             List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
             this.dpdlPostStamp.DataSource = psList;
@@ -72,7 +77,7 @@ namespace MKForum
             };
             if (this.fuCoverImage.HasFile)
             {
-               
+
                 System.Threading.Thread.Sleep(3);
                 Random random = new Random((int)DateTime.Now.Ticks);
 
@@ -143,7 +148,7 @@ namespace MKForum
         {
             // 從Session取得當前子板塊ID
             int cboardid = (int)HttpContext.Current.Session["CboardID"];
-                Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
+            Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
         }
     }
 }

@@ -1,10 +1,10 @@
 * {
     background-color: #181717;
-    background-color: blue;
+    /* background-color: blue; */
 }
 
 div {
-     border: 1px solid rgb(255, 255, 255); 
+     /* border: 1px solid rgb(255, 255, 255);  */
 }
 
 .container-all {
