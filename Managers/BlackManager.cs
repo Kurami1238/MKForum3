@@ -23,8 +23,7 @@ namespace MKForum.Managers
         /// <summary>
         /// 判斷是否有該帳號存在
         /// </summary>
-        /// <param name="currentCboard">當前板塊</param>
-        /// <param name="inpAccount">輸入的帳號</param>
+        /// <param name="inpAccount">(string)輸入的帳號</param>
         /// <returns>回傳值為boolean</returns>
         public bool HasMember(string inpAccount)
         {
@@ -67,13 +66,11 @@ namespace MKForum.Managers
             }
         }
 
-
-
         /// <summary>
         /// 判斷輸入的帳號是否為當前板主(輸入黑名單帳號時使用)
         /// </summary>
-        /// <param name="currentCboard">當前板塊</param>
-        /// <param name="inpAccount">輸入的帳號</param>
+        /// <param name="currentCboard">(string)當前板塊</param>
+        /// <param name="inpAccount">(string)輸入的帳號</param>
         /// <returns>回傳值為boolean</returns>
         public bool IsCurrentModerator(string currentCboard, string inpAccount)
         {
@@ -123,9 +120,9 @@ namespace MKForum.Managers
         /// <summary>
         /// 增加黑名單
         /// </summary>
-        /// <param name="strBlackedAcc">由版主輸入的會員資料</param>
-        /// <param name="strRealseDate">懲處期限</param>
-        /// <param name="cboardid">從session取得當前子板塊</param>
+        /// <param name="strBlackedAcc">(string)由版主輸入的會員資料</param>
+        /// <param name="strRealseDate">(string)懲處期限</param>
+        /// <param name="cboardid">(string)從session取得當前子板塊</param>
         public void AddBlackedList(string strBlackedAcc, string strRealseDate, string cboardid)
         {
 
@@ -160,8 +157,8 @@ namespace MKForum.Managers
         /// <summary>
         /// 判斷會員是否已存在於黑名單的方法(不包含已經解黑的會員)
         /// </summary>
-        /// <param name="strBlackedAcc">欲比對的會員帳號</param>
-        /// <param name="cboardid"></param>
+        /// <param name="account">(string)欲比對的會員帳號</param>
+        /// <param name="currontCB">(string)當前子板塊</param>
         /// <returns>回傳值為boolean</returns>
         public bool IsBlacked(string account, string currontCB)
         {
@@ -206,9 +203,9 @@ namespace MKForum.Managers
         /// <summary>
         /// 修改黑名單
         /// </summary>
-        /// <param name="strBlackedAcc">由版主輸入的會員ID</param>
-        /// <param name="strRealseDate">懲處期限</param>
-        /// <param name="cboardid">當前子板塊</param>
+        /// <param name="strBlackedAcc">(string)由版主輸入的會員ID</param>
+        /// <param name="strRealseDate">(string)懲處期限</param>
+        /// <param name="cboardid">(string)當前子板塊</param>
         public void UpdateBlackedList(string strBlackedAcc, string strRealseDate, string cboardid)
         {
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
@@ -240,7 +237,7 @@ namespace MKForum.Managers
         /// <summary>
         /// 顯示黑名單
         /// </summary>
-        /// <param name="cboardid">session當前子板塊</param>
+        /// <param name="cboardid">(string)session當前子板塊</param>
         /// <returns>回傳值為DataTable</returns>
         public DataTable getBlacked(string currentCboard)
         {

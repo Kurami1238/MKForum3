@@ -72,8 +72,8 @@ namespace MKForum.Managers
         /// <summary>
         /// 增加版主
         /// </summary>
-        /// <param name="strModeratorAcc">由版主輸入的會員資料</param>
-        /// <param name="cboardid">當前子板塊</param>
+        /// <param name="strModeratorAcc">(string)由版主輸入的會員資料</param>
+        /// <param name="cboardid">(string)當前子板塊</param>
         public void AddModeratorsList(string strModeratorAcc, string cboardid)
         {
 
@@ -106,9 +106,9 @@ namespace MKForum.Managers
         /// <summary>
         /// 刪除版主
         /// </summary>
-        /// <param name="strModeratorAcc">欲刪的版主ID</param>
-        /// <param name="cboardid">當前子板塊</param>
-        public void DeleteModeratorsList(string strModeratorAcc, int cboardid)
+        /// <param name="strModeratorAcc">(string)欲刪的版主ID</param>
+        /// <param name="cboardid">(string)當前子板塊</param>
+        public void DeleteModeratorsList(string strModeratorAcc, string cboardid)
         {
             //刪除一筆資料 依照 會員ID (SQL已測試OK)
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
@@ -138,8 +138,8 @@ namespace MKForum.Managers
         /// <summary>
         /// 顯示版主清單
         /// </summary>
-        /// <param name="cboardid">session當前子板塊</param>
-        /// <returns></returns>
+        /// <param name="cboardid">(string)session當前子板塊</param>
+        /// <returns>回傳值為DataTable</returns>
         public DataTable getModerators(string currentCboard)
         {
 

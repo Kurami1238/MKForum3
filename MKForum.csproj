@@ -138,6 +138,9 @@
     <Compile Include="API\MugenHandler.ashx.cs">
       <DependentUpon>MugenHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="API\PBoardHandler.ashx.cs">
+      <DependentUpon>PBoardHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="BackAdmin\MemberEditor.aspx.cs">
       <DependentUpon>MemberEditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -270,9 +273,6 @@
     <Compile Include="Models\PostImgList.cs" />
     <Compile Include="Models\PostStamp.cs" />
     <Compile Include="Models\SearchResult.cs" />
-    <Compile Include="API\PBoardInMain.ashx.cs">
-      <DependentUpon>PBoardInMain.ashx</DependentUpon>
-    </Compile>
     <Compile Include="PboardtoCboard.aspx.cs">
       <DependentUpon>PboardtoCboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -334,8 +334,8 @@
     <Content Include="API\MugenHandler.ashx" />
     <Content Include="css\Brush.woff" />
     <Content Include="css\Brush.ttf" />
+    <Content Include="API\PBoardHandler.ashx" />
     <None Include="packages.config" />
-    <Content Include="API\PBoardInMain.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
