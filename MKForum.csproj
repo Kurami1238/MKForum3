@@ -138,6 +138,9 @@
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\GetLinkHandler.ashx.cs">
+      <DependentUpon>GetLinkHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="API\MugenHandler.ashx.cs">
       <DependentUpon>MugenHandler.ashx</DependentUpon>
     </Compile>
@@ -347,6 +350,7 @@
     <Content Include="css\Brush.woff" />
     <Content Include="css\Brush.ttf" />
     <Content Include="API\PBoardHandler.ashx" />
+    <Content Include="API\GetLinkHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

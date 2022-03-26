@@ -10,6 +10,9 @@
 @media screen and (min-width:630px){
     .CNNmPost .CNNmT{width: 80%;}
 }
+img{
+    width: 100%;
+}
 hr{
     border: 0;
     height: 1px;
@@ -65,6 +68,7 @@ div{
             float: right;
             width: 10%;
             line-height: 40px;
+            margin-bottom: 10px;
             text-align: center;
         }
        .MainPost .btnl{
@@ -77,6 +81,7 @@ div{
         .MainPost .Postbtn div{
             color: antiquewhite; border:0;
             background-color:#181717;
+            margin-right: -2px;
             border: 1px ridge #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
             border-radius:10px;
