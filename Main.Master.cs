@@ -253,8 +253,6 @@ namespace MKForum
         }
 
 
-
-
         protected void lblMember_Change_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/MemberEditor.aspx");
@@ -415,7 +413,38 @@ namespace MKForum
 
         }
 
+        protected void btnAddPB_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //取得輸入的新母板名稱，並去掉空白
+                string inpPBName = this.addPBoard.Text.Trim();
+                //如果輸入的母板名稱是空的，提示使用者
+                string msg = "";
 
+                if (inpPBName == null)
+                {
+                    msg = "未輸入母板名稱";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
+                //如果輸入的母板塊包含禁字
+                if (!this._chkInpMgr.IncludeBanWord(inpPBName))
+                {
+                    msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
 
+                this._pBrdMgr.AddPBoard(inpPBName);
+                msg = "母板塊新增成功。";
+                Response.Write($"<script>alert('{msg}')</script>");
+            }
+            catch (Exception ex)
+            {
+                string msg = "母板塊新增失敗，請聯絡管理員。";
+                Response.Write($"<script>alert('{msg}')</script>");
+            }
+        }
     }
 }

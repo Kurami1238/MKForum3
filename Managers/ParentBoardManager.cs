@@ -19,23 +19,6 @@ namespace MKForum.Managers
 
     public class ParentBoardManager
     {
-        public DataTable GetDataTable()
-        {
-            string connectionString = ConfigHelper.GetConnectionString();
-            string commandText =
-                @"  SELECT *
-                    FROM [MKForum].[dbo].[PBoards]
-                    
-                    ";//取得目前有哪些母板塊
-            DataTable dt = new DataTable();
-            dt.Columns.Add(new DataColumn("Pname", typeof(string)));
-
-            DataRow dataRow = dt.NewRow();
-            dataRow["Pname"] = "Pboard";
-            dataRow["PboardID"] = "PboardID";
-
-            return dt;
-        }
 
         /// <summary>
         /// 藉由Session的會員id導入local db(SQL)判別會員身分的方法，1是一般會員，2是版主，3是後台人員
@@ -83,6 +66,11 @@ namespace MKForum.Managers
             }
         }
 
+        /// <summary>
+        /// 確認會員身分別的方法
+        /// </summary>
+        /// <param name="Account"></param>
+        /// <returns>回傳值為int，1是一般會員，3是管理員</returns>
         public int CheckMemberStatus(string Account)
         {
             int memberStatus = 0;
@@ -122,48 +110,10 @@ namespace MKForum.Managers
         }
 
 
-        /// <summary>
-        /// 寫入板塊名稱(string)，編號(int)，順序(List index)方法
-        /// </summary>
-        /// <param name="PboardList">帶入母版塊list</param>
-        public void UpdatePBoardStatus(Pboard PboardModel)
-        {
-            string connectionString = ConfigHelper.GetConnectionString();
-            string commandText =
-                @"
-                UPDATE [MKForum].[dbo].[PBoards]
-                SET [Pname]=@Pname,[PboardDate]=GETDATE(),
-                    [Porder]=@Porder,[Pshow]=@Pshow,
-                WHERE [PboardID]=@PboardID
-                    ";//使用UPDATE更新母板塊
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    using (SqlCommand command = new SqlCommand(commandText, connection))
-                    {
-                        connection.Open();
-                        //for(int i = 0;i< PboardList.Count;i++)
-                        //{
-                        //    command.Parameters.AddWithValue(@"PboardID", PboardModel[i].PboardID);
-                        //    command.Parameters.AddWithValue(@"Pname", PboardModel[i].Pname);
-                        //    command.Parameters.AddWithValue(@"PboardDate", PboardModel[i].PboardDate);
-                        //    command.Parameters.AddWithValue(@"Porder", PboardModel[i].Porder);
-                        //    command.Parameters.AddWithValue(@"Pshow", PboardModel[i].Pshow);
-                        //    command.ExecuteNonQuery();
-                        //}
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog("ParentBoardManager.SetPBoardStatus", ex);
-                throw;
-            }
-        }
+
 
         /// <summary>
-        /// 依母版ID填入母版順位的方法
+        /// 依母版ID寫入母版順位的方法
         /// </summary>
         /// <param name="pboardModel">傳入值為母版的Model</param>
         public void UpdatePBoardOrder(Pboard pboardModel)
@@ -204,7 +154,7 @@ namespace MKForum.Managers
         /// </summary>
         /// <param name="pboardModel">傳入值為母版的Model</param>
         /// <returns>回傳母版ID(int)</returns>
-        public int GetnPBoardOrder(Pboard pboardModel)
+        public int GetnPBoardIdFromOrder(Pboard pboardModel)
         {
             string strorder = pboardModel.Porder.ToString();
 
@@ -353,6 +303,138 @@ namespace MKForum.Managers
         public List<Pboard> GetList()
         {
             return GetPBoardList();
+        }
+
+        /// <summary>
+        /// 取得母版塊總數量的方法(用來辨別往下移動的母版塊是不是最後一筆)
+        /// </summary>
+        /// <returns></returns>
+        public int GetPBoardLength()
+        {
+            int LargestPOrder = 1;
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+SELECT MAX(Porder) AS LargestPOrder FROM Pboards
+                    ";//取得母板塊排序的最大值
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        conn.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            LargestPOrder = (int)reader["LargestPOrder"];
+                        }
+                        return LargestPOrder;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("ParentBoardManager.GetPBoardStatus", ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 新增母版塊的方法
+        /// </summary>
+        /// <param name="pboardModel"></param>
+        public void AddPBoard(string inpPBName)
+        {
+            int Porder = GetPBoardLength();
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                INSERT INTO [MKForum].[dbo].[PBoards] ( [Pname],[Porder],[Pshow])
+                VALUES(@Pname,@Porder,'true')
+                    ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+
+                        command.Parameters.AddWithValue(@"Pname", inpPBName);
+                        command.Parameters.AddWithValue(@"Porder", Porder);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("ParentBoardManager.AddPBoard", ex);
+                throw;
+            }
+        }
+
+
+
+        //以下用不到
+
+        public DataTable GetDataTable()
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT *
+                    FROM [MKForum].[dbo].[PBoards]
+                    
+                    ";//取得目前有哪些母板塊
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("Pname", typeof(string)));
+
+            DataRow dataRow = dt.NewRow();
+            dataRow["Pname"] = "Pboard";
+            dataRow["PboardID"] = "PboardID";
+
+            return dt;
+        }
+
+        /// <summary>
+        /// 寫入板塊名稱(string)，編號(int)，順序(List index)方法
+        /// </summary>
+        /// <param name="PboardList">帶入母版塊list</param>
+        public void UpdatePBoardStatus(Pboard PboardModel)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                UPDATE [MKForum].[dbo].[PBoards]
+                SET [Pname]=@Pname,[PboardDate]=GETDATE(),
+                    [Porder]=@Porder,[Pshow]=@Pshow,
+                WHERE [PboardID]=@PboardID
+                    ";//使用UPDATE更新母板塊
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        //for(int i = 0;i< PboardList.Count;i++)
+                        //{
+                        //    command.Parameters.AddWithValue(@"PboardID", PboardModel[i].PboardID);
+                        //    command.Parameters.AddWithValue(@"Pname", PboardModel[i].Pname);
+                        //    command.Parameters.AddWithValue(@"PboardDate", PboardModel[i].PboardDate);
+                        //    command.Parameters.AddWithValue(@"Porder", PboardModel[i].Porder);
+                        //    command.Parameters.AddWithValue(@"Pshow", PboardModel[i].Pshow);
+                        //    command.ExecuteNonQuery();
+                        //}
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("ParentBoardManager.SetPBoardStatus", ex);
+                throw;
+            }
         }
     }
 }
