@@ -114,7 +114,7 @@ namespace MKForum.Managers
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
-                    INSERT INTO PostImageLists
+                    INSERT INTO PostImgLists
                     (MemberID, ImagePath)
                     VALUES
                     (@memberID, @imagepath)
