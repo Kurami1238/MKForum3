@@ -3,6 +3,13 @@
     src:url('Brush.woff') format("woff"),
         url('Brush.ttf') format("truetype");
 }
+@media screen and (min-width:490px){
+    .MainPost .Postbtn div{ line-height: 18px;}
+    .MainPost .PostM{font-size: 14px;line-height: 18px;}
+}
+@media screen and (min-width:630px){
+    .CNNmPost .CNNmT{width: 80%;}
+}
 hr{
     border: 0;
     height: 1px;
@@ -32,40 +39,46 @@ div{
 .MainPost{
     padding: 10px;
     margin: 5px;
+    margin-bottom: 15px;
     font-family:'moubi';
+    padding-left: 0px;
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 1px double #e76c25;
-    box-shadow: 2px 2px 4px #e76c25;text-align: left;
+    border-bottom: 0.5px double #e76c25;
+    border-right: 0.5px solid #e76c25;
+    box-shadow: 2px 2px 7px #e76c25;text-align: left;
 }
         .MainPost .mpostall{
             padding: 20px;
             margin: 20px;
             margin-top: 0px;
         }
-        .btnl{
-            margin-top: 10px;
-        }
+        
         .MainPost .PostT{
-            font-size: 40px;
+            font-size: 45px;
             float: left;
             width: 90%;
-            line-height: 66px;
+            line-height: 40px;
+            margin-bottom: 10px;
         }
         .MainPost .PostF{
             font-size: 17px;
             float: right;
             width: 10%;
-            line-height: 66px;
+            line-height: 40px;
             text-align: center;
         }
+       .MainPost .btnl{
+        margin-top: 10px;
+       }
         .MainPost .Postbtn{
             margin-left: 130px;
+            margin-right: -10px;
         }
         .MainPost .Postbtn div{
             color: antiquewhite; border:0;
             background-color:#181717;
             border: 1px ridge #e76c25;
-            box-shadow: 2px 1px 4px #e76c25;line-height: 25px;text-align: center;
+            box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
             border-radius:10px;
             cursor:pointer;
             float: right;
@@ -76,34 +89,37 @@ div{
         .MainPost .Postbtn div:hover{
             color:#fff;
             background-color:rgb(22, 21, 21);
-            border:2px #851a1a solid;
-            text-shadow: 2px 2px 2px #941a12;
+            border:1px #851a1a solid;
+            text-shadow: 2px 2px 5px #941a12;
         }
         
         .MainPost .PostM{
             font-size: 17px;
             width: 42%;
             line-height: 35px;
+            margin-left: 10px;
         }
         .MainPost .PostC{
             font-size: 22px;
             width: 90%;
             margin-top: 30px;
             float: left;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 .nomainPost{
     padding: 10px;
     margin: 5px;
     margin-top: 20px;
+    margin-bottom: 20px;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
     border-bottom: 1px double #e76c25;
-    box-shadow: 2px 2px 3px #e76c25;text-align: left;
+    box-shadow: 2px 2px 5px #e76c25;text-align: left;
 }
         .nomainPost .nmpostall{
             padding: 20px;
             margin: 22px;
+            margin-top: 10px;
             margin-bottom: 10px;
         }
         .nomainPost .nmF{
@@ -155,25 +171,40 @@ div{
 .CNNmPost{
     padding: 10px;
     margin: 5px;
-    margin-top: 20px;
+    margin-top: 40px;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
     border-bottom: 1px double #e76c25;
-    box-shadow: 2px 2px 3px #e76c25;
+    box-shadow: 2px 2px 5px #e76c25;
     
 }
         .CNNmPost input{
             color:#fafafa;
         }
         .CNNmPost .CNNmT{
-            width: 70%;
+            width: 60%;
             line-height: 28px;
+            margin-left: 20px;
+            border: 0.3px none #e76c25;
+            box-shadow: 2px 2px 7px #e76c25;line-height: 35px;text-align: center;
+        }
+        .CNNmPost .CNNmT:hover{
+            color:#fff;
+            background-color:rgb(22, 21, 21);
+            border:1px #851a1a solid;
+            text-shadow: 2px 2px 5px #941a12;
         }
         .CNNmPost .CNNmB{
             margin-left: 20px;
             font-size: 22px;
             border: 1px ridge #e76c25;
-            box-shadow: 2px 1px 4px #e76c25;line-height: 40px;text-align: center;
+            box-shadow: 2px 2px 7px #e76c25;line-height: 40px;text-align: center;
             border-radius:10px;
             cursor:pointer;
+        }
+        .CNNmPost .CNNmB:hover{
+            color:#fff;
+            background-color:rgb(22, 21, 21);
+            border:1px #851a1a solid;
+            text-shadow: 2px 2px 5px #941a12;
         }

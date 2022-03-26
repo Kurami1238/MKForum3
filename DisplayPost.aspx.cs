@@ -219,7 +219,7 @@ namespace MKForum
                 Response.Redirect(Request.RawUrl);
             }
             else
-                Response.Redirect("Login.aspx", true);
+                Response.Redirect("Index.aspx", true);
         }
         protected void rptNmP_ItemCommand(object source, RepeaterCommandEventArgs e)
         {

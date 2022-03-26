@@ -16,5 +16,7 @@ namespace MKForum.Models
         public DateTime LastEditTime { get; set; }
         public int PostView { get; set; }
         public string CoverImage { get; set; }
+        public int Floor { get; set; }
+        public Guid? PointID { get; set; }
     }
 }

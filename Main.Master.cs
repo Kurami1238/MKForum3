@@ -216,7 +216,7 @@ namespace MKForum
                         srchCurrent = "&srchPboardID=" + srchPboardID;
                     }
 
-                    this.Response.Redirect("SearchKekka.aspx" + "?keyword=" + srchText + srchCurrent + " & searcharea=" + drowValue);
+                    this.Response.Redirect("SearchKekka.aspx" + "?keyword=" + srchText + srchCurrent + "&searcharea=" + drowValue);
                 }
             }
             else

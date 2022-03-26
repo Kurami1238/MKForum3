@@ -1,0 +1,135 @@
+@font-face{
+    font-family:'moubi';
+    src:url('Brush.woff') format("woff"),
+        url('Brush.ttf') format("truetype");
+}
+div{
+    /* border: 1px solid #FFF; */
+}
+.btncreatep{
+    position: fixed;
+    top:510px;
+    right: 45px;
+    background:#e76c25;
+    border-radius: 50%;
+    box-shadow: 2px 1px 4px #e76c25;
+    transition: 1.2s;
+    -webkit-filter: opacity(30%); /* Safari */
+    filter: opacity(30%);
+}
+.btncreatep:hover{
+    -webkit-filter: opacity(30%); /* Safari */
+    filter: opacity(100%);
+}
+a{
+    text-decoration:none;
+}
+a:link{
+    color:#ffffff;
+    text-decoration:none;
+
+    }
+a:visited {
+    color:#ffffff;
+    background-color:red;
+    }
+
+.PostA:hover{
+    color:#ffffff;
+    text-shadow: 2px 2px 2px #941a12;
+    text-decoration:none;
+}
+.PostA:hover img{
+    transform:  scale(1.03);
+    -webkit-filter: brightness(105%); /* Safari */
+    filter: brightness(105%);
+}
+a:active {
+    text-decoration:none;
+    background-color:gray;
+    color:#fafafa;
+    }
+img{
+    transform: 2s;
+}
+.kekkamsg {
+    font-family:'moubi';
+    font-size: 26px
+
+}
+.test {
+    /* padding: 20px;
+    margin: 5px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c; */
+    padding: 10px;
+    margin: 5px;
+    font-family:'moubi';
+    text-shadow: 2px 2px 2px #270c0c;
+    border-bottom: 1px double #cc2626;
+    box-shadow: 2px 2px 7px #c90d0d;text-align: left;
+    margin-top: 20px;
+}
+.test .content {
+    margin: 5px;
+    margin-top: 20px;
+    float: left;
+    
+}
+    .test .PostView{
+        width: 16%;
+        float: right;
+        margin-top: 40px;
+        margin-left: 5px;
+        text-align: center;
+
+    }
+  
+    .test .StampButton{
+        font-size: 33px;
+       
+    }
+    .test h1 {
+        margin-left: 50px;
+        font-size: 50px
+    }
+
+    .test .imgPostP{
+        height: 50%;
+    }
+
+        .test .content .article {
+            padding: 10px;
+            margin: 15px;
+            border: 1px double #e76c25;
+            box-shadow: 2px 2px 6px #e76c25;line-height: 100px;text-align: left;
+
+        }
+
+
+            .test h6 {
+                font-size: 44px;
+            }
+
+            .test .article p {
+                font-size: 20px;
+                background-color: rgb(44, 44, 44);
+                line-height: 40px;
+                padding: 8px;
+                height: 100px;
+                width: 70%; 
+            }
+
+            .test .article h3 {
+                margin-top: 5px;
+                font-size: 15px;
+                float: left;
+            }
+
+            .test .article h4 {
+                font-size: 14px;
+                float: right;
+                margin-top: 5px;
+
+                margin-right: 10px;
+            }

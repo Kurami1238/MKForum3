@@ -6,10 +6,10 @@
 .btncreatep{
     position: fixed;
     top:510px;
-    right: 45px;
+    right: 65px;
     background:#e76c25;
     border-radius: 50%;
-    box-shadow: 2px 1px 4px #e76c25;
+    box-shadow: 2px 1px 5px #e76c25;
     transition: 1.2s;
     -webkit-filter: opacity(30%); /* Safari */
     filter: opacity(30%);
@@ -30,6 +30,12 @@
     .btncreatep{
         top:510px;
         right: 210px;
+    }
+}
+@media screen and (min-width:850px){
+    .btncreatep{
+        top:510px;
+        right: 260px;
     }
 }
 @media screen and (min-width:992px){
@@ -93,6 +99,7 @@ img{
     float: left;
     
 }
+    
     .Cboard .StampButton{
         font-size: 33px;
        
@@ -124,12 +131,19 @@ img{
         .Cboard .content .article {
             padding: 10px;
             margin: 15px;
-            border: 1px double #e76c25;
-            box-shadow: 2px 2px 6px #e76c25;line-height: 100px;text-align: left;
-
+            border-bottom: 0.5px double #e76c25;
+            border-right: 0.5px solid #e76c25;
+            box-shadow: 2px 2px 7px #e76c25;line-height: 100px;text-align: left;
 
         }
-
+        .Cboard .content .article .PostV{
+            width: 16%;
+            float: right;
+            margin-top: 40px;
+            margin-left: 5px;
+            text-align: center;
+    
+        }
 
             .Cboard .content .article h6 {
                 font-size: 44px;
