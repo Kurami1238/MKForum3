@@ -101,6 +101,8 @@ namespace MKForum
                            LastEditTime = p.LastEditTime,
                            PostDate = p.PostDate,
                            CoverImage = p.CoverImage,
+                           PostView = p.PostView,
+                           Floor = p.Floor,
                        };
             // 第二次合併把文章內容大於二十字的替換掉
             var pLMLS = from p in pLML
@@ -114,9 +116,11 @@ namespace MKForum
                             MemberID = p.MemberID,
                             CboardID = p.CboardID,
                             Title = p.Title,
-                            LastEditTime = p.LastEditTime,
-                            PostDate = p.PostDate,
+                            LastEditTime = p.LastEditTime.ToString("yyyy/MM/dd tt HH:mm:ss"),
+                            PostDate = p.PostDate.ToString("yyyy/MM/dd tt HH:mm:ss"),
                             CoverImage = p.CoverImage,
+                            PostView = p.PostView,
+                            Floor = p.Floor,
                         };
             this.rptcBtoP.DataSource = pLMLS;
             this.rptcBtoP.DataBind();

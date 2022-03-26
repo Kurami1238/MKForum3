@@ -16,15 +16,7 @@ namespace MKForum
     {
         private PostManager _pmgr = new PostManager();
         private AccountManager _Amgr = new AccountManager();
-
         private Member _member;
-        //private Member _member = new Member()
-        //{
-        //    Account = "a123234",
-        //    Password = "12345678"
-        //};
-        // 先測試 直接輸入
-
         protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
@@ -98,7 +90,7 @@ namespace MKForum
 
             // 新建一筆Post
             Guid postid;
-            this._pmgr.CreatePost(_member.MemberID, cboardid, post, out postid);
+            this._pmgr.CreatePost(this._member.MemberID, cboardid, post, out postid);
 
             // 處理#tag
             string htagtext = this.txtPostHashtag.Text;
@@ -125,18 +117,17 @@ namespace MKForum
                 Random random = new Random((int)DateTime.Now.Ticks);
 
                 string folderPath = "~/FileDownload/PostContent/";
-                string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
+                string fileName = "P" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF")+ "_" + this._member.Account + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
 
                 folderPath = HostingEnvironment.MapPath(folderPath);
                 if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
                     Directory.CreateDirectory(folderPath);
                 string newFilePath = Path.Combine(folderPath, fileName);
                 this.fuPostImage.SaveAs(newFilePath);
-                imgpath = "/FileDownload/MapContent/" + fileName;
+                imgpath = "/FileDownload/PostContent/" + fileName;
 
                 // 儲存圖片路徑
-                if (!string.IsNullOrWhiteSpace(imgpath))
-                    this._pmgr.CreatePostImageList(_member.MemberID, imgpath);
+                    this._pmgr.CreatePostImageList(this._member.MemberID, imgpath);
             }
         }
 

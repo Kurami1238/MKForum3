@@ -77,6 +77,7 @@ input{
 .kobi{
     padding: 10px;
     margin: 5px;
+    width: 97.5%;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
     border-bottom: 1px double #e76c25;
@@ -93,10 +94,13 @@ input{
     cursor:pointer;
 }
 .kobi th{
+    width: 20%;
+}
+.kobi .T{
     width: 100%;
 }
 .kobi td{
-    width: 150%;
+    width: 80%;
     text-align: left;
 }
 .cbtn{

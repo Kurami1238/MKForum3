@@ -563,7 +563,7 @@ namespace MKForum.Managers
                 PostView = (int)reader["PostView"],
                 Title = (string)reader["Title"],
                 PostCotent = (string)reader["PostCotent"],
-                LastEditTime = reader["LastEditTime"] as DateTime?,
+                LastEditTime = (DateTime)reader["LastEditTime"],
                 Floor = (int)reader["Floor"],
                 CoverImage = reader["CoverImage"] as string,
                 SortID = reader["SortID"] as int?            
@@ -645,12 +645,38 @@ namespace MKForum.Managers
 
                         command.Parameters.AddWithValue(@"postID", postid);
                         command.ExecuteNonQuery();
+                        this.DeletePoint(postid);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteLog("PostManager.DeletePost", ex);
+                throw;
+            }
+        }
+        public void DeletePoint(Guid postid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  DELETE FROM Posts
+                    WHERE PointID = @postid ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.DeletePoint", ex);
                 throw;
             }
         }
