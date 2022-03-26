@@ -110,11 +110,11 @@ namespace MKForum.Managers
         }
         public void CreatePostImageList(Guid memberid, string imagepath)
         {
-            imagepath = "1323";
+
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
-                    INSERT INTO  [MKForum].[dbo].PostImgLists
+                    INSERT INTO  PostImgLists
                     (MemberID, ImagePath)
                     VALUES
                     (@memberID, @imagepath)
