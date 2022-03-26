@@ -55,10 +55,11 @@
     filter: opacity(100%);
 }
 a{
+    color:#ffffff;
     text-decoration:none;
 }
 a:link{
-    background-color:#ffffff;
+    color:#ffffff;
     text-decoration:none;
 
     }
