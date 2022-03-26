@@ -127,10 +127,10 @@ namespace MKForum.Managers
         {
 
             string connStr = ConfigHelper.GetConnectionString();
-            string commandText = $@"
+            string commandText = @"
                 INSERT INTO [MKForum].[dbo].[MemberBlacks]
-                (CboardID,Account, CreateDate, ReleaseDate)
-                VALUES  (@cboardid,@strBlackedAcc, GETDATE(),'@strRealseDate')
+                ([CboardID],[Account], [CreateDate], [ReleaseDate])
+                VALUES  (@cboardid,@strBlackedAcc, GETDATE(),@strRealseDate)
                 ";
             try
             {
@@ -142,6 +142,7 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue("@strBlackedAcc", strBlackedAcc);
                         command.Parameters.AddWithValue("@strRealseDate", strRealseDate);
                         command.Parameters.AddWithValue("@cboardid", cboardid);
+                        command.ExecuteNonQuery();
                     }
                 }
             }

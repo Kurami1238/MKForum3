@@ -20,7 +20,7 @@ namespace MKForum.API
 
             if (string.Compare("GET", context.Request.HttpMethod, true) == 0)
             {
-                List<Pboard> PBoardList = this._pbmgr.GetListToAPI();
+                List<Pboard> PBoardList = this._pbmgr.GetPBoardList();
 
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(PBoardList);
 
@@ -131,6 +131,37 @@ namespace MKForum.API
                 }
             }
 
+            //更新(命名母版)
+            if (string.Compare("POST", context.Request.HttpMethod) == 0 && string.Compare("ReName", context.Request.QueryString["Action"], true) == 0)
+            {
+                //如果他是第一個則不執行
+
+                //這邊應該要做欄位型別檢查?
+                int pboardID = int.Parse(context.Request.Form["PboardID"]);
+                string pName = context.Request.Form["Pname"];
+
+                try
+                {
+                    //塞進資料庫
+
+                        Pboard modeldown = new Pboard()
+                        {
+                            PboardID = pboardID,
+                            Pname = pName ,      //這組的順序要下移
+                        };
+
+                        this._pbmgr.ReNamePB(modeldown);
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write("OK");
+
+                }
+                catch
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("error");
+                    return;
+                }
+            }
 
         }
         public bool IsReusable

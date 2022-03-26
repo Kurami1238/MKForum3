@@ -24,8 +24,8 @@ namespace MKForum.Managers
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
-                    SELECT [禁字欄位]
-                    FROM [MKForum].[dbo].[禁字表]
+                    SELECT BanWord
+                    FROM [MKForum].[dbo].[BanWords]
                     ";  //逐一取得資料庫的禁字(不建List)
 
             try
@@ -40,10 +40,11 @@ namespace MKForum.Managers
 
                         List<SearchResult> srchList = new List<SearchResult>();
 
+                        string BanWord;
                         //逐一比對資料庫的禁字
                         while (reader.Read())
                         {
-                            string BanWord = reader["禁字欄位"] as string;
+                            BanWord = reader["BanWord"] as string;
 
                             isBanWord = inpString.Contains(BanWord);  //checkString：輸入字串，BanWord：禁字
                         }
@@ -51,6 +52,7 @@ namespace MKForum.Managers
                         return isBanWord;
                     }
                 }
+
             }
             catch (Exception ex)
             {

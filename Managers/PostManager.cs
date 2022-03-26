@@ -110,11 +110,11 @@ namespace MKForum.Managers
         }
         public void CreatePostImageList(Guid memberid, string imagepath)
         {
-
+            imagepath = "1323";
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
-                    INSERT INTO PostImgLists
+                    INSERT INTO  [MKForum].[dbo].PostImgLists
                     (MemberID, ImagePath)
                     VALUES
                     (@memberID, @imagepath)
@@ -126,8 +126,8 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue(@"memberID", memberid);
-                        command.Parameters.AddWithValue(@"imagepath", imagepath);
+                        command.Parameters.AddWithValue("@memberID", memberid);
+                        command.Parameters.AddWithValue("@imagepath", imagepath);
                     }
                 }
             }

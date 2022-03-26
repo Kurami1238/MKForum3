@@ -201,7 +201,7 @@
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
                                 <asp:PlaceHolder ID="plhAPI2_normal" runat="server">
-                                    <%--<div id="PBDataList_normal2"></div>--%>
+                                    <div id="PBDataList_normal2"></div>
                                 </asp:PlaceHolder>
                                 <%--使用API的母版塊，後台人員操作--%>
                                 <asp:PlaceHolder ID="plhAPI2_admin" runat="server" Visible="false">
@@ -236,7 +236,7 @@
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
                                         <h3>黑名單</h3>
                                         <asp:TextBox ID="txtBlkAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
-                                        <asp:TextBox ID="txtBlkDate" runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
+                                        <asp:TextBox ID="txtBlkDate"  runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
                                         <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
                                         <p runat="server" text="黑單列表" />
                                         <br />
@@ -247,9 +247,14 @@
                                             </ItemTemplate>
                                         </asp:Repeater>
                                     </asp:PlaceHolder>
+
+                                    <!--stamp:顯示當前的tag/新增的輸入框:/確認儲存/刪除stamp-->
+                                    
+                                 <asp:TextBox ID="inpTag" runat="server" placeholder="(輸入新增的文章類型)"></asp:TextBox>
                                 </div>
                                 <br>
                                 <br>
+                                <
                                 <div class="MMlist">
                                     <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
                                         <h3>版主名單</h3>
@@ -343,7 +348,7 @@
                                   <input type="button" id="btnPBMoveUp" class="btn-outline-primary btn-sm btnPBMoveUp rounded-pill" name="btnPBMoveUp" value="上移" />
                                   <input type="button" id="btnPBMoveDown" class="btn-outline-primary btn-sm btnPBMoveDown rounded-pill" name="btnPBMoveDown" value="下移" />
 
-                                  <input type="button" id="btnPBHide" class="btn-outline-success btn-sm btnPBHide rounded-pill" name="btnPBHide" value="儲存"></button>
+                                  <input type="button" id="btnPBName" class="btn-outline-success btn-sm btnPBName rounded-pill" name="btnPBName" value="儲存"></button>
                               </div>
                             </td>
                         </tr>
@@ -465,6 +470,40 @@
                         });
                     });
 
+                    //儲存母版新名稱
+                    $("#PBDataList_Admin1,#PBDataList_Admin2").on('click', ".btnPBName", function () {
+                        var parentDiv = $(this).closest("div");
+                        var id = parentDiv.find("input.PboardID");
+                        var name = parentDiv.find('input.PboardName');
+                        var postData = { "PboardID": id.val(), "Pname": name.val() };
+
+                        $.ajax({
+                            url: "/API/PBoardHandler.ashx?Action=ReName",
+                            method: "POST",
+                            data: postData,
+                            //dataType: "JSON",
+                            success: function (txtMsg) {
+                                //alert(objData);
+                                console.log(txtMsg);
+                                if (txtMsg == "OK") {
+                                    $("#PBDataList_Admin1 *").remove();
+                                    $("#PBDataList_Admin2 *").remove();
+                                    GetPBAdmin();
+
+                                }
+                                else if (txtMsg == "STOP") {
+                                    alert("此板塊已經置底");
+                                }
+                                else {
+                                    alert("更新失敗，請聯絡管理員");
+                                }
+                            },
+                            error: function (msg) {
+                                console.log(msg);
+                                alert("通訊失敗，請聯絡管理員。")
+                            }
+                        });
+                    });
 
 
                 });
