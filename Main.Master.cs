@@ -385,7 +385,7 @@ namespace MKForum
         protected void btnMMDelete_Click(object sender, EventArgs e)
         {
             string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
-            string inpModerator = this.txtBlkAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
+            string inpModerator = this.txtMMAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
 
             if (inpModerator == "")
             {
@@ -495,6 +495,7 @@ namespace MKForum
                 Response.Write($"<script>alert('{msg}')</script>");
             }
         }
+
         //刪除文章類型
         protected void btnStpDelect_Click(object sender, EventArgs e)
         {
