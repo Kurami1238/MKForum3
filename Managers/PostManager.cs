@@ -114,7 +114,7 @@ namespace MKForum.Managers
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
-                    INSERT INTO PostImageLists
+                    INSERT INTO  PostImgLists
                     (MemberID, ImagePath)
                     VALUES
                     (@memberID, @imagepath)
@@ -128,12 +128,52 @@ namespace MKForum.Managers
                         connection.Open();
                         command.Parameters.AddWithValue(@"memberID", memberid);
                         command.Parameters.AddWithValue(@"imagepath", imagepath);
+                        command.ExecuteNonQuery();
+
                     }
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteLog("PostManager.CreatePostImageList", ex);
+                throw;
+            }
+        }
+        public string GetImage(Guid memberid)
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT * FROM PostImgLists
+                    WHERE MemberID = @memberID
+                    ORDER BY ID DESC
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        string imagepath = string.Empty;
+                        connection.Open();
+                        command.Parameters.AddWithValue("@memberID", memberid);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            imagepath = reader["ImagePath"] as string;
+                        }
+                        if (!string.IsNullOrEmpty(imagepath))
+                            return imagepath;
+                        else
+                            return string.Empty;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetImage", ex);
                 throw;
             }
         }
@@ -229,6 +269,8 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"postID", postid);
                         command.Parameters.AddWithValue(@"followStatus", 1);
                         command.Parameters.AddWithValue(@"replied", 1);
+                        command.ExecuteNonQuery();
+
                     }
                 }
             }
@@ -479,7 +521,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public Post GetPost(Guid postid,Guid memberid)
+        public Post GetPost(Guid postid, Guid memberid)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -563,13 +605,13 @@ namespace MKForum.Managers
                 PostView = (int)reader["PostView"],
                 Title = (string)reader["Title"],
                 PostCotent = (string)reader["PostCotent"],
-                LastEditTime = reader["LastEditTime"] as DateTime?,
+                LastEditTime = (DateTime)reader["LastEditTime"],
                 Floor = (int)reader["Floor"],
                 CoverImage = reader["CoverImage"] as string,
-                SortID = reader["SortID"] as int?            
+                SortID = reader["SortID"] as int?
             };
         }
-        public void UpdatePostView(Guid postid,int postview)
+        public void UpdatePostView(Guid postid, int postview)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -645,12 +687,38 @@ namespace MKForum.Managers
 
                         command.Parameters.AddWithValue(@"postID", postid);
                         command.ExecuteNonQuery();
+                        this.DeletePoint(postid);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteLog("PostManager.DeletePost", ex);
+                throw;
+            }
+        }
+        public void DeletePoint(Guid postid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  DELETE FROM Posts
+                    WHERE PointID = @postid ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.DeletePoint", ex);
                 throw;
             }
         }
@@ -770,10 +838,10 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        
+
 
         //----------------Htag--------------------
-        public void CreateHashtag(Guid postid,string htag)
+        public void CreateHashtag(Guid postid, string htag)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -879,7 +947,7 @@ namespace MKForum.Managers
         }
         //----------------Scans-------------------
 
-        public void CreateMemberScan (Guid postid, Guid memberid)
+        public void CreateMemberScan(Guid postid, Guid memberid)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =

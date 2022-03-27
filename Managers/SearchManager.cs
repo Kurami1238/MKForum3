@@ -214,25 +214,30 @@ namespace MKForum.Managers
         //}
 
         // -----------------------------New---------------------------------------
-        public List<SearchResult> GetAllSearchKekka(List<string> hosii)
+        public List<SearchResult> GetAllSearchKekka(List<string> hosii, out int totalRows)
         {
+            string Zyouken = " WHERE  ";
             string connectionStr = ConfigHelper.GetConnectionString();
-            string commandText =
-                @"
-                    SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
-                            LastEditTime,PostView,Members.Account,CoverImage
-                    FROM Posts
-                    INNER JOIN Members
-                    ON Posts.MemberID = Members.MemberID
-                    WHERE  
-                ";
             for (int i = 0; i < hosii.Count; i++)
             {
                 if (i != hosii.Count - 1)
-                    commandText += $" PostCotent LIKE '%'+@{hosii[i]}+'%' OR";
+                    Zyouken += $" (PostCotent LIKE '%'+@{hosii[i]}+'%' OR Title LIKE '%'+@{hosii[i]}+'%' ) OR";
                 else
-                    commandText += $" PostCotent LIKE '%'+@{hosii[i]}+'%' ";
+                    Zyouken += $" (PostCotent LIKE '%'+@{hosii[i]}+'%' OR Title LIKE '%'+@{hosii[i]}+'%' ) ";
             }
+            string commandText =
+                $@"
+                    SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
+                            LastEditTime,PostView,Members.Account,CoverImage,Floor,PointID
+                    FROM Posts
+                    INNER JOIN Members
+                    ON Posts.MemberID = Members.MemberID
+                    {Zyouken}
+                ";
+            string commandCountText = $@"SELECT COUNT(PostID)
+                                        FROM Posts
+                                        {Zyouken}";
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionStr))
@@ -249,22 +254,21 @@ namespace MKForum.Managers
 
                         while (reader.Read())
                         {
-                            SearchResult sr = new SearchResult()
-                            {
-                                PostID = (Guid)reader["PostID"],
-                                Title = (string)reader["Title"],
-                                PostCotent = (string)reader["PostCotent"],
-                                MemberID = (Guid)reader["MemberID"],
-                                CboardID = (int)reader["CboardID"],
-                                MemberAccount = (string)reader["Account"],
-                                LastEditTime = (DateTime)reader["LastEditTime"],
-                                PostView = (int)reader["PostView"],
-                                CoverImage = reader["CoverImage"] as string,
-                            };
+                            SearchResult sr = this.BuildSearchKekka(reader);
                             if (sr != null)
                                 srl.Add(sr);
-                            else
-                                return new List<SearchResult>();
+                        }
+                        reader.Close();
+                        command.Parameters.Clear();
+                        command.CommandText = commandCountText;
+                        for (int i = 0; i < hosii.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{hosii[i]}", hosii[i]);
+                        }
+                        totalRows = (int)command.ExecuteScalar();
+                        if (srl == null)
+                        {
+                            return new List<SearchResult>();
                         }
                         return srl;
                     }
@@ -277,25 +281,31 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public List<SearchResult> GetMemberSearchKekka(List<string> hosii)
+        public List<SearchResult> GetMemberSearchKekka(List<string> hosii,out int totalRows)
         {
+            string Zyouken = " WHERE  ";
             string connectionStr = ConfigHelper.GetConnectionString();
-            string commandText =
-                $@"
-                    SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
-                            LastEditTime,PostView,Members.Account,CoverImage
-                    FROM Posts
-                    INNER JOIN Members
-                    ON Posts.MemberID = Members.MemberID
-                    WHERE 
-                ";
             for (int i = 0; i < hosii.Count; i++)
             {
                 if (i != hosii.Count - 1)
-                    commandText += $"( MemberID = {hosii[i]} OR ";
+                    Zyouken += $" Members.Account = @{hosii[i]} OR ";
                 else
-                    commandText += $"( MemberID = {hosii[i]} ";
+                    Zyouken += $" Members.Account = @{hosii[i]} ";
             }
+            string commandText =
+                $@"
+                    SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
+                            LastEditTime,PostView,Members.Account,CoverImage,Floor,PointID
+                    FROM Posts
+                    INNER JOIN Members
+                    ON Posts.MemberID = Members.MemberID
+                    {Zyouken}
+                ";
+            string commandCountText = $@"SELECT COUNT(PostID)
+                                        FROM Posts
+                                        INNER JOIN Members
+                                        ON Posts.MemberID = Members.MemberID
+                                        {Zyouken}";
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionStr))
@@ -313,22 +323,21 @@ namespace MKForum.Managers
 
                         while (reader.Read())
                         {
-                            SearchResult sr = new SearchResult()
-                            {
-                                PostID = (Guid)reader["PostID"],
-                                Title = (string)reader["Title"],
-                                PostCotent = (string)reader["PostCotent"],
-                                MemberID = (Guid)reader["MemberID"],
-                                CboardID = (int)reader["CboardID"],
-                                MemberAccount = (string)reader["Account"],
-                                LastEditTime = (DateTime)reader["LastEditTime"],
-                                PostView = (int)reader["PostView"],
-                                CoverImage = reader["CoverImage"] as string,
-                            };
+                            SearchResult sr = this.BuildSearchKekka(reader);
                             if (sr != null)
                                 srl.Add(sr);
-                            else
-                                return new List<SearchResult>();
+                        }
+                        reader.Close();
+                        command.Parameters.Clear();
+                        command.CommandText = commandCountText;
+                        for (int i = 0; i < hosii.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{hosii[i]}", hosii[i]);
+                        }
+                        totalRows = (int)command.ExecuteScalar();
+                        if (srl == null)
+                        {
+                            return new List<SearchResult>();
                         }
                         return srl;
                     }
@@ -341,38 +350,52 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public List<SearchResult> GetboardSearchKekka(List<string> hosii, int board, string pORc)
+        public List<SearchResult> GetboardSearchKekka(List<string> hosii, string board, string pORc,out int totalRows)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
-            string commandText = string.Empty;
-            string ruru = @"SELECT PostID 
+            string ruru = @"(SELECT PostID 
                             FROM Posts 
                             WHERE ";
-            string pluszyouken = string.Empty;
             for (int i = 0; i < hosii.Count; i++)
             {
                 if (i != hosii.Count - 1)
-                    ruru += $" PostCotent LIKE '%'+@{hosii[i]}+'%' OR";
+                    ruru += $" (PostCotent LIKE '%'+@{hosii[i]}+'%' OR Title LIKE '%'+@{hosii[i]}+'%' ) OR";
                 else
-                    ruru += $" PostCotent LIKE '%'+@{hosii[i]}+'%' ";
+                    ruru += $" (PostCotent LIKE '%'+@{hosii[i]}+'%' OR Title LIKE '%'+@{hosii[i]}+'%' ))";
             }
+            string pluszyoukenP = @" WHERE PostID IN (SELECT PostID 
+                            FROM Posts 
+                            WHERE ";
+            string pluszyoukenC = $@" WHERE PostID IN {ruru}
+                                      AND CboardID = @board ";
+            string commandText = string.Empty;
+            string commandCountText = string.Empty;
             if (string.Compare(pORc, "p") == 0)
             {
                 List<Cboard> cblist = this.GetPbnoCb(board);
+                if (cblist.Count == 0)
+                {
+                    totalRows = 0;
+                    return new List<SearchResult>();
+                }
                 for (int i = 0; i < cblist.Count; i++)
                 {
                     if (i != cblist.Count - 1)
-                        pluszyouken += $" (CboardID = {cblist[i]} AND Post IN {ruru} ) OR ";
+                        pluszyoukenP += $" (CboardID = {cblist[i].CboardID} AND PostID IN {ruru} ) OR ";
                     else
-                        pluszyouken += $" (CboardID = {cblist[i]} AND {ruru} )";
+                        pluszyoukenP += $" (CboardID = {cblist[i].CboardID} AND PostID IN {ruru} ))";
                 }
                 commandText = $@"
                                 SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
-                                    LastEditTime,PostView,Members.Account,CoverImage
+                                    LastEditTime,PostView,Members.Account,CoverImage,Floor,PointID
                                 FROM Posts
-                                WHERE {pluszyouken}
+                                INNER JOIN Members
+                                ON Posts.MemberID = Members.MemberID
+                                 {pluszyoukenP}
                                 ";
-                
+                commandCountText = $@"SELECT COUNT(PostID)
+                                        FROM Posts
+                                        {pluszyoukenP}";
             }
             if (string.Compare(pORc, "c") == 0)
             {
@@ -380,11 +403,14 @@ namespace MKForum.Managers
                                 SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
                                     LastEditTime,PostView,Members.Account,CoverImage
                                 FROM Posts
-                                WHERE {pluszyouken}
+                                INNER JOIN Members
+                                ON Posts.MemberID = Members.MemberID
+                                {pluszyoukenC} 
                                 ";
-
+                commandCountText = $@"SELECT COUNT(PostID)
+                                        FROM Posts
+                                        {pluszyoukenC}";
             }
-          
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionStr))
@@ -397,32 +423,33 @@ namespace MKForum.Managers
                         {
                             command.Parameters.AddWithValue($"@{hosii[i]}", hosii[i]);
                         }
+                        if (string.Compare(pORc, "c") == 0)
+                            command.Parameters.AddWithValue($"@board", board);
 
                         SqlDataReader reader = command.ExecuteReader();
-
                         while (reader.Read())
                         {
-                            SearchResult sr = new SearchResult()
-                            {
-                                PostID = (Guid)reader["PostID"],
-                                Title = (string)reader["Title"],
-                                PostCotent = (string)reader["PostCotent"],
-                                MemberID = (Guid)reader["MemberID"],
-                                CboardID = (int)reader["CboardID"],
-                                MemberAccount = (string)reader["Account"],
-                                LastEditTime = (DateTime)reader["LastEditTime"],
-                                PostView = (int)reader["PostView"],
-                                CoverImage = reader["CoverImage"] as string,
-                            };
+                            SearchResult sr = this.BuildSearchKekka(reader);
                             if (sr != null)
                                 srl.Add(sr);
-                            else
-                                return new List<SearchResult>();
+                        }
+                        reader.Close();
+                        command.Parameters.Clear();
+                        command.CommandText = commandCountText;
+                        for (int i = 0; i < hosii.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{hosii[i]}", hosii[i]);
+                        }
+                        if (string.Compare(pORc, "c") == 0)
+                            command.Parameters.AddWithValue($"@board", board);
+                        totalRows = (int)command.ExecuteScalar();
+                        if (srl == null)
+                        {
+                            return new List<SearchResult>();
                         }
                         return srl;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -430,7 +457,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public List<Cboard> GetPbnoCb(int pbid)
+        public List<Cboard> GetPbnoCb(string pbid)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
             string commandText =
@@ -467,6 +494,23 @@ namespace MKForum.Managers
                 Logger.WriteLog("PostManager.GetPbnoCb", ex);
                 throw;
             }
+        }
+        private SearchResult BuildSearchKekka(SqlDataReader reader)
+        {
+            return new SearchResult()
+            {
+                PostID = (Guid)reader["PostID"],
+                Title = (string)reader["Title"],
+                PostCotent = (string)reader["PostCotent"],
+                MemberID = (Guid)reader["MemberID"],
+                CboardID = (int)reader["CboardID"],
+                MemberAccount = (string)reader["Account"],
+                LastEditTime = (DateTime)reader["LastEditTime"],
+                PostView = (int)reader["PostView"],
+                CoverImage = reader["CoverImage"] as string,
+                Floor = (int)reader["Floor"],
+                PointID = reader["PointID"] as Guid?,
+            };
         }
         public List<SearchResult> GetMemberSearchKekkaUPUP(List<string> hosii, Guid memberid)
         {

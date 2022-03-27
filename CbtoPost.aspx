@@ -26,6 +26,9 @@
                                 <asp:PlaceHolder runat="server" Visible='<%# !string.IsNullOrWhiteSpace(Eval("CoverImage") as string)%>'>
                                     <img id="imgPostP" class="imgPostP" src="<%# Eval("CoverImage") as string%>" width="300" height="300" />
                                 </asp:PlaceHolder>
+                                <div class="PostV">
+                                     <asp:Literal ID="ltlPostV" runat="server" Text='<%# "👁‍" +Eval("PostView")%>'></asp:Literal>
+                                </div>
                                 <h6 class="PostT">
                                     <asp:Literal ID="ltlPostT" runat="server" Text='<%# Eval("Title")%>'></asp:Literal>
                                 </h6>
@@ -110,12 +113,15 @@
                     var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
                     var titlex = "前往：" + list[i].Title;
                     var postdd = "最後編輯：" + list[i].LastEditTime
+                    var postv = "👁‍" + list[i].PostView
                     $(".PostA", rpt).attr({ "href": url, "title": titlex });
                     $(".imgPostP", rpt).attr({ "src": list[i].Coverimage });
                     $(".PostT", rpt).text(list[i].Title);
                     $(".PostC", rpt).text(list[i].PostCotent);
                     $(".PostM", rpt).text(list[i].MemberAccount);
                     $(".PostD", rpt).text(postdd);
+                    $(".PostV", rpt).text(postv);
+
                     //$("btnPostEdit").attr({ "CommandArgument": list[i].PostID });
                     console.log(rpt.html());
                     //$("#Nmphl").text(list[i].LastEditTime);

@@ -60,9 +60,10 @@ namespace MKForum.API
                                MemberID = p.MemberID,
                                CboardID = p.CboardID,
                                Title = p.Title,
-                               LastEditTime = p.LastEditTime,
+                               LastEditTime = p.LastEditTime.ToString("yyyy/MM/dd tt HH:mm:ss"),
                                PostDate = p.PostDate.ToString("yyyy/MM/dd tt hh:mm:ss"),
                                CoverImage = p.CoverImage,
+                               PostView = p.PostView,
                            };
                 // 第二次合併把文章內容大於二十字的替換掉
                 var pLMLS = from p in pLML
@@ -79,6 +80,7 @@ namespace MKForum.API
                                 LastEditTime = p.LastEditTime,
                                 PostDate = p.PostDate,
                                 CoverImage = p.CoverImage,
+                                PostView = p.PostView,
                             };
                 MugenList<Temp> mugen = new MugenList<Temp>()
                 {
@@ -126,9 +128,10 @@ namespace MKForum.API
             public Guid MemberID { get; set; }
             public int CboardID { get; set; }
             public string Title { get; set; }
-            public DateTime? LastEditTime { get; set; }
+            public string LastEditTime { get; set; }
             public string PostDate { get; set; }
             public string CoverImage { get; set; }
+            public int PostView { get; set; }
         }
 
         public bool IsReusable

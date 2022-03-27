@@ -11,9 +11,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/jquery.min.js"></script>
+
     <style>
         #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout {
             background-color: white;
@@ -31,6 +29,15 @@
         .span1 {
             color: white;
             font-size: 16pt;
+        }
+
+
+
+        /* Style for positioning toast */
+        .toast {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
         }
     </style>
 </head>
@@ -137,25 +144,6 @@
                                         &nbsp
                                         <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
                                         &nbsp&nbsp
-
-                                        <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
-
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
-  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
-</div>
-
-    
-
                                         <div class="Notify">
                                             <asp:Button ID="btnNotify" runat="server" Text="通知" />
                                             <div class="Notifytext">
@@ -219,14 +207,18 @@
                                 <asp:PlaceHolder ID="plhAPI2_admin" runat="server" Visible="false">
                                     <div id="PBDataList_Admin2"></div>
                                 </asp:PlaceHolder>
-
+                                <br />
+                                <br />
                                 <%--編輯母版塊按鈕，後台人員才能看到--%>
                                 <asp:PlaceHolder ID="plhPBEdit2" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBEdit2" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                                    <asp:Button ID="btnPBEdit2" runat="server" CssClass="text-white rounded-pill" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
                                 </asp:PlaceHolder>
                                 <%--結束編輯按鈕，後台人員才能看到--%>
                                 <asp:PlaceHolder ID="plhPBDsplMode2" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBSave2" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
+                                <asp:TextBox ID="addPBoard" runat="server"></asp:TextBox>
+                                <asp:Button ID="btnAddPB" runat="server" CssClass="text-white rounded-pill" Text="新增母板" OnClick="btnAddPB_Click" />
+                                    <br />
+                                <asp:Button ID="btnPBSave2" runat="server" CssClass="text-white rounded-pill" Text="結束編輯" OnClick="btnPBSave_Click" />
                                 </asp:PlaceHolder>
                             </div>
 
@@ -244,7 +236,7 @@
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
                                         <h3>黑名單</h3>
                                         <asp:TextBox ID="txtBlkAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
-                                        <asp:TextBox ID="txtBlkDate" runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
+                                        <asp:TextBox ID="txtBlkDate"  runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
                                         <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
                                         <p runat="server" text="黑單列表" />
                                         <br />
@@ -255,9 +247,14 @@
                                             </ItemTemplate>
                                         </asp:Repeater>
                                     </asp:PlaceHolder>
+
+                                    <!--stamp:顯示當前的tag/新增的輸入框:/確認儲存/刪除stamp-->
+                                    
+                                 <asp:TextBox ID="inpTag" runat="server" placeholder="(輸入新增的文章類型)"></asp:TextBox>
                                 </div>
                                 <br>
                                 <br>
+                                <
                                 <div class="MMlist">
                                     <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
                                         <h3>版主名單</h3>
@@ -290,67 +287,51 @@
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
         })
-    </script>
-    <script>
-        //通知
-        //$('.Notifytext').hide();
+        var option = { Animation: true, delay: 200000, autohide: false }
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl, option)
+        })
 
-        //var scrollVal = $('.Notifytext').prop('scrollHeight');
-        ////var scrollVal = $(window).scrollTop();
-        //console.log(scrollVal);
-        //$(window).scroll(function () {
-        //    var scrollVal = $(this).scrollTop();
-        //    console.log(scrollVal);
-        //    if (scrollVal < 0) {
-        //        $('.Notifytext').hide();
-        //    }
-        //}
-
-        //  展開/收合按鈕
-        $(document).ready(function () {
-
-            $("#collapse").on("click", function () {
-
-                $("#sidebar").toggleClass("active");
-                $(".fa-align-left").toggleClass("fa-chevron-circle-right");
-            })
-        });
-        $(function () {
-            $("#txtBlkDate").datepicker();
-        });
+        function see() {
+            for (var i = 0; i < toastList.length; i++) {
+                toastList[i].show();
+            }
+        }
 
     </script>
 
+
     <script>
-        $(document).ready(function () {
-            //取得母版，不含編輯按鈕
-            $.ajax({
-                url: "/API/PBoardHandler.ashx",
-                method: "GET",
-                dataType: "JSON",
-                success: function (jsonText) {
-                    var rowsText = "";
-                    for (var item of jsonText) {
-                        rowsText += `
-                        <tr>
-                            <td>
-                              <div class="${item.PboardID}">
-                                  <a href="/PboardtoCboard.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">${item.Pname}</p>
-                              </div>
-                            </td>
-                        </tr>
-                        `;
-                    }
-                    $("#PBDataList_normal1").append("<table>" + rowsText + "</table>");
-                    $("#PBDataList_normal2").append("<table>" + rowsText + "</table>");
-                    console.log(jsonText);
-                },
-                error: function (msg) {
-                    console.log(msg);
-                    alert("母版塊載入失敗，請聯絡管理員。");
-                }
-            });
-            //取得母版及按鈕
+                //通知
+                //$('.Notifytext').hide();
+
+                //var scrollVal = $('.Notifytext').prop('scrollHeight');
+                ////var scrollVal = $(window).scrollTop();
+                //console.log(scrollVal);
+                //$(window).scroll(function () {
+                //    var scrollVal = $(this).scrollTop();
+                //    console.log(scrollVal);
+                //    if (scrollVal < 0) {
+                //        $('.Notifytext').hide();
+                //    }
+                //}
+
+                //  展開/收合按鈕
+                $(document).ready(function () {
+
+                    $("#collapse").on("click", function () {
+
+                        $("#sidebar").toggleClass("active");
+                        $(".fa-align-left").toggleClass("fa-chevron-circle-right");
+                    })
+                });
+
+    </script>
+
+    <script>
+        //管理員看到的母版方法
+        function GetPBAdmin() {
             $.ajax({
                 url: "/API/PBoardHandler.ashx",
                 method: "GET",
@@ -361,13 +342,13 @@
                         rowsText += `
                         <tr>
                               <div>
-                                  <input id="PboardID" class="PboardID" value="${item.PboardID}" ></p>
-                                  <input id="PboardName" class="PboardName" value="${item.Pname}">${item.Pname}</input>
-                                  <input id="Porder" class="Porder" value="${item.Porder}" ></p>
+                                  <input name="PboardID" class="PboardID" value="${item.PboardID}" type="hidden"></p>
+                                  <input name="PboardName" class="PboardName rounded-3  text-white" value="${item.Pname}"></input>
+                                  <input name="Porder" class="Porder" value="${item.Porder}"  type="hidden"></p>
+                                  <input type="button" id="btnPBMoveUp" class="btn-outline-primary btn-sm btnPBMoveUp rounded-pill" name="btnPBMoveUp" value="上移" />
+                                  <input type="button" id="btnPBMoveDown" class="btn-outline-primary btn-sm btnPBMoveDown rounded-pill" name="btnPBMoveDown" value="下移" />
 
-                                <input type="submit" id="btnPBMoveUp" class="btn-outline-primary btn-sm btnPBMoveUp" name="btnPBMoveUp" value="上移" />
-                                  <button type="button" class="btn-outline-primary PBDataList_btnPBMoveDown_0" data-bs-target="#btnPBMoveDown">下移</button>
-                                  <button type="button" class="btn-outline-primary PBDataList_btnPBHide_0" data-bs-target="#btnPBHide">隱藏</button>
+                                  <input type="button" id="btnPBName" class="btn-outline-success btn-sm btnPBName rounded-pill" name="btnPBName" value="儲存"></button>
                               </div>
                             </td>
                         </tr>
@@ -384,39 +365,148 @@
                 }
             });
 
-            //上移母版
-            $("#PBDataList_Admin2").on('click', ".btnPBMoveUp", function () {
+        }
 
-                var parentDiv = $(this).closest("div");
-                var id = parentDiv.find("input.PboardID");
-                var order = parentDiv.find('input.Porder');
-                var postData = { "PboardID": id.val(), "Porder": order.val() };
-
-                //alert(id.val());
-
-                $.ajax({
-                    url: "/API/PBoardHandler.ashx?Action=MoveUp",
-                    method: "POST",
-                    data: postData,
-                    //dataType: "JSON",
-                    success: function (txtMsg) {
-                        //alert(objData);
-                        console.log(txtMsg);
-                        if (txtMsg == "OK") {
-                            alert("更新成功");
-                        } else {
-                            alert("更新失敗，請聯絡管理員");
+                $(document).ready(function () {
+                    //一班會員看到的母版
+                    $.ajax({
+                        url: "/API/PBoardHandler.ashx",
+                        method: "GET",
+                        dataType: "JSON",
+                        success: function (jsonText) {
+                            var rowsText = "";
+                            for (var item of jsonText) {
+                                rowsText += `
+                        <tr>
+                            <td>
+                              <div class="${item.PboardID}">
+                                  <a href="/PboardtoCboard.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">${item.Pname}</p>
+                              </div>
+                            </td>
+                        </tr>
+                        `;
+                            }
+                            $("#PBDataList_normal1").append("<table>" + rowsText + "</table>");
+                            $("#PBDataList_normal2").append("<table>" + rowsText + "</table>");
+                            console.log(jsonText);
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                            alert("母版塊載入失敗，請聯絡管理員。");
                         }
-                    },
-                    error: function (msg) {
-                        console.log(msg);
-                        alert("通訊失敗，請聯絡管理員。")
-                    }
+                    });
+
+                    //顯示管理員看到的母版
+                    GetPBAdmin();
+
+
+                    //上移母版
+                    $("#PBDataList_Admin1,#PBDataList_Admin2").on('click', ".btnPBMoveUp", function () {
+
+                        var parentDiv = $(this).closest("div");
+                        var id = parentDiv.find("input.PboardID");
+                        var order = parentDiv.find('input.Porder');
+                        var postData = { "PboardID": id.val(), "Porder": order.val() };
+
+                        $.ajax({
+                            url: "/API/PBoardHandler.ashx?Action=MoveUp",
+                            method: "POST",
+                            data: postData,
+                            //dataType: "JSON",
+                            success: function (txtMsg) {
+                                //alert(objData);
+                                console.log(txtMsg);
+                                if (txtMsg == "OK") {
+                                    $("#PBDataList_Admin1 *").remove();
+                                    $("#PBDataList_Admin2 *").remove();
+                                    GetPBAdmin();
+                                }
+                                else if (txtMsg == "STOP") {
+                                    alert("此板塊已經置頂");
+                                }
+                                else {
+                                    alert("更新失敗，請聯絡管理員");
+                                }
+                            },
+                            error: function (msg) {
+                                console.log(msg);
+                                alert("通訊失敗，請聯絡管理員。")
+                            }
+                        });
+                    });
+
+                    //下移母版
+                    $("#PBDataList_Admin1,#PBDataList_Admin2").on('click', ".btnPBMoveDown", function () {
+                        var parentDiv = $(this).closest("div");
+                        var id = parentDiv.find("input.PboardID");
+                        var order = parentDiv.find('input.Porder');
+                        var postData = { "PboardID": id.val(), "Porder": order.val() };
+
+                        $.ajax({
+                            url: "/API/PBoardHandler.ashx?Action=MoveDown",
+                            method: "POST",
+                            data: postData,
+                            //dataType: "JSON",
+                            success: function (txtMsg) {
+                                //alert(objData);
+                                console.log(txtMsg);
+                                if (txtMsg == "OK") {
+                                    $("#PBDataList_Admin1 *").remove();
+                                    $("#PBDataList_Admin2 *").remove();
+                                    GetPBAdmin();
+
+                                }
+                                else if (txtMsg == "STOP") {
+                                    alert("此板塊已經置底");
+                                }
+                                else {
+                                    alert("更新失敗，請聯絡管理員");
+                                }
+                            },
+                            error: function (msg) {
+                                console.log(msg);
+                                alert("通訊失敗，請聯絡管理員。")
+                            }
+                        });
+                    });
+
+                    //儲存母版新名稱
+                    $("#PBDataList_Admin1,#PBDataList_Admin2").on('click', ".btnPBName", function () {
+                        var parentDiv = $(this).closest("div");
+                        var id = parentDiv.find("input.PboardID");
+                        var name = parentDiv.find('input.PboardName');
+                        var postData = { "PboardID": id.val(), "Pname": name.val() };
+
+                        $.ajax({
+                            url: "/API/PBoardHandler.ashx?Action=ReName",
+                            method: "POST",
+                            data: postData,
+                            //dataType: "JSON",
+                            success: function (txtMsg) {
+                                //alert(objData);
+                                console.log(txtMsg);
+                                if (txtMsg == "OK") {
+                                    $("#PBDataList_Admin1 *").remove();
+                                    $("#PBDataList_Admin2 *").remove();
+                                    GetPBAdmin();
+
+                                }
+                                else if (txtMsg == "STOP") {
+                                    alert("此板塊已經置底");
+                                }
+                                else {
+                                    alert("更新失敗，請聯絡管理員");
+                                }
+                            },
+                            error: function (msg) {
+                                console.log(msg);
+                                alert("通訊失敗，請聯絡管理員。")
+                            }
+                        });
+                    });
+
+
                 });
-            });
-
-
-        });
 
     </script>
 </body>

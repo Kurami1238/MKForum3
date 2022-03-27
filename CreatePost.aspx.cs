@@ -16,36 +16,29 @@ namespace MKForum
     {
         private PostManager _pmgr = new PostManager();
         private AccountManager _Amgr = new AccountManager();
-
         private Member _member;
-        //private Member _member = new Member()
-        //{
-        //    Account = "a123234",
-        //    Password = "12345678"
-        //};
-        // 先測試 直接輸入
-
         protected void Page_Init(object sender, EventArgs e)
         {
-            // 從Session取得登錄者ID
-            if (this._Amgr.IsLogined())
-            {
-                Member account = this._Amgr.GetCurrentUser();
-                _member = account;
-            }
-            // 從Session取得當前子板塊ID
-            int cboardid = 0;
-            if (HttpContext.Current.Session["CboardID"] != null)
-                cboardid = (int)HttpContext.Current.Session["CboardID"];
-            else
-                Response.Redirect($"Index.aspx", true);
+                // 從Session取得登錄者ID
+                if (this._Amgr.IsLogined())
+                {
+                    Member account = this._Amgr.GetCurrentUser();
+                    _member = account;
+                this.memberid.Value = this._member.MemberID.ToString();
+                }
+                // 從Session取得當前子板塊ID
+                int cboardid = 0;
+                if (HttpContext.Current.Session["CboardID"] != null)
+                    cboardid = (int)HttpContext.Current.Session["CboardID"];
+                else
+                    Response.Redirect($"Index.aspx", true);
 
-            // 繫結PostStamp
-            List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
-            this.dpdlPostStamp.DataSource = psList;
-            this.dpdlPostStamp.DataTextField = "PostSort";
-            this.dpdlPostStamp.DataValueField = "SortID";
-            this.dpdlPostStamp.DataBind();
+                // 繫結PostStamp
+                List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
+                this.dpdlPostStamp.DataSource = psList;
+                this.dpdlPostStamp.DataTextField = "PostSort";
+                this.dpdlPostStamp.DataValueField = "SortID";
+                this.dpdlPostStamp.DataBind();
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -98,7 +91,7 @@ namespace MKForum
 
             // 新建一筆Post
             Guid postid;
-            this._pmgr.CreatePost(_member.MemberID, cboardid, post, out postid);
+            this._pmgr.CreatePost(this._member.MemberID, cboardid, post, out postid);
 
             // 處理#tag
             string htagtext = this.txtPostHashtag.Text;
@@ -125,18 +118,19 @@ namespace MKForum
                 Random random = new Random((int)DateTime.Now.Ticks);
 
                 string folderPath = "~/FileDownload/PostContent/";
-                string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
+                string fileName = "P" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF")+ "_" + this._member.Account + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
 
                 folderPath = HostingEnvironment.MapPath(folderPath);
                 if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
                     Directory.CreateDirectory(folderPath);
                 string newFilePath = Path.Combine(folderPath, fileName);
                 this.fuPostImage.SaveAs(newFilePath);
-                imgpath = "/FileDownload/MapContent/" + fileName;
+                imgpath = "/FileDownload/PostContent/" + fileName;
 
                 // 儲存圖片路徑
-                if (!string.IsNullOrWhiteSpace(imgpath))
-                    this._pmgr.CreatePostImageList(_member.MemberID, imgpath);
+                    this._pmgr.CreatePostImageList(this._member.MemberID, imgpath);
+                string imagelink = this._pmgr.GetImage(this._member.MemberID);
+                this.content.InnerText += $" ![]({imagelink})";
             }
         }
 

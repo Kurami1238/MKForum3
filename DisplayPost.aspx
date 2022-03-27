@@ -5,6 +5,7 @@
     <script src="js/showdown.js"></script>
     <link href="css/github-markdown-dark.css" rel="stylesheet" />
     <link href="css/github-markdown.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -49,9 +50,11 @@
             <div class="nomainPost col-sm-11 col-md-11 col-lg-11">
                 <div class="nmpostall">
                     <div class="nmF">
-                        <asp:Label ID="lblNmFloor" runat="server" Text='<%# Eval("Floor")+"F" %>'></asp:Label>
+                        <a name='<%# Eval("Floor") %>'>
+                            <asp:Label ID="lblNmFloor" runat="server" Text='<%# Eval("Floor")+"F" %>'></asp:Label>
+                        </a>
                     </div>
-                    <asp:PlaceHolder ID="Nmphl" runat="server"  Visible = '<%# (HttpContext.Current.Session["MemberID"] != null) ? (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0) : false%>'>
+                    <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (HttpContext.Current.Session["MemberID"] != null) ? (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0) : false%>'>
                         <div class="nmbtn">
                             <div>
                                 <asp:Button class="btn" ID="btnEditNmPost" runat="server" Text="編輯回覆" CommandName="btnEditNmpost" CommandArgument='<%# Eval("PostID") %>' />
@@ -76,6 +79,7 @@
             </div>
         </ItemTemplate>
     </asp:Repeater>
+
     <div class="CNNmPost col-sm-11 col-md-11 col-lg-11">
         <asp:TextBox class="CNNmT" runat="server" ID="txtCNNmPost" placeholder="請輸入回覆訊息"></asp:TextBox>
         <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" OnClientClick="NmCreatePosta();" />
