@@ -75,6 +75,7 @@ a:visited {
 }
 .PostA:hover img{
     transform:  scale(1.03);
+
     -webkit-filter: brightness(105%); /* Safari */
     filter: brightness(105%);
 }
@@ -84,6 +85,7 @@ a:active {
     color:#fafafa;
     }
 img{
+    transition: 0.4s;
     transform: 2s;
 }
 
@@ -100,10 +102,27 @@ img{
     float: left;
     
 }
-    
     .Cboard .StampButton{
-        font-size: 33px;
-       
+        margin-left: 20px;
+    }
+    .Cboard .StampButton input{
+        font-size: 27px;
+        margin-left: 5px;
+        color: antiquewhite; border:0;
+        background-color:#181717;
+        color:#fff;
+        border: 1px none #e76c25;
+        box-shadow: 2px 2px 6px #e76c25;line-height: 35px;text-align: center;
+        border-radius:10px;
+        cursor:pointer;
+        transition: 0.4s;
+    }
+    .Cboard .StampButton input:hover{
+        color:#fff;
+        border:2px #851a1a none;
+        text-shadow: 2px 2px 2px #941a12;
+        box-shadow: 2px 2px 8px #941a12;
+    
     }
     .Cboard .Sbtn{
         color: antiquewhite; border:0;
@@ -135,6 +154,7 @@ img{
             border-bottom: 0.5px double #e76c25;
             border-right: 0.5px solid #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 100px;text-align: left;
+            transition: 0.4s;
 
         }
         .Cboard .content .article .PostV{

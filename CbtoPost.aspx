@@ -12,6 +12,7 @@
         <div class="StampButton">
             <asp:Repeater ID="rptStamp" runat="server" OnItemCommand="rptStamp_ItemCommand">
                 <ItemTemplate>
+                    <asp:Button runat="server" ID="btnStamp" CommandName="btnStamp" CommandArgument='<%# Eval("SortID") %>' Text='<%# Eval("PostSort") %>' />
                 </ItemTemplate>
             </asp:Repeater>
         </div>
