@@ -33,8 +33,7 @@ namespace MKForum
             // 判斷是不是遊客及是否為作者and版主就全開放
             this.CheckDare();
             // 檢查追蹤與否
-            this.MemberFollowFirst(this._member.MemberID,postid);
-
+                this.MemberFollowFirst(postid);
         }
 
         //private void Check()
@@ -95,7 +94,7 @@ namespace MKForum
             this.DisplayPost(post);
             if (this._member != null)
                 if (this._member.MemberID != null)
-                    this.MemberFollowFirst(this._member.MemberID, postid);
+                    this.MemberFollowFirst(postid);
         }
 
         private Guid GetPostID()
@@ -241,15 +240,20 @@ namespace MKForum
                     break;
             }
         }
-        private void MemberFollowFirst(Guid memberID, Guid postID)
+        private void MemberFollowFirst(Guid postID)
         {
-            if (this._mfmsg.GetMemberFollowThisPost(memberID, postID) != null)
-                if (this._mfmsg.GetMemberFollowThisPost(memberID, postID).FollowStatus)
-                    this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+            if (this._member != null)
+            {
+                if (this._mfmsg.GetMemberFollowThisPost(this._member.MemberID, postID) != null)
+                    if (this._mfmsg.GetMemberFollowThisPost(this._member.MemberID, postID).FollowStatus)
+                        this.lblMemberFollow_FollowStatus.Text = "追蹤中";
+                    else
+                        this.lblMemberFollow_FollowStatus.Text = "未追蹤";
                 else
                     this.lblMemberFollow_FollowStatus.Text = "未追蹤";
-            else
-                this.lblMemberFollow_FollowStatus.Text = "未追蹤";
+            }
+            
+
         }
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
