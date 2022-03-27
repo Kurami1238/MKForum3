@@ -23,6 +23,7 @@ namespace MKForum.Managers
 	                                    Posts.CoverImage,
 	                                    Posts.PostCotent,
 	                                    Posts.PostID,
+	                                    Posts.CboardID,
 	                                    TempT.ViewCount
                                     FROM Posts
                                     JOIN members
@@ -63,7 +64,8 @@ namespace MKForum.Managers
                                 CoverImage = reader["CoverImage"] as string,
                                 PostCotent = (string)reader["PostCotent"],
                                 PostID = (Guid)reader["PostID"],
-                                ViewCount = (int)reader["ViewCount"]
+                                ViewCount = (int)reader["ViewCount"],
+                                CboardID = (int)reader["CboardID"]
                             };
                             RankingList.Add(MatchData);
 
@@ -78,6 +80,99 @@ namespace MKForum.Managers
                 throw;
             }
         }
+
+
+        public List<RankingDATA> GetScansTitleList()
+        {
+            string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";            //連線字串
+            string commandText = @"
+                                select 
+	                                Cboards.CboardID,
+	                                Cboards.Cname,
+	                                Pboards.Pname
+                                from Cboards
+                                join Pboards
+                                on Cboards.PboardID = Pboards.PboardID
+                                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+
+                        conn.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        List<RankingDATA> RankingTitleList = new List<RankingDATA>();
+
+                        //把取得的資料放進陣列(資料庫無資料無法測試)
+                        while (reader.Read())
+                        {
+                            RankingDATA MatchData = new RankingDATA()
+                            {
+                                CboardID = (int)reader["CboardID"],
+                                Cname = (string)reader["Cname"],
+                                Pname = (string)reader["Pname"],
+                            };
+                            RankingTitleList.Add(MatchData);
+
+                        }
+                        return RankingTitleList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("RankingManager.GetRankingList", ex);
+                throw;
+            }
+        }
+
+
+        public List<RankingDATA> GetHashtags()
+        {
+            string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";            //連線字串
+            string commandText = @"
+                                SELECT TOP(4) 
+	                                Naiyo, 
+	                                count(Naiyo) as 'tagcount'
+                                FROM PostHashtags
+                                GROUP BY Naiyo
+                                ORDER BY tagcount DESC
+                                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+
+                        conn.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        List<RankingDATA> RankingTitleList = new List<RankingDATA>();
+
+                        //把取得的資料放進陣列(資料庫無資料無法測試)
+                        while (reader.Read())
+                        {
+                            RankingDATA MatchData = new RankingDATA()
+                            {
+                                Naiyo = (string)reader["Naiyo"],
+                            };
+                            RankingTitleList.Add(MatchData);
+
+                        }
+                        return RankingTitleList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("RankingManager.GetRankingList", ex);
+                throw;
+            }
+        }
+
+
 
 
 

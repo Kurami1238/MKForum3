@@ -231,30 +231,43 @@
                             </div>
 
                             <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
-                            <div class="d-none d-md-block col-md-2">
-                                <div class="BLmember">
+                            <div class="d-none d-md-block col-md-2 ">
+                                <br />
+                                <div class="BLmember rounded border border-1 border-light overflow-auto">
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
                                         <h3>黑名單</h3>
-                                        <asp:TextBox ID="txtBlkAcc" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
-                                        <asp:TextBox ID="txtBlkDate"  runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
+                                        <asp:TextBox ID="txtBlkAcc" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入懲處會員帳號)"></asp:TextBox>
+                                        <asp:TextBox ID="txtBlkDate" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入懲處期限)"></asp:TextBox>
                                         <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
+                                <br />
                                         <p runat="server" text="黑單列表" />
+
                                         <br />
                                         <asp:Repeater ID="RptrBlk" runat="server">
                                             <ItemTemplate>
                                                 <asp:Literal ID="ltlBlkID" runat="server" Text='<%# Eval("Account") %>' /><br />
-                                                <asp:Literal ID="ltlDate" runat="server" Text='<%# Eval("ReleaseDate")%>' />
+                                                <asp:Literal ID="ltlDate" runat="server" Text='<%# Eval("ReleaseDate")%>' /><br />
                                             </ItemTemplate>
                                         </asp:Repeater>
+                                        <br />
+                                        <h5 class="page-header"></h5>
+                                        <hr />
+                                        <figure class="figure">
+
+                                        <p runat="server" text="文章類型列表" />
+                                        <asp:Literal ID="ltlBlkID"  runat="server" Text='<%# Eval("PostSort") %>' /><br />
+                                        <asp:TextBox ID="inpTag" CssClass="rounded-3  text-white" runat="server" placeholder="(輸入新增的文章類型)"></asp:TextBox>
+                                        <asp:Button ID="btnTagSave" class="btn-outline-success btn-sm rounded-pill" runat="server" Text="儲存" OnClick="btnTagSave_Click" />&nbsp
+                                        <asp:Button ID="btnTagDelect" class="btn-outline-danger btn-sm rounded-pill" runat="server" Text="刪除" OnClick="btnTagDelect_Click" />
+                                            </figure>
                                     </asp:PlaceHolder>
 
                                     <!--stamp:顯示當前的tag/新增的輸入框:/確認儲存/刪除stamp-->
                                     
-                                 <asp:TextBox ID="inpTag" runat="server" placeholder="(輸入新增的文章類型)"></asp:TextBox>
                                 </div>
                                 <br>
                                 <br>
-                                <
+                                
                                 <div class="MMlist">
                                     <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
                                         <h3>版主名單</h3>
@@ -342,13 +355,13 @@
                         rowsText += `
                         <tr>
                               <div>
-                                  <input name="PboardID" class="PboardID" value="${item.PboardID}" type="hidden"></p>
-                                  <input name="PboardName" class="PboardName rounded-3  text-white" value="${item.Pname}"></input>
-                                  <input name="Porder" class="Porder" value="${item.Porder}"  type="hidden"></p>
+                                  <input name="PboardID" class="PboardID" value="${item.PboardID}" type="hidden" />
+                                  <input name="PboardName" class="PboardName rounded-3  text-white" value="${item.Pname}" />
+                                  <input name="Porder" class="Porder" value="${item.Porder}"  type="hidden" />
                                   <input type="button" id="btnPBMoveUp" class="btn-outline-primary btn-sm btnPBMoveUp rounded-pill" name="btnPBMoveUp" value="上移" />
                                   <input type="button" id="btnPBMoveDown" class="btn-outline-primary btn-sm btnPBMoveDown rounded-pill" name="btnPBMoveDown" value="下移" />
 
-                                  <input type="button" id="btnPBName" class="btn-outline-success btn-sm btnPBName rounded-pill" name="btnPBName" value="儲存"></button>
+                                  <input type="button" id="btnPBName" class="btn-outline-success btn-sm btnPBName rounded-pill" name="btnPBName" value="儲存" />
                               </div>
                             </td>
                         </tr>
