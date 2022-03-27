@@ -363,10 +363,11 @@ namespace MKForum.Managers
             string connectionStr = ConfigHelper.GetConnectionString();
             for (int i = 0; i < pl.Count; i++)
             {
+                //  @{i}是因為 Guid一堆毛
                 if (i != pl.Count - 1)
-                    Zyouken += $" PostID = @{pl[i]} OR ";
+                    Zyouken += $" PostID = @{i} OR ";
                 else
-                    Zyouken += $" PostID = @{pl[i]} ";
+                    Zyouken += $" PostID = @{i} ";
             }
             string commandText =
                 $@"
@@ -392,7 +393,7 @@ namespace MKForum.Managers
                         connection.Open();
                         for (int i = 0; i < pl.Count; i++)
                         {
-                            command.Parameters.AddWithValue($"@{pl[i]}", pl[i]);
+                            command.Parameters.AddWithValue($"@{i}", pl[i].PostID);
                         }
 
                         SqlDataReader reader = command.ExecuteReader();
@@ -408,7 +409,7 @@ namespace MKForum.Managers
                         command.CommandText = commandCountText;
                         for (int i = 0; i < pl.Count; i++)
                         {
-                            command.Parameters.AddWithValue($"@{pl[i]}", pl[i]);
+                            command.Parameters.AddWithValue($"@{i}", pl[i].PostID);
                         }
                         totalRows = (int)command.ExecuteScalar();
                         if (srl == null)
@@ -440,7 +441,7 @@ namespace MKForum.Managers
             string commandText =
                 $@"
                     SELECT *
-                    FROM PostHashtag
+                    FROM PostHashtags
                     {Zyouken}
                 ";
             try
