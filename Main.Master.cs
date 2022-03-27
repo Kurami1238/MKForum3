@@ -447,5 +447,16 @@ namespace MKForum
                 Response.Write($"<script>alert('{msg}')</script>");
             }
         }
+
+        //新增Tag
+        protected void btnTagSave_Click(object sender, EventArgs e)
+        {
+
+        }
+        //刪除Tag
+        protected void btnTagDelect_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
