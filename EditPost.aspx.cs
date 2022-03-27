@@ -17,7 +17,7 @@ namespace MKForum
         private PostManager _pmgr = new PostManager();
         private AccountManager _amgr = new AccountManager();
         private Member _member;
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
             if (this._amgr.IsLogined())
@@ -63,14 +63,14 @@ namespace MKForum
             if (post.SortID != null)
             sort = (int)post.SortID;
             this.txtTitle.Text = post.Title;
-            this.txtPostCotent.Text = post.PostCotent;
+            this.content.InnerText = post.PostCotent;
             // 讀取Post裡的sortID  沒辦法塞回DropDownList
             //this.ddlPostStamp.;
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
             string TitleText = this.txtTitle.Text.Trim();
-            string PostCotentText = this.txtPostCotent.Text.Trim();
+            string PostCotentText = this.content.InnerText.Trim();
 
             //檢查必填欄位及關鍵字
 
@@ -122,19 +122,25 @@ namespace MKForum
                 Random random = new Random((int)DateTime.Now.Ticks);
 
                 string folderPath = "~/FileDownload/PostContent/";
-                string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
+                string fileName = "P" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + this._member.Account + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
 
                 folderPath = HostingEnvironment.MapPath(folderPath);
                 if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
                     Directory.CreateDirectory(folderPath);
                 string newFilePath = Path.Combine(folderPath, fileName);
                 this.fuPostImage.SaveAs(newFilePath);
-                imgpath = "/FileDownload/MapContent/" + fileName;
+                imgpath = "/FileDownload/PostContent/" + fileName;
 
                 // 儲存圖片路徑
-                if (!string.IsNullOrWhiteSpace(imgpath))
-                    this._pmgr.CreatePostImageList(_member.MemberID, imgpath);
+                this._pmgr.CreatePostImageList(this._member.MemberID, imgpath);
+                string imagelink = this._pmgr.GetImage(this._member.MemberID);
+                this.content.InnerText += $" ![]({imagelink})";
             }
         }
+        protected void btnback_Click(object sender, EventArgs e)
+        {
+            this.BackToListPage();
+        }
+        
     }
 }

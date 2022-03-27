@@ -38,6 +38,7 @@ a:active {
 }
         .zenbu td{
             width: 70%;
+            font-size: 18px;
         }
         .zenbu th{
          font-size: 25px;
@@ -46,24 +47,45 @@ a:active {
             width: 80%;
         }
         .zenbu td .button{
-            width: 40%;
+            width: 60%;
+            font-size: 18px;
         }
-input{
-
-}
         .zenbu select{
           color: #fafafaea;
+          border: 1px none #e76c25;
+          box-shadow: 2px 1px 5px #e76c25;
           border-radius:10px;
+          font-size: 18px;
+
+        }
+        .zenbu textarea{
+            border: 1px none #e76c25;
+            box-shadow: 2px 1px 4px #e76c25;
+            width: 90%;
         }
         .zenbu input{
             width: 20%;
             color: #fafafaea;
             color: antiquewhite; border:0;
             background-color:#181717;
-            border: 1px ridge #e76c25;
-            box-shadow: 2px 1px 4px #e76c25;text-align: center;
+            border: 1px none #e76c25;
+            box-shadow: 2px 1px 4px #e76c25;
             border-radius:10px;
             cursor:pointer;
+        }
+        .zenbu .dougu{
+            color: #fafafaea;
+            border: 1px ridge #a31515;
+            margin-bottom: 2px;
+        }
+        .zenbu input:hover{
+            box-shadow: 2px 2px 4px #cc2626;
+        }
+        .zenbu input:active{
+        }
+        .zenbu td .kakutei{
+            width: 25%;
+            
         }
         .zenbu .T{
             width: 80%;
@@ -93,6 +115,9 @@ input{
     border-radius:10px;
     cursor:pointer;
 }
+.kobi img{
+    width: 50%;
+}
 .kobi th{
     width: 20%;
 }
@@ -106,12 +131,15 @@ input{
 .cbtn{
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
-            border: 1px ridge #e76c25;
-    box-shadow: 2px 2px 4px #e76c25;text-align: center;
+    border: 1px ridge #e76c25;
+    box-shadow: 2px 2px 6px #e76c25;text-align: center;
     font-size: 22px;
     color: #fafafaea;
     border-radius:10px;
     width: 20%;
-
-    margin-left: 85px;
+    float: right;
+}
+.cbtn:hover{
+    border: 1px double #cc2626;
+    box-shadow: 2px 2px 6px #cc2626;
 }
