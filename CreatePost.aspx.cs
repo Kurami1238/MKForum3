@@ -19,32 +19,44 @@ namespace MKForum
         private Member _member;
         protected void Page_Init(object sender, EventArgs e)
         {
-                // 從Session取得登錄者ID
-                if (this._Amgr.IsLogined())
-                {
-                    Member account = this._Amgr.GetCurrentUser();
-                    _member = account;
-                this.memberid.Value = this._member.MemberID.ToString();
-                }
-                // 從Session取得當前子板塊ID
-                int cboardid = 0;
-                if (HttpContext.Current.Session["CboardID"] != null)
-                    cboardid = (int)HttpContext.Current.Session["CboardID"];
-                else
-                    Response.Redirect($"Index.aspx", true);
+            // 從Session取得登錄者ID
+            this.CheckLogin();
+            // 從Session取得當前子板塊ID
+            int cboardid = this.GetCboardID();
+            // 繫結PostStamp
+            this.BuildPostStamp(cboardid);
+        }
 
-                // 繫結PostStamp
-                List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
-                this.dpdlPostStamp.DataSource = psList;
-                this.dpdlPostStamp.DataTextField = "PostSort";
-                this.dpdlPostStamp.DataValueField = "SortID";
-                this.dpdlPostStamp.DataBind();
+        private void BuildPostStamp(int cboardid)
+        {
+            List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
+            this.dpdlPostStamp.DataSource = psList;
+            this.dpdlPostStamp.DataTextField = "PostSort";
+            this.dpdlPostStamp.DataValueField = "SortID";
+            this.dpdlPostStamp.DataBind();
+        }
+        private int GetCboardID()
+        {
+            int cboardid = 0;
+            if (HttpContext.Current.Session["CboardID"] != null)
+                cboardid = (int)HttpContext.Current.Session["CboardID"];
+            else
+                Response.Redirect($"Index.aspx", true);
+            return cboardid;
+        }
+        private void CheckLogin()
+        {
+            if (this._Amgr.IsLogined())
+            {
+                Member account = this._Amgr.GetCurrentUser();
+                _member = account;
+                this.memberid.Value = this._member.MemberID.ToString();
+            }
         }
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-
         protected void btnSend_Click(object sender, EventArgs e)
         {
             string TitleText = this.txtTitle.Text.Trim();
@@ -52,7 +64,6 @@ namespace MKForum
             // 從Session取得當前子板塊ID
             int cboardid = (int)HttpContext.Current.Session["CboardID"];
             //檢查必填欄位及關鍵字
-
             if (!this._pmgr.CheckInput(TitleText, PostCotentText))
             {
                 this.lblMsg.Text = this._pmgr.GetmsgText();
@@ -70,7 +81,6 @@ namespace MKForum
             };
             if (this.fuCoverImage.HasFile)
             {
-
                 System.Threading.Thread.Sleep(3);
                 Random random = new Random((int)DateTime.Now.Ticks);
 
@@ -106,9 +116,7 @@ namespace MKForum
                 this._pmgr.CreateHashtag(postid, htaglist[i]);
             }
             Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
-
         }
-
         protected void btnPostImage_Click(object sender, EventArgs e)
         {
             string imgpath = string.Empty;
@@ -133,7 +141,6 @@ namespace MKForum
                 this.content.InnerText += $" ![]({imagelink})";
             }
         }
-
         protected void btnback_Click(object sender, EventArgs e)
         {
             this.BackToListPage();
