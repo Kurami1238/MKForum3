@@ -18,12 +18,12 @@ namespace MKForum
             {
                 string keyword = this.Request.QueryString["keyword"];
                 string searchArea = this.Request.QueryString["searcharea"];
-                if ((string.Compare(searchArea, "srchWriter") == 0) || (string.Compare(searchArea, "srchCurrent") == 0) || (string.Compare(searchArea, "srchAll") == 0))
+                if ((string.Compare(searchArea, "srchWriter") == 0) || (string.Compare(searchArea, "srchCurrent") == 0) || (string.Compare(searchArea, "srchAll") == 0)|| (string.Compare(searchArea, "srchTag") == 0))
                 {
                     // 切分關鍵字，透過空白，有重複的會排除
                     List<string> kwlist = this.Setudan(keyword);
                     // 根據選擇的模式分流
-                    List<SearchResult> srl = this.ModeErabi(searchArea, kwlist,out int kazu);
+                    List<SearchResult> srl = this.ModeErabi(searchArea, kwlist, out int kazu);
                     // 文章若長度大於二十個字，後面則隱藏
                     List<SearchResult> seripost = PostContentSeri(srl);
                     // 合併把文章內容大於二十字的替換掉
@@ -54,14 +54,14 @@ namespace MKForum
             }
         }
 
-        private List<SearchResult> ModeErabi(string searchArea, List<string> kwlist,out int totalrow)
+        private List<SearchResult> ModeErabi(string searchArea, List<string> kwlist, out int totalrow)
         {
             int kazu = 0;
             List<SearchResult> srl = new List<SearchResult>();
             switch (searchArea)
             {
                 case "srchWriter":
-                    srl = this._srmgr.GetMemberSearchKekka(kwlist,out kazu);
+                    srl = this._srmgr.GetMemberSearchKekka(kwlist, out kazu);
                     break;
                 case "srchCurrent":
                     if (this.Request.QueryString["srchCboardID"] != null)
@@ -70,11 +70,11 @@ namespace MKForum
                         srl = this._srmgr.GetboardSearchKekka(kwlist, this.Request.QueryString["srchPboardID"], "p", out kazu);
                     break;
                 case "srchAll":
-                    srl = this._srmgr.GetAllSearchKekka(kwlist,out kazu);
+                    srl = this._srmgr.GetAllSearchKekka(kwlist, out kazu);
                     break;
                 case "srchTag":
-
-                        break;
+                    srl = this._srmgr.GetTagSearchKekka(kwlist, out kazu);
+                    break;
             }
             totalrow = kazu;
             return srl;
