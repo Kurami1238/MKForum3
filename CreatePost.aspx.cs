@@ -19,26 +19,25 @@ namespace MKForum
         private Member _member;
         protected void Page_Init(object sender, EventArgs e)
         {
-                // 從Session取得登錄者ID
-                if (this._Amgr.IsLogined())
-                {
-                    Member account = this._Amgr.GetCurrentUser();
-                    _member = account;
-                this.memberid.Value = this._member.MemberID.ToString();
-                }
-                // 從Session取得當前子板塊ID
-                int cboardid = 0;
-                if (HttpContext.Current.Session["CboardID"] != null)
-                    cboardid = (int)HttpContext.Current.Session["CboardID"];
-                else
-                    Response.Redirect($"Index.aspx", true);
+            // 從Session取得登錄者ID
+            if (this._Amgr.IsLogined())
+            {
+                Member account = this._Amgr.GetCurrentUser();
+                _member = account;
+            }
+            // 從Session取得當前子板塊ID
+            int cboardid = 0;
+            if (HttpContext.Current.Session["CboardID"] != null)
+                cboardid = (int)HttpContext.Current.Session["CboardID"];
+            else
+                Response.Redirect($"Index.aspx", true);
 
-                // 繫結PostStamp
-                List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
-                this.dpdlPostStamp.DataSource = psList;
-                this.dpdlPostStamp.DataTextField = "PostSort";
-                this.dpdlPostStamp.DataValueField = "SortID";
-                this.dpdlPostStamp.DataBind();
+            // 繫結PostStamp
+            List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
+            this.dpdlPostStamp.DataSource = psList;
+            this.dpdlPostStamp.DataTextField = "PostSort";
+            this.dpdlPostStamp.DataValueField = "SortID";
+            this.dpdlPostStamp.DataBind();
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -129,8 +128,6 @@ namespace MKForum
 
                 // 儲存圖片路徑
                     this._pmgr.CreatePostImageList(this._member.MemberID, imgpath);
-                string imagelink = this._pmgr.GetImage(this._member.MemberID);
-                this.content.InnerText += $" ![]({imagelink})";
             }
         }
 

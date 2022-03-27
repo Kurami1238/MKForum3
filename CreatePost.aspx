@@ -9,7 +9,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
-            <input type="hidden" id="memberid" class="memberid" runat="server"/>
         <table class="zenbu col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>標題 * </th>
@@ -33,19 +32,15 @@
             <tr class="img">
                 <th>文內圖片 </th>
                 <td>
-                    <asp:FileUpload class="button upup" ID="fuPostImage" runat="server" />
+                    <asp:FileUpload class="button" ID="fuPostImage" runat="server" />
                     <asp:Image ID="imgPostImage" runat="server" />
-                    <asp:Button  class="button kakutei" ID="btnPostImage" runat="server" Text="確定上傳" OnClick="btnPostImage_Click" OnClientClick="Getlink();" />
+                    <asp:Button class="button" ID="btnPostImage" runat="server" Text="確定上傳" OnClick="btnPostImage_Click" />
                 </td>
             </tr>
             <tr class="C">
                 <th>內文 *</th>
                 <td>
-                    <button class="dougu" type="button" onclick="big();">大</button>
-                    <button class="dougu" type="button" onclick="mid();">中</button>
-                    <button class="dougu" type="button" onclick="sml();">小</button>
-                    <button class="dougu" type="button" onclick="narabi();">項目符號</button>
-                    <textarea class="content" id="content" rows="6" cols="28" runat="server"></textarea>
+                    <textarea class="content" id="content" rows="6" cols="20" runat="server"></textarea>
                 </td>
             </tr>
             <tr class="tag">
@@ -59,7 +54,8 @@
                 </td>
             </tr>
         </table>
-       
+        <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
+        <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"    />
     </div>
     <div>
         <table class="kobi col-sm-8 col-md-11 col-lg-11">
@@ -79,10 +75,6 @@
             </tr>
         </table>
     </div>
-    <div class="col-sm-8 col-md-11 col-lg-11">
-     <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
-        <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
-        </div>
     <script>
         $('.content').on('keyup', function () {
             var text = $(".content").val();
@@ -91,57 +83,6 @@
             $('.result').html(html);
             $('.result2').html(html);
         });
-        function big() {
-            var text = $(".zenbu .C .content").val();
-            text += "#";
-            $(".zenbu .C .content").text(text);
-        }
-        function mid() {
-            var text = $(".zenbu .C .content").val();
-            text += "###";
-            $(".zenbu .C .content").text(text);
-        }
-        function sml() {
-            var text = $(".zenbu .C .content").val();
-            text += "#####";
-            $(".zenbu .C .content").text(text);
-        }
-        function narabi() {
-            var text = $(".zenbu .C .content").val();
-            text += "+ a\n+ a\n+ a";
-            $(".zenbu .C .content").text(text);
-        }
-        function Getlink() {
-            var upup = $(".upup").val();
-            var mid = $(".memberid").val();
-            var text = $(".zenbu .C .content").val();
-            console.log(text);
-
-            var postData = {
-                "MemberID": mid,
-            }
-            if (upup != null) {
-                $.ajax({
-                    url: "/API/GetLinkHandler.ashx?Action=Link",
-                    method: "POST",
-                    data: postData,
-                    dataType: "json",
-                    success: function (henzi) {
-                        console.log(henzi);
-                        console.log(text);
-                        text += "![這是一個格式]" + (henzi);
-                        console.log(text);
-
-                        $(".zenbu .C .content").text = text;
-                    },
-                    error: function (henzi) {
-                        console.log(henzi);
-                        alert("通訊失敗，請聯絡管理員。")
-                    }
-                });
-            }
-            
-        }
         function Createa() { alert('新增文章成功') }
     </script>
 </asp:Content>
