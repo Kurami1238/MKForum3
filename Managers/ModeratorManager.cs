@@ -114,7 +114,7 @@ namespace MKForum.Managers
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
             string commandText = $@"
                 DELETE FROM [MKForum].[dbo].[MemberModerators]
-                WHERE MemberID='@strModeratorAcc'
+                WHERE MemberID=@strModeratorAcc
                 ";
             try
             {
@@ -125,6 +125,8 @@ namespace MKForum.Managers
                         conn.Open();
                         command.Parameters.AddWithValue("@strModeratorAcc", strModeratorAcc);
                         command.Parameters.AddWithValue("@cboardid", cboardid);
+                        command.ExecuteNonQuery();
+
                     }
                 }
             }
@@ -145,8 +147,10 @@ namespace MKForum.Managers
 
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
             string commandText = $@"
-                SELECT [MemberID]
+                SELECT [Members].[Account]
                 FROM  [MKForum].[dbo].[MemberModerators]
+				INNER JOIN [Members]
+				ON [Members].[MemberID] = [MemberModerators].[MemberID]
                 WHERE CboardID= @currentCboard ";
             try
             {

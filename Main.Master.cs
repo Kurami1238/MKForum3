@@ -24,6 +24,8 @@ namespace MKForum
         private BlackManager _blkmgr = new BlackManager();
         private ModeratorManager _Mmgr = new ModeratorManager();
         private MemberFollowManager _mfmgr = new MemberFollowManager();
+        private StampManager _stpmgr = new StampManager();               //文章類型
+        
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -92,25 +94,26 @@ namespace MKForum
 
             #endregion
 
-            #region//顯示黑名單的功能
-            DataTable BlckMbrDT;
-            //如果當前在子板塊內，且為該子版版主，則顯示黑名單
+            #region//顯示黑名單及子板文章類型的功能
+            List<MemberBlack> blckMbrList;
+            DataTable stampDT;
+            //如果當前在子板塊內，且為該子版版主，則顯示黑名單及子板文章類型
             if (currentCboard != null)
             {
                 if (this._Mmgr.IsCurrentModerator(currentCboard) || _pBrdMgr.GetMemberStatus() == 3)
                 {
                     this.plhBlk.Visible = true;
-                    BlckMbrDT = _blkmgr.getBlacked(currentCboard);
-                    this.RptrBlk.DataSource = BlckMbrDT;
+                    blckMbrList = _blkmgr.getBlackedList(currentCboard);
+                    this.RptrBlk.DataSource = blckMbrList;
                     this.RptrBlk.DataBind();
+                    stampDT = this._stpmgr.getStamp(currentCboard);
+                    this.RptrStp.DataSource = stampDT;
+                    this.RptrStp.DataBind();
                 }
             }
-            else
-            { }
-
             #endregion
 
-            #region//顯示版主名單的功能(資料庫沒資料無法測試)
+            #region//顯示版主名單的功能
             //如果當前在子板塊內，且為後台人員(身分別為3)，則顯示板主名單
             if (currentCboard != null)
             {
@@ -123,8 +126,6 @@ namespace MKForum
                 }
             }
             #endregion
-
-
 
         }
         protected void Page_Prerender(object sender, EventArgs e)
@@ -140,6 +141,8 @@ namespace MKForum
                 this.srchDrop.Items[1].Attributes.Remove("disabled");
             }
             #endregion
+
+            //母板編輯按鈕顯示：再次確認如果處於編輯中的狀態，則隱藏"編輯母板"按鈕
             if (this.plhAPI2_admin.Visible)
             {
                 this.plhPBEdit1.Visible = false;    //隱藏編輯按鈕
@@ -377,6 +380,7 @@ namespace MKForum
             }
         }
 
+        //刪除板主
         protected void btnMMDelete_Click(object sender, EventArgs e)
         {
             string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
@@ -401,18 +405,17 @@ namespace MKForum
             {
                 string msg = "輸入的帳號不是本板板主";
                 Response.Write($"<script>alert('{msg}')</script>");
-                return;
             }
             else
             {
                 this._Mmgr.DeleteModeratorsList(outModerator, currentCboard);
                 string msg = $"已從板主名單移除{outModerator}。";
                 Response.Write($"<script>alert('{msg}')</script>");
-                return;
             }
 
         }
 
+        //新增母板
         protected void btnAddPB_Click(object sender, EventArgs e)
         {
             try
@@ -448,14 +451,82 @@ namespace MKForum
             }
         }
 
-        //新增Tag
-        protected void btnTagSave_Click(object sender, EventArgs e)
+        //新增文章類型
+        protected void btnStpAdd_Click(object sender, EventArgs e)
         {
+            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+            try
+            {
+                //取得輸入的新類型名稱，並去掉空白
+                string strIinpStp = this.inpStp.Text.Trim();
+                //如果輸入的新類型名稱是空的，提示使用者
+                string msg = "";
 
+                if (strIinpStp == null)
+                {
+                    msg = "未輸入文章類型名稱";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
+                //如果輸入的新類型包含禁字
+                if (this._chkInpMgr.IncludeBanWord(strIinpStp))
+                {
+                    msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
+                //如果輸入的新類型已經存在
+                if (this._stpmgr.IncludeStp(strIinpStp,currentCboard))
+                {
+                    msg = "文章類型已經存在";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                }
+                else
+                { 
+                this._stpmgr.AddStmp(strIinpStp,currentCboard);
+                msg = "文章類型新增成功。";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = "文章類型新增失敗，請聯絡管理員。";
+                Response.Write($"<script>alert('{msg}')</script>");
+            }
         }
-        //刪除Tag
-        protected void btnTagDelect_Click(object sender, EventArgs e)
+        //刪除文章類型
+        protected void btnStpDelect_Click(object sender, EventArgs e)
         {
+            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+            string strIinpStp = this.inpStp.Text.Trim();   //輸入的文章類型，並去掉空白字元
+
+            if (strIinpStp == "")
+            {
+                string msg = "未輸入欲刪除的文章類型";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+            }
+
+            if (this._chkInpMgr.IncludeBanWord(strIinpStp))
+            {
+                string msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
+                Response.Write($"<script>alert('{msg}')</script>");
+                return;
+
+            }
+            if (!this._stpmgr.IncludeStp(strIinpStp, currentCboard))
+            {
+                string msg = "輸入的文章類型不存在";
+                Response.Write($"<script>alert('{msg}')</script>");
+            }
+            else
+            {
+                this._stpmgr.DeleteStmp(strIinpStp, currentCboard);
+                string msg = $"已從文章類型 移除{strIinpStp}。";
+                Response.Write($"<script>alert('{msg}')</script>");
+
+            }
+
 
         }
     }

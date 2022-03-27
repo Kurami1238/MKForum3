@@ -236,6 +236,7 @@
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
+    <Compile Include="Managers\StampManager.cs" />
     <Compile Include="MemberFollowList.aspx.cs">
       <DependentUpon>MemberFollowList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

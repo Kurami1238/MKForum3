@@ -98,8 +98,6 @@ namespace MKForum.Managers
 
                         while (reader.Read())
                         {
-                            Member member = new Member();
-
                             memberStatus = (int)reader["MemberStatus"]; //身份別由Guid轉型為int
                         }
                         return memberStatus;

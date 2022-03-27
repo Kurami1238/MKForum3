@@ -236,11 +236,70 @@ namespace MKForum.Managers
         }
 
         /// <summary>
-        /// 顯示黑名單
+        /// 顯示黑名單測試list
         /// </summary>
         /// <param name="cboardid">(string)session當前子板塊</param>
         /// <returns>回傳值為DataTable</returns>
-        public DataTable getBlacked(string currentCboard)
+        public List<MemberBlack> getBlackedList(string currentCboard)
+        {
+            List<MemberBlack> blackedList = new List<MemberBlack>();
+            string connStr = ConfigHelper.GetConnectionString();
+            string commandText = $@"
+                SELECT  [ReleaseDate],[Account]
+                FROM [MKForum].[dbo].[MemberBlacks]
+                WHERE CboardID= @currontCB AND getdate() < [ReleaseDate];";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+
+                        conn.Open();
+                        command.Parameters.AddWithValue("@currontCB", currentCboard);
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            DateTime dbRleaseDate = (DateTime)reader["ReleaseDate"];
+                            string strRleaseDate = dbRleaseDate.ToString("D");
+                            DateTime releaseDate = Convert.ToDateTime(strRleaseDate);
+                            MemberBlack memberBlacked = new MemberBlack()
+                            {
+                                Account = reader["Account"] as string,
+                                ReleaseDate = releaseDate
+                            };
+
+                            blackedList.Add(memberBlacked);
+                        }
+
+                        //DataTable dt = new DataTable();
+
+                        //dt.Load(reader);
+
+                        return blackedList;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("BlackManager.getBlackedList", ex);
+                throw;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// 顯示黑名單 (改成List作廢)
+        /// </summary>
+        /// <param name="cboardid">(string)session當前子板塊</param>
+        /// <returns>回傳值為DataTable</returns>
+        public DataTable getBlacked(string currentCboard)//改成list作廢
         {
             string connStr = ConfigHelper.GetConnectionString();
             string commandText = $@"
@@ -271,7 +330,7 @@ namespace MKForum.Managers
             }
             catch (Exception ex)
             {
-                Logger.WriteLog("BlackManager.getBlackedList", ex);
+                Logger.WriteLog("BlackManager.getBlacked", ex);
                 throw;
             }
 
