@@ -72,6 +72,9 @@ namespace MKForum
                 case "srchAll":
                     srl = this._srmgr.GetAllSearchKekka(kwlist,out kazu);
                     break;
+                case "srchTag":
+
+                        break;
             }
             totalrow = kazu;
             return srl;

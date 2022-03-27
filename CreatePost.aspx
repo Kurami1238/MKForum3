@@ -84,30 +84,26 @@
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>
     <script>
+        var text;
         $('.content').on('keyup', function () {
-            var text = $(".content").val();
+            text = $(".content").val();
             var converter = new showdown.Converter();
             var html = converter.makeHtml(text);
             $('.result').html(html);
-            $('.result2').html(html);
         });
         function big() {
-            var text = $(".zenbu .C .content").val();
             text += "#";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").html(text);
         }
         function mid() {
-            var text = $(".zenbu .C .content").val();
             text += "###";
             $(".zenbu .C .content").text(text);
         }
         function sml() {
-            var text = $(".zenbu .C .content").val();
             text += "#####";
             $(".zenbu .C .content").text(text);
         }
         function narabi() {
-            var text = $(".zenbu .C .content").val();
             text += "+ a\n+ a\n+ a";
             $(".zenbu .C .content").text(text);
         }

@@ -26,7 +26,6 @@ namespace MKForum
             // 繫結PostStamp
             this.BuildPostStamp(cboardid);
         }
-
         private void BuildPostStamp(int cboardid)
         {
             List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);

@@ -350,6 +350,132 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        public List<SearchResult> GetTagSearchKekka(List<string> hosii, out int totalRows)
+        {
+            // 透過關鍵字得到postID清單
+            List<Post> pl = this.SearchPostIDwithTag(hosii);
+            if (pl == null)
+            {
+                totalRows = 0;
+                return new List<SearchResult>();
+            }
+            string Zyouken = " WHERE  ";
+            string connectionStr = ConfigHelper.GetConnectionString();
+            for (int i = 0; i < pl.Count; i++)
+            {
+                if (i != pl.Count - 1)
+                    Zyouken += $" PostID = @{pl[i]} OR ";
+                else
+                    Zyouken += $" PostID = @{pl[i]} ";
+            }
+            string commandText =
+                $@"
+                    SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
+                            LastEditTime,PostView,Members.Account,CoverImage,Floor,PointID
+                    FROM Posts
+                    INNER JOIN Members
+                    ON Posts.MemberID = Members.MemberID
+                    {Zyouken}
+                ";
+            string commandCountText = $@"SELECT COUNT(PostID)
+                                        FROM Posts
+                                        INNER JOIN Members
+                                        ON Posts.MemberID = Members.MemberID
+                                        {Zyouken}";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<SearchResult> srl = new List<SearchResult>();
+                        connection.Open();
+                        for (int i = 0; i < pl.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{pl[i]}", pl[i]);
+                        }
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            SearchResult sr = this.BuildSearchKekka(reader);
+                            if (sr != null)
+                                srl.Add(sr);
+                        }
+                        reader.Close();
+                        command.Parameters.Clear();
+                        command.CommandText = commandCountText;
+                        for (int i = 0; i < pl.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{pl[i]}", pl[i]);
+                        }
+                        totalRows = (int)command.ExecuteScalar();
+                        if (srl == null)
+                        {
+                            return new List<SearchResult>();
+                        }
+                        return srl;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetMemberSearchKekka", ex);
+                throw;
+            }
+        }
+        public List<Post> SearchPostIDwithTag(List<string> tag)
+        {
+            string Zyouken = " WHERE  ";
+            for (int i = 0; i < tag.Count; i++)
+            {
+                if (i != tag.Count - 1)
+                    Zyouken += $" (Naiyo LIKE '%'+@{tag[i]}+'%') OR";
+                else
+                    Zyouken += $" (Naiyo LIKE '%'+@{tag[i]}+'%') ";
+            }
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@"
+                    SELECT *
+                    FROM PostHashtag
+                    {Zyouken}
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        List<Post> pl = new List<Post>();
+                        connection.Open();
+                        for (int i = 0; i < tag.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{tag[i]}", tag[i]);
+                        }
+                        
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Post cb = new Post()
+                            {
+                                PostID = (Guid)reader["PostID"],
+                            };
+                            pl.Add(cb);
+                        }
+                        return pl;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.SearchPostIDwithTag", ex);
+                throw;
+            }
+        }
         public List<SearchResult> GetboardSearchKekka(List<string> hosii, string board, string pORc,out int totalRows)
         {
             string connectionStr = ConfigHelper.GetConnectionString();
