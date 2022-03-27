@@ -111,6 +111,8 @@ namespace MKForum.Managers
         /// <param name="cboardid">(string)當前子板塊</param>
         public void DeleteModeratorsList(string strModeratorAcc, string cboardid)
         {
+            Guid mberID = getIDFromAcc(strModeratorAcc);
+
             //刪除一筆資料 依照 會員ID (SQL已測試OK)
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
             string commandText = $@"

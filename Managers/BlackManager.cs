@@ -225,6 +225,8 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue("@strBlackedAcc", strBlackedAcc);
                         command.Parameters.AddWithValue("@strRealseDate", strRealseDate);
                         command.Parameters.AddWithValue("@cboardid", cboardid);
+                        command.ExecuteNonQuery();
+
                     }
                 }
             }

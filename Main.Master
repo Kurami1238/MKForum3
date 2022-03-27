@@ -110,7 +110,7 @@
                         <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
                         <div class="col-sm-4 col-md-4 col-lg-3">
-                            <a href="HomePage.html" class="d-none d-sm-block">
+                            <a href="HomePage.aspx" class="d-none d-sm-block">
                                 <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
                             <div class="d-flex d-none d-sm-block">
                                 <asp:TextBox runat="server" ID="txtSearch" class="form-control" placeholder="搜尋"></asp:TextBox>
