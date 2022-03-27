@@ -71,7 +71,7 @@ namespace MKForum.Managers
             catch (Exception ex)
             {
                 Logger.WriteLog("MemberFollowManager.GetReplied_POSTMemberFollows", ex);
-                throw;
+                return null;
             }
         }
 

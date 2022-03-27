@@ -108,6 +108,7 @@
     <Content Include="css\github-markdown-dark.css" />
     <Content Include="css\github-markdown.css" />
     <Content Include="css\index.css" />
+    <Content Include="css\main.css" />
     <Content Include="css\PboardtoCboard.css" />
     <Content Include="css\pen.png" />
     <Content Include="css\SearchPage.css" />
@@ -217,13 +218,6 @@
     </Compile>
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Main.Master.cs">
-      <DependentUpon>Main.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Main.Master.designer.cs">
-      <DependentUpon>Main.Master</DependentUpon>
     </Compile>
     <Compile Include="Managers\AccountManager.cs" />
     <Compile Include="Managers\BlackManager.cs" />
@@ -335,7 +329,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logs\Log.log" />
-    <Content Include="Main.Master" />
     <Content Include="bin\MKForum.dll.config" />
     <Content Include="bin\roslyn\csc.exe.config" />
     <Content Include="bin\roslyn\csc.rsp" />

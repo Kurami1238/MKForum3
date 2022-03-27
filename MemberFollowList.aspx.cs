@@ -15,10 +15,10 @@ namespace MKForum
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows("c8142d85-68c2-4483-ab51-e7d3fc366b89");
+            //List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows("c8142d85-68c2-4483-ab51-e7d3fc366b89");
 
-            this.rptMemberFollows.DataSource = MemberFollows;
-            this.rptMemberFollows.DataBind();
+            //this.rptMemberFollows.DataSource = MemberFollows;
+            //this.rptMemberFollows.DataBind();
         }
     }
 }
