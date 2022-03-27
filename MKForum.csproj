@@ -132,7 +132,6 @@
     <Content Include="Scripts\showdown.js" />
     <Content Include="Scripts\showdown.min.js" />
     <Content Include="SearchKekka.aspx" />
-    <Content Include="SearchPage.aspx" />
     <Content Include="ShareControls\Mugen.ascx" />
     <Content Include="Web.config" />
     <Content Include="DisplayPost.aspx" />
@@ -317,13 +316,6 @@
     </Compile>
     <Compile Include="SearchKekka.aspx.designer.cs">
       <DependentUpon>SearchKekka.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SearchPage.aspx.cs">
-      <DependentUpon>SearchPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SearchPage.aspx.designer.cs">
-      <DependentUpon>SearchPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="ShareControls\Mugen.ascx.cs">
       <DependentUpon>Mugen.ascx</DependentUpon>
