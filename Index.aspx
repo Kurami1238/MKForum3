@@ -16,7 +16,7 @@
         <div class="content">
             <asp:Repeater ID="rptHotTags" runat="server">
                 <ItemTemplate>
-                    <h1> <%# Eval("Naiyo") %></h1>
+                    <h1><%# Eval("Naiyo") %></h1>
                 </ItemTemplate>
             </asp:Repeater>
         </div>
@@ -33,24 +33,23 @@
         <asp:Repeater ID="rptHotPosts" runat="server">
             <ItemTemplate>
 
-                <div class="content">
-                    <%--<a href="DisplayPost.aspx?CboardID=2&PostID=d54c4cc3-5063-49ba-88f2-ce5aae83fc66"></a>--%>
-                    <h2><%# string.Format("{0} - {1}", Eval("Pname"), Eval("Cname"))%> </h2>
-                    <div class="article">
-                        <h1>標題:<%# Eval("Title") %></h1>
-                        <div class="ppd">
-                            <p class="ellipsis"><%# Eval("PostCotent") %></p>
+                <a href="DisplayPost.aspx?CboardID=<%# Eval("CboardID") %>&PostID=<%# Eval("PostID") %>">
+                    <div class="content">
+                        <h2><%# string.Format("{0} - {1}", Eval("Pname"), Eval("Cname"))%> </h2>
+                        <div class="article">
+                            <h1>標題:<%# Eval("Title") %></h1>
+                            <div class="ppd">
+                                <p class="ellipsis"><%# Eval("PostCotent") %></p>
+                            </div>
+                            <h3>發文者:<%# Eval("Account") %></h3>
+                            <h4>日期:<%# Eval("PostDate") %></h4>
+                            <h5>
+                                <br />
+                            </h5>
                         </div>
-                        <h3>發文者:<%# Eval("Account") %></h3>
-                        <h4>日期:<%# Eval("PostDate") %></h4>
-                        <h5>
-                            <br />
-                        </h5>
                     </div>
-                </div>
+                </a>
 
-                <%--              <asp:Label runat="server"><%# Eval("Title") %></asp:Label>
-              <asp:Label runat="server"><%# Eval("PostCotent") %></asp:Label>--%>
             </ItemTemplate>
         </asp:Repeater>
 
