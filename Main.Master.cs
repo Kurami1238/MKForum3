@@ -332,7 +332,7 @@ namespace MKForum
         protected void btnMMSave_Click(object sender, EventArgs e)
         {
             string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
-            string inpModerator = this.txtBlkAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
+            string inpModerator = this.txtMMAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
 
             if (inpModerator == "")
             {
@@ -375,6 +375,7 @@ namespace MKForum
                 this._Mmgr.AddModeratorsList(outModerator, currentCboard);
                 string msg = $"已加入{outModerator}至版主。";
                 Response.Write($"<script>alert('{msg}')</script>");
+                Response.Redirect(Request.Url.ToString());
                 return;
 
             }

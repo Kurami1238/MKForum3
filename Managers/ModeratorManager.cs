@@ -76,13 +76,13 @@ namespace MKForum.Managers
         /// <param name="cboardid">(string)當前子板塊</param>
         public void AddModeratorsList(string strModeratorAcc, string cboardid)
         {
-
+            Guid mberID=getIDFromAcc(strModeratorAcc);
             //寫入 當前板塊 會員ID  (SQL已測試OK)
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
             string commandText = $@"
-                INSERT INTO [MKForum].[dbo].[MemberModerators]
+                INSERT INTO [MemberModerators]
                 (CboardID,MemberID)
-                VALUES  ('@cboardid','@strModeratorAcc')
+                VALUES  (@cboardid,@mberID)
                 ";
             try
             {
@@ -91,8 +91,9 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, conn))
                     {
                         conn.Open();
-                        command.Parameters.AddWithValue("@strModeratorAcc", strModeratorAcc);
+                        command.Parameters.AddWithValue("@mberID", mberID);
                         command.Parameters.AddWithValue("@cboardid", cboardid);
+                        command.ExecuteNonQuery();
                     }
                 }
             }
@@ -177,6 +178,44 @@ namespace MKForum.Managers
             }
         }
 
+        /// <summary>
+        /// 以輸入的帳號查找會員ID的方法
+        /// </summary>
+        /// <param name="cboardid">(string)session當前子板塊</param>
+        /// <returns>回傳值為DataTable</returns>
+        public Guid getIDFromAcc(string acc)
+        {
+            Guid MemberID=new Guid();
+            string connStr = ConfigHelper.GetConnectionString();
+            string commandText = $@"
+                SELECT [MemberID]
+                FROM  [Members]
+                WHERE Account= @Acc ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+
+                        conn.Open();
+                        command.Parameters.AddWithValue("@Acc", acc);
+                        command.ExecuteNonQuery();
+                        SqlDataReader reader = command.ExecuteReader();
+                        while(reader.Read())
+                        {
+                            MemberID = (Guid)reader["MemberID"];
+                        }
+                        return MemberID;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("ModeratorManager.getModeratorsList", ex);
+                throw;
+            }
+        }
 
     }
 }

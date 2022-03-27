@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.min.js"></script>
     <style>
         #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout {
             background-color: white;
@@ -110,11 +112,12 @@
                         <div class="col-sm-4 col-md-4 col-lg-3">
                             <a href="HomePage.html" class="d-none d-sm-block">
                                 <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                            <div action="連結到搜尋結果的.aspx" class="d-flex d-none d-sm-block">
-                                <asp:TextBox runat="server" ID="txtSearch" Text="搜尋" class="form-control"></asp:TextBox>
+                            <div class="d-flex d-none d-sm-block">
+                                <asp:TextBox runat="server" ID="txtSearch" class="form-control" placeholder="搜尋"></asp:TextBox>
                                 <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
                                     <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
+                                    <asp:ListItem Selected="false" Value="srchTag"> 搜尋Tag </asp:ListItem>
                                     <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
                                 </asp:DropDownList>
                                 <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
@@ -245,9 +248,9 @@
                                         <br />
                                         <asp:Repeater ID="RptrBlk" runat="server">
                                             <ItemTemplate>
-                                            <asp:Label runat="server" Text="會員帳號："></asp:Label>
+                                                <asp:Label runat="server" Text="會員帳號："></asp:Label>
                                                 <asp:Literal ID="ltlBlkID" runat="server" Text='<%# Eval("Account") %>' /><br />
-                                            <asp:Label runat="server" Text="解黑日："></asp:Label>
+                                                <asp:Label runat="server" Text="解黑日："></asp:Label>
                                                 <asp:Literal ID="ltlDate" runat="server" Text='<%# Eval("ReleaseDate", "{0:yyyy/MM/dd}")%>' /><br />
                                             </ItemTemplate>
                                         </asp:Repeater>
@@ -284,11 +287,10 @@
                                         <asp:Button ID="btnMMUpdate" runat="server" Text="加入" OnClick="btnMMSave_Click" />
                                         <asp:Button ID="btnMMDelete" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
                                         <br />
-                                            <asp:Label runat="server" Text="版主名單列表："></asp:Label>
+                                        <asp:Label runat="server" Text="版主名單列表："></asp:Label><br />
                                         <asp:Repeater ID="RptrMM" runat="server">
                                             <ItemTemplate>
-                                                <asp:Literal ID="ltlMMID" runat="server" Text='<%# Eval("Account") %>' />
-                                                <br />
+                                                <asp:Literal ID="ltlMMID" runat="server" Text='<%# Eval("Account") %>' />/
                                             </ItemTemplate>
                                         </asp:Repeater>
                                     </asp:PlaceHolder>
@@ -300,9 +302,7 @@
             </div>
         </asp:PlaceHolder>
     </form>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/jquery.min.js"></script>
+
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
