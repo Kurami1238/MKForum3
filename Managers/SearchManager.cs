@@ -360,6 +360,7 @@ namespace MKForum.Managers
                 return new List<SearchResult>();
             }
             string Zyouken = " WHERE  ";
+            // fkfk
             string connectionStr = ConfigHelper.GetConnectionString();
             for (int i = 0; i < pl.Count; i++)
             {
