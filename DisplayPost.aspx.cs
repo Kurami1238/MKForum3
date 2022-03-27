@@ -269,7 +269,11 @@ namespace MKForum
             }
             else if (this.lblMemberFollow_FollowStatus.Text == "未追蹤")
             {
-                this._mfmsg.Updatetrack(this._member.MemberID, postid, 1);
+                if (this._mfmsg.GetMemberFollowThisPost(this._member.MemberID, postid) != null)
+                    this._mfmsg.Updatetrack(this._member.MemberID, postid, 1);
+                else
+                    this._mfmsg.Createtrack(this._member.MemberID, postid, 1);
+
                 this.lblMemberFollow_FollowStatus.Text = "追蹤中";
             }
 
