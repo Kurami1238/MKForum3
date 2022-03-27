@@ -146,5 +146,39 @@ namespace MKForum.Managers
                 throw;
             }
         }
+
+
+        public void Createtrack(Guid MemberID, Guid PostID, int FollowStatus)
+        {
+            string connStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    INSERT INTO MemberFollows
+                        (MemberID, PostID, FollowStatus, Replied)
+                    VALUES
+                        (@MemberID, @PostID, @FollowStatus, 0)
+
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@MemberID", MemberID);
+                        command.Parameters.AddWithValue("@PostID", PostID);
+                        command.Parameters.AddWithValue("@FollowStatus", FollowStatus);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("Updatetrack", ex);
+                throw;
+            }
+        }
+
     }
 }
