@@ -11,13 +11,14 @@
     <div class="hot-cboards">
         <div class="title">
             <img src="./images/HOT.png">
-            <h1>熱門討論區</h1>
+            <h1>熱門標籤</h1>
         </div>
         <div class="content">
-            <h1>K-POP </h1>
-            <h1>跑跑薑餅人 </h1>
-            <h1>哈利波特 </h1>
-            <h1>迷因分享區 </h1>
+            <asp:Repeater ID="rptHotTags" runat="server">
+                <ItemTemplate>
+                    <h1> <%# Eval("Naiyo") %></h1>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
     </div>
 
@@ -29,25 +30,12 @@
             <h1>熱門文章</h1>
         </div>
 
-
-        <%--        <div class="content">
-            <h2>音樂討論區 </h2>
-            <div class="article">
-                <h1>標題:神滅之刃OP Lisa</h1>
-                <p>The Last Take版本聽到我都哭了....(繼續閱讀)</p>
-                <h3>發文者:LoveLeeSA_666</h3>
-                <h4>日期:2022/02/12</h4>
-                <h5>
-                    <br />
-                </h5>
-            </div>
-        </div>--%>
-        <asp:Repeater ID="Repeater1" runat="server">
+        <asp:Repeater ID="rptHotPosts" runat="server">
             <ItemTemplate>
 
                 <div class="content">
                     <%--<a href="DisplayPost.aspx?CboardID=2&PostID=d54c4cc3-5063-49ba-88f2-ce5aae83fc66"></a>--%>
-                    <h2>音樂討論區 </h2>
+                    <h2><%# string.Format("{0} - {1}", Eval("Pname"), Eval("Cname"))%> </h2>
                     <div class="article">
                         <h1>標題:<%# Eval("Title") %></h1>
                         <div class="ppd">

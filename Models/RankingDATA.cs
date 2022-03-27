@@ -14,5 +14,13 @@ namespace MKForum.Models
         public string PostCotent { get; set; }
         public Guid PostID { get; set; }
         public int ViewCount { get; set; }
+        public int CboardID { get; set; }
+
+
+        public string Cname { get; set; }
+        public string Pname { get; set; }
+
+
+        public string Naiyo { get; set; }
     }
 }
