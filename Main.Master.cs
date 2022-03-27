@@ -52,9 +52,13 @@ namespace MKForum
 
             else if (_amgr.IsLogined())
             {
-                List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows("c8142d85-68c2-4483-ab51-e7d3fc366b89");
-                this.rptMemberFollows.DataSource = MemberFollows;
-                this.rptMemberFollows.DataBind();
+                string MemberID = HttpContext.Current.Session["MemberID"].ToString();
+                List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows(MemberID);
+                if (_mfmgr.GetReplied_POSTMemberFollows(MemberID) != null)
+                {
+                    this.rptMemberFollows.DataSource = MemberFollows;
+                    this.rptMemberFollows.DataBind();
+                }
 
                 this.btnwebLogin.Visible = false;
                 this.plhLogin.Visible = false;

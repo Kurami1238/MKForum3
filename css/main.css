@@ -219,4 +219,27 @@ ul ul li a {
 
 .Notifytext {
     position: fixed;
+    z-index: -999;
+    border: 1px solid black;
+    height: 100px;
+    width: 300px;
+    background-color: white;
+    text-align: left;
+    bottom: 30px;
+    right:50px;
+}
+
+    .Notifytext h3 {
+        background-color: white;
+        color: red;
+        font-size:26px;
+    }
+
+.Notifytext span {
+    background-color: white;
+    color: black;
+}
+
+#btnNotify {
+    background-color: white;
 }

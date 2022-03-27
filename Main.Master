@@ -148,8 +148,9 @@
                                         <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
                                         &nbsp&nbsp
                                         <div class="Notify">
-                                            <asp:Button ID="btnNotify" runat="server" Text="通知" />
+                                            <button ID="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
                                             <div class="Notifytext">
+                                            <h3>通知：</h3>
                                                 <asp:Repeater ID="rptMemberFollows" runat="server">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label1" runat="server"> 
@@ -320,23 +321,23 @@
             }
         }
 
+
+
     </script>
 
 
     <script>
         //通知
-        //$('.Notifytext').hide();
-
-        //var scrollVal = $('.Notifytext').prop('scrollHeight');
-        ////var scrollVal = $(window).scrollTop();
-        //console.log(scrollVal);
-        //$(window).scroll(function () {
-        //    var scrollVal = $(this).scrollTop();
-        //    console.log(scrollVal);
-        //    if (scrollVal < 0) {
-        //        $('.Notifytext').hide();
-        //    }
-        //}
+        function Notifytoggle() {
+            var zindex = $('.Notifytext').css("z-index")
+            //alert(zindex);
+            if (zindex < 0) {
+                $('.Notifytext').css("z-index", "999")
+            }
+            else {
+                $('.Notifytext').css("z-index", "-999")
+            }
+        }
 
         //  展開/收合按鈕
         $(document).ready(function () {
