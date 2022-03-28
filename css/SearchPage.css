@@ -22,18 +22,16 @@ div{
     filter: opacity(100%);
 }
 a{
+    color:#ffffff;
     text-decoration:none;
 }
 a:link{
     color:#ffffff;
     text-decoration:none;
-
     }
 a:visited {
     color:#ffffff;
-    background-color:red;
-    }
-
+}
 .PostA:hover{
     color:#ffffff;
     text-shadow: 2px 2px 2px #941a12;
@@ -46,16 +44,15 @@ a:visited {
 }
 a:active {
     text-decoration:none;
-    background-color:gray;
     color:#fafafa;
     }
 img{
     transform: 2s;
+    transition: 0.4s;
 }
 .kekkamsg {
     font-family:'moubi';
     font-size: 26px
-
 }
 .test {
     /* padding: 20px;

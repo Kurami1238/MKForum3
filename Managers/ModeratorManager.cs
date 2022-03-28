@@ -116,8 +116,8 @@ namespace MKForum.Managers
             //刪除一筆資料 依照 會員ID (SQL已測試OK)
             string connStr = "Server=localhost;Database=MKForum;Integrated Security=True;";
             string commandText = $@"
-                DELETE FROM [MKForum].[dbo].[MemberModerators]
-                WHERE MemberID=@strModeratorAcc
+                DELETE FROM [MemberModerators]
+                WHERE MemberID=@mberID
                 ";
             try
             {
@@ -126,7 +126,7 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, conn))
                     {
                         conn.Open();
-                        command.Parameters.AddWithValue("@strModeratorAcc", strModeratorAcc);
+                        command.Parameters.AddWithValue("@mberID", mberID);
                         command.Parameters.AddWithValue("@cboardid", cboardid);
                         command.ExecuteNonQuery();
 

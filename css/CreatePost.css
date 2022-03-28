@@ -72,11 +72,16 @@ a:active {
             box-shadow: 2px 1px 4px #e76c25;
             border-radius:10px;
             cursor:pointer;
+            transition: 0.4s;
+
         }
         .zenbu .dougu{
             color: #fafafaea;
             border: 1px ridge #a31515;
             margin-bottom: 2px;
+
+        }
+        .zenbu .dougu:hover{
         }
         .zenbu input:hover{
             box-shadow: 2px 2px 4px #cc2626;
@@ -138,6 +143,8 @@ a:active {
     border-radius:10px;
     width: 20%;
     float: right;
+    transition: 0.4s;
+
 }
 .cbtn:hover{
     border: 1px double #cc2626;

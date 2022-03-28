@@ -95,7 +95,7 @@ div{
         }
         .MainPost .Postbtn div:hover{
             color:#fff;
-            border:1px #851a1a solid;
+            box-shadow: 2px 2px 7px #851a1a;
             text-shadow: 2px 2px 5px #941a12;
         }
         
@@ -120,22 +120,20 @@ div{
         }
         .MainPost .pht{
             color:rgba(248, 204, 145, 0.904);
-            width: 15%;
+            margin-right: 5px;
             float: left;
+            padding: 2px 15px 2px 15px;
             transition: 1s;
             margin-left: 4px;
             border: 1px none #a75410;
             border-radius:10px;
             font-style: italic;
             text-shadow: 1px 1px 2px rgb(138, 80, 5);
-
-
         }  
         .MainPost .pht:hover{
             color:rgb(228, 229, 155);
             text-shadow: 2px 2px 5px #941a12;
             box-shadow: 2px 2px 4px #a52818;
-
         }
 .nomainPost{
     padding: 10px;
@@ -210,8 +208,6 @@ div{
     border-bottom: 1px double #e76c25;
     box-shadow: 2px 2px 5px #e76c25;
     transition: 0.4s;
-
-    
 }
         .CNNmPost input{
             color:#fafafa;
@@ -241,7 +237,6 @@ div{
         }
         .CNNmPost .CNNmB:hover{
             color:#fff;
-            background-color:rgb(22, 21, 21);
-            border:1px #851a1a solid;
+            box-shadow: 2px 2px 7px #851a1a;
             text-shadow: 2px 2px 5px #941a12;
         }
