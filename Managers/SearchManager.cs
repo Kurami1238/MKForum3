@@ -354,12 +354,13 @@ namespace MKForum.Managers
         {
             // 透過關鍵字得到postID清單
             List<Post> pl = this.SearchPostIDwithTag(hosii);
-            if (pl == null)
+            if (pl.Count == 0)
             {
                 totalRows = 0;
                 return new List<SearchResult>();
             }
             string Zyouken = " WHERE  ";
+            string fkfk = string.Empty;
             string connectionStr = ConfigHelper.GetConnectionString();
             for (int i = 0; i < pl.Count; i++)
             {

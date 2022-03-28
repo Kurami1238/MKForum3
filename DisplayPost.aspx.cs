@@ -215,7 +215,10 @@ namespace MKForum
                 Response.Redirect(Request.RawUrl);
             }
             else
+            {
+                HttpContext.Current.Session["NeedTouroku"] = 1;
                 Response.Redirect("Index.aspx", true);
+            }
         }
         protected void rptNmP_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
