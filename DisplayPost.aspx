@@ -43,8 +43,18 @@
             </div>
         </div>
         <asp:Label CssClass="btnl" ID="lblMemberFollow_FollowStatus" runat="server"></asp:Label>
+        <div class="allpht">
+            <asp:Repeater ID="rptpht" runat="server">
+                <ItemTemplate>
+                    <a href='<%# "SearchKekka.aspx?keyword=" + Eval("Naiyo") + "&searcharea=srchTag" %>'>
+                        <div class="pht">
+                            <asp:Label runat="server" Text='<%# "#"+Eval("Naiyo") %>'></asp:Label>
+                        </div>
+                    </a>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
     </div>
-
     <asp:Repeater ID="rptNmP" runat="server" OnItemCommand="rptNmP_ItemCommand">
         <ItemTemplate>
             <div class="nomainPost col-sm-11 col-md-11 col-lg-11">

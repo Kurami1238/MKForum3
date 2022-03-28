@@ -826,7 +826,7 @@ namespace MKForum.Managers
             if (followlist.Count > 0)
                 this.DeleteMemberFollows(followlist, postid);
             // 透過postid找 這篇文的會員瀏覽紀錄
-            List<MemberScan> msl = this.GetMemberScanlist(postid);
+            List<MemberScan> msl = this.GetMemberScanList(postid);
             // 比對postid與memberid 兩者皆符合者 刪除會員瀏覽紀錄
             if (msl.Count > 0)
                 this.DeleteMemberScan(msl, postid);
@@ -1029,6 +1029,42 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        public List<PostHashtag> GetPostHashtagList(Guid postid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT *
+                    FROM PostHashtags
+                    WHERE PostID = @postID
+                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        command.Parameters.AddWithValue("@postID", postid);
+                        conn.Open();
+                        List<PostHashtag> phtl = new List<PostHashtag>();
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            PostHashtag pht = new PostHashtag
+                            {
+                                Naiyo = reader["Naiyo"] as string,
+                            };
+                            phtl.Add(pht);
+                        }
+                        return phtl;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetPostHashtagList", ex);
+                throw;
+            }
+        }
         //----------------Stamp-------------------
         public List<PostStamp> GetPostStampList(int cboardid)
         {
@@ -1174,7 +1210,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public List<MemberScan> GetMemberScanlist(Guid postid)
+        public List<MemberScan> GetMemberScanList(Guid postid)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =

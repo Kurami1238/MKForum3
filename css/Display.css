@@ -21,20 +21,19 @@ hr{
     background-image: linear-gradient(to right, #333, #ccc, #333);
 }
 a{
+    color:#ffffff;
     text-decoration:none;
 }
 a:link{
-    background-color:#ffffff;
+    color:#ffffff;
     text-decoration:none;
 
     }
 a:visited {
     color:#ffffff;
-    background-color:red;
     }
 a:active {
     text-decoration:none;
-    background-color:gray;
     color:#fafafa;
     }
 div{
@@ -83,18 +82,19 @@ div{
             color: antiquewhite; border:0;
             background-color:#181717;
             margin-right: -2px;
-            border: 1px ridge #e76c25;
+            border: 1px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
             border-radius:10px;
             cursor:pointer;
             float: right;
+            transition: 0.4s;
+
         }
         .MainPost .Postbtn div input{
             color:#fff;
         }
         .MainPost .Postbtn div:hover{
             color:#fff;
-            background-color:rgb(22, 21, 21);
             border:1px #851a1a solid;
             text-shadow: 2px 2px 5px #941a12;
         }
@@ -110,7 +110,32 @@ div{
             width: 90%;
             margin-top: 30px;
             float: left;
-            margin-bottom: 12px;
+        }
+        .MainPost .allpht{
+            float: left;
+            text-align: center;
+            width: 80%;
+            margin-left:36px;
+            margin-top: -10px;
+        }
+        .MainPost .pht{
+            color:rgba(248, 204, 145, 0.904);
+            width: 15%;
+            float: left;
+            transition: 1s;
+            margin-left: 4px;
+            border: 1px none #a75410;
+            border-radius:10px;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgb(138, 80, 5);
+
+
+        }  
+        .MainPost .pht:hover{
+            color:rgb(228, 229, 155);
+            text-shadow: 2px 2px 5px #941a12;
+            box-shadow: 2px 2px 4px #a52818;
+
         }
 .nomainPost{
     padding: 10px;
@@ -144,12 +169,14 @@ div{
         .nomainPost .nmbtn div{
             color: antiquewhite; border:0;
             background-color:#181717;
-            border: 1px ridge #e76c25;
+            border: 1px none #e76c25;
             box-shadow: 2px 1px 4px #e76c25;line-height: 25px;text-align: center;
             border-radius:10px;
             cursor:pointer;
             float: right;
             margin-top: -5px;
+            transition: 0.4s;
+
         }
         .nomainPost .nmbtn div input{
             color:#fff;
@@ -182,6 +209,8 @@ div{
     text-shadow: 2px 2px 2px #270c0c;
     border-bottom: 1px double #e76c25;
     box-shadow: 2px 2px 5px #e76c25;
+    transition: 0.4s;
+
     
 }
         .CNNmPost input{
@@ -203,10 +232,12 @@ div{
         .CNNmPost .CNNmB{
             margin-left: 20px;
             font-size: 22px;
-            border: 1px ridge #e76c25;
+            border: 1px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 40px;text-align: center;
             border-radius:10px;
             cursor:pointer;
+            transition: 0.4s;
+
         }
         .CNNmPost .CNNmB:hover{
             color:#fff;
