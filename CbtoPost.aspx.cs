@@ -160,6 +160,7 @@ namespace MKForum
             }
             else
             {
+                HttpContext.Current.Session["CboardID"] = _cboardid;
                 HttpContext.Current.Session["NeedTouroku"] = 1;
                 Response.Redirect("Index.aspx", true);
             }
