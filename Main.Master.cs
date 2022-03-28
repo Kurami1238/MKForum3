@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -25,7 +26,7 @@ namespace MKForum
         private ModeratorManager _Mmgr = new ModeratorManager();
         private MemberFollowManager _mfmgr = new MemberFollowManager();
         private StampManager _stpmgr = new StampManager();               //文章類型
-        
+
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -253,9 +254,13 @@ namespace MKForum
         //儲存母版塊按鈕
         protected void btnPBSave_Click(object sender, EventArgs e)
         {
+            this.plhPBDsplMode1.Visible = false;    //隱藏儲存按鈕
             this.plhPBDsplMode2.Visible = false;    //隱藏儲存按鈕
+            this.plhAPI1_admin.Visible = false;    //關閉有按鈕的ajax
             this.plhAPI2_admin.Visible = false;    //關閉有按鈕的ajax
+            this.plhAPI1_normal.Visible = true;    //換成顯示模式的ajax
             this.plhAPI2_normal.Visible = true;    //換成顯示模式的ajax
+            this.plhPBEdit1.Visible = true;    //顯示編輯按鈕
             this.plhPBEdit2.Visible = true;    //顯示編輯按鈕
         }
 
@@ -313,22 +318,38 @@ namespace MKForum
             else
             {
                 //如果已經在黑名單表
-                if (_blkmgr.IsBlacked(inpAccount, currentCboard))
+                if (_blkmgr.InBlacked(inpAccount, currentCboard))
                 {
-                    this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);      //無效
-                    string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";
-                    Response.Write($"<script>alert('{msg}')</script>");
-                    return;
+                    //如果正在被黑名單
+                    if (_blkmgr.IsBlacked(inpAccount, currentCboard))
+                    {
+                        this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
+                        //string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";
+                        //Response.Write($"<script>alert('{msg}')</script>");
+                        Response.Redirect(Request.Url.ToString());
+
+                    }
+
+                    else//曾被黑單，但已經解黑，要再度加入黑名單
+                    {
+                        this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
+                        //string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
+                        //Response.Write($"<script>alert('{msg}')</script>");
+                        Response.Redirect(Request.Url.ToString());
+                    }
                 }
+
                 //如果還未被黑單過
                 else
                 {
 
-                    this._blkmgr.AddBlackedList(inpAccount, dt, currentCboard);      //無效
-                    string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
-                    Response.Write($"<script>alert('{msg}')</script>");
-                    return;
+                    this._blkmgr.AddBlackedList(inpAccount, dt, currentCboard);
+                    //string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
+                    //Response.Write($"<script>alert('{msg}')</script>");
+                    Response.Redirect(Request.Url.ToString());
                 }
+
+
             }
         }
 
@@ -481,15 +502,15 @@ namespace MKForum
                     return;
                 }
                 //如果輸入的新類型已經存在
-                if (this._stpmgr.IncludeStp(strIinpStp,currentCboard))
+                if (this._stpmgr.IncludeStp(strIinpStp, currentCboard))
                 {
                     msg = "文章類型已經存在";
                     Response.Write($"<script>alert('{msg}')</script>");
                 }
                 else
-                { 
-                this._stpmgr.AddStmp(strIinpStp,currentCboard);
-                msg = "文章類型新增成功。";
+                {
+                    this._stpmgr.AddStmp(strIinpStp, currentCboard);
+                    msg = "文章類型新增成功。";
                     Response.Write($"<script>alert('{msg}')</script>");
                 }
             }
