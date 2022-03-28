@@ -744,13 +744,13 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public void DeleteMemberScan(List<MemberFollow> followlist, Guid postid)
+        public void DeleteMemberScan(List<MemberScan> msl, Guid postid)
         {
             string Zyouken = " WHERE  ";
-            for (int i = 0; i < followlist.Count; i++)
+            for (int i = 0; i < msl.Count; i++)
             {
                 //  @{i}是因為 Guid一堆毛
-                if (i != followlist.Count - 1)
+                if (i != msl.Count - 1)
                     Zyouken += $" (MemberID = @{i} AND PostID = @postid) OR ";
                 else
                     Zyouken += $" (MemberID = @{i} AND PostID = @postid) ";
@@ -766,9 +766,9 @@ namespace MKForum.Managers
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
                         connection.Open();
-                        for (int i = 0; i < followlist.Count; i++)
+                        for (int i = 0; i < msl.Count; i++)
                         {
-                            command.Parameters.AddWithValue($"@{i}", followlist[i].MemberID);
+                            command.Parameters.AddWithValue($"@{i}", msl[i].MemberID);
                         }
                         command.Parameters.AddWithValue(@"postid", postid);
                         command.ExecuteNonQuery();
@@ -825,8 +825,11 @@ namespace MKForum.Managers
             // 比對postid與memberid 兩者皆符合者 刪除追蹤狀態
             if (followlist.Count > 0)
                 this.DeleteMemberFollows(followlist, postid);
-            // 比對postid與memberid 兩者皆符合者 刪除瀏覽紀錄
-                this.DeleteMemberScan(followlist, postid);
+            // 透過postid找 這篇文的會員瀏覽紀錄
+            List<MemberScan> msl = this.GetMemberScanlist(postid);
+            // 比對postid與memberid 兩者皆符合者 刪除會員瀏覽紀錄
+            if (msl.Count > 0)
+                this.DeleteMemberScan(msl, postid);
             // 刪有關連性資料後才刪除文章本體
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -842,7 +845,7 @@ namespace MKForum.Managers
 
                         command.Parameters.AddWithValue(@"postid", postid);
                         command.ExecuteNonQuery();
-                        // 之後刪除下面的回文
+                        // 之後刪除此文的回文
                         this.DeletePoint(postid);
                     }
                 }
@@ -1171,14 +1174,14 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public MemberScan GetMemberScan(Guid postid, Guid memberid)
+        public List<MemberScan> GetMemberScanlist(Guid postid)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"
                     SELECT *
                     FROM MemberScans
-                    WHERE PostID = @postID AND MemberID = @memberid 
+                    WHERE PostID = @postID 
                 ";
             try
             {
@@ -1186,20 +1189,19 @@ namespace MKForum.Managers
                 {
                     using (SqlCommand command = new SqlCommand(commandText, connection))
                     {
+                        List<MemberScan> msl = new List<MemberScan>();
                         connection.Open();
-                        command.Parameters.AddWithValue(@"memberID", memberid);
                         command.Parameters.AddWithValue(@"postID", postid);
                         SqlDataReader reader = command.ExecuteReader();
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             MemberScan ms = new MemberScan()
                             {
-                                ScanID = (int)reader["ScanID"],
-
+                                MemberID = (Guid)reader["MemberID"],
                             };
-                            return ms;
+                            msl.Add(ms);
                         }
-                        return null;
+                        return msl;
                     }
                 }
             }

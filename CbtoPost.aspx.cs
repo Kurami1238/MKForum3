@@ -162,6 +162,7 @@ namespace MKForum
             {
                 HttpContext.Current.Session["CboardID"] = _cboardid;
                 HttpContext.Current.Session["NeedTouroku"] = 1;
+                HttpContext.Current.Session["JumpPage"] = null;
                 Response.Redirect(Request.RawUrl, true);
             }
         }
