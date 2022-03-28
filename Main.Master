@@ -36,17 +36,18 @@
 
 
         /* Style for positioning toast */
-        .toast {
+        /*.toast {
             position: absolute;
             bottom: 10px;
             right: 10px;
-        }
+        }*/
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
 
 
+        <!--登入畫面-->
         <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
 
             <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
@@ -65,47 +66,54 @@
             <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
         </asp:PlaceHolder>
 
-
+        <!--主板畫面-->
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
+
             <div class="container-all">
                 <!--xs以下顯示，md以上不顯示 -->
                 <div class="d-xs-block d-md-none">
-                    <!--左拉式選單-->
-                    <div class="container-left">
-                        <!-- 導覽列 -->
-                        <nav id="sidebar">
-                            <!-- 展往/縮起來 按鈕 -->
-                            <button type="button" id="collapse" class="collapse-btn">
-                                <i class="fas fa-align-left"></i>
-                            </button>
-                            <div>
-                                <!-- List 列表 -->
-                                <p>母版塊列表 </p>
-                                <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
-                                <br>
-                                <%--使用API的母版塊，前台觀看--%>
-                                <asp:PlaceHolder ID="plhAPI1_normal" runat="server">
-                                    <div id="PBDataList_normal1"></div>
-                                </asp:PlaceHolder>
-                                <%--使用API的母版塊，後台人員操作--%>
-                                <asp:PlaceHolder ID="plhAPI1_admin" runat="server" Visible="false">
-                                    <div id="PBDataList_Admin1"></div>
-                                </asp:PlaceHolder>
+                    <!--懸浮按鈕-->
+                    <div id="hamburgerMenu" class="container">
+                        <div class="float-left">
+                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--左邊收合母版-->
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasExampleLabel">母版塊列表</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <a href="/HomePage.aspx">首頁Home </a>
+                            <br>
+                            <%--使用API的母版塊，前台觀看--%>
+                            <asp:PlaceHolder ID="plhAPI1_normal" runat="server">
+                                <div id="PBDataList_normal1"></div>
+                            </asp:PlaceHolder>
+                            <%--使用API的母版塊，後台人員操作--%>
+                            <asp:PlaceHolder ID="plhAPI1_admin" runat="server" Visible="false">
+                                <div id="PBDataList_Admin1"></div>
+                            </asp:PlaceHolder>
 
-                                <%--編輯母版塊按鈕，後台人員才能看到--%>
-                                <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
-                                </asp:PlaceHolder>
-                                <%--結束編輯按鈕，後台人員才能看到--%>
-                                <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
-                                </asp:PlaceHolder>
-                            </div>
-                        </nav>
+                            <%--編輯母版塊按鈕，後台人員才能看到--%>
+                            <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
+                                <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                            </asp:PlaceHolder>
+                            <%--結束編輯按鈕，後台人員才能看到--%>
+                            <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
+                                <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
+                            </asp:PlaceHolder>
+
+
+                        </div>
                     </div>
                 </div>
-                <!-- 上區塊 -->
+
+
                 <div class="container-fluid bg-dark text-white">
+                    <!-- 上區塊 -->
                     <div class="row">
                         <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
@@ -127,10 +135,13 @@
                         <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
                         <div class="col-sm-4 col-md-4 col-lg-5 h3 text-center">
+
                             <a href="/index.aspx" class="d-block d-sm-none">
                                 <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
                             MKForun
+
                         </div>
+
                         <!-- 上區塊內的右上區塊(使用者狀態區) -->
                         <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
                         <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
@@ -148,9 +159,9 @@
                                         <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
                                         &nbsp&nbsp
                                         <div class="Notify">
-                                            <button ID="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
+                                            <button id="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
                                             <div class="Notifytext">
-                                            <h3>通知：</h3>
+                                                <h3>通知：</h3>
                                                 <asp:Repeater ID="rptMemberFollows" runat="server">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label1" runat="server"> 
@@ -201,12 +212,13 @@
                             <!-- 固定母版塊 -->
                             <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
                             <div class="d-none d-md-block col-md-2" id="PBArea">
-                                <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
+                                <a href="/HomePage.aspx">首頁Home </a>
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
                                 <asp:PlaceHolder ID="plhAPI2_normal" runat="server">
                                     <div id="PBDataList_normal2"></div>
                                 </asp:PlaceHolder>
+
                                 <%--使用API的母版塊，後台人員操作--%>
                                 <asp:PlaceHolder ID="plhAPI2_admin" runat="server" Visible="false">
                                     <div id="PBDataList_Admin2"></div>
@@ -238,7 +250,9 @@
                             <div class="d-none d-md-block col-md-2 ">
                                 <br />
                                 <div class="BLmember rounded border border-1 border-light overflow-auto">
+
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
+
                                         <h3>黑名單</h3>
                                         <asp:TextBox ID="txtBlkAcc" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言會員帳號)"></asp:TextBox>
                                         <asp:TextBox ID="txtBlkDate" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox>
@@ -340,14 +354,14 @@
         }
 
         //  展開/收合按鈕
-        $(document).ready(function () {
+        //$(document).ready(function () {
 
-            $("#collapse").on("click", function () {
+        //    $("#collapse").on("click", function () {
 
-                $("#sidebar").toggleClass("active");
-                $(".fa-align-left").toggleClass("fa-chevron-circle-right");
-            })
-        });
+        //        $("#sidebar").toggleClass("active");
+        //        $(".fa-align-left").toggleClass("fa-chevron-circle-right");
+        //    })
+        //});
 
     </script>
 
@@ -388,7 +402,6 @@
             });
 
         }
-
         $(document).ready(function () {
             //一班會員看到的母版
             $.ajax({

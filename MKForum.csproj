@@ -50,6 +50,7 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -122,7 +123,7 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\showdown.js" />
-    <Content Include="Login.aspx" />
+    <Content Include="MemberEditor.aspx" />
     <Content Include="MemberFollowList.aspx" />
     <Content Include="MemberList.aspx" />
     <Content Include="MemberRegister.aspx" />
@@ -237,6 +238,13 @@
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
     <Compile Include="Managers\StampManager.cs" />
+    <Compile Include="MemberEditor.aspx.cs">
+      <DependentUpon>MemberEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MemberEditor.aspx.designer.cs">
+      <DependentUpon>MemberEditor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MemberFollowList.aspx.cs">
       <DependentUpon>MemberFollowList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

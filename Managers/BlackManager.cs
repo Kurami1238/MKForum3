@@ -156,7 +156,7 @@ namespace MKForum.Managers
         }
 
         /// <summary>
-        /// 判斷會員是否已存在於黑名單的方法(不包含已經解黑的會員)
+        /// 判斷會員是否正在被黑單的方法(不包含已經解黑的會員)
         /// </summary>
         /// <param name="account">(string)欲比對的會員帳號</param>
         /// <param name="currontCB">(string)當前子板塊</param>
@@ -171,6 +171,51 @@ namespace MKForum.Managers
                 FROM [MKForum].[dbo].[MemberBlacks]
 
                 WHERE CboardID= @currontCB AND getdate() < [ReleaseDate] ;
+                ";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+
+                        conn.Open();
+                        command.Parameters.AddWithValue("@currontCB", currontCB);
+                        command.ExecuteNonQuery();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            dbAccount = reader["Account"] as string;
+                            if (account == dbAccount)
+                                return isBlacked = true;
+                        }
+                    }
+                }
+                return isBlacked = false;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("BlackManager.IsBlacked", ex);
+                throw;
+            }
+        }
+        /// <summary>
+        /// 判斷會員是否已存在於黑名單Table的方法(含已解黑的會員)
+        /// </summary>
+        /// <param name="account">(string)欲比對的會員帳號</param>
+        /// <param name="currontCB">(string)當前子板塊</param>
+        /// <returns>回傳值為boolean</returns>
+        public bool InBlacked(string account, string currontCB)
+        {
+            bool isBlacked = false;
+            string dbAccount;
+            string connStr = ConfigHelper.GetConnectionString();
+            string commandText = $@"
+                SELECT [Account]
+                FROM [MKForum].[dbo].[MemberBlacks]
+
+                WHERE CboardID= @currontCB ;
                 ";
             try
             {
