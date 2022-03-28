@@ -42,14 +42,17 @@ namespace MKForum
             this.ckbskip.Visible = true;
 #endif
 
-
-            if (!_amgr.IsLogined())
+            if (Session["NeedTouroku"] as int? == 1 || Session["NeedTouroku"] as int? == 2)
+            {
+                this.plhLogin.Visible = true;
+                this.plhLogined.Visible = false;
+            }
+            else if (!_amgr.IsLogined())
             {
                 this.plhLogin.Visible = false;
                 this.plhLogined.Visible = true;
                 this.plgMemberStatus.Visible = false;
             }
-
             else if (_amgr.IsLogined())
             {
                 string MemberID = HttpContext.Current.Session["MemberID"].ToString();
@@ -171,12 +174,40 @@ namespace MKForum
             {
                 if (this._amgr.TryLogin("Text05", "12345678"))
                 {
-                    Response.Redirect(Request.RawUrl);
+                    if (Session["NeedTouroku"] as int? == 1)
+                    {
+                        Session["NeedTouroku"] = null;
+                        Response.Redirect("/CreatePost.aspx");
+                    }
+                    else if (Session["NeedTouroku"] as int? == 2)
+                    {
+                        Session["NeedTouroku"] = null;
+                        string QSPostID = HttpContext.Current.Session["PostID"].ToString();
+                        string QSCboardID = HttpContext.Current.Session["CboardID"].ToString();
+                        string displayurl = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}",QSCboardID, QSPostID);
+                        Response.Redirect(displayurl);
+                    }
+                    else
+                        Response.Redirect(Request.RawUrl);
                 }
             }
             else if (this._amgr.TryLogin(account, pwd))
             {
-                Response.Redirect(Request.RawUrl);
+                if (Session["NeedTouroku"] as int? == 1)
+                {
+                    Session["NeedTouroku"] = null;
+                    Response.Redirect("/CreatePost.aspx");
+                }
+                else if (Session["NeedTouroku"] as int? == 2)
+                {
+                    Session["NeedTouroku"] = null;
+                    string QSPostID = HttpContext.Current.Session["PostID"].ToString();
+                    string QSCboardID = HttpContext.Current.Session["CboardID"].ToString();
+                    string displayurl = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}", QSCboardID, QSPostID);
+                    Response.Redirect(displayurl);
+                }
+                else
+                    Response.Redirect(Request.RawUrl);
             }
             else
             {

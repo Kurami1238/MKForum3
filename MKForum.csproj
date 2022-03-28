@@ -123,6 +123,7 @@
     <Content Include="js\jquery.min.js" />
     <Content Include="js\showdown.js" />
     <Content Include="Login.aspx" />
+    <Content Include="MemberEditor.aspx" />
     <Content Include="MemberFollowList.aspx" />
     <Content Include="MemberList.aspx" />
     <Content Include="MemberRegister.aspx" />
@@ -218,6 +219,13 @@
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Main.Master.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Main.Master.designer.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+    </Compile>
     <Compile Include="Managers\AccountManager.cs" />
     <Compile Include="Managers\BlackManager.cs" />
     <Compile Include="Managers\CboardManager.cs" />
@@ -230,6 +238,13 @@
     <Compile Include="Managers\RankingManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
     <Compile Include="Managers\StampManager.cs" />
+    <Compile Include="MemberEditor.aspx.cs">
+      <DependentUpon>MemberEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MemberEditor.aspx.designer.cs">
+      <DependentUpon>MemberEditor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MemberFollowList.aspx.cs">
       <DependentUpon>MemberFollowList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -337,6 +352,7 @@
     <Content Include="css\Brush.ttf" />
     <Content Include="API\PBoardHandler.ashx" />
     <Content Include="API\GetLinkHandler.ashx" />
+    <Content Include="Main.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

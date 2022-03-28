@@ -14,7 +14,6 @@
         <asp:Literal ID="ltlAcc" runat="server" Text="-"></asp:Literal></br>
         密碼:<asp:TextBox ID="txtPwd" runat="server"></asp:TextBox></br>
         E-mail:<asp:TextBox ID="txtMail" runat="server"></asp:TextBox></br>
-        驗證碼:<asp:TextBox ID="txtCapt" runat="server"></asp:TextBox></br>
 
     </form>
 </body>
