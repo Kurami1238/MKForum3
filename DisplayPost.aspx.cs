@@ -216,7 +216,9 @@ namespace MKForum
             }
             else
             {
-                HttpContext.Current.Session["NeedTouroku"] = 1;
+                HttpContext.Current.Session["PostID"] = this.Request.QueryString["PostID"];
+                HttpContext.Current.Session["CboardID"] = this.Request.QueryString["CboardID"];
+                HttpContext.Current.Session["NeedTouroku"] = 2;
                 Response.Redirect("Index.aspx", true);
             }
         }
