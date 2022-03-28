@@ -28,7 +28,8 @@ namespace MKForum
             // 從Session取得當前子板塊ID
             string cboard = this.Request.QueryString["CboardID"];
             int cboardid = 0;
-            int.TryParse(cboard, out cboardid);
+            if (!int.TryParse(cboard, out cboardid))
+                this.BackToListPage();
             // 繫結PostStamp
             List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
             this.dpdlPostStamp.DataSource = psList;
@@ -109,13 +110,14 @@ namespace MKForum
                 this.fuCoverImage.SaveAs(newFilePath);
                 post.CoverImage = "/FileDownload/MapContent/" + fileName;
             }
-            
+
             // 更新Post
+            string cboard = this.Request.QueryString["CboardID"];
 
             this._pmgr.UpdatePost(post);
+            Response.Redirect($"CbtoPost.aspx?CboardID={cboard}", true);
 
             //提示使用者成功
-            this.lblMsg.Text = "更新成功！";
 
         }
 

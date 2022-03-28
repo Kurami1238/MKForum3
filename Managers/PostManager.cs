@@ -730,7 +730,7 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"postID", post.PostID);
                         command.Parameters.AddWithValue(@"title", post.Title);
                         command.Parameters.AddWithValue(@"postcotent", post.PostCotent);
-                        command.Parameters.AddWithValue(@"lastedittime", DateTime.Now.ToString());
+                        command.Parameters.AddWithValue(@"lastedittime", DateTime.Now);
                         command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
                         command.Parameters.AddWithValue(@"sortid", post.SortID);
 

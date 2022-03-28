@@ -136,6 +136,6 @@
             }
 
         }
-        function Createa() { alert('新增文章成功') }
+        function Createa() { alert('更新文章成功') }
     </script>
 </asp:Content>
