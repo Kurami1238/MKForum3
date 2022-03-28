@@ -1,7 +1,7 @@
-/** {
-    background-color: #181717;*/
-    /* background-color: blue; */
-/*}*/
+* {
+    background-color: #181717;
+/*     background-color: blue; */
+}
 
 /*.container-all {
     display: flex;
