@@ -47,11 +47,6 @@
                     <textarea class="content" id="content" rows="6" cols="28" runat="server"></textarea>
                 </td>
             </tr>
-            <tr class="tag">
-                <th>#tag (用/分隔)</th>
-                <td>
-                    <asp:TextBox ID="txtPostHashtag" runat="server"></asp:TextBox></td>
-            </tr>
             <tr class="msg">
                 <td colspan="2">
                     <asp:Label runat="server" ID="lblMsg" ForeColor="Red"></asp:Label>

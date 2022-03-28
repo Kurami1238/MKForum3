@@ -17,14 +17,11 @@ namespace MKForum
         private PostManager _pmgr = new PostManager();
         private AccountManager _amgr = new AccountManager();
         private Member _member;
+        private Post _motopost;
         protected void Page_Init(object sender, EventArgs e)
         {
             // 從Session取得登錄者ID
-            if (this._amgr.IsLogined())
-            {
-                Member account = this._amgr.GetCurrentUser();
-                _member = account;
-            }
+            this.CheckLogin();
             // 如果登錄者ID與EditPostID不符則回列表頁
             if (this._member != HttpContext.Current.Session["EditPostMember"])
                 this.BackToListPage();
@@ -32,9 +29,8 @@ namespace MKForum
             string cboard = this.Request.QueryString["CboardID"];
             int cboardid = 0;
             int.TryParse(cboard, out cboardid);
-            List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
             // 繫結PostStamp
-
+            List<PostStamp> psList = this._pmgr.GetPostStampList(cboardid);
             this.dpdlPostStamp.DataSource = psList;
             this.dpdlPostStamp.DataTextField = "PostSort";
             this.dpdlPostStamp.DataValueField = "SortID";
@@ -48,7 +44,18 @@ namespace MKForum
             if (Guid.TryParse(postidtext, out postid))
                 post = this._pmgr.GetPost(postid);
             this.DisplayPost(post);
+            this._motopost = post;
         }
+
+        private void CheckLogin()
+        {
+            if (this._amgr.IsLogined())
+            {
+                Member account = this._amgr.GetCurrentUser();
+                _member = account;
+            }
+        }
+
         private void BackToListPage()
         {
             // 從QS取得當前子板塊ID
@@ -69,9 +76,11 @@ namespace MKForum
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
+            Post post = this._motopost;
             string TitleText = this.txtTitle.Text.Trim();
             string PostCotentText = this.content.InnerText.Trim();
-
+            post.Title = TitleText;
+            post.PostCotent = PostCotentText;
             //檢查必填欄位及關鍵字
 
             if (!this._pmgr.CheckInput(TitleText, PostCotentText))
@@ -80,13 +89,10 @@ namespace MKForum
                 return;
             }
             // 處理類型
-
+            string postSorttext = this.dpdlPostStamp.Text;
+            int? postSort = Convert.ToInt32(postSorttext);
+            post.SortID = postSort;
             // 儲存圖片
-            Post post = new Post()
-            {
-                Title = TitleText,
-                PostCotent = PostCotentText
-            };
             if (this.fuCoverImage.HasFile)
             {
 
@@ -103,7 +109,7 @@ namespace MKForum
                 this.fuCoverImage.SaveAs(newFilePath);
                 post.CoverImage = "/FileDownload/MapContent/" + fileName;
             }
-
+            
             // 更新Post
 
             this._pmgr.UpdatePost(post);

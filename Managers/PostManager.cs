@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace MKForum.Managers
 {
+
     public class PostManager
     {
         private static List<string> _msgList = new List<string>();
@@ -56,7 +57,7 @@ namespace MKForum.Managers
         }
         public void CreatePost(Guid member, Guid pointtid, Post post, out Guid postid)
         {
-            Post pointpost = GetPost(pointtid);   // 取發文的標題
+            Post pointpost = this.GetPost(pointtid);   // 取發文的標題
             List<Post> pointpostlist = this.GetPostpointNowFloor(pointtid); // 搜那篇回文數有多少
             int floor;
             if (pointpostlist.Count > 0)
@@ -96,11 +97,23 @@ namespace MKForum.Managers
                         postid = post.PostID;
                     }
                 }
-                CreateInMemberFollows(member, pointtid);  // 增加至會員的追蹤表
-                List<MemberFollow> followlist = GetMemberFollowsMemberID(pointtid);
+                // 查追蹤表有無追蹤，沒有才增加
+                MemberFollow mf = this.GetMemberFollowThisPost(member, pointtid);
+                if (mf == null)
+                    this.CreateInMemberFollows(member, pointtid);  // 增加至會員的追蹤表
+                // 取追蹤該文章的會員
+                List<MemberFollow> followlist = this.GetMemberFollowsMemberID(pointtid);
+                // 如果追蹤者有發文者自己則刪去
+                for (int i = 0; i < followlist.Count; i++)
+                {
+                    if (string.Compare(member.ToString(), followlist[i].MemberID.ToString()) == 0)
+                    {
+                        followlist.Remove(followlist[i]);
+                    }
+                }
                 //var fl = followlist.Select((x, index) => { return new { Index = index }; });
                 if (followlist.Count() > 0)
-                    RepliedtoNO(followlist, pointtid); // 讓追蹤原文的會員狀態都改為未讀
+                    this.RepliedtoNO(followlist, pointtid); // 讓追蹤原文的會員狀態都改為未讀
             }
             catch (Exception ex)
             {
@@ -218,11 +231,52 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        public MemberFollow GetMemberFollowThisPost(Guid MemberID, Guid PostID)
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT * FROM MemberFollows
+                    WHERE MemberID = @MemberID AND PostID = @PostID;
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+
+                        command.Parameters.AddWithValue("@MemberID", MemberID);
+                        command.Parameters.AddWithValue("@PostID", PostID);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        reader.Read();
+
+                        MemberFollow Follow = new MemberFollow()
+                        {
+                            MemberID = (Guid)reader["MemberID"],
+                            PostID = (Guid)reader["PostID"],
+                            FollowStatus = (bool)reader["FollowStatus"],
+                            ReadedDate = (DateTime)reader["ReadedDate"],
+                            Replied = (bool)reader["Replied"],
+                        };
+                        return Follow;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("MemberFollowManager.GetMemberFollows", ex);
+                return null;
+            }
+        }
         public void RepliedtoNO(List<MemberFollow> member, Guid postid)
         {
             string Zyouken = " WHERE  ";
             string connectionString = ConfigHelper.GetConnectionString();
-            
+
             for (int i = 0; i < member.Count; i++)
             {
                 if (i != member.Count - 1)
@@ -310,7 +364,7 @@ namespace MKForum.Managers
 
                         while (reader.Read())
                         {
-                            
+
                             MemberFollow Follow = new MemberFollow()
                             {
                                 MemberID = (Guid)reader["MemberID"],
@@ -661,8 +715,10 @@ namespace MKForum.Managers
                     SET 
                         Title = @title,
                         PostCotent = @postcotent,
-                        LastEditTime = @lastedittime
-                    WHERE PostID = @postid ";
+                        LastEditTime = @lastedittime,
+                        CoverImage = @coverimage,
+                        SortID = @sortid
+                    WHERE PostID = @postID ";
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -675,6 +731,9 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", post.Title);
                         command.Parameters.AddWithValue(@"postcotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"lastedittime", DateTime.Now.ToString());
+                        command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
+                        command.Parameters.AddWithValue(@"sortid", post.SortID);
+
                         command.ExecuteNonQuery();
                     }
                 }
