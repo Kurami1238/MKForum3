@@ -46,6 +46,8 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"postdate", time);
                         command.ExecuteNonQuery();
                         postid = post.PostID;
+
+                        this.CreateInMemberFollows(member, postid);  // 增加至會員的追蹤表
                     }
                 }
             }
