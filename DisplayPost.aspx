@@ -21,7 +21,7 @@
                 <div>
                     <asp:Button class="btn" ID="btnMemberFollow_FollowStatus" runat="server" Text="追蹤" OnClick="btnMemberFollow_FollowStatus_Click" />
                 </div>
-                <asp:PlaceHolder ID="phl" runat="server">
+                <asp:PlaceHolder ID="phl" runat="server">   
                     <asp:HiddenField runat="server" ID="hfMemberID" />
                     <div>
                         <asp:Button class="btn" ID="btnEditPost" runat="server" Text="編輯文章" OnClick="btnEditPost_Click" />

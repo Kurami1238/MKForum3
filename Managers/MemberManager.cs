@@ -98,40 +98,6 @@ namespace MKForum.Managers
             }
         }
 
-        //未完成
-        public void CreateMember(Member member)
-        {
-            string connectionString = ConfigHelper.GetConnectionString();
-            string commandText =
-                @"
-                    INSERT INTO Member
-                        (MemberStatus, Account, Password, Email, NickName, Birthday, Sex)
-                    VALUES
-                        (@MemberStatus, @Account, @Password, @Email, @NickName, @Birthday, @Sex)
-                    ";
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    using (SqlCommand command = new SqlCommand(commandText, connection))
-                    {
-                        connection.Open();
-                        command.Parameters.AddWithValue("@Account", member.Account);
-                        command.Parameters.AddWithValue("@Password", member.Password);
-                        command.Parameters.AddWithValue("@Email", member.Email);
-                        command.Parameters.AddWithValue("@NickName", member.NickName);
-                        command.Parameters.AddWithValue("@Birthday", member.Birthday);
-                        command.Parameters.AddWithValue("@Sex", member.Sex);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog("MemberManager.GetMembers", ex);
-                throw;
-            }
-        }
-
         public void UpdateMember(Member member)
         {
             string connectionString = ConfigHelper.GetConnectionString();
@@ -140,7 +106,7 @@ namespace MKForum.Managers
                     UPDATE Members
                     SET 
                         Account = @Account, Password = @Password, Email = @Email, 
-                        NickName= @NickName, Birthday = @Birthday, Sex = @Sex
+                        NickName= @NickName, Birthday = @Birthday, Sex = @Sex, salt = @Salt
                     Where MemberID = @MemberID
                 ";
             try
@@ -157,6 +123,7 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue("@NickName", member.NickName);
                         command.Parameters.AddWithValue("@Birthday", member.Birthday);
                         command.Parameters.AddWithValue("@Sex", member.Sex);
+                        command.Parameters.AddWithValue("@Salt", member.Salt);
                         command.ExecuteNonQuery();
                     }
                 }

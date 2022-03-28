@@ -529,7 +529,7 @@ namespace MKForum.Managers
             {
                 commandText = $@"
                                 SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
-                                    LastEditTime,PostView,Members.Account,CoverImage
+                                    LastEditTime,PostView,Members.Account,CoverImage,Floor
                                 FROM Posts
                                 INNER JOIN Members
                                 ON Posts.MemberID = Members.MemberID

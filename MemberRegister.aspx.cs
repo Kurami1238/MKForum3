@@ -17,7 +17,7 @@ namespace MKForum
     {
         private AccountManager _mgr = new AccountManager();
         private EncryptionHelper _encryption = new EncryptionHelper();
-
+        private LoginHelper _lgihp = new LoginHelper();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -79,6 +79,14 @@ namespace MKForum
                 };
 
                 _mgr.CreateAccount(member);
+
+                //自動登入
+                Member newmember = _mgr.GetAccount(account);
+                member.Password = null;
+                HttpContext.Current.Session["Member"] = newmember;
+                HttpContext.Current.Session["MemberID"] = newmember.MemberID;
+                _lgihp.Login(newmember.Account, newmember.MemberID.ToString());
+
                 this.ltlAccountcheckmsg.Text = "存檔成功";
 
                 Response.Redirect("~/Index.aspx");
@@ -152,10 +160,15 @@ namespace MKForum
             if (PassWordValue != PassWordValueCheck)
                 msgList.Add("密碼輸入不一致");
 
-            string pattern = @"^[A-Za-z0-9]+$";
-            Regex regex = new Regex(pattern);
-            if (!regex.IsMatch(PassWordValue))
-                msgList.Add("密碼請用英文及數字");
+
+            Regex a_zPattern = new Regex("[a-z]");
+            Regex a_zPattern2 = new Regex("[A-Z]");
+            var a_zPattern01 = a_zPattern.Matches(PassWordValue);
+            var a_zPattern02 = a_zPattern2.Matches(PassWordValue);
+            if (a_zPattern01.Count == 0)
+                if (a_zPattern02.Count == 0)
+                    msgList.Add("密碼請用英文及數字");
+
 
             if (SexValue == null)
                 msgList.Add("性別輸入錯誤");

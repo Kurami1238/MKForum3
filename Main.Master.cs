@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -26,7 +25,6 @@ namespace MKForum
         private ModeratorManager _Mmgr = new ModeratorManager();
         private MemberFollowManager _mfmgr = new MemberFollowManager();
         private StampManager _stpmgr = new StampManager();               //文章類型
-
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -43,14 +41,18 @@ namespace MKForum
             this.ckbskip.Visible = true;
 #endif
 
-
-            if (!_amgr.IsLogined())
+            if ((Session["NeedTouroku"] as int? == 1 || Session["NeedTouroku"] as int? == 2) && Session["JumpPage"] as int? != 1)
+            {
+                HttpContext.Current.Session["JumpPage"] = 1;
+                this.plhLogin.Visible = true;
+                this.plhLogined.Visible = false;
+            }
+            else if (!_amgr.IsLogined())
             {
                 this.plhLogin.Visible = false;
                 this.plhLogined.Visible = true;
                 this.plgMemberStatus.Visible = false;
             }
-
             else if (_amgr.IsLogined())
             {
                 string MemberID = HttpContext.Current.Session["MemberID"].ToString();
@@ -59,6 +61,7 @@ namespace MKForum
                 {
                     this.rptMemberFollows.DataSource = MemberFollows;
                     this.rptMemberFollows.DataBind();
+
                 }
 
                 this.btnwebLogin.Visible = false;
@@ -157,6 +160,24 @@ namespace MKForum
 
         }
 
+        protected void rptMemberFollows_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            List<MemberFollow> allMemberFollow = _mfmgr.GetALLMemberFollow();
+            foreach (MemberFollow MFPostID in allMemberFollow)
+            {
+                if (e.CommandName == MFPostID.PostID.ToString())
+                {
+                    string MemberID = HttpContext.Current.Session["MemberID"].ToString();
+                    string postID = e.CommandArgument.ToString();
+                    string[] postIDs = postID.Split(' ');
+                    this._mfmgr.UpdateReplied(MemberID, postIDs[2], 1);
+                    string url = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}#{2}", postIDs[0], postIDs[2], postIDs[1]);
+                    Response.Redirect(url);
+                }
+            }
+            
+        }
+
 
         protected void btnwebLogin_Click(object sender, EventArgs e)
         {
@@ -172,11 +193,13 @@ namespace MKForum
             {
                 if (this._amgr.TryLogin("Text05", "12345678"))
                 {
+                    Session["NeedTouroku"] = null;
                     Response.Redirect(Request.RawUrl);
                 }
             }
             else if (this._amgr.TryLogin(account, pwd))
             {
+                Session["NeedTouroku"] = null;
                 Response.Redirect(Request.RawUrl);
             }
             else
@@ -254,13 +277,9 @@ namespace MKForum
         //儲存母版塊按鈕
         protected void btnPBSave_Click(object sender, EventArgs e)
         {
-            this.plhPBDsplMode1.Visible = false;    //隱藏儲存按鈕
             this.plhPBDsplMode2.Visible = false;    //隱藏儲存按鈕
-            this.plhAPI1_admin.Visible = false;    //關閉有按鈕的ajax
             this.plhAPI2_admin.Visible = false;    //關閉有按鈕的ajax
-            this.plhAPI1_normal.Visible = true;    //換成顯示模式的ajax
             this.plhAPI2_normal.Visible = true;    //換成顯示模式的ajax
-            this.plhPBEdit1.Visible = true;    //顯示編輯按鈕
             this.plhPBEdit2.Visible = true;    //顯示編輯按鈕
         }
 
@@ -318,38 +337,22 @@ namespace MKForum
             else
             {
                 //如果已經在黑名單表
-                if (_blkmgr.InBlacked(inpAccount, currentCboard))
+                if (_blkmgr.IsBlacked(inpAccount, currentCboard))
                 {
-                    //如果正在被黑名單
-                    if (_blkmgr.IsBlacked(inpAccount, currentCboard))
-                    {
-                        this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
-                        //string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";
-                        //Response.Write($"<script>alert('{msg}')</script>");
-                        Response.Redirect(Request.Url.ToString());
-
-                    }
-
-                    else//曾被黑單，但已經解黑，要再度加入黑名單
-                    {
-                        this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
-                        //string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
-                        //Response.Write($"<script>alert('{msg}')</script>");
-                        Response.Redirect(Request.Url.ToString());
-                    }
+                    this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);      //無效
+                    string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
                 }
-
                 //如果還未被黑單過
                 else
                 {
 
-                    this._blkmgr.AddBlackedList(inpAccount, dt, currentCboard);
-                    //string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
-                    //Response.Write($"<script>alert('{msg}')</script>");
-                    Response.Redirect(Request.Url.ToString());
+                    this._blkmgr.AddBlackedList(inpAccount, dt, currentCboard);      //無效
+                    string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
                 }
-
-
             }
         }
 
@@ -398,9 +401,10 @@ namespace MKForum
             else
             {
                 this._Mmgr.AddModeratorsList(outModerator, currentCboard);
-                //string msg = $"已加入{outModerator}至版主。";
-                //Response.Write($"<script>alert('{msg}')</script>");
+                string msg = $"已加入{outModerator}至版主。";
+                Response.Write($"<script>alert('{msg}')</script>");
                 Response.Redirect(Request.Url.ToString());
+                return;
 
             }
         }
@@ -434,9 +438,8 @@ namespace MKForum
             else
             {
                 this._Mmgr.DeleteModeratorsList(outModerator, currentCboard);
-                //string msg = $"已從板主名單移除{outModerator}。";
-                //Response.Write($"<script>alert('{msg}')</script>");
-                Response.Redirect(Request.Url.ToString());
+                string msg = $"已從板主名單移除{outModerator}。";
+                Response.Write($"<script>alert('{msg}')</script>");
             }
 
         }
@@ -502,17 +505,16 @@ namespace MKForum
                     return;
                 }
                 //如果輸入的新類型已經存在
-                if (this._stpmgr.IncludeStp(strIinpStp, currentCboard))
+                if (this._stpmgr.IncludeStp(strIinpStp,currentCboard))
                 {
                     msg = "文章類型已經存在";
                     Response.Write($"<script>alert('{msg}')</script>");
                 }
                 else
-                {
-                    this._stpmgr.AddStmp(strIinpStp, currentCboard);
-                    //msg = "文章類型新增成功。";
-                    //Response.Write($"<script>alert('{msg}')</script>");
-                    Response.Redirect(Request.Url.ToString());
+                { 
+                this._stpmgr.AddStmp(strIinpStp,currentCboard);
+                msg = "文章類型新增成功。";
+                    Response.Write($"<script>alert('{msg}')</script>");
                 }
             }
             catch (Exception ex)
@@ -550,9 +552,8 @@ namespace MKForum
             else
             {
                 this._stpmgr.DeleteStmp(strIinpStp, currentCboard);
-                //string msg = $"已從文章類型 移除{strIinpStp}。";
-                //Response.Write($"<script>alert('{msg}')</script>");
-                Response.Redirect(Request.Url.ToString());
+                string msg = $"已從文章類型 移除{strIinpStp}。";
+                Response.Write($"<script>alert('{msg}')</script>");
 
             }
 

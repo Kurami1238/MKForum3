@@ -36,18 +36,17 @@
 
 
         /* Style for positioning toast */
-        /*.toast {
+        .toast {
             position: absolute;
             bottom: 10px;
             right: 10px;
-        }*/
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
 
 
-        <!--登入畫面-->
         <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
 
             <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
@@ -97,23 +96,20 @@
                                 <div id="PBDataList_Admin1"></div>
                             </asp:PlaceHolder>
 
-                            <%--編輯母版塊按鈕，後台人員才能看到--%>
-                            <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
-                                <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
-                            </asp:PlaceHolder>
-                            <%--結束編輯按鈕，後台人員才能看到--%>
-                            <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
-                                <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
-                            </asp:PlaceHolder>
-
-
-                        </div>
+                                <%--編輯母版塊按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
+                                    <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                                </asp:PlaceHolder>
+                                <%--結束編輯按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
+                                    <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
+                                </asp:PlaceHolder>
+                            </div>
+                        </nav>
                     </div>
                 </div>
-
-
+                <!-- 上區塊 -->
                 <div class="container-fluid bg-dark text-white">
-                    <!-- 上區塊 -->
                     <div class="row">
                         <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
@@ -139,9 +135,7 @@
                             <a href="/index.aspx" class="d-block">
                                 <img src="images/logo.gif" width="40" height="40" class="d-inline-block align-top" alt=""></a>
                             MKForun
-
                         </div>
-
                         <!-- 上區塊內的右上區塊(使用者狀態區) -->
                         <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
                         <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
@@ -162,22 +156,20 @@
                                             <button id="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
                                             <div class="Notifytext">
                                                 <h3>通知：</h3>
-                                                <asp:Repeater ID="rptMemberFollows" runat="server">
+                                                <asp:Repeater ID="rptMemberFollows" runat="server" OnItemCommand="rptMemberFollows_ItemCommand">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server"> 
-                                                        <%# !(bool)Eval("Replied")
+                                                        <asp:Label ID="Label1" runat="server">
+                                                            <%--<a href="DisplayPost.aspx?CboardID=<%#Eval("CboardID")%>&PostID=<%#Eval("PostID")%>#<%#Eval("Floor")%>">--%>
+                                                            <asp:Button ID="Button1" runat="server" CommandName='<%#Eval("PostID")%>' CommandArgument='<%#Eval("CboardID")+" "+Eval("Floor")+" "+ Eval("PostID")%>' Text='<%# !(bool)Eval("Replied")
                                                                 ? Eval("PointID") == null 
-
                                                                    ? Eval("LastEditTime") == null 
                                                                         ? string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("PostDate", "{0:yyyy/MM/dd}")) 
                                                                         : string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("LastEditTime", "{0:yyyy/MM/dd}"))
-
                                                                     : Eval("LastEditTime") == null 
                                                                         ? string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("PostDate", "{0:yyyy/MM/dd}"))
                                                                         : string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("LastEditTime", "{0:yyyy/MM/dd}")) 
-
-                                                                : ""
-                                                        %> 
+                                                                : ""%>'>
+                                                            </asp:Button>
                                                         </asp:Label>
                                                         <br />
                                                     </ItemTemplate>
@@ -212,13 +204,12 @@
                             <!-- 固定母版塊 -->
                             <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
                             <div class="d-none d-md-block col-md-2" id="PBArea">
-                                <a href="/HomePage.aspx">首頁Home </a>
+                                <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
                                 <asp:PlaceHolder ID="plhAPI2_normal" runat="server">
                                     <div id="PBDataList_normal2"></div>
                                 </asp:PlaceHolder>
-
                                 <%--使用API的母版塊，後台人員操作--%>
                                 <asp:PlaceHolder ID="plhAPI2_admin" runat="server" Visible="false">
                                     <div id="PBDataList_Admin2"></div>
@@ -250,9 +241,7 @@
                             <div class="d-none d-md-block col-md-2 ">
                                 <br />
                                 <div class="BLmember rounded border border-1 border-light overflow-auto">
-
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
-
                                         <h3>黑名單</h3>
                                         <asp:TextBox ID="txtBlkAcc" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言會員帳號)"></asp:TextBox>
                                         <asp:TextBox ID="txtBlkDate" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox>
@@ -397,6 +386,7 @@
             });
 
         }
+
         $(document).ready(function () {
             //一班會員看到的母版
             $.ajax({
