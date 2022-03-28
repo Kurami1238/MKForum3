@@ -212,7 +212,7 @@
                             <!-- 固定母版塊 -->
                             <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
                             <div class="d-none d-md-block col-md-2" id="PBArea">
-                                <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
+                                <a href="/HomePage.aspx">首頁Home </a>
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
                                 <asp:PlaceHolder ID="plhAPI2_normal" runat="server">
@@ -354,14 +354,14 @@
         }
 
         //  展開/收合按鈕
-        $(document).ready(function () {
+        //$(document).ready(function () {
 
-            $("#collapse").on("click", function () {
+        //    $("#collapse").on("click", function () {
 
-                $("#sidebar").toggleClass("active");
-                $(".fa-align-left").toggleClass("fa-chevron-circle-right");
-            })
-        });
+        //        $("#sidebar").toggleClass("active");
+        //        $(".fa-align-left").toggleClass("fa-chevron-circle-right");
+        //    })
+        //});
 
     </script>
 

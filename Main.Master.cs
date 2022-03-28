@@ -398,10 +398,9 @@ namespace MKForum
             else
             {
                 this._Mmgr.AddModeratorsList(outModerator, currentCboard);
-                string msg = $"已加入{outModerator}至版主。";
-                Response.Write($"<script>alert('{msg}')</script>");
+                //string msg = $"已加入{outModerator}至版主。";
+                //Response.Write($"<script>alert('{msg}')</script>");
                 Response.Redirect(Request.Url.ToString());
-                return;
 
             }
         }
@@ -435,8 +434,9 @@ namespace MKForum
             else
             {
                 this._Mmgr.DeleteModeratorsList(outModerator, currentCboard);
-                string msg = $"已從板主名單移除{outModerator}。";
-                Response.Write($"<script>alert('{msg}')</script>");
+                //string msg = $"已從板主名單移除{outModerator}。";
+                //Response.Write($"<script>alert('{msg}')</script>");
+                Response.Redirect(Request.Url.ToString());
             }
 
         }
@@ -510,8 +510,9 @@ namespace MKForum
                 else
                 {
                     this._stpmgr.AddStmp(strIinpStp, currentCboard);
-                    msg = "文章類型新增成功。";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    //msg = "文章類型新增成功。";
+                    //Response.Write($"<script>alert('{msg}')</script>");
+                    Response.Redirect(Request.Url.ToString());
                 }
             }
             catch (Exception ex)
@@ -549,8 +550,9 @@ namespace MKForum
             else
             {
                 this._stpmgr.DeleteStmp(strIinpStp, currentCboard);
-                string msg = $"已從文章類型 移除{strIinpStp}。";
-                Response.Write($"<script>alert('{msg}')</script>");
+                //string msg = $"已從文章類型 移除{strIinpStp}。";
+                //Response.Write($"<script>alert('{msg}')</script>");
+                Response.Redirect(Request.Url.ToString());
 
             }
 

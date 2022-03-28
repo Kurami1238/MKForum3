@@ -1,34 +1,34 @@
-* {
-    background-color: #181717;
+/** {
+    background-color: #181717;*/
     /* background-color: blue; */
-}
+/*}*/
 
-.container-all {
-/*    display: flex;
-    align-items: stretch;*/
-}
+/*.container-all {
+    display: flex;
+    align-items: stretch;
+}*/
 
-#sidebar {
+/*#sidebar {
     width: 250px;
     height: 100%;
     background-color: #ff6a00;
     color: white;
     transition: 1s;
-}
+}*/
 
-    #sidebar.active {
+/*    #sidebar.active {
         margin-left: -250px;
     }
-
-.container-right {
+*/
+/*.container-right {
     background-color: lavender;
     width: 100%;
     height: 100vh;
     text-align: center;
     padding: 30px;
-}
+}*/
 
-.collapse-btn {
+/*.collapse-btn {
     position: relative;
     top: 1%;
     left: 260px;
@@ -37,14 +37,14 @@
     border: none;
     font-size: 30px;
     padding: 5px;
-}
+}*/
 
-    .collapse-btn:hover {
+/*    .collapse-btn:hover {
         background-color: rgb(105, 105, 105);
         transition: 0.4s;
-    }
+    }*/
 
-#sidebar p {
+/*#sidebar p {
     text-align: center;
     font-size: 30px;
     font-style: italic;
@@ -68,9 +68,9 @@
 .far,
 .fab {
     float: right;
-}
+}*/
 
-ul ul li a {
+/*ul ul li a {
     background-color: rgb(203, 142, 247);
     font-size: 20px;
     font-style: italic;
@@ -98,43 +98,43 @@ ul ul li a {
         text-align: left;
     }
 }
-
+*/
 
 /*=====================�¦W��====================*/
-.blacklist {
+/*.blacklist {*/
     /*border: none;*/
-}
+/*}
 
     .blacklist .BLsearch {
         margin: 60px 30px;
         border: none;
-    }
+    }*/
 
 
-        .blacklist .BLsearch #txtBLsearch {
+/*        .blacklist .BLsearch #txtBLsearch {
             width: 100%;
             height: 60px;
             margin: 20px auto;
             background-color: white;
             font-size: 28px;
-        }
+        }*/
 
-::placeholder {
+/*::placeholder {
     text-align: center;
     font-size: 28px;
-}
+}*/
 
 
-.blacklist .BLsearch #btnBLsearch {
+/*.blacklist .BLsearch #btnBLsearch {
     float: right;
     height:40px;
     width:100px;
     background-color:gainsboro;
     font-size:24px;
-}
+}*/
 
 /*--------------------------------*/
-
+/*
 .blacklist .BLmember {
     border: none;
     margin-top: 100px;
@@ -162,7 +162,7 @@ ul ul li a {
         margin-bottom: 30px;
         font-size: 20px;
     }
-
+*/
 /*--------------------------------*/
 #btnRegister {
     background-color: white;
