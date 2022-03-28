@@ -159,9 +159,12 @@ namespace MKForum
                 Response.Redirect("CreatePost.aspx", true);
             }
             else
-                // 改為引導登陸 放張圖 讓他visible
-                //Main.plhLogined.Visible = true;
-                Response.Redirect("Index.aspx", true);
+            {
+                HttpContext.Current.Session["CboardID"] = _cboardid;
+                HttpContext.Current.Session["NeedTouroku"] = 1;
+                HttpContext.Current.Session["JumpPage"] = null;
+                Response.Redirect(Request.RawUrl, true);
+            }
         }
 
         protected void rptcBtoP_ItemCommand(object source, RepeaterCommandEventArgs e)

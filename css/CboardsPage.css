@@ -9,7 +9,7 @@ img{
 }
 .btncreatep{
     position: fixed;
-    top:460px;
+    top:480px;
     right: 65px;
     background:#e76c25;
     border-radius: 50%;
@@ -20,43 +20,43 @@ img{
 }
 @media screen and (min-width:576px){
     .btncreatep{
-        top:460px;
+        top:480px;
         right: 100px;
     }
 }
 @media screen and (min-width:630px){
     .btncreatep{
-        top:460px;
+        top:480px;
         right: 150px;
     }
 }
 @media screen and (min-width:768px){
     .btncreatep{
-        top:460px;
+        top:480px;
         right: 210px;
     }
 }
 @media screen and (min-width:850px){
     .btncreatep{
-        top:460px;
+        top:480px;
         right: 260px;
     }
 }
 @media screen and (min-width:992px){
     .btncreatep{
-        top:460px;
+        top:480px;
         right: 300px;
     }
 }
 @media screen and (min-width:1200px){
     .btncreatep{
-        top:460px;
+        top:480px;
         right: 380px;
     }
 }
 @media screen and (min-width:1400px){
     .btncreatep{
-        top:460px;
+        top:480px;
         right: 450px;
     }
 }
@@ -75,7 +75,6 @@ a:link{
     }
 a:visited {
     color:#ffffff;
-    background-color:red;
     }
 
 .PostA:hover{
