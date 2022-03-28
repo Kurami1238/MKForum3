@@ -34,6 +34,14 @@ namespace MKForum
             this.CheckDare();
             // 檢查追蹤與否
             this.MemberFollowFirst(postid);
+            // 顯示Htag
+            List<PostHashtag> phtl = this._pmgr.GetPostHashtagList(postid);
+            if (phtl.Count > 0)
+            {
+                this.rptpht.DataSource = phtl;
+                this.rptpht.DataBind();
+            }
+           
         }
 
         //private void Check()
