@@ -219,7 +219,7 @@ namespace MKForum
                 HttpContext.Current.Session["PostID"] = this.Request.QueryString["PostID"];
                 HttpContext.Current.Session["CboardID"] = this.Request.QueryString["CboardID"];
                 HttpContext.Current.Session["NeedTouroku"] = 2;
-                Response.Redirect("Index.aspx", true);
+                Response.Redirect(Request.RawUrl, true);
             }
         }
         protected void rptNmP_ItemCommand(object source, RepeaterCommandEventArgs e)

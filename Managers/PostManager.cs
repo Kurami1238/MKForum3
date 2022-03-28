@@ -610,7 +610,7 @@ namespace MKForum.Managers
                         {
                             Post post = this.BuildPostContent(reader);
                             this.UpdatePostView(post.PostID, post.PostView + 1);
-                            MemberScan ms = this.GetMemberScan(postid, memberid);
+                            MemberScan ms = this.GetMemberScanwithAdd1day(postid, memberid);
                             if (ms == null)
                                 this.CreateMemberScan(postid, memberid);
                             else
@@ -744,8 +744,90 @@ namespace MKForum.Managers
                 throw;
             }
         }
+        public void DeleteMemberScan(List<MemberFollow> followlist, Guid postid)
+        {
+            string Zyouken = " WHERE  ";
+            for (int i = 0; i < followlist.Count; i++)
+            {
+                //  @{i}是因為 Guid一堆毛
+                if (i != followlist.Count - 1)
+                    Zyouken += $" (MemberID = @{i} AND PostID = @postid) OR ";
+                else
+                    Zyouken += $" (MemberID = @{i} AND PostID = @postid) ";
+            }
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@" DELETE FROM MemberScans
+                    {Zyouken} ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        for (int i = 0; i < followlist.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{i}", followlist[i].MemberID);
+                        }
+                        command.Parameters.AddWithValue(@"postid", postid);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.DeleteMemberFollows", ex);
+                throw;
+            }
+        }
+        public void DeleteMemberFollows(List<MemberFollow> followlist, Guid postid)
+        {
+            string Zyouken = " WHERE  ";
+            for (int i = 0; i < followlist.Count; i++)
+            {
+                //  @{i}是因為 Guid一堆毛
+                if (i != followlist.Count - 1)
+                    Zyouken += $" (MemberID = @{i} AND PostID = @postid) OR ";
+                else
+                    Zyouken += $" (MemberID = @{i} AND PostID = @postid) ";
+            }
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                $@" DELETE FROM MemberFollows
+                    {Zyouken} ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        for (int i = 0; i < followlist.Count; i++)
+                        {
+                            command.Parameters.AddWithValue($"@{i}", followlist[i].MemberID);
+                        }
+                        command.Parameters.AddWithValue(@"postid", postid);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.DeleteMemberFollows", ex);
+                throw;
+            }
+        }
         public void DeletePost(Guid postid)
         {
+            // 透過postid找 有追蹤的memberid 
+            List<MemberFollow> followlist = this.GetMemberFollowsMemberID(postid);
+            // 比對postid與memberid 兩者皆符合者 刪除追蹤狀態
+            if (followlist.Count > 0)
+                this.DeleteMemberFollows(followlist, postid);
+            // 比對postid與memberid 兩者皆符合者 刪除瀏覽紀錄
+                this.DeleteMemberScan(followlist, postid);
+            // 刪有關連性資料後才刪除文章本體
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
                 @"  DELETE FROM Posts
@@ -758,8 +840,9 @@ namespace MKForum.Managers
                     {
                         connection.Open();
 
-                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.Parameters.AddWithValue(@"postid", postid);
                         command.ExecuteNonQuery();
+                        // 之後刪除下面的回文
                         this.DeletePoint(postid);
                     }
                 }
@@ -784,7 +867,7 @@ namespace MKForum.Managers
                     {
                         connection.Open();
 
-                        command.Parameters.AddWithValue(@"postID", postid);
+                        command.Parameters.AddWithValue(@"postid", postid);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -1049,7 +1132,7 @@ namespace MKForum.Managers
                 throw;
             }
         }
-        public MemberScan GetMemberScan(Guid postid, Guid memberid)
+        public MemberScan GetMemberScanwithAdd1day(Guid postid, Guid memberid)
         {
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
@@ -1058,6 +1141,44 @@ namespace MKForum.Managers
                     FROM MemberScans
                     WHERE PostID = @postID AND MemberID = @memberid 
                             AND DATEADD(day,1,ScanDate) > GETDATE()
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue(@"memberID", memberid);
+                        command.Parameters.AddWithValue(@"postID", postid);
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            MemberScan ms = new MemberScan()
+                            {
+                                ScanID = (int)reader["ScanID"],
+
+                            };
+                            return ms;
+                        }
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("PostManager.GetMemberScan", ex);
+                throw;
+            }
+        }
+        public MemberScan GetMemberScan(Guid postid, Guid memberid)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT *
+                    FROM MemberScans
+                    WHERE PostID = @postID AND MemberID = @memberid 
                 ";
             try
             {
