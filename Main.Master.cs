@@ -61,6 +61,7 @@ namespace MKForum
                 {
                     this.rptMemberFollows.DataSource = MemberFollows;
                     this.rptMemberFollows.DataBind();
+
                 }
 
                 this.btnwebLogin.Visible = false;
@@ -80,6 +81,7 @@ namespace MKForum
                     this.lblMember_MemberStatus.Text = "版主";
                 else if (memberInfo.MemberStatus == 3)
                     this.lblMember_MemberStatus.Text = "管理員";
+
             }
 
 
@@ -275,13 +277,9 @@ namespace MKForum
         //儲存母版塊按鈕
         protected void btnPBSave_Click(object sender, EventArgs e)
         {
-            this.plhPBDsplMode1.Visible = false;    //隱藏儲存按鈕
             this.plhPBDsplMode2.Visible = false;    //隱藏儲存按鈕
-            this.plhAPI1_admin.Visible = false;    //關閉有按鈕的ajax
             this.plhAPI2_admin.Visible = false;    //關閉有按鈕的ajax
-            this.plhAPI1_normal.Visible = true;    //換成顯示模式的ajax
             this.plhAPI2_normal.Visible = true;    //換成顯示模式的ajax
-            this.plhPBEdit1.Visible = true;    //顯示編輯按鈕
             this.plhPBEdit2.Visible = true;    //顯示編輯按鈕
         }
 
