@@ -25,7 +25,6 @@ namespace MKForum
         private ModeratorManager _Mmgr = new ModeratorManager();
         private MemberFollowManager _mfmgr = new MemberFollowManager();
         private StampManager _stpmgr = new StampManager();               //文章類型
-        
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -42,8 +41,9 @@ namespace MKForum
             this.ckbskip.Visible = true;
 #endif
 
-            if (Session["NeedTouroku"] as int? == 1 || Session["NeedTouroku"] as int? == 2)
+            if ((Session["NeedTouroku"] as int? == 1 || Session["NeedTouroku"] as int? == 2) && Session["JumpPage"] as int? != 1)
             {
+                HttpContext.Current.Session["JumpPage"] = 1;
                 this.plhLogin.Visible = true;
                 this.plhLogined.Visible = false;
             }
@@ -61,6 +61,7 @@ namespace MKForum
                 {
                     this.rptMemberFollows.DataSource = MemberFollows;
                     this.rptMemberFollows.DataBind();
+
                 }
 
                 this.btnwebLogin.Visible = false;
@@ -159,6 +160,24 @@ namespace MKForum
 
         }
 
+        protected void rptMemberFollows_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            List<MemberFollow> allMemberFollow = _mfmgr.GetALLMemberFollow();
+            foreach (MemberFollow MFPostID in allMemberFollow)
+            {
+                if (e.CommandName == MFPostID.PostID.ToString())
+                {
+                    string MemberID = HttpContext.Current.Session["MemberID"].ToString();
+                    string postID = e.CommandArgument.ToString();
+                    string[] postIDs = postID.Split(' ');
+                    this._mfmgr.UpdateReplied(MemberID, postIDs[2], 1);
+                    string url = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}#{2}", postIDs[0], postIDs[2], postIDs[1]);
+                    Response.Redirect(url);
+                }
+            }
+            
+        }
+
 
         protected void btnwebLogin_Click(object sender, EventArgs e)
         {
@@ -174,40 +193,14 @@ namespace MKForum
             {
                 if (this._amgr.TryLogin("Text05", "12345678"))
                 {
-                    if (Session["NeedTouroku"] as int? == 1)
-                    {
-                        Session["NeedTouroku"] = null;
-                        Response.Redirect("/CreatePost.aspx");
-                    }
-                    else if (Session["NeedTouroku"] as int? == 2)
-                    {
-                        Session["NeedTouroku"] = null;
-                        string QSPostID = HttpContext.Current.Session["PostID"].ToString();
-                        string QSCboardID = HttpContext.Current.Session["CboardID"].ToString();
-                        string displayurl = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}",QSCboardID, QSPostID);
-                        Response.Redirect(displayurl);
-                    }
-                    else
-                        Response.Redirect(Request.RawUrl);
+                    Session["NeedTouroku"] = null;
+                    Response.Redirect(Request.RawUrl);
                 }
             }
             else if (this._amgr.TryLogin(account, pwd))
             {
-                if (Session["NeedTouroku"] as int? == 1)
-                {
-                    Session["NeedTouroku"] = null;
-                    Response.Redirect("/CreatePost.aspx");
-                }
-                else if (Session["NeedTouroku"] as int? == 2)
-                {
-                    Session["NeedTouroku"] = null;
-                    string QSPostID = HttpContext.Current.Session["PostID"].ToString();
-                    string QSCboardID = HttpContext.Current.Session["CboardID"].ToString();
-                    string displayurl = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}", QSCboardID, QSPostID);
-                    Response.Redirect(displayurl);
-                }
-                else
-                    Response.Redirect(Request.RawUrl);
+                Session["NeedTouroku"] = null;
+                Response.Redirect(Request.RawUrl);
             }
             else
             {

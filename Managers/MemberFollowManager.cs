@@ -117,6 +117,49 @@ namespace MKForum.Managers
             }
         }
 
+        public List<MemberFollow> GetALLMemberFollow()
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT * FROM MemberFollows
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        List<MemberFollow> allmemberfollow = new List<MemberFollow>();
+                        while (reader.Read())
+                        {
+                            MemberFollow Follow = new MemberFollow()
+                            {
+                                MemberID = (Guid)reader["MemberID"],
+                                PostID = (Guid)reader["PostID"],
+                                FollowStatus = (bool)reader["FollowStatus"],
+                                ReadedDate = (DateTime)reader["ReadedDate"],
+                                Replied = (bool)reader["Replied"],
+                            };
+                            allmemberfollow.Add(Follow);
+                        }
+
+                        
+                        return allmemberfollow;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("MemberFollowManager.GetMemberFollows", ex);
+                throw;
+            }
+        }
+
+
         public void Updatetrack(Guid MemberID, Guid PostID, int FollowStatus)
         {
             string connStr = ConfigHelper.GetConnectionString();
@@ -169,6 +212,36 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue("@MemberID", MemberID);
                         command.Parameters.AddWithValue("@PostID", PostID);
                         command.Parameters.AddWithValue("@FollowStatus", FollowStatus);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("Updatetrack", ex);
+                throw;
+            }
+        }
+
+        public void UpdateReplied(string MemberID, string PostID, int Replied)
+        {
+            string connStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    UPDATE MemberFollows
+                    SET Replied = @Replied
+                    WHERE MemberID = @MemberID AND PostID = @PostID;
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Replied", Replied);
+                        command.Parameters.AddWithValue("@MemberID", MemberID);
+                        command.Parameters.AddWithValue("@PostID", PostID);
                         command.ExecuteNonQuery();
                     }
                 }

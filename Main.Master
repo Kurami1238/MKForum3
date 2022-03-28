@@ -148,25 +148,23 @@
                                         <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
                                         &nbsp&nbsp
                                         <div class="Notify">
-                                            <button ID="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
+                                            <button id="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
                                             <div class="Notifytext">
-                                            <h3>通知：</h3>
-                                                <asp:Repeater ID="rptMemberFollows" runat="server">
+                                                <h3>通知：</h3>
+                                                <asp:Repeater ID="rptMemberFollows" runat="server" OnItemCommand="rptMemberFollows_ItemCommand">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server"> 
-                                                        <%# !(bool)Eval("Replied")
+                                                        <asp:Label ID="Label1" runat="server">
+                                                            <%--<a href="DisplayPost.aspx?CboardID=<%#Eval("CboardID")%>&PostID=<%#Eval("PostID")%>#<%#Eval("Floor")%>">--%>
+                                                            <asp:Button ID="Button1" runat="server" CommandName='<%#Eval("PostID")%>' CommandArgument='<%#Eval("CboardID")+" "+Eval("Floor")+" "+ Eval("PostID")%>' Text='<%# !(bool)Eval("Replied")
                                                                 ? Eval("PointID") == null 
-
                                                                    ? Eval("LastEditTime") == null 
                                                                         ? string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("PostDate", "{0:yyyy/MM/dd}")) 
                                                                         : string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("LastEditTime", "{0:yyyy/MM/dd}"))
-
                                                                     : Eval("LastEditTime") == null 
                                                                         ? string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("PostDate", "{0:yyyy/MM/dd}"))
                                                                         : string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("LastEditTime", "{0:yyyy/MM/dd}")) 
-
-                                                                : ""
-                                                        %> 
+                                                                : ""%>'>
+                                                            </asp:Button>
                                                         </asp:Label>
                                                         <br />
                                                     </ItemTemplate>

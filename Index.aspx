@@ -16,7 +16,9 @@
         <div class="content">
             <asp:Repeater ID="rptHotTags" runat="server">
                 <ItemTemplate>
-                    <h1><%# Eval("Naiyo") %></h1>
+                    <a href="/SearchKekka.aspx?keyword=<%# Eval("Naiyo") %> &searcharea=srchTag">
+                        <h1><%# Eval("Naiyo") %></h1>
+                    </a>
                 </ItemTemplate>
             </asp:Repeater>
         </div>
