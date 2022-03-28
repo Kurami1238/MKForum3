@@ -68,17 +68,17 @@
 
         <!--主板畫面-->
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
-
+                            <div class="d-xs-block d-md-none">
+                    <!--懸浮按鈕-->
+                    <div id="hamburgerMenu" class="container ">
+                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
+                            </a>
+                    </div>
+                    </div>
             <div class="container-all">
                 <!--xs以下顯示，md以上不顯示 -->
                 <div class="d-xs-block d-md-none">
-                    <!--懸浮按鈕-->
-                    <div id="hamburgerMenu" class="container">
-                        <div class="float-left">
-                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
-                            </a>
-                        </div>
-                    </div>
+
                     <!--左邊收合母版-->
                     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                         <div class="offcanvas-header">
@@ -118,10 +118,9 @@
                         <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
                         <div class="col-sm-4 col-md-4 col-lg-3">
-                            <a href="HomePage.aspx" class="d-none d-sm-block">
-                                <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                            <div class="d-flex d-none d-sm-block">
+                            <div class="d-flex d-none d-sm-block searchArea float col-6">
                                 <asp:TextBox runat="server" ID="txtSearch" class="form-control" placeholder="搜尋"></asp:TextBox>
+                            <div class="float-left col-6">
                                 <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
                                     <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
@@ -130,14 +129,15 @@
                                 </asp:DropDownList>
                                 <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
                             </div>
+                            </div>
                         </div>
 
                         <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
                         <div class="col-sm-4 col-md-4 col-lg-5 h3 text-center">
 
-                            <a href="/index.aspx" class="d-block d-sm-none">
-                                <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                            <a href="/index.aspx" class="d-block">
+                                <img src="images/logo.gif" width="40" height="40" class="d-inline-block align-top" alt=""></a>
                             MKForun
 
                         </div>
@@ -329,13 +329,6 @@
             return new bootstrap.Toast(toastEl, option)
         })
 
-        function see() {
-            for (var i = 0; i < toastList.length; i++) {
-                toastList[i].show();
-            }
-        }
-
-
 
     </script>
 
@@ -353,16 +346,18 @@
             }
         }
 
-        //  展開/收合按鈕
-        //$(document).ready(function () {
-
-        //    $("#collapse").on("click", function () {
-
-        //        $("#sidebar").toggleClass("active");
-        //        $(".fa-align-left").toggleClass("fa-chevron-circle-right");
-        //    })
+/*搜尋區*/
+.txtSearch {
+            width: 25 px;
+        }
+        $('txtSearch').css({
+            color: 'red',
+            'background-color': 'blue'
+        });
+        //$("#searchArea").attr({
+        //    alt: "Beijing Brush Seller",
+        //    title: "photo by Kelly Clark"
         //});
-
     </script>
 
     <script>
