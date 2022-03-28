@@ -173,7 +173,7 @@ namespace MKForum
                     Response.Redirect(url);
                 }
             }
-            
+
         }
 
 
@@ -459,7 +459,6 @@ namespace MKForum
                 //Response.Write($"<script>alert('{msg}')</script>");
                 Response.Redirect(Request.Url.ToString());
             }
-
         }
 
         //新增母板
@@ -576,8 +575,7 @@ namespace MKForum
                 Response.Redirect(Request.Url.ToString());
 
             }
-
-
         }
+
     }
 }

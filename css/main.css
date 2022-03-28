@@ -1,6 +1,6 @@
 * {
     background-color: #181717;
-/*     background-color: blue; */
+    /*     background-color: blue; */
 }
 
 /*.container-all {
@@ -102,7 +102,7 @@
 
 /*=====================�¦W��====================*/
 /*.blacklist {*/
-    /*border: none;*/
+/*border: none;*/
 /*}
 
     .blacklist .BLsearch {
@@ -166,9 +166,9 @@
 /*--------------------------------*/
 #btnRegister {
     background-color: white;
-    font-size:22px;
-    width:75px;
-    height:50px;
+    font-size: 22px;
+    width: 75px;
+    height: 50px;
 }
 
 
@@ -190,20 +190,24 @@
     width: auto;
     height: 100%
 }
+
 .memberstatusleft {
     float: left;
     width: 60%;
     height: 100%;
 }
+
     .memberstatusleft span {
         float: right;
     }
+
 .memberstatusright {
-    padding-top:10px;
+    padding-top: 10px;
     float: left;
     width: 40%;
     height: 100%;
 }
+
 .MemberStatus input {
     background-color: white;
 }
@@ -222,19 +226,19 @@
     background-color: white;
     text-align: left;
     bottom: 30px;
-    right:50px;
+    right: 50px;
 }
 
     .Notifytext h3 {
         background-color: white;
         color: red;
-        font-size:26px;
+        font-size: 26px;
     }
 
-.Notifytext span {
-    background-color: white;
-    color: black;
-}
+    .Notifytext span {
+        background-color: white;
+        color: black;
+    }
 
 #btnNotify {
     background-color: white;

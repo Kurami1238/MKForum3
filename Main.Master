@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>MK Forun</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link rel="stylesheet" href="css/bootstrap.css" />
@@ -65,32 +65,36 @@
             <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
         </asp:PlaceHolder>
 
-
+        <!--主板畫面-->
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
+                            <div class="d-xs-block d-md-none">
+                    <!--懸浮按鈕-->
+                    <div id="hamburgerMenu" class="container ">
+                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
+                            </a>
+                    </div>
+                    </div>
             <div class="container-all">
                 <!--xs以下顯示，md以上不顯示 -->
                 <div class="d-xs-block d-md-none">
-                    <!--左拉式選單-->
-                    <div class="container-left">
-                        <!-- 導覽列 -->
-                        <nav id="sidebar">
-                            <!-- 展往/縮起來 按鈕 -->
-                            <button type="button" id="collapse" class="collapse-btn">
-                                <i class="fas fa-align-left"></i>
-                            </button>
-                            <div>
-                                <!-- List 列表 -->
-                                <p>母版塊列表 </p>
-                                <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
-                                <br>
-                                <%--使用API的母版塊，前台觀看--%>
-                                <asp:PlaceHolder ID="plhAPI1_normal" runat="server">
-                                    <div id="PBDataList_normal1"></div>
-                                </asp:PlaceHolder>
-                                <%--使用API的母版塊，後台人員操作--%>
-                                <asp:PlaceHolder ID="plhAPI1_admin" runat="server" Visible="false">
-                                    <div id="PBDataList_Admin1"></div>
-                                </asp:PlaceHolder>
+
+                    <!--左邊收合母版-->
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasExampleLabel">母版塊列表</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <a href="/HomePage.aspx">首頁Home </a>
+                            <br>
+                            <%--使用API的母版塊，前台觀看--%>
+                            <asp:PlaceHolder ID="plhAPI1_normal" runat="server">
+                                <div id="PBDataList_normal1"></div>
+                            </asp:PlaceHolder>
+                            <%--使用API的母版塊，後台人員操作--%>
+                            <asp:PlaceHolder ID="plhAPI1_admin" runat="server" Visible="false">
+                                <div id="PBDataList_Admin1"></div>
+                            </asp:PlaceHolder>
 
                                 <%--編輯母版塊按鈕，後台人員才能看到--%>
                                 <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
@@ -110,9 +114,10 @@
                         <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
                         <div class="col-sm-4 col-md-4 col-lg-3">
-                            <div class="d-flex d-none d-sm-block searchArea float col-6">
+                            <a href="HomePage.aspx" class="d-none d-sm-block">
+                                <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                            <div class="d-flex d-none d-sm-block">
                                 <asp:TextBox runat="server" ID="txtSearch" class="form-control" placeholder="搜尋"></asp:TextBox>
-                            <div class="float-left col-6">
                                 <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
                                     <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
@@ -195,7 +200,7 @@
 
                             </div>
                         </div>
-                    </div>
+                        </div>
                     <!-- 下方 -->
                     <div class="container-fluid">
                         <div class="row">
@@ -320,13 +325,6 @@
             return new bootstrap.Toast(toastEl, option)
         })
 
-        function see() {
-            for (var i = 0; i < toastList.length; i++) {
-                toastList[i].show();
-            }
-        }
-
-
 
     </script>
 
@@ -335,25 +333,27 @@
         //通知
         function Notifytoggle() {
             var zindex = $('.Notifytext').css("z-index")
-            //alert(zindex);
+            alert(zindex);
             if (zindex < 0) {
-                $('.Notifytext').css("z-index", "999")
+                $('.Notifytext').css("z-index", "999");
             }
             else {
-                $('.Notifytext').css("z-index", "-999")
+                $('.Notifytext').css("z-index", "-999");
             }
         }
 
-        //  展開/收合按鈕
-        $(document).ready(function () {
-
-            $("#collapse").on("click", function () {
-
-                $("#sidebar").toggleClass("active");
-                $(".fa-align-left").toggleClass("fa-chevron-circle-right");
-            })
+/*搜尋區*/
+.txtSearch {
+            width: 25 px;
+        }
+        $('txtSearch').css({
+            color: 'red',
+            'background-color': 'blue'
         });
-
+        //$("#searchArea").attr({
+        //    alt: "Beijing Brush Seller",
+        //    title: "photo by Kelly Clark"
+        //});
     </script>
 
     <script>
