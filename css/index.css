@@ -95,6 +95,7 @@
 
         .hot-posts .content .article {
             background: url(https://acegif.com/wp-content/gifs/fire-15.gif) no-repeat;
+            background-size:100%;
             padding: 10px;
             margin: 0px 0px 20px auto;
             border: 1px double #e76c25;
