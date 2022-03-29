@@ -67,9 +67,8 @@
             <div class="nomainPost col-sm-11 col-md-11 col-lg-11">
                 <div class="nmpostall">
                     <div class="nmF">
-                        <a name='<%# Eval("Floor") %>'>
+                        
                             <asp:Label ID="lblNmFloor" runat="server" Text='<%# Eval("Floor")+"F" %>'></asp:Label>
-                        </a>
                     </div>
                     <asp:PlaceHolder ID="Nmphl" runat="server" Visible='<%# (HttpContext.Current.Session["MemberID"] != null) ? (string.Compare(Eval("MemberID").ToString(), HttpContext.Current.Session["MemberID"].ToString()) == 0) : false%>'>
                         <div class="nmbtn">
@@ -89,8 +88,10 @@
                     </a>
 
                     <div class="nmC">
+                        <a name='<%# Eval("Floor") %>'>
                         <asp:Label ID="lblNmPostcotent" runat="server" Text='<%# Eval("PostCotent") %>'></asp:Label>
                         <hr />
+                            </a>
                     </div>
                 </div>
             </div>

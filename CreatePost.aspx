@@ -93,20 +93,25 @@
             $('.result').html(html);
         });
         function big() {
+            text = $(".content").val();
             text += "#";
-            $(".zenbu .C .content").html(text);
+            $(".zenbu .C .content").val(text);
         }
         function mid() {
+            text = $(".content").val();
             text += "###";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function sml() {
+            text = $(".content").val();
             text += "#####";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function narabi() {
+            text = $(".content").val();
             text += "+ a\n+ a\n+ a";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
+
             //var postData = $(".content").val();
 
             //$.ajax({
@@ -128,6 +133,7 @@
             //    }
             //});
         }
+        
         function Getlink() {
             var upup = $(".upup").val();
             var mid = $(".memberid").val();
