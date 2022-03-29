@@ -92,13 +92,6 @@
             var html = converter.makeHtml(text);
             $('.result').html(html);
         });
-        //var text;
-        //$('.content').on('keyup', function () {
-        //    text = $(".content").val();
-        //    var converter = new showdown.Converter();
-        //    var html = converter.makeHtml(text);
-        //    $('.result').html(html);
-        //});
         function big() {
             text += "#";
             $(".zenbu .C .content").html(text);

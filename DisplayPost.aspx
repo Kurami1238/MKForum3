@@ -36,7 +36,10 @@
                 </asp:PlaceHolder>
             </div>
             <div class="PostM">
-                <asp:Label ID="lblMember" runat="server" Text="作者"></asp:Label>
+            <input type="hidden" id="sakusyaacc" class="sortid" runat="server"/>
+                <a href='<%= "SearchKekka.aspx?keyword=" + this.sakusyaacc.Value + "&searcharea=srchWriter" %>' title="搜尋此：<%= this.sakusyaacc.Value%> 作者">
+                <asp:Label ID="lblMember" runat="server" Text=""></asp:Label>
+                    </a>
             </div>
             <div class="PostC">
                 <div class="result" id="result">
@@ -79,7 +82,7 @@
                         </div>
                     </asp:PlaceHolder>
                     <asp:HiddenField runat="server" ID="hfNmPID" Value='<%# Eval("PostID")%>' />
-                    <a href="MemberStastus.aspx?MemberID=<%# Eval("MemberID")%>" title="前往：<%# Eval("MemberID")%>會員頁">
+                    <a href='<%# "SearchKekka.aspx?keyword=" + Eval("MemberAccount") + "&searcharea=srchWriter" %>' title="搜尋此：<%# Eval("MemberID")%> 作者">
                         <div class="nmM">
                             <asp:Label ID="lblNmMember" runat="server" Text='<%# "作者：" +Eval("MemberAccount")%>'></asp:Label>
                         </div>
