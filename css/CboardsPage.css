@@ -9,7 +9,7 @@ img{
 }
 .btncreatep{
     position: fixed;
-    top:480px;
+    top:490px;
     right: 65px;
     background:#e76c25;
     border-radius: 50%;
@@ -20,43 +20,43 @@ img{
 }
 @media screen and (min-width:576px){
     .btncreatep{
-        top:480px;
+        top:490px;
         right: 100px;
     }
 }
 @media screen and (min-width:630px){
     .btncreatep{
-        top:480px;
+        top:490px;
         right: 150px;
     }
 }
 @media screen and (min-width:768px){
     .btncreatep{
-        top:480px;
+        top:490px;
         right: 210px;
     }
 }
 @media screen and (min-width:850px){
     .btncreatep{
-        top:480px;
+        top:490px;
         right: 260px;
     }
 }
 @media screen and (min-width:992px){
     .btncreatep{
-        top:480px;
+        top:490px;
         right: 300px;
     }
 }
 @media screen and (min-width:1200px){
     .btncreatep{
-        top:480px;
+        top:490px;
         right: 380px;
     }
 }
 @media screen and (min-width:1400px){
     .btncreatep{
-        top:480px;
+        top:490px;
         right: 450px;
     }
 }
@@ -84,7 +84,6 @@ a:visited {
 }
 .PostA:hover img{
     transform:  scale(1.03);
-
     -webkit-filter: brightness(105%); /* Safari */
     filter: brightness(105%);
 }

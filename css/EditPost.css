@@ -10,20 +10,18 @@ hr{
     background-image: linear-gradient(to right, #333, #ccc, #333);
 }
 a{
+    color:#fafafa;
     text-decoration:none;
 }
 a:link{
-    background-color:#ffffff;
+    color:#fafafa;
     text-decoration:none;
-
     }
 a:visited {
     color:#ffffff;
-    background-color:red;
     }
 a:active {
     text-decoration:none;
-    background-color:gray;
     color:#fafafa;
     }
 .zenbu{

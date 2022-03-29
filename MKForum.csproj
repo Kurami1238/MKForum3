@@ -97,7 +97,6 @@
     <Content Include="bin\roslyn\vbc.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="BlackMember.aspx" />
-    <Content Include="CboardsPage.aspx" />
     <Content Include="CbtoPost.aspx" />
     <Content Include="CreatePost.aspx" />
     <Content Include="css\bootstrap.css" />
@@ -168,13 +167,6 @@
     </Compile>
     <Compile Include="BackAdmin\tryencryption.aspx.designer.cs">
       <DependentUpon>tryencryption.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CboardsPage.aspx.cs">
-      <DependentUpon>CboardsPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CboardsPage.aspx.designer.cs">
-      <DependentUpon>CboardsPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="CbtoPost.aspx.cs">
       <DependentUpon>CbtoPost.aspx</DependentUpon>

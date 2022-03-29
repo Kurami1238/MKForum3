@@ -293,6 +293,11 @@ namespace MKForum
 
         }
 
+        protected void modalback_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Request.RawUrl);
+        }
+
         //protected void rptNmP_ItemCommand(object source, RepeaterCommandEventArgs e)
         //{
 

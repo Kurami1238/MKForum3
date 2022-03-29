@@ -62,7 +62,7 @@
        
     </div>
     <div>
-        <table class="kobi col-sm-8 col-md-11 col-lg-11">
+        <table class="kobi col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>預覽 </th>
                 <td>
@@ -85,12 +85,20 @@
         </div>
     <script>
         var text;
+        text = $(".content").val();
         $('.content').on('keyup', function () {
             text = $(".content").val();
             var converter = new showdown.Converter();
             var html = converter.makeHtml(text);
             $('.result').html(html);
         });
+        //var text;
+        //$('.content').on('keyup', function () {
+        //    text = $(".content").val();
+        //    var converter = new showdown.Converter();
+        //    var html = converter.makeHtml(text);
+        //    $('.result').html(html);
+        //});
         function big() {
             text += "#";
             $(".zenbu .C .content").html(text);
@@ -106,6 +114,26 @@
         function narabi() {
             text += "+ a\n+ a\n+ a";
             $(".zenbu .C .content").text(text);
+            //var postData = $(".content").val();
+
+            //$.ajax({
+            //    url: "/API/GetLinkHandler.ashx?Action=Link",
+            //    method: "POST",
+            //    data: postData,
+            //    dataType: "json",
+            //    success: function (henzi) {
+            //        console.log(henzi);
+            //        console.log(text);
+            //        text += "![這是一個格式]" + (henzi);
+            //        console.log(text);
+
+            //        $(".zenbu .C .content").text = text;
+            //    },
+            //    error: function (henzi) {
+            //        console.log(henzi);
+            //        alert("通訊失敗，請聯絡管理員。")
+            //    }
+            //});
         }
         function Getlink() {
             var upup = $(".upup").val();
@@ -136,7 +164,6 @@
                     }
                 });
             }
-            
         }
         function Createa() { alert('新增文章成功') }
     </script>

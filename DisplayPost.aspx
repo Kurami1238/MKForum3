@@ -6,6 +6,7 @@
     <link href="css/github-markdown-dark.css" rel="stylesheet" />
     <link href="css/github-markdown.css" rel="stylesheet" />
     <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -21,13 +22,16 @@
                 <div>
                     <asp:Button class="btn" ID="btnMemberFollow_FollowStatus" runat="server" Text="追蹤" OnClick="btnMemberFollow_FollowStatus_Click" />
                 </div>
-                <asp:PlaceHolder ID="phl" runat="server">   
+                <asp:PlaceHolder ID="phl" runat="server">
                     <asp:HiddenField runat="server" ID="hfMemberID" />
                     <div>
                         <asp:Button class="btn" ID="btnEditPost" runat="server" Text="編輯文章" OnClick="btnEditPost_Click" />
                     </div>
                     <div>
-                        <asp:Button class="btn" ID="btnDeletePost" runat="server" Text="刪除文章" OnClick="btnDeletePost_Click" OnClientClick="dela();" />
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#hondouni">
+                            刪除文章
+                        </button>
+                        <%--<asp:Button class="btn" ID="btnDeletePost" runat="server" Text="刪除文章" OnClick="btnDeletePost_Click" OnClientClick="dela();" />--%>
                     </div>
                 </asp:PlaceHolder>
             </div>
@@ -93,6 +97,51 @@
     <div class="CNNmPost col-sm-11 col-md-11 col-lg-11">
         <asp:TextBox class="CNNmT" runat="server" ID="txtCNNmPost" placeholder="請輸入回覆訊息"></asp:TextBox>
         <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" OnClientClick="NmCreatePosta();" />
+    </div>
+
+    <div class="modal fade" id="hondouni" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-modal="true" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <asp:Literal runat="server" ID="ltlModalTitle">你</asp:Literal>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <asp:Literal runat="server" ID="ltlModalContent">確定要刪除！？</asp:Literal>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">關閉</button>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#hondouhondouni">
+                            刪除文章
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="hondouhondouni" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-modal="true" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <asp:Literal runat="server" ID="Literal1">你</asp:Literal>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <asp:Literal runat="server" ID="Literal2">真的真的要刪除ㄇ！？</asp:Literal>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <asp:button runat="server" ID="modalback" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close" OnClick="modalback_Click" Text="我後悔了"></asp:button>
+                    <asp:Button class="btn" ID="Button1" runat="server" Text="刪除文章" OnClick="btnDeletePost_Click" OnClientClick="dela();" />
+                </div>
+            </div>
+        </div>
     </div>
     <script>
         $(document).ready(function () {

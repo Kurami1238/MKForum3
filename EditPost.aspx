@@ -73,7 +73,7 @@
             </tr>
         </table>
     </div>
-    <div class="col-sm-8 col-md-11 col-lg-11">
+    <div class="col-sm-11 col-md-11 col-lg-11">
      <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>

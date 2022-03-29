@@ -137,7 +137,7 @@ namespace MKForum
                 // 儲存圖片路徑
                     this._pmgr.CreatePostImageList(this._member.MemberID, imgpath);
                 string imagelink = this._pmgr.GetImage(this._member.MemberID);
-                this.content.InnerText += $" ![]({imagelink})";
+                this.content.InnerText += $"![]({imagelink})";
             }
         }
         protected void btnback_Click(object sender, EventArgs e)
