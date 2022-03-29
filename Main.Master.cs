@@ -281,6 +281,10 @@ namespace MKForum
             this.plhAPI2_admin.Visible = false;    //關閉有按鈕的ajax
             this.plhAPI2_normal.Visible = true;    //換成顯示模式的ajax
             this.plhPBEdit2.Visible = true;    //顯示編輯按鈕
+            this.plhPBDsplMode1.Visible = false;    //隱藏儲存按鈕
+            this.plhAPI1_admin.Visible = false;    //關閉有按鈕的ajax
+            this.plhAPI1_normal.Visible = true;    //換成顯示模式的ajax
+            this.plhPBEdit1.Visible = true;    //顯示編輯按鈕
         }
 
 

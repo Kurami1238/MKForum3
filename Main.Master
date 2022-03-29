@@ -105,8 +105,41 @@
                                     <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
                                 </asp:PlaceHolder>
                             </div>
+                        </nav>
                     </div>
                 </div>
+                <!--任何尺寸都顯示，僅限板主跟管理員顯示 -->
+                                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasExampleLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasRightTitle">母版塊列表</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <a href="/HomePage.aspx">首頁Home </a>
+                            <br>
+                            <%--使用API的母版塊，前台觀看--%>
+                            <asp:PlaceHolder ID="PlaceHolder1" runat="server">
+                                <div id="PBDataList_normal1"></div>
+                            </asp:PlaceHolder>
+                            <%--使用API的母版塊，後台人員操作--%>
+                            <asp:PlaceHolder ID="PlaceHolder2" runat="server" Visible="false">
+                                <div id="PBDataList_Admin1"></div>
+                            </asp:PlaceHolder>
+
+                                <%--編輯母版塊按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="PlaceHolder3" runat="server" Visible="false">
+                                    <asp:Button ID="Button2" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                                </asp:PlaceHolder>
+                                <%--結束編輯按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="PlaceHolder4" runat="server" Visible="false">
+                                    <asp:Button ID="Button3" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
+                                </asp:PlaceHolder>
+                            </div>
+                        </nav>
+                    </div>
+
+
+
                 <!-- 上區塊 -->
                 <div class="container-fluid bg-dark text-white">
                     <div class="row">
@@ -203,7 +236,7 @@
                             <!-- 固定母版塊 -->
                             <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
                             <div class="d-none d-md-block col-md-2" id="PBArea">
-                                <a href="/HomePage.aspx">首頁Home <i class="fas fa-home"></i></a>
+                                <a href="/HomePage.aspx">首頁Home </a>
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
                                 <asp:PlaceHolder ID="plhAPI2_normal" runat="server">
@@ -325,7 +358,7 @@
         //通知
         function Notifytoggle() {
             var zindex = $('.Notifytext').css("z-index")
-            alert(zindex);
+            //alert(zindex);
             if (zindex < 0) {
                 $('.Notifytext').css("z-index", "999");
             }
@@ -334,18 +367,7 @@
             }
         }
 
-/*搜尋區*/
-.txtSearch {
-            width: 25 px;
-        }
-        $('txtSearch').css({
-            color: 'red',
-            'background-color': 'blue'
-        });
-        //$("#searchArea").attr({
-        //    alt: "Beijing Brush Seller",
-        //    title: "photo by Kelly Clark"
-        //});
+
     </script>
 
     <script>
@@ -526,6 +548,7 @@
 
 
         });
+
 
     </script>
 </body>
