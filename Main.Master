@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>MK Forun</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link rel="stylesheet" href="css/bootstrap.css" />
@@ -36,18 +36,17 @@
 
 
         /* Style for positioning toast */
-        /*.toast {
+        .toast {
             position: absolute;
             bottom: 10px;
             right: 10px;
-        }*/
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
 
-
-        <!--登入畫面-->
+         <!--登入畫面-->
         <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
 
             <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
@@ -68,17 +67,17 @@
 
         <!--主板畫面-->
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
-
+                            <div class="d-xs-block d-md-none">
+                    <!--懸浮按鈕-->
+                    <div id="hamburgerMenu" class="container ">
+                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
+                            </a>
+                    </div>
+                    </div>
             <div class="container-all">
                 <!--xs以下顯示，md以上不顯示 -->
                 <div class="d-xs-block d-md-none">
-                    <!--懸浮按鈕-->
-                    <div id="hamburgerMenu" class="container">
-                        <div class="float-left">
-                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
-                            </a>
-                        </div>
-                    </div>
+
                     <!--左邊收合母版-->
                     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                         <div class="offcanvas-header">
@@ -97,31 +96,59 @@
                                 <div id="PBDataList_Admin1"></div>
                             </asp:PlaceHolder>
 
-                            <%--編輯母版塊按鈕，後台人員才能看到--%>
-                            <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
-                                <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
-                            </asp:PlaceHolder>
-                            <%--結束編輯按鈕，後台人員才能看到--%>
-                            <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
-                                <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
-                            </asp:PlaceHolder>
-
-
-                        </div>
+                                <%--編輯母版塊按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
+                                    <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                                </asp:PlaceHolder>
+                                <%--結束編輯按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
+                                    <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
+                                </asp:PlaceHolder>
+                            </div>
+                        </nav>
                     </div>
                 </div>
+                <!--任何尺寸都顯示，僅限板主跟管理員顯示 -->
+                                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasExampleLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasRightTitle">母版塊列表</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <a href="/HomePage.aspx">首頁Home </a>
+                            <br>
+                            <%--使用API的母版塊，前台觀看--%>
+                            <asp:PlaceHolder ID="PlaceHolder1" runat="server">
+                                <div id="PBDataList_normal1"></div>
+                            </asp:PlaceHolder>
+                            <%--使用API的母版塊，後台人員操作--%>
+                            <asp:PlaceHolder ID="PlaceHolder2" runat="server" Visible="false">
+                                <div id="PBDataList_Admin1"></div>
+                            </asp:PlaceHolder>
+
+                                <%--編輯母版塊按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="PlaceHolder3" runat="server" Visible="false">
+                                    <asp:Button ID="Button2" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                                </asp:PlaceHolder>
+                                <%--結束編輯按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="PlaceHolder4" runat="server" Visible="false">
+                                    <asp:Button ID="Button3" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
+                                </asp:PlaceHolder>
+                            </div>
+                        </nav>
+                    </div>
 
 
+
+                <!-- 上區塊 -->
                 <div class="container-fluid bg-dark text-white">
-                    <!-- 上區塊 -->
                     <div class="row">
                         <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
                         <div class="col-sm-4 col-md-4 col-lg-3">
-                            <a href="HomePage.aspx" class="d-none d-sm-block">
-                                <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                            <div class="d-flex d-none d-sm-block">
+                            <div class="d-flex d-none d-sm-block searchArea">
                                 <asp:TextBox runat="server" ID="txtSearch" class="form-control" placeholder="搜尋"></asp:TextBox>
+                            <div class="float-left">
                                 <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
                                     <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
@@ -130,18 +157,17 @@
                                 </asp:DropDownList>
                                 <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
                             </div>
+                            </div>
                         </div>
 
                         <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
                         <div class="col-sm-4 col-md-4 col-lg-5 h3 text-center">
 
-                            <a href="/index.aspx" class="d-block d-sm-none">
-                                <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                            <a href="/index.aspx" class="d-block">
+                                <img src="images/logo.gif" width="40" height="40" class="d-inline-block align-top" alt=""></a>
                             MKForun
-
                         </div>
-
                         <!-- 上區塊內的右上區塊(使用者狀態區) -->
                         <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
                         <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
@@ -162,22 +188,20 @@
                                             <button id="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
                                             <div class="Notifytext">
                                                 <h3>通知：</h3>
-                                                <asp:Repeater ID="rptMemberFollows" runat="server">
+                                                <asp:Repeater ID="rptMemberFollows" runat="server" OnItemCommand="rptMemberFollows_ItemCommand">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server"> 
-                                                        <%# !(bool)Eval("Replied")
+                                                        <asp:Label ID="Label1" runat="server">
+                                                            <%--<a href="DisplayPost.aspx?CboardID=<%#Eval("CboardID")%>&PostID=<%#Eval("PostID")%>#<%#Eval("Floor")%>">--%>
+                                                            <asp:Button ID="Button1" runat="server" CommandName='<%#Eval("PostID")%>' CommandArgument='<%#Eval("CboardID")+" "+Eval("Floor")+" "+ Eval("PostID")%>' Text='<%# !(bool)Eval("Replied")
                                                                 ? Eval("PointID") == null 
-
                                                                    ? Eval("LastEditTime") == null 
                                                                         ? string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("PostDate", "{0:yyyy/MM/dd}")) 
                                                                         : string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("LastEditTime", "{0:yyyy/MM/dd}"))
-
                                                                     : Eval("LastEditTime") == null 
                                                                         ? string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("PostDate", "{0:yyyy/MM/dd}"))
                                                                         : string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("LastEditTime", "{0:yyyy/MM/dd}")) 
-
-                                                                : ""
-                                                        %> 
+                                                                : ""%>'>
+                                                            </asp:Button>
                                                         </asp:Label>
                                                         <br />
                                                     </ItemTemplate>
@@ -205,7 +229,7 @@
 
                             </div>
                         </div>
-                    </div>
+                        </div>
                     <!-- 下方 -->
                     <div class="container-fluid">
                         <div class="row">
@@ -218,7 +242,6 @@
                                 <asp:PlaceHolder ID="plhAPI2_normal" runat="server">
                                     <div id="PBDataList_normal2"></div>
                                 </asp:PlaceHolder>
-
                                 <%--使用API的母版塊，後台人員操作--%>
                                 <asp:PlaceHolder ID="plhAPI2_admin" runat="server" Visible="false">
                                     <div id="PBDataList_Admin2"></div>
@@ -250,9 +273,7 @@
                             <div class="d-none d-md-block col-md-2 ">
                                 <br />
                                 <div class="BLmember rounded border border-1 border-light overflow-auto">
-
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
-
                                         <h3>黑名單</h3>
                                         <asp:TextBox ID="txtBlkAcc" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言會員帳號)"></asp:TextBox>
                                         <asp:TextBox ID="txtBlkDate" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox>
@@ -329,13 +350,6 @@
             return new bootstrap.Toast(toastEl, option)
         })
 
-        function see() {
-            for (var i = 0; i < toastList.length; i++) {
-                toastList[i].show();
-            }
-        }
-
-
 
     </script>
 
@@ -346,22 +360,13 @@
             var zindex = $('.Notifytext').css("z-index")
             //alert(zindex);
             if (zindex < 0) {
-                $('.Notifytext').css("z-index", "999")
+                $('.Notifytext').css("z-index", "999");
             }
             else {
-                $('.Notifytext').css("z-index", "-999")
+                $('.Notifytext').css("z-index", "-999");
             }
         }
 
-        //  展開/收合按鈕
-        //$(document).ready(function () {
-
-        //    $("#collapse").on("click", function () {
-
-        //        $("#sidebar").toggleClass("active");
-        //        $(".fa-align-left").toggleClass("fa-chevron-circle-right");
-        //    })
-        //});
 
     </script>
 
@@ -402,6 +407,7 @@
             });
 
         }
+
         $(document).ready(function () {
             //一班會員看到的母版
             $.ajax({
@@ -542,6 +548,7 @@
 
 
         });
+
 
     </script>
 </body>

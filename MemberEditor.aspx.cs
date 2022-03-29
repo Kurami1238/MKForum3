@@ -1,4 +1,5 @@
-﻿using MKForum.Managers;
+﻿using MKForum.Helpers;
+using MKForum.Managers;
 using MKForum.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace MKForum.BackAdmin
     public partial class MemberEditor : System.Web.UI.Page
     {
         private MemberManager _mmgr = new MemberManager();
-        private AccountManager _amgr = new AccountManager(); 
+        private AccountManager _amgr = new AccountManager();
+        private EncryptionHelper _encryption = new EncryptionHelper();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -63,6 +65,12 @@ namespace MKForum.BackAdmin
             }
         }
 
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Index.aspx");
+        }
+
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
             Member account = _amgr.GetCurrentUser();
@@ -82,6 +90,14 @@ namespace MKForum.BackAdmin
             else if (this.lblMember_Status.Text == "管理員")
                 StatusValue = 3;
 
+            //雜湊
+            string Password = this.txtMember_PassWord.Text.Trim();
+            string key = _encryption.HashPasswordkey();
+            byte[] salt = _encryption.BuildNewSalt();
+
+            byte[] securitBytes = _encryption.GetHashPassword(Password, key, salt);
+            string HashPassword = Convert.ToBase64String(securitBytes);
+
             if (SaveCheck(SexValue, StatusValue))
             {
                 Models.Member memberSet = new Models.Member()
@@ -92,7 +108,8 @@ namespace MKForum.BackAdmin
                     Birthday = Convert.ToDateTime(this.txtMember_Birthday.Text.Trim()),
                     MemberStatus = (int)StatusValue,
                     Account = this.txtMember_Account.Text.Trim(),
-                    Password = this.txtMember_PassWord.Text.Trim(),
+                    Password = HashPassword,
+                    Salt = salt,
                     Email = this.txtMember_Mail.Text.Trim(),
                 };
                 _mmgr.UpdateMember(memberSet);
@@ -147,10 +164,13 @@ namespace MKForum.BackAdmin
             if (PassWordValue != PassWordValueCheck)
                 msgList.Add("密碼輸入不一致");
 
-            string pattern = @"^[A-Za-z0-9]+$";
-            Regex regex = new Regex(pattern);
-            if (!regex.IsMatch(PassWordValue))
-                msgList.Add("密碼請用英文及數字");
+            Regex a_zPattern = new Regex("[a-z]");
+            Regex a_zPattern2 = new Regex("[A-Z]");
+            var a_zPattern01 = a_zPattern.Matches(PassWordValue);
+            var a_zPattern02 = a_zPattern2.Matches(PassWordValue);
+            if (a_zPattern01.Count == 0)
+                if (a_zPattern02.Count == 0)
+                    msgList.Add("密碼請用英文及數字");
 
             if (SexValue == null)
                 msgList.Add("性別輸入錯誤");

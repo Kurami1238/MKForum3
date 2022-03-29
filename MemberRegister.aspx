@@ -48,7 +48,7 @@
                     <th>帳號</th>
                     <td>
                         <asp:TextBox runat="server" ID="txtAccount"></asp:TextBox>
-                        <asp:Button ID="btnAccountcheck" runat="server" Text="帳號確認" OnClick="btnAccouncheck_Click" />
+                        <asp:Button ID="btnAccountcheck" runat="server" Text="帳號確認" OnClick="btnAccouncheck_Click" Type="Button" />
                         <asp:Literal ID="ltlAccountcheckmsg" runat="server"></asp:Literal>
                     </td>
                 </tr>
@@ -56,8 +56,8 @@
                 <tr>
                     <th>密碼</th>
                     <td>
-                        <asp:TextBox runat="server" ID="txtPassword"></asp:TextBox> <br />
-                        <asp:TextBox runat="server" ID="txtPassword_Check" placeholder="密碼確認"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtPassword" TextMode="Password"></asp:TextBox> <br />
+                        <asp:TextBox runat="server" ID="txtPassword_Check" placeholder="密碼確認" TextMode="Password"></asp:TextBox>
                     </td>
                 </tr>
 

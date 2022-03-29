@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -26,7 +25,6 @@ namespace MKForum
         private ModeratorManager _Mmgr = new ModeratorManager();
         private MemberFollowManager _mfmgr = new MemberFollowManager();
         private StampManager _stpmgr = new StampManager();               //文章類型
-
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -43,14 +41,18 @@ namespace MKForum
             this.ckbskip.Visible = true;
 #endif
 
-
-            if (!_amgr.IsLogined())
+            if ((Session["NeedTouroku"] as int? == 1 || Session["NeedTouroku"] as int? == 2) && Session["JumpPage"] as int? != 1)
+            {
+                HttpContext.Current.Session["JumpPage"] = 1;
+                this.plhLogin.Visible = true;
+                this.plhLogined.Visible = false;
+            }
+            else if (!_amgr.IsLogined())
             {
                 this.plhLogin.Visible = false;
                 this.plhLogined.Visible = true;
                 this.plgMemberStatus.Visible = false;
             }
-
             else if (_amgr.IsLogined())
             {
                 string MemberID = HttpContext.Current.Session["MemberID"].ToString();
@@ -59,6 +61,7 @@ namespace MKForum
                 {
                     this.rptMemberFollows.DataSource = MemberFollows;
                     this.rptMemberFollows.DataBind();
+
                 }
 
                 this.btnwebLogin.Visible = false;
@@ -157,6 +160,24 @@ namespace MKForum
 
         }
 
+        protected void rptMemberFollows_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            List<MemberFollow> allMemberFollow = _mfmgr.GetALLMemberFollow();
+            foreach (MemberFollow MFPostID in allMemberFollow)
+            {
+                if (e.CommandName == MFPostID.PostID.ToString())
+                {
+                    string MemberID = HttpContext.Current.Session["MemberID"].ToString();
+                    string postID = e.CommandArgument.ToString();
+                    string[] postIDs = postID.Split(' ');
+                    this._mfmgr.UpdateReplied(MemberID, postIDs[2], 1);
+                    string url = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}#{2}", postIDs[0], postIDs[2], postIDs[1]);
+                    Response.Redirect(url);
+                }
+            }
+
+        }
+
 
         protected void btnwebLogin_Click(object sender, EventArgs e)
         {
@@ -172,11 +193,13 @@ namespace MKForum
             {
                 if (this._amgr.TryLogin("Text05", "12345678"))
                 {
+                    Session["NeedTouroku"] = null;
                     Response.Redirect(Request.RawUrl);
                 }
             }
             else if (this._amgr.TryLogin(account, pwd))
             {
+                Session["NeedTouroku"] = null;
                 Response.Redirect(Request.RawUrl);
             }
             else
@@ -254,14 +277,14 @@ namespace MKForum
         //儲存母版塊按鈕
         protected void btnPBSave_Click(object sender, EventArgs e)
         {
-            this.plhPBDsplMode1.Visible = false;    //隱藏儲存按鈕
             this.plhPBDsplMode2.Visible = false;    //隱藏儲存按鈕
-            this.plhAPI1_admin.Visible = false;    //關閉有按鈕的ajax
             this.plhAPI2_admin.Visible = false;    //關閉有按鈕的ajax
-            this.plhAPI1_normal.Visible = true;    //換成顯示模式的ajax
             this.plhAPI2_normal.Visible = true;    //換成顯示模式的ajax
-            this.plhPBEdit1.Visible = true;    //顯示編輯按鈕
             this.plhPBEdit2.Visible = true;    //顯示編輯按鈕
+            this.plhPBDsplMode1.Visible = false;    //隱藏儲存按鈕
+            this.plhAPI1_admin.Visible = false;    //關閉有按鈕的ajax
+            this.plhAPI1_normal.Visible = true;    //換成顯示模式的ajax
+            this.plhPBEdit1.Visible = true;    //顯示編輯按鈕
         }
 
 
@@ -438,7 +461,6 @@ namespace MKForum
                 //Response.Write($"<script>alert('{msg}')</script>");
                 Response.Redirect(Request.Url.ToString());
             }
-
         }
 
         //新增母板
@@ -555,8 +577,7 @@ namespace MKForum
                 Response.Redirect(Request.Url.ToString());
 
             }
-
-
         }
+
     }
 }

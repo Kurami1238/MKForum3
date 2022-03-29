@@ -56,6 +56,8 @@
         </table>
 
         <asp:Button ID="btnSave" runat="server" Text="儲存" OnClick="btnSave_Click" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:Button ID="btnCancel" runat="server" Text="取消" OnClick="btnCancel_Click" />
         <br />
         <asp:Label ID="lblSave_notice" runat="server" Text=""></asp:Label>
 
