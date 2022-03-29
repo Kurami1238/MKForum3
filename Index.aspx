@@ -16,9 +16,12 @@
         <div class="content">
             <asp:Repeater ID="rptHotTags" runat="server">
                 <ItemTemplate>
-                    <a href="/SearchKekka.aspx?keyword=<%# Eval("Naiyo") %> &searcharea=srchTag">
-                        <h1><%# Eval("Naiyo") %></h1>
-                    </a>
+                    <div class="col">
+                        <a href="/SearchKekka.aspx?keyword=<%# Eval("Naiyo").ToString().Trim()%>&searcharea=srchTag">
+                            <img src="images/tag.png" width="200" height="100" />
+                            <b>#<%# Eval("Naiyo") %></b>
+                        </a>
+                    </div>
                 </ItemTemplate>
             </asp:Repeater>
         </div>

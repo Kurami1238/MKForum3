@@ -20,21 +20,33 @@
     /* -------------------------- */
 
     .hot-cboards .content {
-        display: flex;
         padding: 0px 30px;
+        display:flex;
     }
 
-        .hot-cboards .content h1 {
+        .hot-cboards .content .col {
+            background: red;
+            border-radius: 10px;
             margin: 20px;
             text-align: center;
+        }
+
+        .hot-cboards .content a {
             line-height: 80px;
-            font-size: 20px;
-            padding: 10px;
+            font-size: 26px;
             background: red;
-            color: #fff;
-            border-radius: 10px;
-            margin: 25px auto;
-            width: 20%;
+            color: rgba(248, 204, 145, 0.904);
+            width: 25%;
+            text-decoration: none;
+            font-style: italic;
+        }
+        .hot-cboards .content .col img {
+
+        }
+
+        .hot-cboards .content b {
+            background: red;
+            float: left;
         }
 /* ======================= */
 
