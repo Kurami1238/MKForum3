@@ -140,6 +140,9 @@
     <Content Include="DisplayPost.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\CBoardHandler.ashx.cs">
+      <DependentUpon>CBoardHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="API\GetLinkHandler.ashx.cs">
       <DependentUpon>GetLinkHandler.ashx</DependentUpon>
     </Compile>
@@ -347,6 +350,7 @@
     <Content Include="API\PBoardHandler.ashx" />
     <Content Include="API\GetLinkHandler.ashx" />
     <Content Include="Main.Master" />
+    <Content Include="API\CBoardHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <自動產生的>
+// <自動產生>
 //     這段程式碼是由工具產生的。
 //
 //     變更這個檔案可能會導致不正確的行為，而且如果已重新產生
 //     程式碼，則會遺失變更。
-// </自動產生的>
+// </自動產生>
 //------------------------------------------------------------------------------
 
 namespace MKForum
@@ -114,22 +114,22 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.PlaceHolder plhLogined;
 
         /// <summary>
-        /// plhAPI1_normal 控制項。
+        /// plhAPI_normal1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI1_normal;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI_normal1;
 
         /// <summary>
-        /// plhAPI1_admin 控制項。
+        /// plhAPI_admin1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI1_admin;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI_admin1;
 
         /// <summary>
         /// plhPBEdit1 控制項。
@@ -168,58 +168,85 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.Button btnPBSave1;
 
         /// <summary>
-        /// PlaceHolder1 控制項。
+        /// plhCBAPI_normal1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder1;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBAPI_normal1;
 
         /// <summary>
-        /// PlaceHolder2 控制項。
+        /// plhCBAPI_admin1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder2;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBAPI_admin1;
 
         /// <summary>
-        /// PlaceHolder3 控制項。
+        /// plhCBEdit1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder3;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBEdit1;
 
         /// <summary>
-        /// Button2 控制項。
+        /// btnCBEdit1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button btnCBEdit1;
 
         /// <summary>
-        /// PlaceHolder4 控制項。
+        /// plhCBDsplMode1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder4;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBDsplMode1;
 
         /// <summary>
-        /// Button3 控制項。
+        /// addCBoard1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.TextBox addCBoard1;
+
+        /// <summary>
+        /// addCBoardcontent1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox addCBoardcontent1;
+
+        /// <summary>
+        /// btnAddCB1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddCB1;
+
+        /// <summary>
+        /// btnCBSave1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCBSave1;
 
         /// <summary>
         /// txtSearch 控制項。
@@ -330,22 +357,22 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.Button btnwebLogout;
 
         /// <summary>
-        /// plhAPI2_normal 控制項。
+        /// plhAPI_normal2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI2_normal;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI_normal2;
 
         /// <summary>
-        /// plhAPI2_admin 控制項。
+        /// plhAPI_admin2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI2_admin;
+        protected global::System.Web.UI.WebControls.PlaceHolder plhAPI_admin2;
 
         /// <summary>
         /// plhPBEdit2 控制項。
@@ -400,6 +427,96 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPBSave2;
+
+        /// <summary>
+        /// currentPB 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden currentPB;
+
+        /// <summary>
+        /// plhCBAPI_normal2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBAPI_normal2;
+
+        /// <summary>
+        /// plhCBAPI_admin2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBAPI_admin2;
+
+        /// <summary>
+        /// plhCBEdit2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBEdit2;
+
+        /// <summary>
+        /// btnCBEdit2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCBEdit2;
+
+        /// <summary>
+        /// plhCBDsplMode2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plhCBDsplMode2;
+
+        /// <summary>
+        /// addCBoard 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox addCBoard;
+
+        /// <summary>
+        /// addCBoardcontent 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox addCBoardcontent;
+
+        /// <summary>
+        /// btnAddCB2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddCB2;
+
+        /// <summary>
+        /// btnCBSave2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCBSave2;
 
         /// <summary>
         /// ContentPlaceHolder1 控制項。
