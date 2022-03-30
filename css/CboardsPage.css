@@ -89,7 +89,6 @@ a:visited {
 }
 a:active {
     text-decoration:none;
-    background-color:gray;
     color:#fafafa;
     }
 img{
@@ -116,8 +115,6 @@ img{
     .Cboard .StampButton input{
         font-size: 27px;
         margin-left: 5px;
-        color: antiquewhite; border:0;
-        background-color:#181717;
         color:#fff;
         border: 1px none #e76c25;
         box-shadow: 2px 2px 6px #e76c25;line-height: 35px;text-align: center;
@@ -134,7 +131,6 @@ img{
     }
     .Cboard .Sbtn{
         color: antiquewhite; border:0;
-        background-color:#181717;
         color:#fff;
         border: 1px ridge #e76c25;
         box-shadow: 2px 1px 4px #e76c25;line-height: 40px;text-align: center;
@@ -143,7 +139,6 @@ img{
       
         .Cboard .Sbtn:hover{
         color:#fff;
-        background-color:rgb(22, 21, 21);
         border:2px #851a1a solid;
         text-shadow: 2px 2px 2px #941a12;
         }
@@ -159,9 +154,8 @@ img{
         .Cboard .content .article {
             padding: 10px;
             margin: 15px;
-            border-bottom: 0.5px double #e76c25;
-            border-right: 0.5px solid #e76c25;
-            box-shadow: 2px 2px 7px #e76c25;line-height: 100px;text-align: left;
+            border-bottom: 0.5px double #b34d11;
+            box-shadow: 1px 1px 7px #e76c25;line-height: 100px;text-align: left;
             transition: 0.4s;
 
         }

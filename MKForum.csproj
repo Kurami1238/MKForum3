@@ -114,6 +114,8 @@
     <Content Include="EditPost.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
+    <Content Include="images\fire-15.gif" />
+    <Content Include="images\fire-17.gif" />
     <Content Include="images\logo.png" />
     <Content Include="images\MENU.png" />
     <Content Include="Index.aspx" />
