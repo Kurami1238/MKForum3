@@ -144,10 +144,13 @@ div{
             width: 80%;
             margin-left:36px;
             margin-top: -10px;
+            display:flex;
+
         }
-        .MainPost .pht{
+        .MainPost .pht span{
             color:rgba(248, 204, 145, 0.904);
             margin-right: 5px;
+            background-color: transparent;
             float: left;
             padding: 2px 15px 2px 15px;
             transition: 0.5s;
@@ -157,10 +160,15 @@ div{
             font-style: italic;
             text-shadow: 1px 1px 2px rgb(138, 80, 5);
         }  
-        .MainPost .pht:hover{
+        .MainPost .pht span:hover{
             color:rgb(228, 229, 155);
             text-shadow: 2px 2px 5px #941a12;
             box-shadow: 2px 2px 6px #a52818;
+        }
+        .MainPost .allpht .pht{
+            background: url("../images/tag.png")no-repeat   ;
+            background-size:contain;
+            height: 28px;
         }
 .nomainPost{
     padding: 10px;
