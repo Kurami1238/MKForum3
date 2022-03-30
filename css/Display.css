@@ -152,7 +152,7 @@ div{
             margin-right: 5px;
             float: left;
             padding: 2px 15px 2px 15px;
-            transition: 1s;
+            transition: 0.5s;
             margin-left: 4px;
             border: 1px none #a75410;
             border-radius:10px;
@@ -162,7 +162,7 @@ div{
         .MainPost .pht:hover{
             color:rgb(228, 229, 155);
             text-shadow: 2px 2px 5px #941a12;
-            box-shadow: 2px 2px 4px #a52818;
+            box-shadow: 2px 2px 6px #a52818;
         }
 .nomainPost{
     padding: 10px;
