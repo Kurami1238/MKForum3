@@ -97,7 +97,7 @@
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="BlackMember.aspx" />
     <Content Include="CbtoPost.aspx" />
-    <Content Include="motoCreatePost.aspx" />
+    <Content Include="CreatePost.aspx" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\CboardsPage.css" />
