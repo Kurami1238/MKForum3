@@ -39,6 +39,31 @@ a:active {
 div{
     /* border: 2px solid rgb(194, 194, 194); */
 }
+.modal{
+    font-family:'moubi';
+}
+.modal .modal-title{
+    font-size: 45px;
+}
+.modal .modal-body{
+    font-size: 30px;
+}
+.modal .btn{
+            color: antiquewhite; border:0;
+            background-color:#181717;
+            margin-right: -2px;
+            border: 1px none #e76c25;
+            box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
+            border-radius:10px;
+            cursor:pointer;
+            float: right;
+            transition: 0.4s;
+}
+.modal .btn:hover{
+            color:#fff;
+            box-shadow: 2px 2px 7px #851a1a;
+            text-shadow: 2px 2px 5px #941a12;
+}
 .MainPost{
     padding: 10px;
     margin: 5px;
@@ -46,9 +71,8 @@ div{
     font-family:'moubi';
     padding-left: 0px;
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 0.5px double #e76c25;
-    border-right: 0.5px solid #e76c25;
-    box-shadow: 2px 2px 7px #e76c25;text-align: left;
+    border-bottom: 0.5px double #b34d11;
+    box-shadow: 1px 1px 7px #e76c25;text-align: left;
 }
         .MainPost .mpostall{
             padding: 20px;
@@ -78,9 +102,12 @@ div{
             margin-left: 130px;
             margin-right: -10px;
         }
+        .MainPost .Postbtn .btn{
+        color:#ffffff;
+
+        }
         .MainPost .Postbtn div{
             color: antiquewhite; border:0;
-            background-color:#181717;
             margin-right: -2px;
             border: 1px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
@@ -117,23 +144,31 @@ div{
             width: 80%;
             margin-left:36px;
             margin-top: -10px;
+            display:flex;
+
         }
-        .MainPost .pht{
+        .MainPost .pht span{
             color:rgba(248, 204, 145, 0.904);
             margin-right: 5px;
+            background-color: transparent;
             float: left;
             padding: 2px 15px 2px 15px;
-            transition: 1s;
+            transition: 0.5s;
             margin-left: 4px;
             border: 1px none #a75410;
             border-radius:10px;
             font-style: italic;
             text-shadow: 1px 1px 2px rgb(138, 80, 5);
         }  
-        .MainPost .pht:hover{
+        .MainPost .pht span:hover{
             color:rgb(228, 229, 155);
             text-shadow: 2px 2px 5px #941a12;
-            box-shadow: 2px 2px 4px #a52818;
+            box-shadow: 2px 2px 6px #a52818;
+        }
+        .MainPost .allpht .pht{
+            background: url("../images/tag.png")no-repeat   ;
+            background-size:contain;
+            height: 28px;
         }
 .nomainPost{
     padding: 10px;
@@ -215,6 +250,7 @@ div{
         .CNNmPost .CNNmT{
             width: 60%;
             line-height: 28px;
+            font-size: 22px;
             margin-left: 20px;
             border: 0.3px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 35px;text-align: center;

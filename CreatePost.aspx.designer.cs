@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // <自動產生的>
 //     這段程式碼是由工具產生的。
 //
@@ -15,13 +15,22 @@ namespace MKForum
     {
 
         /// <summary>
-        /// memberid 控制項。
+        /// Hidden1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden memberid;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden Hidden1;
+
+        /// <summary>
+        /// XXmsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden XXmsg;
 
         /// <summary>
         /// txtTitle 控制項。

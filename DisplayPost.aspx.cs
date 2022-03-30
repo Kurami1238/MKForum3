@@ -131,6 +131,7 @@ namespace MKForum
             this.lblTitle.Text = post.Title;
             Member member = this._amgr.GetAccount(post.MemberID);
             this.lblMember.Text = "作者：" + member.Account;
+            this.sakusyaacc.Value = member.Account;
             this.lblFloor.Text = post.Floor.ToString() + "F";
             this.sortid.Value = post.PostCotent;
             this.hfMemberID.Value = post.MemberID.ToString();
@@ -292,6 +293,11 @@ namespace MKForum
                 this.lblMemberFollow_FollowStatus.Text = "追蹤中";
             }
 
+        }
+
+        protected void modalback_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Request.RawUrl);
         }
 
         //protected void rptNmP_ItemCommand(object source, RepeaterCommandEventArgs e)

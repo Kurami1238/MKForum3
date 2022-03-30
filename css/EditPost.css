@@ -10,20 +10,18 @@ hr{
     background-image: linear-gradient(to right, #333, #ccc, #333);
 }
 a{
+    color:#fafafa;
     text-decoration:none;
 }
 a:link{
-    background-color:#ffffff;
+    color:#fafafa;
     text-decoration:none;
-
     }
 a:visited {
     color:#ffffff;
-    background-color:red;
     }
 a:active {
     text-decoration:none;
-    background-color:gray;
     color:#fafafa;
     }
 .zenbu{
@@ -31,8 +29,8 @@ a:active {
     margin: 5px;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 1px double #e76c25;
-    box-shadow: 2px 2px 4px #e76c25;text-align: left;
+    border-bottom: 0.5px double #b34d11;
+    box-shadow: 1px 1px 7px #e76c25;text-align: left;
     font-size: 18px;
     color: #fafafaea;
 }
@@ -67,7 +65,6 @@ a:active {
             width: 20%;
             color: #fafafaea;
             color: antiquewhite; border:0;
-            background-color:#181717;
             border: 1px none #e76c25;
             box-shadow: 2px 1px 4px #e76c25;
             border-radius:10px;
@@ -104,14 +101,13 @@ a:active {
     width: 97.5%;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 1px double #e76c25;
-    box-shadow: 2px 2px 4px #e76c25;
+    border-bottom: 0.5px double #b34d11;
+    box-shadow: 1px 1px 7px #e76c25;
     font-size: 22px;
     color: #fafafaea;   
 }
 .kobi input{
     color: antiquewhite; border:0;
-    background-color:#181717;
     border: 1px ridge #e76c25;
     box-shadow: 2px 1px 4px #e76c25;text-align: center;
     border-radius:10px;

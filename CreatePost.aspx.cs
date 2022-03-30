@@ -1,8 +1,9 @@
-﻿using MKForum.Managers;
+using MKForum.Managers;
 using MKForum.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -49,7 +50,7 @@ namespace MKForum
             {
                 Member account = this._Amgr.GetCurrentUser();
                 _member = account;
-                this.memberid.Value = this._member.MemberID.ToString();
+                //this.memberid.Value = this._member.MemberID.ToString();
             }
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -80,18 +81,26 @@ namespace MKForum
             };
             if (this.fuCoverImage.HasFile)
             {
-                System.Threading.Thread.Sleep(3);
-                Random random = new Random((int)DateTime.Now.Ticks);
+                if (this.CheckImgFormat(this.fuCoverImage.FileName) == true)
+                {
+                    System.Threading.Thread.Sleep(3);
+                    Random random = new Random((int)DateTime.Now.Ticks);
 
-                string folderPath = "~/FileDownload/PostContent/";
-                string fileName = "C" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuCoverImage.FileName);
+                    string folderPath = "~/FileDownload/PostContent/";
+                    string fileName = "C" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuCoverImage.FileName);
 
-                folderPath = HostingEnvironment.MapPath(folderPath);
-                if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
-                    Directory.CreateDirectory(folderPath);
-                string newFilePath = Path.Combine(folderPath, fileName);
-                this.fuCoverImage.SaveAs(newFilePath);
-                post.CoverImage = "/FileDownload/PostContent/" + fileName;
+                    folderPath = HostingEnvironment.MapPath(folderPath);
+                    if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
+                        Directory.CreateDirectory(folderPath);
+                    string newFilePath = Path.Combine(folderPath, fileName);
+                    this.fuCoverImage.SaveAs(newFilePath);
+                    post.CoverImage = "/FileDownload/PostContent/" + fileName;
+                }
+                else
+                {
+                    return;
+
+                }
             }
             if (post.CoverImage == null)
             {
@@ -123,22 +132,46 @@ namespace MKForum
             {
                 System.Threading.Thread.Sleep(3);
                 Random random = new Random((int)DateTime.Now.Ticks);
+                if (this.CheckImgFormat(this.fuPostImage.FileName) == true)
+                {
+                    string folderPath = "~/FileDownload/PostContent/";
+                    string fileName = "P" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + this._member.Account + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
 
-                string folderPath = "~/FileDownload/PostContent/";
-                string fileName = "P" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF")+ "_" + this._member.Account + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuPostImage.FileName);
+                    folderPath = HostingEnvironment.MapPath(folderPath);
+                    if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
+                        Directory.CreateDirectory(folderPath);
+                    string newFilePath = Path.Combine(folderPath, fileName);
+                    this.fuPostImage.SaveAs(newFilePath);
+                    imgpath = "/FileDownload/PostContent/" + fileName;
 
-                folderPath = HostingEnvironment.MapPath(folderPath);
-                if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
-                    Directory.CreateDirectory(folderPath);
-                string newFilePath = Path.Combine(folderPath, fileName);
-                this.fuPostImage.SaveAs(newFilePath);
-                imgpath = "/FileDownload/PostContent/" + fileName;
-
-                // 儲存圖片路徑
+                    // 儲存圖片路徑
                     this._pmgr.CreatePostImageList(this._member.MemberID, imgpath);
-                string imagelink = this._pmgr.GetImage(this._member.MemberID);
-                this.content.InnerText += $" ![]({imagelink})";
+                    string imagelink = this._pmgr.GetImage(this._member.MemberID);
+                    this.content.InnerText += $"![]({imagelink})";
+                }
+                else
+                {
+                    this.XXmsg.Value = "別亂傳檔案";  
+                    return;
+                }
+
             }
+        }
+        private Boolean CheckImgFormat(String fileName)
+        {
+            Boolean flag = false;
+            String fileExtension = Path.GetExtension(fileName).ToLower();
+            String[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+
+            for (int i = 0; i < allowedExtensions.Length; i++)
+            {
+                if (allowedExtensions[i].ToString().Equals(fileExtension))
+                {
+                    flag = true;
+                }
+            }
+
+            return flag;
         }
         protected void btnback_Click(object sender, EventArgs e)
         {
@@ -151,4 +184,4 @@ namespace MKForum
             Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
         }
     }
-}
+} 

@@ -72,8 +72,7 @@ namespace MKForum
             sort = (int)post.SortID;
             this.txtTitle.Text = post.Title;
             this.content.InnerText = post.PostCotent;
-            // 讀取Post裡的sortID  沒辦法塞回DropDownList
-            //this.ddlPostStamp.;
+            this.dpdlPostStamp.SelectedValue = sort.ToString();
         }
         protected void btnSend_Click(object sender, EventArgs e)
         {
@@ -108,7 +107,7 @@ namespace MKForum
                     Directory.CreateDirectory(folderPath);
                 string newFilePath = Path.Combine(folderPath, fileName);
                 this.fuCoverImage.SaveAs(newFilePath);
-                post.CoverImage = "/FileDownload/MapContent/" + fileName;
+                post.CoverImage = "/FileDownload/PostContent/" + fileName;
             }
 
             // 更新Post

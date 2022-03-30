@@ -96,7 +96,6 @@
     <Content Include="bin\roslyn\vbc.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="BlackMember.aspx" />
-    <Content Include="CboardsPage.aspx" />
     <Content Include="CbtoPost.aspx" />
     <Content Include="CreatePost.aspx" />
     <Content Include="css\bootstrap.css" />
@@ -115,6 +114,8 @@
     <Content Include="EditPost.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HomePage.aspx" />
+    <Content Include="images\fire-15.gif" />
+    <Content Include="images\fire-17.gif" />
     <Content Include="images\logo.png" />
     <Content Include="images\MENU.png" />
     <Content Include="Index.aspx" />
@@ -171,13 +172,6 @@
     </Compile>
     <Compile Include="BackAdmin\tryencryption.aspx.designer.cs">
       <DependentUpon>tryencryption.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CboardsPage.aspx.cs">
-      <DependentUpon>CboardsPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CboardsPage.aspx.designer.cs">
-      <DependentUpon>CboardsPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="CbtoPost.aspx.cs">
       <DependentUpon>CbtoPost.aspx</DependentUpon>

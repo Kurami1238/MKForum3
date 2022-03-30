@@ -9,7 +9,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
-            <input type="hidden" id="memberid" class="memberid" runat="server"/>
+            <input type="hidden" id="Hidden1" class="memberid" runat="server"/>
+            <input type="hidden" id="XXmsg" class="XXmsg" runat="server"/>
         <table class="zenbu col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>標題 * </th>
@@ -35,7 +36,7 @@
                 <td>
                     <asp:FileUpload class="button upup" ID="fuPostImage" runat="server" />
                     <asp:Image ID="imgPostImage" runat="server" />
-                    <asp:Button  class="button kakutei" ID="btnPostImage" runat="server" Text="確定上傳" OnClick="btnPostImage_Click" OnClientClick="Getlink();" />
+                    <asp:Button  class="button kakutei" ID="btnPostImage" runat="server" Text="確定上傳" OnClick="btnPostImage_Click"  />
                 </td>
             </tr>
             <tr class="C">
@@ -62,7 +63,7 @@
        
     </div>
     <div>
-        <table class="kobi col-sm-8 col-md-11 col-lg-11">
+        <table class="kobi col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>預覽 </th>
                 <td>
@@ -84,7 +85,11 @@
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>
     <script>
+        $('.XXmsg').change(function(){
+            alert($('.XXmsg').val)
+        });
         var text;
+        text = $(".content").val();
         $('.content').on('keyup', function () {
             text = $(".content").val();
             var converter = new showdown.Converter();
@@ -92,21 +97,47 @@
             $('.result').html(html);
         });
         function big() {
+            text = $(".content").val();
             text += "#";
-            $(".zenbu .C .content").html(text);
+            $(".zenbu .C .content").val(text);
         }
         function mid() {
+            text = $(".content").val();
             text += "###";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function sml() {
+            text = $(".content").val();
             text += "#####";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function narabi() {
+            text = $(".content").val();
             text += "+ a\n+ a\n+ a";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
+
+            //var postData = $(".content").val();
+
+            //$.ajax({
+            //    url: "/API/GetLinkHandler.ashx?Action=Link",
+            //    method: "POST",
+            //    data: postData,
+            //    dataType: "json",
+            //    success: function (henzi) {
+            //        console.log(henzi);
+            //        console.log(text);
+            //        text += "![這是一個格式]" + (henzi);
+            //        console.log(text);
+
+            //        $(".zenbu .C .content").text = text;
+            //    },
+            //    error: function (henzi) {
+            //        console.log(henzi);
+            //        alert("通訊失敗，請聯絡管理員。")
+            //    }
+            //});
         }
+        
         function Getlink() {
             var upup = $(".upup").val();
             var mid = $(".memberid").val();
@@ -136,7 +167,6 @@
                     }
                 });
             }
-            
         }
         function Createa() { alert('新增文章成功') }
     </script>
