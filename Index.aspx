@@ -10,15 +10,19 @@
 
     <div class="hot-cboards">
         <div class="title">
-            <img src="./images/HOT.png">
+            <%--<img src="./images/HOT.png">--%>
+            <div class="fire">
+                <h3>HOT</h3>
+            </div>
             <h1>熱門標籤</h1>
         </div>
         <div class="content">
             <asp:Repeater ID="rptHotTags" runat="server">
                 <ItemTemplate>
-                    <a href="/SearchKekka.aspx?keyword=<%# Eval("Naiyo") %> &searcharea=srchTag">
-                        <h1><%# Eval("Naiyo") %></h1>
-                    </a>
+                        <a href="/SearchKekka.aspx?keyword=<%# Eval("Naiyo").ToString().Trim()%>&searcharea=srchTag">
+                            <%--<img src="images/tag.png" width="200" height="100" />--%>
+                            <b>#<%# Eval("Naiyo") %></b>
+                        </a>
                 </ItemTemplate>
             </asp:Repeater>
         </div>
