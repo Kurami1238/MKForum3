@@ -9,7 +9,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
-            <input type="hidden" id="memberid" class="memberid" runat="server"/>
+            <input type="hidden" id="Hidden1" class="memberid" runat="server"/>
+            <input type="hidden" id="XXmsg" class="XXmsg" runat="server"/>
         <table class="zenbu col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>標題 * </th>
@@ -35,7 +36,7 @@
                 <td>
                     <asp:FileUpload class="button upup" ID="fuPostImage" runat="server" />
                     <asp:Image ID="imgPostImage" runat="server" />
-                    <asp:Button  class="button kakutei" ID="btnPostImage" runat="server" Text="確定上傳" OnClick="btnPostImage_Click" OnClientClick="Getlink();" />
+                    <asp:Button  class="button kakutei" ID="btnPostImage" runat="server" Text="確定上傳" OnClick="btnPostImage_Click"  />
                 </td>
             </tr>
             <tr class="C">
@@ -84,6 +85,9 @@
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>
     <script>
+        $('.XXmsg').change(function(){
+            alert($('.XXmsg').val)
+        });
         var text;
         text = $(".content").val();
         $('.content').on('keyup', function () {
