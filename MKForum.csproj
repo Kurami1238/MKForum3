@@ -177,6 +177,13 @@
     <Compile Include="CbtoPost.aspx.designer.cs">
       <DependentUpon>CbtoPost.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CreatePost.aspx.cs">
+      <DependentUpon>CreatePost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreatePost.aspx.designer.cs">
+      <DependentUpon>CreatePost.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EditPost.aspx.cs">
       <DependentUpon>EditPost.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
