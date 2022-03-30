@@ -34,7 +34,10 @@
         }
 
         .weight80 {
-            width: 90%;
+            width: 100%;
+        }
+        #MMlist , #BLmember{
+            padding:5%;
         }
 
         /* Style for positioning toast */
@@ -292,14 +295,14 @@
                             <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
                             <div class="d-none d-md-block col-md-2 ">
                                 <br />
-                                <div class="BLmember rounded border border-0 bg-body bg-opacity-10">
+                                <div id="BLmember" class="BLmember rounded border border-0 bg-body bg-opacity-10">
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
                                         <h3>黑名單</h3>
-                                        &nbsp<asp:TextBox ID="txtBlkAcc" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入禁言會員帳號)"></asp:TextBox><br />
-                                        &nbsp<asp:TextBox ID="txtBlkDate" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox><br />
+                                        <asp:TextBox ID="txtBlkAcc" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入禁言會員帳號)"></asp:TextBox><br />
+                                        <asp:TextBox ID="txtBlkDate" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox><br />
 
-                                        &nbsp<asp:Button ID="Button1" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="確認" OnClick="btnBlk_Click" />
-                                        <button type="button" class="btn btn-sm rounded-pill btn-outline-light text-white  float-end" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號及日期(格式:2000-01-01)；更新日期請直接輸入新的日期並儲存，解除時間將為當日的0時；立即解除請輸入本日時間，永久黑單請輸入(2999-12-31)。 輸入帳號不得為管理員及版主。">?</button> &nbsp
+                                        <asp:Button ID="Button1" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="確認" OnClick="btnBlk_Click" />
+                                        <button type="button" class="btn btn-sm rounded-pill btn-outline-light text-white  float-end" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號及日期(格式:2000-01-01)；更新日期請直接輸入新的日期並儲存，解除時間將為當日的0時；立即解除請輸入本日時間，永久黑單請輸入(2999-12-31)。 輸入帳號不得為管理員及版主。">?</button> 
                                         <br />
                                         <br />
                                         <asp:Label runat="server" Text="黑單列表："></asp:Label>
@@ -319,8 +322,8 @@
 
 
 
-                                        &nbsp<asp:TextBox ID="inpStp" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入新增的文章類型)"></asp:TextBox><br />
-                                        &nbsp<asp:Button ID="btnStpAdd" class="btn-outline-success btn-sm rounded-pill" runat="server" Text="儲存" OnClick="btnStpAdd_Click" />&nbsp
+                                        <asp:TextBox ID="inpStp" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(新增的文章類型)"></asp:TextBox><br />
+                                        <asp:Button ID="btnStpAdd" class="btn-outline-success btn-sm rounded-pill" runat="server" Text="儲存" OnClick="btnStpAdd_Click" />
                                         <asp:Button ID="btnStpDelect" class="btn-outline-danger btn-sm rounded-pill" runat="server" Text="刪除" OnClick="btnStpDelect_Click" />
                                         <br />
                                         <asp:Label runat="server" Text="現有的文章類型："></asp:Label>
@@ -335,12 +338,12 @@
                                 <br>
                                 <br>
 
-                                <div class="MMlist  rounded border border-0 bg-body bg-opacity-10">
+                                <div id="MMlist" class="MMlist rounded border border-0 bg-body bg-opacity-10">
                                     <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
                                         <asp:TextBox ID="txtMMAcc" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入新增板主帳號)"></asp:TextBox><br />
                                         <button type="button" class="btn btn-sm btn-outline-light text-white bg-dark  text-white" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號，點擊新增使其就任板主職位；點擊解除使其卸任板主職位。 新增板主不得為管理員，亦不得為黑名單中的會員。">?</button><br />
-                                        <asp:Button ID="btnMMUpdate" runat="server" Text="加入" OnClick="btnMMSave_Click" />
-                                        <asp:Button ID="btnMMDelete" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
+                                        <asp:Button ID="btnMMUpdate" CssClass="btn-outline-success btn-sm rounded-pill" runat="server" Text="加入" OnClick="btnMMSave_Click" />
+                                        <asp:Button ID="btnMMDelete" class="btn-outline-danger btn-sm rounded-pill" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
                                         <br />
                                         <asp:Label runat="server" Text="版主名單列表："></asp:Label><br />
                                         <asp:Repeater ID="RptrMM" runat="server">
@@ -426,7 +429,7 @@
             });
 
         }
-        //母版編輯功能
+        //子母版編輯功能
         $(document).ready(function () {
             //一班會員看到的母版
             $.ajax({
@@ -648,6 +651,7 @@
                             $("#CBDataList_Admin1 *").remove();
                             $("#CBDataList_Admin2 *").remove();
                             GetCBAdmin();
+                            alert("更新子板資訊成功。");
                         }
                         else {
                             alert("更新失敗，請聯絡管理員");
