@@ -10,7 +10,7 @@ namespace MKForum.Managers
 {
     public class CboardManager
     {
-        public void CreateCboard(Pboard pboardid, string cname, string cboardcotent)
+        public void CreateCboard(string pboardid, string cname, string cboardcotent)
         {
 
             string connectionString = ConfigHelper.GetConnectionString();
@@ -182,6 +182,96 @@ namespace MKForum.Managers
             catch (Exception ex)
             {
                 Logger.WriteLog("CboardManager.GetCPboardtoCboard", ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// (API用)以母版ID取得子版List的方法
+        /// </summary>
+        /// <param name="PboardID">(int)輸入值為母版ID</param>
+        /// <returns>回傳值為List</returns>
+        public List<Cboard> GetCbFromPB(string PboardID)
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT 
+	                CboardID,
+	                PboardID,
+	                Cname,
+	                CboardDate,
+	                CboardCotent
+                    FROM  [MKForum].[dbo].[Cboards]
+                    WHERE PboardID = @PboardID;
+                ";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        command.Parameters.AddWithValue("@PboardID", PboardID);
+                        conn.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        List<Cboard> cboardList = new List<Cboard>();
+                        while (reader.Read())
+                        {
+                            Cboard cboard = new Cboard()
+                            {
+                                CboardID = (int)reader["CboardID"],
+                                Cname = (string)reader["Cname"],
+                                CboardCotent = (string)reader["CboardCotent"],
+                            };
+                            cboardList.Add(cboard);
+                        }
+                        return cboardList;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("CboardManager.GetCPboardtoCboard", ex);
+                throw;
+            }
+        }
+
+
+        /// <summary>
+        /// (API用)依母版ID重新命名子板的方法
+        /// </summary>
+        /// <param name="cboardModel">傳入值為母版的Model</param>
+        public void ReNameCB(Cboard cboardModel)
+        {
+            string strCboardID = cboardModel.CboardID.ToString();
+            string strName = cboardModel.Cname.ToString();
+            string strContent = cboardModel.CboardCotent.ToString();
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                UPDATE [MKForum].[dbo].[CBoards]
+                SET  [Cname]=@cName ,[CboardCotent]=@cBoardCotent
+                WHERE [CboardID]=@cBoardID
+                    ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+
+                        command.Parameters.AddWithValue(@"cBoardID", strCboardID);
+                        command.Parameters.AddWithValue(@"cName", strName);
+                        command.Parameters.AddWithValue(@"cBoardCotent", strContent);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("ParentBoardManager.ReNameCB", ex);
                 throw;
             }
         }

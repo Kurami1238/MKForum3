@@ -34,7 +34,6 @@ namespace MKForum.API
             {
 
 
-                //這邊應該要做欄位型別檢查?
                 int pboardID = int.Parse(context.Request.Form["PboardID"]);
                 int porder = int.Parse(context.Request.Form["Porder"]);
 

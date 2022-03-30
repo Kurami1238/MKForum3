@@ -33,7 +33,9 @@
             font-size: 16pt;
         }
 
-
+        .weight80 {
+            width: 90%;
+        }
 
         /* Style for positioning toast */
         .toast {
@@ -46,7 +48,7 @@
 <body>
     <form id="form1" runat="server">
 
-         <!--登入畫面-->
+        <!--登入畫面-->
         <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
 
             <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
@@ -67,13 +69,13 @@
 
         <!--主板畫面-->
         <asp:PlaceHolder ID="plhLogined" runat="server" Visible="true">
-                            <div class="d-xs-block d-md-none">
-                    <!--懸浮按鈕-->
-                    <div id="hamburgerMenu" class="container ">
-                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
-                            </a>
-                    </div>
-                    </div>
+            <div class="d-xs-block d-md-none">
+                <!--懸浮按鈕-->
+                <div id="hamburgerMenu" class="container ">
+                    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
+                    </a>
+                </div>
+            </div>
             <div class="container-all">
                 <!--xs以下顯示，md以上不顯示 -->
                 <div class="d-xs-block d-md-none">
@@ -88,58 +90,51 @@
                             <a href="/HomePage.aspx">首頁Home </a>
                             <br>
                             <%--使用API的母版塊，前台觀看--%>
-                            <asp:PlaceHolder ID="plhAPI1_normal" runat="server">
+                            <asp:PlaceHolder ID="plhAPI_normal1" runat="server">
                                 <div id="PBDataList_normal1"></div>
                             </asp:PlaceHolder>
                             <%--使用API的母版塊，後台人員操作--%>
-                            <asp:PlaceHolder ID="plhAPI1_admin" runat="server" Visible="false">
+                            <asp:PlaceHolder ID="plhAPI_admin1" runat="server" Visible="false">
                                 <div id="PBDataList_Admin1"></div>
                             </asp:PlaceHolder>
 
-                                <%--編輯母版塊按鈕，後台人員才能看到--%>
-                                <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
-                                </asp:PlaceHolder>
-                                <%--結束編輯按鈕，後台人員才能看到--%>
-                                <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
-                                </asp:PlaceHolder>
-                            </div>
-                        </nav>
+                            <%--編輯母版塊按鈕，後台人員才能看到--%>
+                            <asp:PlaceHolder ID="plhPBEdit1" runat="server" Visible="false">
+                                <asp:Button ID="btnPBEdit1" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                            </asp:PlaceHolder>
+                            <%--結束編輯按鈕，後台人員才能看到--%>
+                            <asp:PlaceHolder ID="plhPBDsplMode1" runat="server" Visible="false">
+                                <asp:Button ID="btnPBSave1" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
+                            </asp:PlaceHolder>
+                            <br />
+                            <hr />
+                            <%--使用API的子版塊，非編輯模式--%>
+                            <asp:PlaceHolder ID="plhCBAPI_normal1" runat="server" Visible="false">
+                                <asp:Label runat="server" Text="子板塊："></asp:Label>
+                                <div id="CBDataList_normal1"></div>
+                            </asp:PlaceHolder>
+                            <%--使用API的子版塊，編輯模式--%>
+                            <asp:PlaceHolder ID="plhCBAPI_admin1" runat="server" Visible="false">
+                                <asp:Label runat="server" Text="子板塊："></asp:Label>
+                                <div id="CBDataList_Admin1"></div>
+                            </asp:PlaceHolder>
+                            <br />
+                            <br />
+                            <%--編輯子版塊按鈕，後台人員才能看到--%>
+                            <asp:PlaceHolder ID="plhCBEdit1" runat="server" Visible="false">
+                                <asp:Button ID="btnCBEdit1" runat="server" CssClass="text-white rounded-pill" Text="編輯子版塊" OnClick="btnCBEdit_Click" />
+                            </asp:PlaceHolder>
+                            <%--結束編輯按鈕，後台人員才能看到--%>
+                            <asp:PlaceHolder ID="plhCBDsplMode1" runat="server" Visible="false">
+                                <asp:TextBox ID="addCBoard1" runat="server" placeholder="請輸入子版標題"></asp:TextBox>
+                                <asp:TextBox ID="addCBoardcontent1" runat="server" placeholder="請輸入子版描述"></asp:TextBox>
+                                <asp:Button ID="btnAddCB1" runat="server" CssClass="text-white rounded-pill" Text="新增子板" OnClick="btnAddCB_Click" />
+                                <br />
+                                <asp:Button ID="btnCBSave1" runat="server" CssClass="text-white rounded-pill" Text="結束編輯" OnClick="btnCBSave_Click" />
+                            </asp:PlaceHolder>
+                        </div>
                     </div>
                 </div>
-                <!--任何尺寸都顯示，僅限板主跟管理員顯示 -->
-                                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasExampleLabel">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasRightTitle">母版塊列表</h5>
-                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body">
-                            <a href="/HomePage.aspx">首頁Home </a>
-                            <br>
-                            <%--使用API的母版塊，前台觀看--%>
-                            <asp:PlaceHolder ID="PlaceHolder1" runat="server">
-                                <div id="PBDataList_normal1"></div>
-                            </asp:PlaceHolder>
-                            <%--使用API的母版塊，後台人員操作--%>
-                            <asp:PlaceHolder ID="PlaceHolder2" runat="server" Visible="false">
-                                <div id="PBDataList_Admin1"></div>
-                            </asp:PlaceHolder>
-
-                                <%--編輯母版塊按鈕，後台人員才能看到--%>
-                                <asp:PlaceHolder ID="PlaceHolder3" runat="server" Visible="false">
-                                    <asp:Button ID="Button2" runat="server" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
-                                </asp:PlaceHolder>
-                                <%--結束編輯按鈕，後台人員才能看到--%>
-                                <asp:PlaceHolder ID="PlaceHolder4" runat="server" Visible="false">
-                                    <asp:Button ID="Button3" runat="server" Text="結束編輯" OnClick="btnPBSave_Click" />
-                                </asp:PlaceHolder>
-                            </div>
-                        </nav>
-                    </div>
-
-
-
                 <!-- 上區塊 -->
                 <div class="container-fluid bg-dark text-white">
                     <div class="row">
@@ -148,15 +143,15 @@
                         <div class="col-sm-4 col-md-4 col-lg-3">
                             <div class="d-flex d-none d-sm-block searchArea">
                                 <asp:TextBox runat="server" ID="txtSearch" class="form-control" placeholder="搜尋"></asp:TextBox>
-                            <div class="float-left">
-                                <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
-                                    <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
-                                    <asp:ListItem Selected="false" Value="srchTag"> 搜尋Tag </asp:ListItem>
-                                    <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
-                                </asp:DropDownList>
-                                <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
-                            </div>
+                                <div class="float-left">
+                                    <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
+                                        <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
+                                        <asp:ListItem Selected="false" Value="srchTag"> 搜尋Tag </asp:ListItem>
+                                        <asp:ListItem Selected="false" Value="srchWriter"> 搜尋作者 </asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
+                                </div>
                             </div>
                         </div>
 
@@ -200,8 +195,7 @@
                                                                     : Eval("LastEditTime") == null 
                                                                         ? string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("PostDate", "{0:yyyy/MM/dd}"))
                                                                         : string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("LastEditTime", "{0:yyyy/MM/dd}")) 
-                                                                : ""%>'>
-                                                            </asp:Button>
+                                                                : ""%>'></asp:Button>
                                                         </asp:Label>
                                                         <br />
                                                     </ItemTemplate>
@@ -229,7 +223,7 @@
 
                             </div>
                         </div>
-                        </div>
+                    </div>
                     <!-- 下方 -->
                     <div class="container-fluid">
                         <div class="row">
@@ -239,25 +233,51 @@
                                 <a href="/HomePage.aspx">首頁Home </a>
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
-                                <asp:PlaceHolder ID="plhAPI2_normal" runat="server">
+                                <asp:PlaceHolder ID="plhAPI_normal2" runat="server">
                                     <div id="PBDataList_normal2"></div>
                                 </asp:PlaceHolder>
                                 <%--使用API的母版塊，後台人員操作--%>
-                                <asp:PlaceHolder ID="plhAPI2_admin" runat="server" Visible="false">
+                                <asp:PlaceHolder ID="plhAPI_admin2" runat="server" Visible="false">
                                     <div id="PBDataList_Admin2"></div>
                                 </asp:PlaceHolder>
                                 <br />
                                 <br />
                                 <%--編輯母版塊按鈕，後台人員才能看到--%>
                                 <asp:PlaceHolder ID="plhPBEdit2" runat="server" Visible="false">
-                                    <asp:Button ID="btnPBEdit2" runat="server" CssClass="text-white rounded-pill" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                                    <asp:Button ID="btnPBEdit2" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="編輯母版塊" OnClick="btnPBEditMode_Click" />
+                                </asp:PlaceHolder>
+                                <%--結束母版塊編輯按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="plhPBDsplMode2" runat="server" Visible="false">
+                                    <asp:TextBox ID="addPBoard" runat="server" CssClass=" rounded-3  text-white " placeholder="新增母板標題"></asp:TextBox>
+                                    <asp:Button ID="btnAddPB" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="新增母板" OnClick="btnAddPB_Click" />
+                                    <asp:Button ID="btnPBSave2" runat="server" CssClass="btn-outline-danger btn-sm rounded-pill float-end" Text="結束編輯" OnClick="btnPBSave_Click" />
+                                </asp:PlaceHolder>
+                                <br />
+                                <hr />
+                                <%--使用API的子版塊，非編輯模式--%>
+                                <input id="currentPB" name="currentPB" runat="server" value="" type="hidden" />
+
+                                <asp:PlaceHolder ID="plhCBAPI_normal2" runat="server" Visible="false">
+                                    <asp:Label runat="server" Text="子板塊列表："></asp:Label>
+                                    <div id="CBDataList_normal2"></div>
+                                </asp:PlaceHolder>
+                                <%--使用API的子版塊，編輯模式--%>
+                                <asp:PlaceHolder ID="plhCBAPI_admin2" runat="server" Visible="false">
+                                    <asp:Label runat="server" Text="子板塊列表："></asp:Label>
+                                    <div id="CBDataList_Admin2"></div>
+                                </asp:PlaceHolder>
+                                <br />
+                                <br />
+                                <%--編輯子版塊按鈕，後台人員才能看到--%>
+                                <asp:PlaceHolder ID="plhCBEdit2" runat="server" Visible="false">
+                                    <asp:Button ID="btnCBEdit2" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="編輯子版塊" OnClick="btnCBEdit_Click" />
                                 </asp:PlaceHolder>
                                 <%--結束編輯按鈕，後台人員才能看到--%>
-                                <asp:PlaceHolder ID="plhPBDsplMode2" runat="server" Visible="false">
-                                    <asp:TextBox ID="addPBoard" runat="server"></asp:TextBox>
-                                    <asp:Button ID="btnAddPB" runat="server" CssClass="text-white rounded-pill" Text="新增母板" OnClick="btnAddPB_Click" />
-                                    <br />
-                                    <asp:Button ID="btnPBSave2" runat="server" CssClass="text-white rounded-pill" Text="結束編輯" OnClick="btnPBSave_Click" />
+                                <asp:PlaceHolder ID="plhCBDsplMode2" runat="server" Visible="false">
+                                    <asp:TextBox ID="addCBoard" runat="server" CssClass=" rounded-3  text-white" placeholder="(請輸入子版標題)"></asp:TextBox>
+                                    <asp:TextBox ID="addCBoardcontent" runat="server" CssClass=" rounded-3  text-white" placeholder="(請輸入子版描述)"></asp:TextBox>
+                                    <asp:Button ID="btnAddCB2" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="新增子板" OnClick="btnAddCB_Click" />
+                                    <asp:Button ID="btnCBSave2" runat="server" CssClass="btn-outline-danger btn-sm rounded-pill float-end" Text="結束編輯" OnClick="btnCBSave_Click" />
                                 </asp:PlaceHolder>
                             </div>
 
@@ -272,13 +292,15 @@
                             <%--黑白名單區，xs.sm時隱藏，md以上顯示，md為2格--%>
                             <div class="d-none d-md-block col-md-2 ">
                                 <br />
-                                <div class="BLmember rounded border border-1 border-light overflow-auto">
+                                <div class="BLmember rounded border border-0 bg-body bg-opacity-10">
                                     <asp:PlaceHolder ID="plhBlk" runat="server" Visible="false">
                                         <h3>黑名單</h3>
-                                        <asp:TextBox ID="txtBlkAcc" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言會員帳號)"></asp:TextBox>
-                                        <asp:TextBox ID="txtBlkDate" CssClass="rounded-3 fs-5 text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox>
-                                        <button type="button" class="btn btn-sm btn-outline-light text-white bg-dark  text-white" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號及日期(格式:2000-01-01)；更新日期請直接輸入新的日期並儲存，解除時間將為當日的0時；立即解除請輸入本日時間，永久黑單請輸入(2999-12-31)。 輸入帳號不得為管理員及版主。">?</button><br />
-                                        <asp:Button ID="Button1" runat="server" Text="確認" OnClick="btnBlk_Click" /><br />
+                                        &nbsp<asp:TextBox ID="txtBlkAcc" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入禁言會員帳號)"></asp:TextBox><br />
+                                        &nbsp<asp:TextBox ID="txtBlkDate" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox><br />
+
+                                        &nbsp<asp:Button ID="Button1" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="確認" OnClick="btnBlk_Click" />
+                                        <button type="button" class="btn btn-sm rounded-pill btn-outline-light text-white  float-end" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號及日期(格式:2000-01-01)；更新日期請直接輸入新的日期並儲存，解除時間將為當日的0時；立即解除請輸入本日時間，永久黑單請輸入(2999-12-31)。 輸入帳號不得為管理員及版主。">?</button> &nbsp
+                                        <br />
                                         <br />
                                         <asp:Label runat="server" Text="黑單列表："></asp:Label>
                                         <br />
@@ -294,31 +316,28 @@
                                         <br />
                                         <h5 class="page-header"></h5>
                                         <hr />
-                                        <figure class="figure">
 
 
-                                            <asp:TextBox ID="inpStp" CssClass="rounded-3  text-white" runat="server" placeholder="(輸入新增的文章類型)"></asp:TextBox>
-                                            <asp:Button ID="btnStpAdd" class="btn-outline-success btn-sm rounded-pill" runat="server" Text="儲存" OnClick="btnStpAdd_Click" />&nbsp
+
+                                        &nbsp<asp:TextBox ID="inpStp" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入新增的文章類型)"></asp:TextBox><br />
+                                        &nbsp<asp:Button ID="btnStpAdd" class="btn-outline-success btn-sm rounded-pill" runat="server" Text="儲存" OnClick="btnStpAdd_Click" />&nbsp
                                         <asp:Button ID="btnStpDelect" class="btn-outline-danger btn-sm rounded-pill" runat="server" Text="刪除" OnClick="btnStpDelect_Click" />
-                                            <br />
-                                            <asp:Label runat="server" Text="現有的文章類型："></asp:Label>
-                                            <asp:Repeater ID="RptrStp" runat="server">
-                                                <ItemTemplate>
-                                                    <asp:Literal ID="ltlStamp" runat="server" Text='<%# Eval("PostSort") %>' />/
-                                                </ItemTemplate>
-                                            </asp:Repeater>
-                                        </figure>
+                                        <br />
+                                        <asp:Label runat="server" Text="現有的文章類型："></asp:Label>
+                                        <asp:Repeater ID="RptrStp" runat="server">
+                                            <ItemTemplate>
+                                                <asp:Literal ID="ltlStamp" runat="server" Text='<%# Eval("PostSort") %>' />/
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                        <br />
                                     </asp:PlaceHolder>
-
-                                    <!--stamp:顯示當前的tag/新增的輸入框:/確認儲存/刪除stamp-->
-
                                 </div>
                                 <br>
                                 <br>
 
-                                <div class="MMlist">
+                                <div class="MMlist  rounded border border-0 bg-body bg-opacity-10">
                                     <asp:PlaceHolder ID="plhMM" runat="server" Visible="false">
-                                        <asp:TextBox ID="txtMMAcc" runat="server" placeholder="(輸入新增板主帳號)"></asp:TextBox><br />
+                                        <asp:TextBox ID="txtMMAcc" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入新增板主帳號)"></asp:TextBox><br />
                                         <button type="button" class="btn btn-sm btn-outline-light text-white bg-dark  text-white" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號，點擊新增使其就任板主職位；點擊解除使其卸任板主職位。 新增板主不得為管理員，亦不得為黑名單中的會員。">?</button><br />
                                         <asp:Button ID="btnMMUpdate" runat="server" Text="加入" OnClick="btnMMSave_Click" />
                                         <asp:Button ID="btnMMDelete" runat="server" Text="解除" OnClick="btnMMDelete_Click" /><br />
@@ -407,7 +426,7 @@
             });
 
         }
-
+        //母版編輯功能
         $(document).ready(function () {
             //一班會員看到的母版
             $.ajax({
@@ -421,7 +440,8 @@
                         <tr>
                             <td>
                               <div class="${item.PboardID}">
-                                  <a href="/PboardtoCboard.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">${item.Pname}</p>
+                                  <a href="/PboardtoCboard.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">
+                                    <p>${item.Pname}</p>
                               </div>
                             </td>
                         </tr>
@@ -439,7 +459,6 @@
 
             //顯示管理員看到的母版
             GetPBAdmin();
-
 
             //上移母版
             $("#PBDataList_Admin1,#PBDataList_Admin2").on('click', ".btnPBMoveUp", function () {
@@ -532,9 +551,6 @@
                             GetPBAdmin();
 
                         }
-                        else if (txtMsg == "STOP") {
-                            alert("此板塊已經置底");
-                        }
                         else {
                             alert("更新失敗，請聯絡管理員");
                         }
@@ -547,9 +563,103 @@
             });
 
 
+            //編輯模式的子版塊
+            function GetCBAdmin() {
+                var ID = $("#currentPB").val()
+                var postData2 = { "PBid": ID };
+                if (ID != null) {
+                    $.ajax({
+                        url: "/API/CBoardHandler.ashx?Action=GetList",
+                        method: "POST",
+                        data: postData2,
+                        dataType: "JSON",
+                        success: function (jsonText) {
+                            var rowsText = "";
+                            for (var item of jsonText) {
+                                rowsText += `
+                             <div class="${item.CboardID}" >
+                                  <input name="CboardID" class="CboardID" value="${item.CboardID}" type="hidden" />
+                                  <input name="Cname" class="Cname rounded-3  text-white" value="${item.Cname}"/>
+                                  <input name="Ccontent" class="Ccontent rounded-3  text-white" value="${item.CboardCotent}"/>
+                                  <input type="button" id="btnCBName" class="btn-outline-success btn-sm btnCBName rounded-pill" name="btnCBName" value="儲存" />
+                             </div>
+                             `;
+                            }
+                            console.log(jsonText);
+                            $("#CBDataList_Admin2").append(rowsText);
+
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                            alert("編輯模式子版塊載入失敗，請聯絡管理員。");
+                        }
+                    });
+                }
+            }
+            //顯示非編輯模式的子版塊
+            var ID = $("#currentPB").val()
+            var postData2 = { "PBid": ID };
+            if (ID != "" && plhLogined.Visible == "true") {
+                $.ajax({
+                    url: "/API/CBoardHandler.ashx?Action=GetList",
+                    method: "POST",
+                    data: postData2,
+                    dataType: "JSON",
+                    success: function (jsonText) {
+                        var rowsText = "";
+                        for (var item of jsonText) {
+                            rowsText += `
+                             <div class="${item.CboardID}" >
+                                  <input name="CboardID" class="CboardID" value="${item.CboardID}" type="hidden" />
+                                    <p>${item.Cname}</p>
+                             </div>
+                             `;
+                        }
+                        console.log(jsonText);
+                        $("#CBDataList_normal2").append(rowsText);
+
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                        alert("顯示子版塊失敗，請聯絡管理員。");
+                    }
+                });
+            }
+            //顯示管理員看到的子版
+            if (ID != "" && plhLogined.Visible == "true") {
+                GetCBAdmin();
+            }
+            //儲存子版新名稱
+            $("#CBDataList_Admin1,#CBDataList_Admin2").on('click', ".btnCBName", function () {
+                var parentDiv = $(this).closest("div");
+                var id = parentDiv.find("input.CboardID");
+                var name = parentDiv.find('input.Cname');
+                var content = parentDiv.find('input.Ccontent');
+                var postData = { "CboardID": id.val(), "Cname": name.val(), "CboardCotent": content.val() };
+
+                $.ajax({
+                    url: "/API/CBoardHandler.ashx?Action=ReName",
+                    method: "POST",
+                    data: postData,
+                    //dataType: "JSON",
+                    success: function (txtMsg) {
+                        console.log(txtMsg);
+                        if (txtMsg == "OK") {
+                            $("#CBDataList_Admin1 *").remove();
+                            $("#CBDataList_Admin2 *").remove();
+                            GetCBAdmin();
+                        }
+                        else {
+                            alert("更新失敗，請聯絡管理員");
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                        alert("通訊失敗，請聯絡管理員。")
+                    }
+                });
+            });
         });
-
-
     </script>
 </body>
 </html>

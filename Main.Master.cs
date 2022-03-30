@@ -25,6 +25,7 @@ namespace MKForum
         private ModeratorManager _Mmgr = new ModeratorManager();
         private MemberFollowManager _mfmgr = new MemberFollowManager();
         private StampManager _stpmgr = new StampManager();               //文章類型
+        private CboardManager _cBrdMgr = new CboardManager(); //母版塊
         private int memberStatus = 0;//預設會員等級為0
 
 
@@ -93,11 +94,18 @@ namespace MKForum
             string currentCboard = this.Request.QueryString["CboardID"];           //從URL取得當前CboardID
 
 
-            //如果是管理員，顯示編輯按鈕
+            //如果是管理員，顯示母子版塊編輯按鈕
             if (_pBrdMgr.GetMemberStatus() == 3)
             {
                 this.plhPBEdit1.Visible = true;
                 this.plhPBEdit2.Visible = true;
+
+                //管理員在母版進子版的頁面才能看到子版增刪修
+                if (currentPboard != null && currentCboard == null)
+                {
+                    this.plhCBAPI_normal2.Visible = true;
+                    plhCBEdit2.Visible = true;
+                }
             }
 
             #endregion
@@ -150,14 +158,28 @@ namespace MKForum
             }
             #endregion
 
+            #region//子母板塊顯示隱藏功能
             //母板編輯按鈕顯示：再次確認如果處於編輯中的狀態，則隱藏"編輯母板"按鈕
-            if (this.plhAPI2_admin.Visible)
+            if (this.plhAPI_admin1.Visible || this.plhAPI_admin2.Visible)
             {
-                this.plhPBEdit1.Visible = false;    //隱藏編輯按鈕
-                this.plhPBEdit2.Visible = false;    //隱藏編輯按鈕
-
+                this.plhPBEdit1.Visible = false;    //隱藏母板編輯按鈕
+                this.plhPBEdit2.Visible = false;    //隱藏母板編輯按鈕
+                this.plhAPI_normal1.Visible = false;    //隱藏顯示用的母板列表
+                this.plhAPI_normal2.Visible = false;    //隱藏顯示用的母板列表
             }
 
+            //子板編輯按鈕顯示：再次確認如果處於編輯中的狀態，則隱藏"編輯子板"按鈕
+            if (this.plhCBAPI_admin2.Visible || this.plhCBAPI_admin1.Visible)
+            {
+                this.plhCBEdit1.Visible = false;    //隱藏子板編輯按鈕
+                this.plhCBEdit2.Visible = false;    //隱藏子板編輯按鈕
+                this.plhCBAPI_normal1.Visible = false;    //隱藏顯示用的子板列表
+                this.plhCBAPI_normal2.Visible = false;    //隱藏顯示用的子板列表
+
+            }
+            //把當前母板的值傳到HTML再傳到API
+            this.currentPB.Value = currentPboard;
+            #endregion
         }
 
         protected void rptMemberFollows_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -261,15 +283,15 @@ namespace MKForum
         {
             #region//第一組的顯示隱藏
             this.plhPBEdit1.Visible = false;    //隱藏編輯按鈕
-            this.plhAPI1_normal.Visible = false;    //關閉顯示模式的ajax
-            this.plhAPI1_admin.Visible = true;    //換成有按鈕的ajax
+            this.plhAPI_normal1.Visible = false;    //關閉顯示模式的ajax
+            this.plhAPI_admin1.Visible = true;    //換成有按鈕的ajax
             this.plhPBDsplMode1.Visible = true;    //顯示儲存按鈕
             #endregion
 
             #region//第二組的顯示隱藏
             this.plhPBEdit2.Visible = false;    //隱藏編輯按鈕
-            this.plhAPI2_normal.Visible = false;    //關閉顯示模式的ajax
-            this.plhAPI2_admin.Visible = true;    //換成有按鈕的ajax
+            this.plhAPI_normal2.Visible = false;    //關閉顯示模式的ajax
+            this.plhAPI_admin2.Visible = true;    //換成有按鈕的ajax
             this.plhPBDsplMode2.Visible = true;    //顯示儲存按鈕
             #endregion
         }
@@ -278,15 +300,50 @@ namespace MKForum
         protected void btnPBSave_Click(object sender, EventArgs e)
         {
             this.plhPBDsplMode2.Visible = false;    //隱藏儲存按鈕
-            this.plhAPI2_admin.Visible = false;    //關閉有按鈕的ajax
-            this.plhAPI2_normal.Visible = true;    //換成顯示模式的ajax
+            this.plhAPI_admin2.Visible = false;    //關閉有按鈕的ajax
+            this.plhAPI_normal2.Visible = true;    //換成顯示模式的ajax
             this.plhPBEdit2.Visible = true;    //顯示編輯按鈕
             this.plhPBDsplMode1.Visible = false;    //隱藏儲存按鈕
-            this.plhAPI1_admin.Visible = false;    //關閉有按鈕的ajax
-            this.plhAPI1_normal.Visible = true;    //換成顯示模式的ajax
+            this.plhAPI_admin1.Visible = false;    //關閉有按鈕的ajax
+            this.plhAPI_normal1.Visible = true;    //換成顯示模式的ajax
             this.plhPBEdit1.Visible = true;    //顯示編輯按鈕
         }
 
+        //子版塊編輯按鈕
+        protected void btnCBEdit_Click(object sender, EventArgs e)
+        {
+            #region//第一組的顯示隱藏
+            this.plhCBEdit1.Visible = false;    //隱藏編輯按鈕
+            this.plhCBAPI_normal1.Visible = false;    //關閉顯示模式的ajax子列表
+            this.plhCBAPI_admin1.Visible = true;    //換成有按鈕的ajax子列表
+            this.plhCBDsplMode1.Visible = true;    //顯示儲存按鈕
+            #endregion
+
+            #region//第二組的顯示隱藏
+            this.plhCBEdit2.Visible = false;    //隱藏編輯按鈕
+            this.plhCBAPI_normal2.Visible = false;    //關閉顯示模式的ajax子列表
+            this.plhCBAPI_admin2.Visible = true;    //換成有按鈕的ajax子列表
+            this.plhCBDsplMode2.Visible = true;    //顯示儲存按鈕
+            #endregion
+        }
+
+        //儲存子版塊按鈕
+        protected void btnCBSave_Click(object sender, EventArgs e)
+        {
+            #region//第一組的顯示隱藏
+            this.plhCBEdit1.Visible = true;    //顯示編輯按鈕
+            this.plhCBAPI_normal1.Visible = true;    //顯示顯示模式的ajax子列表
+            this.plhCBAPI_admin1.Visible = false;    //關閉有按鈕的ajax子列表
+            this.plhCBDsplMode1.Visible = false;    //關閉儲存按鈕
+            #endregion
+
+            #region//第二組的顯示隱藏
+            this.plhCBEdit2.Visible = true;    //顯示編輯按鈕
+            this.plhCBAPI_normal2.Visible = true;    //顯示顯示模式的ajax子列表
+            this.plhCBAPI_admin2.Visible = false;    //關閉有按鈕的ajax子列表
+            this.plhCBDsplMode2.Visible = false;    //關閉儲存按鈕
+            #endregion
+        }
 
         protected void lblMember_Change_Click(object sender, EventArgs e)
         {
@@ -499,6 +556,47 @@ namespace MKForum
             }
         }
 
+        //新增子板
+        protected void btnAddCB_Click(object sender, EventArgs e)
+        {
+            string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
+            try
+            {
+                //取得輸入的新子板名稱，並去掉空白
+                string inpCBName = this.addCBoard.Text.Trim();
+                string cboardcontent = this.addCBoardcontent.Text.Trim();
+
+                //如果輸入的子板名稱是空的，提示使用者
+                string msg = "";
+
+                if (inpCBName == null)
+                {
+                    msg = "未輸入子板名稱";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
+                //如果輸入的子板塊包含禁字
+                if (this._chkInpMgr.IncludeBanWord(inpCBName))
+                {
+                    msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
+                    Response.Write($"<script>alert('{msg}')</script>");
+                    return;
+                }
+
+                this._cBrdMgr.CreateCboard(currentPboard,inpCBName, cboardcontent);
+                msg = "子板塊新增成功。";
+
+                Response.Write($"<script>alert('{msg}')</script>");
+            }
+            catch (Exception ex)
+            {
+                string msg = "子板塊新增失敗，請聯絡管理員。";
+                Response.Write($"<script>alert('{msg}')</script>");
+            }
+
+        }
+
+
         //新增文章類型
         protected void btnStpAdd_Click(object sender, EventArgs e)
         {
@@ -578,6 +676,7 @@ namespace MKForum
 
             }
         }
+
 
     }
 }
