@@ -37,7 +37,9 @@
         display:flex;
     }
 
-
+    .hot-cboards .content b{
+        color: blue;
+    }
         .hot-cboards .content a {
             font-size: 20px;
             text-decoration: none;

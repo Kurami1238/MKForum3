@@ -202,6 +202,7 @@ a:active {
 
 #btnwebLogin {
     background-color: white;
+    color: black;
 }
 
 
@@ -237,12 +238,13 @@ a:active {
             background-color: transparent;
             font-size:32px;
         }
-        .memberstatusleft #Notifycount {
-            position: absolute;
-            top: 30%;
-            right: 0px;
-            z-index:999;
-        }
+    .memberstatusleft #Notifycount {
+        position: absolute;
+        top: 30%;
+        right: 0px;
+        color: white;
+        z-index: 999;
+    }
 
         .memberstatuscenter {
             float: left;
@@ -263,6 +265,14 @@ a:active {
 
 .MemberStatus input {
     background-color: white;
+    color:black;
+}
+
+.Notify hr {
+    width: 100%;
+    text-align: right;
+    margin: 0px;
+    color:black;
 }
 
 /*--------------------------------*/
@@ -273,31 +283,56 @@ a:active {
 .Notifytext {
     position: fixed;
     z-index: -999;
-    border: 1px solid black;
+    border: none;
     height: 130px;
     width: 300px;
     background-color: white;
     text-align: left;
     bottom: 30px;
     right: 50px;
+    background: url("../images/reel2.png") no-repeat;
+    background-size: 100%;
     overflow: scroll;
 }
 
-.Notifytext input {
-    border:none;
-}
+    .Notifytext .Notifytextpos {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: transparent;
+    }
+
+    .Notifytext::-webkit-scrollbar {
+        width: 12px; /* width of the entire scrollbar */
+    }
+
+    .Notifytext::-webkit-scrollbar-track {
+        background: transparent; /* color of the tracking area */
+    }
+
+    .Notifytext::-webkit-scrollbar-thumb {
+        background-color: transparent; /* color of the scroll thumb */
+        border-radius: 20px; /* roundness of the scroll thumb */
+        border: none; /* creates padding around scroll thumb */
+    }
+
+
+    .Notifytext input {
+        border: none;
+        background-color: transparent;
+    }
 
     .Notifytext h3 {
-        background-color: white;
-        color: red;
+        background-color: transparent;
+        color: blue;
         font-size: 26px;
     }
 
     .Notifytext span {
-        background-color: white;
+        background-color: transparent;
         color: black;
     }
 
 #btnNotify {
-    background-color: white;
+    background-color: transparent;
 }
