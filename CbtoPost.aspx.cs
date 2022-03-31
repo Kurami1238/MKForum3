@@ -29,6 +29,12 @@ namespace MKForum
             this.DisplayPost(cboard);
             // 若被ban則看不到小按鈕
             this.CheckCanCreatePost();
+            // 提示使用者訊息
+            if (HttpContext.Current.Session["Msg"] != null)
+            {
+                this.msgmsg.Value = HttpContext.Current.Session["Msg"].ToString();
+                HttpContext.Current.Session["Msg"] = null;
+            }
 
         }
         protected void Page_Load(object sender, EventArgs e)

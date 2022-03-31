@@ -9,6 +9,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
             <input type="hidden" id="memberid" class="memberid" runat="server"/>
+            <input type="hidden" id="msgmsg" class="msgmsg" runat="server"/>
         <table class="zenbu col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>標題 * </th>
@@ -57,7 +58,7 @@
        
     </div>
     <div>
-        <table class="kobi col-sm-8 col-md-11 col-lg-11">
+        <table class="kobi col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>預覽 </th>
                 <td>
@@ -74,38 +75,44 @@
             </tr>
         </table>
     </div>
-    <div class="col-sm-11 col-md-11 col-lg-11">
+    <div class="col-sm-8 col-md-11 col-lg-11">
      <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" />
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>
     <script>
+        $(document).ready(function () {
+            var msg = $(".msgmsg").val();
+            console.log(msg);
+            if (msg != undefined && msg != null && msg != "")
+                alert(msg);
+        });
         $('.content').on('keyup', function () {
             var text = $(".content").val();
             var converter = new showdown.Converter();
             var html = converter.makeHtml(text);
             $('.result').html(html);
-            $('.result2').html(html);
         });
+        var text;
+        text = $(".content").val();
         function big() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "#";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function mid() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "###";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function sml() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "#####";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function narabi() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "+ a\n+ a\n+ a";
-            $(".zenbu .C .content").text(text);
-        }
+            $(".zenbu .C .content").val(text);
         function Getlink() {
             var upup = $(".upup").val();
             var mid = $(".memberid").val();

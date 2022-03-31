@@ -39,9 +39,12 @@ div{
             border-radius:10px;
             cursor:pointer;
             float: right;
-            transition: 0.4s;
+    color:rgba(255, 248, 240, 0.93);
+    transition: 0.4s;
 }
 .modal .btn:hover{
+    color:rgba(255, 248, 240, 0.93);
+
             box-shadow: 2px 2px 7px #851a1a;
             text-shadow: 2px 2px 5px #941a12;
 }

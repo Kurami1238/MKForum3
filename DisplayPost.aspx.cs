@@ -203,6 +203,7 @@ namespace MKForum
             if (Guid.TryParse(postidText, out postid))
             {
                 this._pmgr.DeletePost(postid);
+                HttpContext.Current.Session["Msg"] = "刪除成功";
                 this.BackToListPage();
             }
         }

@@ -11,6 +11,7 @@
     <div>
             <input type="hidden" id="Hidden1" class="memberid" runat="server"/>
             <input type="hidden" id="XXmsg" class="XXmsg" runat="server"/>
+            <input type="hidden" id="msgmsg" class="msgmsg" runat="server"/>
         <table class="zenbu col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>標題 * </th>
@@ -82,10 +83,16 @@
         </table>
     </div>
     <div class="col-sm-8 col-md-11 col-lg-11">
-     <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
+     <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" />
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>
     <script>
+        $(document).ready(function () {
+            var msg = $(".msgmsg").val();
+            console.log(msg);
+            if (msg != undefined && msg != null && msg != "")
+                alert(msg);
+        });
         $('.XXmsg').change(function(){
             alert($('.XXmsg').val)
         });
@@ -169,6 +176,5 @@
                 });
             }
         }
-        function Createa() { alert('新增文章成功') }
     </script>
 </asp:Content>
