@@ -274,7 +274,7 @@
                             </div>
 
                             <!--主內容區，sm為12格，md為8格 -->
-                            <div class="col-sm-12 col-md-8">
+                            <div class="col-sm-12 col-md-8  bg-opacity-10">
                                 <div class="row">
                                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                                     </asp:ContentPlaceHolder>
