@@ -76,7 +76,7 @@
                             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <a href="/HomePage.aspx">首頁Home </a>
+                            <a href="/index.aspx">首頁 </a>
                             <br>
                             <%--使用API的母版塊，前台觀看--%>
                             <asp:PlaceHolder ID="plhAPI_normal1" runat="server">
@@ -155,7 +155,6 @@
                         <!-- 上區塊內的右上區塊(使用者狀態區) -->
                         <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
                         <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
-                            使用者狀態區
                             <div class="MemberStatus">
                                 <asp:Button ID="btnwebLogin" runat="server" Text="登入" OnClick="btnwebLogin_Click" />
                                 <asp:PlaceHolder ID="plgMemberStatus" runat="server">
@@ -218,11 +217,12 @@
                     </div>
                     <!-- 下方 -->
                     <div class="container-fluid">
+                        <br>
                         <div class="row">
                             <!-- 固定母版塊 -->
                             <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
                             <div class="d-none d-md-block col-md-2" id="PBArea">
-                                <a href="/HomePage.aspx">首頁Home </a>
+                                <a class="ahome" href="/index.aspx"><h1>首頁</h1></a>
                                 <br>
                                 <%--使用API的母版塊，前台觀看--%>
                                 <asp:PlaceHolder ID="plhAPI_normal2" runat="server">
@@ -434,7 +434,7 @@
                             <td>
                               <div class="${item.PboardID}">
                                   <a href="/PboardtoCboard.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">
-                                    <p>${item.Pname}</p>
+                                    <h3>${item.Pname}</h3>
                               </div>
                             </td>
                         </tr>

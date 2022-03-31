@@ -9,7 +9,7 @@
         padding-left: 20px;
     }
 
-        .hot-cboards .title .fire {
+         .title .fire {
             float: left;
             background: url(https://acegif.com/wp-content/gifs/fire-17.gif) no-repeat;
             background-size: contain;
@@ -18,7 +18,7 @@
             height: 70px;
         }
 
-            .hot-cboards .title .fire h3 {
+             .title .fire h3 {
                 background-color: transparent;
                 position: absolute;
                 top: 50%;
@@ -26,7 +26,7 @@
                 transform: translate(-50%, -50%);
             }
 
-        .hot-cboards .title h1 {
+         .title h1 {
             line-height: 70px;
             margin-left: 60px;
         }
