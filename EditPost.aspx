@@ -22,13 +22,7 @@
                         <asp:ListItem Value="無"></asp:ListItem>
                     </asp:DropDownList>
             </tr>
-            <tr class="Cv">
-                <th>封面圖</th>
-                <td>
-                    <asp:FileUpload class="button" ID="fuCoverImage" runat="server" />
-                    <asp:Image ID="imgCoverImage" runat="server" />
-                </td>
-            </tr>
+            
             <tr class="img">
                 <th>文內圖片 </th>
                 <td>
@@ -45,6 +39,13 @@
                     <button class="dougu" type="button" onclick="sml();">小</button>
                     <button class="dougu" type="button" onclick="narabi();">項目符號</button>
                     <textarea class="content" id="content" rows="6" cols="28" runat="server"></textarea>
+                </td>
+            </tr>
+            <tr class="Cv">
+                <th>封面圖</th>
+                <td>
+                    <asp:FileUpload class="button" ID="fuCoverImage" runat="server" />
+                    <asp:Image ID="imgCoverImage" runat="server" />
                 </td>
             </tr>
             <tr class="msg">
@@ -74,7 +75,7 @@
         </table>
     </div>
     <div class="col-sm-11 col-md-11 col-lg-11">
-     <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
+     <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" />
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>
     <script>
@@ -136,6 +137,5 @@
             }
 
         }
-        function Createa() { alert('更新文章成功') }
     </script>
 </asp:Content>

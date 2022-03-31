@@ -20,22 +20,6 @@ hr{
     background: #333;
     background-image: linear-gradient(to right, #333, #ccc, #333);
 }
-a{
-    color:#ffffff;
-    text-decoration:none;
-}
-a:link{
-    color:#ffffff;
-    text-decoration:none;
-
-    }
-a:visited {
-    color:#ffffff;
-    }
-a:active {
-    text-decoration:none;
-    color:#fafafa;
-    }
 div{
     /* border: 2px solid rgb(194, 194, 194); */
 }
@@ -49,8 +33,6 @@ div{
     font-size: 30px;
 }
 .modal .btn{
-            color: antiquewhite; border:0;
-            background-color:#181717;
             margin-right: -2px;
             border: 1px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
@@ -60,7 +42,6 @@ div{
             transition: 0.4s;
 }
 .modal .btn:hover{
-            color:#fff;
             box-shadow: 2px 2px 7px #851a1a;
             text-shadow: 2px 2px 5px #941a12;
 }
@@ -103,11 +84,10 @@ div{
             margin-right: -10px;
         }
         .MainPost .Postbtn .btn{
-        color:#ffffff;
+            color:rgba(255, 248, 240, 0.87)
 
         }
         .MainPost .Postbtn div{
-            color: antiquewhite; border:0;
             margin-right: -2px;
             border: 1px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
@@ -118,10 +98,10 @@ div{
 
         }
         .MainPost .Postbtn div input{
-            color:#fff;
+            color:rgba(255, 248, 240, 0.87)
+
         }
         .MainPost .Postbtn div:hover{
-            color:#fff;
             box-shadow: 2px 2px 7px #851a1a;
             text-shadow: 2px 2px 5px #941a12;
         }
@@ -200,8 +180,6 @@ div{
             margin-right: -5px;
         }
         .nomainPost .nmbtn div{
-            color: antiquewhite; border:0;
-            background-color:#181717;
             border: 1px none #e76c25;
             box-shadow: 2px 1px 4px #e76c25;line-height: 25px;text-align: center;
             border-radius:10px;
@@ -212,14 +190,12 @@ div{
 
         }
         .nomainPost .nmbtn div input{
-            color:#fff;
+            color:rgba(255, 248, 240, 0.87);
             cursor:pointer;
         }
         .nomainPost .nmbtn div:hover{
-            color:#fff;
-            background-color:rgb(22, 21, 21);
-            border:2px #851a1a solid;
             text-shadow: 2px 2px 2px #941a12;
+            box-shadow: 2px 2px 6px #a52818;
         }
         
         .nomainPost .nmM{
@@ -245,7 +221,6 @@ div{
     transition: 0.4s;
 }
         .CNNmPost input{
-            color:#fafafa;
         }
         .CNNmPost .CNNmT{
             width: 60%;
@@ -256,8 +231,6 @@ div{
             box-shadow: 2px 2px 7px #e76c25;line-height: 35px;text-align: center;
         }
         .CNNmPost .CNNmT:hover{
-            color:#fff;
-            background-color:rgb(22, 21, 21);
             border:1px #851a1a solid;
             text-shadow: 2px 2px 5px #941a12;
         }
@@ -272,7 +245,6 @@ div{
 
         }
         .CNNmPost .CNNmB:hover{
-            color:#fff;
             box-shadow: 2px 2px 7px #851a1a;
             text-shadow: 2px 2px 5px #941a12;
         }

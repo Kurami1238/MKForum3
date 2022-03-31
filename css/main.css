@@ -2,7 +2,24 @@
     /*background-color: #181717;*/
     background-color: #070100;
     /*     background-color: blue; */
+    color:rgba(255, 248, 240, 0.87)
 }
+a{
+    color:rgba(255, 248, 240, 0.87);
+    text-decoration:none;
+}
+a:link{
+    color:rgba(255, 248, 240, 0.87);
+    text-decoration:none;
+    }
+a:visited {
+    text-decoration:none;
+    color:rgba(255, 248, 240, 0.87);
+    }
+a:active {
+    color:rgba(255, 248, 240, 0.87);
+    text-decoration:none;
+    }
 /*---------SU-3/30增加---------*/
 .Cname {
     width: 80%;

@@ -482,8 +482,8 @@ namespace MKForum.Managers
         {
             string connectionStr = ConfigHelper.GetConnectionString();
             string ruru = @"(SELECT PostID 
-                            FROM Posts 
-                            WHERE ";
+                             FROM Posts 
+                             WHERE ";
             for (int i = 0; i < hosii.Count; i++)
             {
                 if (i != hosii.Count - 1)
@@ -492,8 +492,8 @@ namespace MKForum.Managers
                     ruru += $" (PostCotent LIKE '%'+@{hosii[i]}+'%' OR Title LIKE '%'+@{hosii[i]}+'%' ))";
             }
             string pluszyoukenP = @" WHERE PostID IN (SELECT PostID 
-                            FROM Posts 
-                            WHERE ";
+                                     FROM Posts 
+                                     WHERE ";
             string pluszyoukenC = $@" WHERE PostID IN {ruru}
                                       AND CboardID = @board ";
             string commandText = string.Empty;
@@ -522,22 +522,22 @@ namespace MKForum.Managers
                                  {pluszyoukenP}
                                 ";
                 commandCountText = $@"SELECT COUNT(PostID)
-                                        FROM Posts
-                                        {pluszyoukenP}";
+                                      FROM Posts
+                                      {pluszyoukenP}";
             }
             if (string.Compare(pORc, "c") == 0)
             {
                 commandText = $@"
                                 SELECT PostID,Title,PostCotent,Posts.MemberID,CboardID,
-                                    LastEditTime,PostView,Members.Account,CoverImage,Floor
+                                    LastEditTime,PostView,Members.Account,CoverImage,Floor,PointID
                                 FROM Posts
                                 INNER JOIN Members
                                 ON Posts.MemberID = Members.MemberID
                                 {pluszyoukenC} 
                                 ";
                 commandCountText = $@"SELECT COUNT(PostID)
-                                        FROM Posts
-                                        {pluszyoukenC}";
+                                      FROM Posts
+                                      {pluszyoukenC}";
             }
             try
             {

@@ -24,13 +24,7 @@
                         <asp:ListItem Value="無"></asp:ListItem>
                     </asp:DropDownList>
             </tr>
-            <tr class="Cv">
-                <th>封面圖</th>
-                <td>
-                    <asp:FileUpload class="button" ID="fuCoverImage" runat="server" />
-                    <asp:Image ID="imgCoverImage" runat="server" />
-                </td>
-            </tr>
+            
             <tr class="img">
                 <th>文內圖片 </th>
                 <td>
@@ -53,6 +47,13 @@
                 <th>#tag (用/分隔)</th>
                 <td>
                     <asp:TextBox ID="txtPostHashtag" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr class="Cv">
+                <th>封面圖</th>
+                <td>
+                    <asp:FileUpload class="button" ID="fuCoverImage" runat="server" />
+                    <asp:Image ID="imgCoverImage" runat="server" />
+                </td>
             </tr>
             <tr class="msg">
                 <td colspan="2">
