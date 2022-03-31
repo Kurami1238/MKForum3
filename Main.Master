@@ -223,7 +223,6 @@
                             <!-- xs.sm時隱藏，md以上顯示，md為2格 -->
                             <div class="d-none d-md-block col-md-2" id="PBArea">
                                 <a class="ahome" href="/index.aspx"><h1>首頁</h1></a>
-                                <br>
                                 <%--使用API的母版塊，前台觀看--%>
                                 <asp:PlaceHolder ID="plhAPI_normal2" runat="server">
                                     <div id="PBDataList_normal2"></div>
