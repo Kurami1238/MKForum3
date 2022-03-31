@@ -108,6 +108,7 @@
     <Content Include="css\github-markdown.css" />
     <Content Include="css\index.css" />
     <Content Include="css\main.css" />
+    <Content Include="css\MemberRegister.css" />
     <Content Include="css\PboardtoCboard.css" />
     <Content Include="css\pen.png" />
     <Content Include="css\SearchPage.css" />

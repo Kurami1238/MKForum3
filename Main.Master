@@ -15,18 +15,7 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.min.js"></script>
     <style>
-        #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout {
-            background-color: white;
-            color: black;
-            font-family: Consolas;
-            font-size: 22pt;
-        }
 
-
-        #lblTEXT {
-            color: white;
-            font-size: 42pt;
-        }
 
         .span1 {
             color: white;
@@ -50,21 +39,23 @@
 
         <!--登入畫面-->
         <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
-
-            <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
-            <br />
-            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox><br />
-            <br />
-            <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnRegister" runat="server" Text="註冊" OnClick="btnRegister_Click" />
-            <br />
-            <span class="span1">測試版登入?</span>
-            <asp:CheckBox runat="server" ID="ckbskip" Checked="true" Visible="false" /><br />
-            <br />
-            <asp:Label ID="lblTEXT" runat="server" Text="Label"></asp:Label>
-            <br />
-            <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
+            <div class="mainlogin">
+                <h1>會員登入</h1>
+                <br />
+                <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
+                <br />
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox><br />
+                <br />
+                <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
+                <asp:Button ID="btnRegister" runat="server" Text="註冊" OnClick="btnRegister_Click" />
+                <br />
+                <span class="span1">測試版登入?</span>
+                <asp:CheckBox runat="server" ID="ckbskip" Checked="true" Visible="false" /><br />
+                <br />
+                <asp:Label ID="lblTEXT" runat="server"></asp:Label>
+                <br />
+                <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
+            </div>
         </asp:PlaceHolder>
 
         <!--主板畫面-->
@@ -171,16 +162,10 @@
                                 <asp:Button ID="btnwebLogin" runat="server" Text="登入" OnClick="btnwebLogin_Click" />
                                 <asp:PlaceHolder ID="plgMemberStatus" runat="server">
                                     <div class="memberstatusleft">
+                                        <asp:Label ID="Notifycount" runat="server" Text="5"></asp:Label>
 
-                                        <br />
-                                        <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
-                                        <br />
-                                        <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
-                                        &nbsp
-                                        <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
-                                        &nbsp&nbsp
                                         <div class="Notify">
-                                            <button id="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
+                                            <button id="btnNotify" type="button" onclick="Notifytoggle();">🔔</button>
                                             <div class="Notifytext">
                                                 <h3>通知：</h3>
                                                 <asp:Repeater ID="rptMemberFollows" runat="server" OnItemCommand="rptMemberFollows_ItemCommand">
@@ -202,19 +187,24 @@
                                                 </asp:Repeater>
                                             </div>
                                         </div>
+                                    </div>
 
-
-
-
+                                    <div class="memberstatuscenter">
+                                        <br />
+                                        <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
+                                        <br />
+                                        <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
                                         <br />
                                         <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
-
+                                        <br />
                                     </div>
 
                                     <div class="memberstatusright">
 
                                         <asp:Image ID="imgMember_PicPath" runat="server" />
                                         <br />
+                                        <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
+
                                         <br />
                                         <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
 
@@ -299,7 +289,8 @@
                                         &nbsp<asp:TextBox ID="txtBlkDate" CssClass="weight80 rounded-3  text-white" runat="server" placeholder="(輸入禁言期限)"></asp:TextBox><br />
 
                                         &nbsp<asp:Button ID="Button1" runat="server" CssClass="btn-outline-success btn-sm rounded-pill" Text="確認" OnClick="btnBlk_Click" />
-                                        <button type="button" class="btn btn-sm rounded-pill btn-outline-light text-white  float-end" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號及日期(格式:2000-01-01)；更新日期請直接輸入新的日期並儲存，解除時間將為當日的0時；立即解除請輸入本日時間，永久黑單請輸入(2999-12-31)。 輸入帳號不得為管理員及版主。">?</button> &nbsp
+                                        <button type="button" class="btn btn-sm rounded-pill btn-outline-light text-white  float-end" data-bs-toggle="popover" data-bs-placement="bottom" animation="true" data-bs-content="請輸入會員帳號及日期(格式:2000-01-01)；更新日期請直接輸入新的日期並儲存，解除時間將為當日的0時；立即解除請輸入本日時間，永久黑單請輸入(2999-12-31)。 輸入帳號不得為管理員及版主。">?</button>
+                                        &nbsp
                                         <br />
                                         <br />
                                         <asp:Label runat="server" Text="黑單列表："></asp:Label>

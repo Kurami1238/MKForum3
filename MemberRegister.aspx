@@ -5,12 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>MKForum會員註冊</title>
+    <link rel="stylesheet" href="css/MemberRegister.css" />
 </head>
 
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="mainMemberRegister">
             <table>
                 <tr>
                     <th>大頭照</th>
@@ -65,15 +66,6 @@
                     <th>Email</th>
                     <td>
                         <asp:TextBox runat="server" ID="txtEmail" TextMode="Email"></asp:TextBox>
-                    </td>
-                </tr>
-
-
-
-                <tr>
-                    <th>驗證碼</th>
-                    <td>
-                        <asp:TextBox runat="server" ID="txtCapt"></asp:TextBox>
                     </td>
                 </tr>
             </table>
