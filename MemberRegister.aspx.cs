@@ -102,7 +102,7 @@ namespace MKForum
         {
             if (accountcheck())
             {
-                this.ltlAccountcheckmsg.Text = "* 此帳號可使用";
+                this.ltlAccountcheckmsg.Text = "* 此帳號未使用過";
             }
             else
             {

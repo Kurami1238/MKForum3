@@ -74,6 +74,44 @@ namespace MKForum.Managers
                 return null;
             }
         }
+        public int? GetReplied_count(string MemberID)
+        {
+            string connectionStr = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"
+                    SELECT COUNT(Replied) as RepliedCount, MemberID FROM MemberFollows
+                    WHERE MemberID = @MemberID AND Replied = 0
+                    GROUP BY MemberID
+                ";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionStr))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, connection))
+                    {
+                        connection.Open();
+
+                        command.Parameters.AddWithValue("@MemberID", MemberID);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        reader.Read();
+                        //Post RepliedCount = new Post()
+                        //{
+                        //    RepliedCount = reader["RepliedCount"] as int?,
+                        //    MemberID = (Guid)reader["MemberID"],
+                        //};
+                        //return RepliedCount;
+                        int? RepliedCount = reader["RepliedCount"] as int?;
+                        return RepliedCount;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("MemberFollowManager.GetReplied_POSTMemberFollows", ex);
+                return null;
+            }
+        }
 
         public MemberFollow GetMemberFollowThisPost(Guid MemberID, Guid PostID)
         {

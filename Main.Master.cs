@@ -58,12 +58,19 @@ namespace MKForum
             {
                 string MemberID = HttpContext.Current.Session["MemberID"].ToString();
                 List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows(MemberID);
+                int? RepliedCount = _mfmgr.GetReplied_count(MemberID);
                 if (_mfmgr.GetReplied_POSTMemberFollows(MemberID) != null)
                 {
-                    this.rptMemberFollows.DataSource = MemberFollows;
-                    this.rptMemberFollows.DataBind();
-
+                    if (!IsPostBack)
+                    {
+                        this.rptMemberFollows.DataSource = MemberFollows;
+                        this.rptMemberFollows.DataBind();
+                    }
                 }
+                if (RepliedCount != null)
+                    this.Notifycount.Text = RepliedCount.ToString();
+                else
+                    this.Notifycount.Text = "";
 
                 this.btnwebLogin.Visible = false;
                 this.plhLogin.Visible = false;
