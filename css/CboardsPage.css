@@ -64,21 +64,8 @@ img{
     -webkit-filter: opacity(30%); /* Safari */
     filter: opacity(100%);
 }
-a{
-    color:#ffffff;
-    text-decoration:none;
-}
-a:link{
-    color:#ffffff;
-    text-decoration:none;
-
-    }
-a:visited {
-    color:#ffffff;
-    }
 
 .PostA:hover{
-    color:#ffffff;
     text-shadow: 2px 2px 2px #941a12;
     text-decoration:none;
 }
@@ -89,7 +76,6 @@ a:visited {
 }
 a:active {
     text-decoration:none;
-    color:#fafafa;
     }
 img{
     transition: 0.4s;
@@ -115,7 +101,6 @@ img{
     .Cboard .StampButton input{
         font-size: 27px;
         margin-left: 5px;
-        color:#fff;
         border: 1px none #e76c25;
         box-shadow: 2px 2px 6px #e76c25;line-height: 35px;text-align: center;
         border-radius:10px;
@@ -123,22 +108,18 @@ img{
         transition: 0.4s;
     }
     .Cboard .StampButton input:hover{
-        color:#fff;
         border:2px #851a1a none;
         text-shadow: 2px 2px 2px #941a12;
         box-shadow: 2px 2px 8px #941a12;
     
     }
     .Cboard .Sbtn{
-        color: antiquewhite; border:0;
-        color:#fff;
         border: 1px ridge #e76c25;
         box-shadow: 2px 1px 4px #e76c25;line-height: 40px;text-align: center;
         border-radius:10px;
         cursor:pointer;}
       
         .Cboard .Sbtn:hover{
-        color:#fff;
         border:2px #851a1a solid;
         text-shadow: 2px 2px 2px #941a12;
         }

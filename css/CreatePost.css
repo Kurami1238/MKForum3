@@ -9,21 +9,7 @@ hr{
     background: #333;
     background-image: linear-gradient(to right, #333, #ccc, #333);
 }
-a{
-    color:#fafafa;
-    text-decoration:none;
-}
-a:link{
-    color:#fafafa;
-    text-decoration:none;
-    }
-a:visited {
-    color:#ffffff;
-    }
-a:active {
-    text-decoration:none;
-    color:#fafafa;
-    }
+
 .zenbu{
     padding: 10px;
     margin: 5px;
@@ -32,7 +18,6 @@ a:active {
     border-bottom: 0.5px double #b34d11;
     box-shadow: 1px 1px 7px #e76c25;text-align: left;
     font-size: 18px;
-    color: #fafafaea;
 }
         .zenbu td{
             width: 70%;
@@ -49,7 +34,6 @@ a:active {
             font-size: 18px;
         }
         .zenbu select{
-          color: #fafafaea;
           border: 1px none #e76c25;
           box-shadow: 2px 1px 5px #e76c25;
           border-radius:10px;
@@ -63,8 +47,6 @@ a:active {
         }
         .zenbu input{
             width: 20%;
-            color: #fafafaea;
-            color: antiquewhite; border:0;
             border: 1px none #e76c25;
             box-shadow: 2px 1px 4px #e76c25;
             border-radius:10px;
@@ -73,7 +55,6 @@ a:active {
 
         }
         .zenbu .dougu{
-            color: #fafafaea;
             border: 1px ridge #a31515;
             margin-bottom: 2px;
 
@@ -93,10 +74,8 @@ a:active {
             width: 80%;
         }
         .zenbu #txtPostCotent{
-            color: #fafafaea;
         }
     textarea{
-        color: #fafafaea;
     }
 .kobi{
     padding: 10px;
@@ -107,10 +86,8 @@ a:active {
     border-bottom: 1px double #e76c25;
     box-shadow: 2px 2px 4px #e76c25;
     font-size: 22px;
-    color: #fafafaea;   
 }
 .kobi input{
-    color: antiquewhite; border:0;
     border: 1px ridge #e76c25;
     box-shadow: 2px 1px 4px #e76c25;text-align: center;
     border-radius:10px;
@@ -135,7 +112,6 @@ a:active {
     border: 1px ridge #e76c25;
     box-shadow: 2px 2px 6px #e76c25;text-align: center;
     font-size: 22px;
-    color: #fafafaea;
     border-radius:10px;
     width: 20%;
     float: right;

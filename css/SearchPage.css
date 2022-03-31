@@ -21,19 +21,7 @@ div{
     -webkit-filter: opacity(30%); /* Safari */
     filter: opacity(100%);
 }
-a{
-    color:#ffffff;
-    text-decoration:none;
-}
-a:link{
-    color:#ffffff;
-    text-decoration:none;
-    }
-a:visited {
-    color:#ffffff;
-}
 .PostA:hover{
-    color:#ffffff;
     text-shadow: 2px 2px 2px #941a12;
     text-decoration:none;
 }
@@ -44,7 +32,6 @@ a:visited {
 }
 a:active {
     text-decoration:none;
-    color:#fafafa;
     }
 img{
     transform: 2s;
