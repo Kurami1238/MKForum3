@@ -41,7 +41,12 @@ namespace MKForum
                 this.rptpht.DataSource = phtl;
                 this.rptpht.DataBind();
             }
-           
+            // 提示使用者訊息
+            if (HttpContext.Current.Session["Msg"] != null)
+            {
+                this.msgmsg.Value = HttpContext.Current.Session["Msg"].ToString();
+                HttpContext.Current.Session["Msg"] = null;
+            }
 
         }
 
@@ -222,6 +227,7 @@ namespace MKForum
                 Guid NmpostID = Guid.Empty;
                 this._pmgr.CreatePost(member.MemberID, point, post, out NmpostID);
                 // Js alert 提示回覆成功
+                HttpContext.Current.Session["Msg"] = "回復成功";
                 Response.Redirect(Request.RawUrl);
             }
             else
@@ -251,6 +257,7 @@ namespace MKForum
                     {
                         this._pmgr.DeletePost(postID);
                         // Js alert 提示刪除成功
+                        HttpContext.Current.Session["Msg"] = "刪除成功";
                         this.BackToListPage();
                     }
                     break;
@@ -274,6 +281,15 @@ namespace MKForum
         protected void btnMemberFollow_FollowStatus_Click(object sender, EventArgs e)
         {
             //從QS取得文章id 不能就回子版
+            if (this._member == null)
+            {
+                HttpContext.Current.Session["PostID"] = this.Request.QueryString["PostID"];
+                HttpContext.Current.Session["CboardID"] = this.Request.QueryString["CboardID"];
+                HttpContext.Current.Session["NeedTouroku"] = 2;
+                HttpContext.Current.Session["JumpPage"] = null;
+                Response.Redirect(Request.RawUrl, true);
+
+            }
             string postidText = this.Request.QueryString["PostID"];
             Guid postid;
             if (!Guid.TryParse(postidText, out postid))

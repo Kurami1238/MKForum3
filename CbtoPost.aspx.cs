@@ -143,7 +143,7 @@ namespace MKForum
                     {
                         newpc += pccarr[i];
                     }
-                    newpc += "...(點擊後觀看)";
+                    newpc += " ..........(點擊後觀看)";
                     seripost.Add(new Post() { PostID = x.PostID, PostCotent = newpc });
                 }
             }

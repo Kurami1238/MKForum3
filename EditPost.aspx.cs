@@ -69,7 +69,7 @@ namespace MKForum
         {
             int sort = 0;
             if (post.SortID != null)
-            sort = (int)post.SortID;
+                sort = (int)post.SortID;
             this.txtTitle.Text = post.Title;
             this.content.InnerText = post.PostCotent;
             this.dpdlPostStamp.SelectedValue = sort.ToString();
@@ -114,9 +114,13 @@ namespace MKForum
             string cboard = this.Request.QueryString["CboardID"];
 
             this._pmgr.UpdatePost(post);
-            Response.Redirect($"CbtoPost.aspx?CboardID={cboard}", true);
-
             //提示使用者成功
+            HttpContext.Current.Session["Msg"] = "更新成功";
+            if (post.PointID == null)
+                Response.Redirect($"DisplayPost.aspx?CboardID={cboard}&PostID={post.PostID}", true);
+            else
+                Response.Redirect($"DisplayPost.aspx?CboardID={cboard}&PostID={post.PointID}", true);
+
 
         }
 
@@ -148,6 +152,6 @@ namespace MKForum
         {
             this.BackToListPage();
         }
-        
+
     }
 }

@@ -69,10 +69,15 @@ img{
     text-shadow: 2px 2px 2px #941a12;
     text-decoration:none;
 }
+.PostA img{
+    border-radius:12px;
+
+}
 .PostA:hover img{
-    transform:  scale(1.03);
+    transform:  scale(1.15);
     -webkit-filter: brightness(105%); /* Safari */
     filter: brightness(105%);
+
 }
 a:active {
     text-decoration:none;
@@ -111,7 +116,6 @@ img{
         border:2px #851a1a none;
         text-shadow: 2px 2px 2px #941a12;
         box-shadow: 2px 2px 8px #941a12;
-    
     }
     .Cboard .Sbtn{
         border: 1px ridge #e76c25;
@@ -160,6 +164,8 @@ img{
                 padding: 8px;
                 height: 100px;
                 width: 70%; 
+                border-radius:12px;
+
             }
 
             .Cboard .content .article h3 {

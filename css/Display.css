@@ -33,7 +33,6 @@ div{
     font-size: 30px;
 }
 .modal .btn{
-            background-color:#181717;
             margin-right: -2px;
             border: 1px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
@@ -85,6 +84,7 @@ div{
             margin-right: -10px;
         }
         .MainPost .Postbtn .btn{
+            color:rgba(255, 248, 240, 0.87)
 
         }
         .MainPost .Postbtn div{
@@ -98,6 +98,8 @@ div{
 
         }
         .MainPost .Postbtn div input{
+            color:rgba(255, 248, 240, 0.87)
+
         }
         .MainPost .Postbtn div:hover{
             box-shadow: 2px 2px 7px #851a1a;
@@ -178,7 +180,6 @@ div{
             margin-right: -5px;
         }
         .nomainPost .nmbtn div{
-            background-color:#181717;
             border: 1px none #e76c25;
             box-shadow: 2px 1px 4px #e76c25;line-height: 25px;text-align: center;
             border-radius:10px;
@@ -189,12 +190,12 @@ div{
 
         }
         .nomainPost .nmbtn div input{
+            color:rgba(255, 248, 240, 0.87);
             cursor:pointer;
         }
         .nomainPost .nmbtn div:hover{
-            background-color:rgb(22, 21, 21);
-            border:2px #851a1a solid;
             text-shadow: 2px 2px 2px #941a12;
+            box-shadow: 2px 2px 6px #a52818;
         }
         
         .nomainPost .nmM{
@@ -230,7 +231,6 @@ div{
             box-shadow: 2px 2px 7px #e76c25;line-height: 35px;text-align: center;
         }
         .CNNmPost .CNNmT:hover{
-            background-color:rgb(22, 21, 21);
             border:1px #851a1a solid;
             text-shadow: 2px 2px 5px #941a12;
         }
