@@ -341,39 +341,65 @@ a:active {
 
 .ahome h1 {
     text-align: center;
-    background-color: transparent;
     font-size: 28px;
-    border-radius: 5px;
-    border: 3px white solid;
-    border-radius: 5px;
-    background-color: #F1CDCE;
     margin-bottom: 0px;
-    color: black;
+    color: white;
 }
 
-        .ahome h1:hover {
-            text-align: center;
-            background-color: transparent;
-            font-size: 32px;
-            border: 3px white solid;
-            border-radius: 5px;
-            background-color: deepskyblue;
-            color:white;
-        }
+    .ahome h1:hover {
+        text-align: center;
+
+        background: url("../images/skull.gif") no-repeat;
+        background-size: 100%;
+        color: transparent;
+    }
 
 #btnPBEdit2 {
 
 }
 
 #PBDataList_normal2 {
-    background: url("../images/door.png") no-repeat;
+    background: url("../images/doorclose.jpg") no-repeat;
     background-size: 100%;
 }
+
+    #PBDataList_normal2:hover {
+        background: url("../images/door.png") no-repeat;
+        background-size: 100%;
+        animation-name: example;
+        animation-duration: 1s;
+    }
+@keyframes example {
+    from {
+        background: url("../images/doorclose.jpg") no-repeat;
+        background-size: 100%;
+    }
+
+    to {
+        background: url("../images/door.png") no-repeat;
+        background-size: 100%;
+    }
+}
+
+    #PBDataList_normal2:hover > table * {
+
+        color: white;
+    }
 
     #PBDataList_normal2 table {
         margin: 0px;
         margin: auto;
+        background-color: transparent;
     }
+
+        #PBDataList_normal2 table * {
+            background-color: transparent;
+            color: transparent;
+        }
+
+            #PBDataList_normal2 table *:hover {
+                color: white;
+            }
 
     .PboardID h3 {
         margin: 15px 0px;
