@@ -33,6 +33,7 @@
     </style>
 </head>
 <body>
+    <div class="container">
     <form id="form1" runat="server">
 
         <!--登入畫面-->
@@ -125,7 +126,7 @@
                     </div>
                 </div>
                 <!-- 上區塊 -->
-                <div class="container-fluid bg-dark text-white">
+                <div class="container-fluid text-white">
                     <div class="row">
                         <!-- 上區塊內的左上區塊(LOGO & 搜尋) -->
                         <!-- sm為4格，md為4格，lg為4格，置中-->
@@ -349,6 +350,9 @@
             </div>
         </asp:PlaceHolder>
     </form>
+  <video class="video" src="images/Final Work Lunar Tears ffff.mp4" autoplay muted loop></video>
+
+</div>
 
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
