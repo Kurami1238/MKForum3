@@ -15,7 +15,7 @@ namespace MKForum.Managers
 
             string connectionString = ConfigHelper.GetConnectionString();
             string commandText =
-                @"  INSERT INTO Cboard
+                @"  INSERT INTO Cboards
                     (PboardID, Cname, CboardCotent)
                     VALUES
                     (@pboardID, @cname, @cboardCotent)";
@@ -29,6 +29,8 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"pboardID", pboardid);
                         command.Parameters.AddWithValue(@"cname", cname);
                         command.Parameters.AddWithValue(@"cboardCotent", cboardcotent);
+                        command.ExecuteNonQuery();
+
                     }
                 }
             }
