@@ -9,13 +9,14 @@ hr{
     background: #333;
     background-image: linear-gradient(to right, #333, #ccc, #333);
 }
+
 .zenbu{
     padding: 10px;
     margin: 5px;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 0.5px double #b34d11;
-    box-shadow: 1px 1px 7px #e76c25;text-align: left;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px;
+    text-align: left;
     font-size: 18px;
 }
         .zenbu td{
@@ -56,6 +57,9 @@ hr{
         .zenbu .dougu{
             border: 1px ridge #a31515;
             margin-bottom: 2px;
+
+        }
+        .zenbu .dougu:hover{
         }
         .zenbu input:hover{
             box-shadow: 2px 2px 4px #cc2626;
@@ -79,16 +83,15 @@ hr{
     width: 97.5%;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 0.5px double #b34d11;
-    box-shadow: 1px 1px 7px #e76c25;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px;
     font-size: 22px;
 }
 .kobi input{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px;
     border: 1px ridge #e76c25;
-    box-shadow: 2px 1px 4px #e76c25;text-align: center;
+    text-align: center;
     border-radius:10px;
     cursor:pointer;
-    
 }
 .kobi img{
     width: 50%;
@@ -106,13 +109,14 @@ hr{
 .cbtn{
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
-    border: 1px ridge #e76c25;
+    border: 1px none #e76c25;
     box-shadow: 2px 2px 6px #e76c25;text-align: center;
     font-size: 22px;
     border-radius:10px;
     width: 20%;
     float: right;
     transition: 0.4s;
+
 }
 .cbtn:hover{
     border: 1px double #cc2626;
