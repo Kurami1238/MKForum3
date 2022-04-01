@@ -336,3 +336,57 @@ a:active {
 #btnNotify {
     background-color: transparent;
 }
+
+/*--------------------------------*/
+
+.ahome h1 {
+    text-align: center;
+    background-color: transparent;
+    font-size: 28px;
+    border-radius: 5px;
+    border: 3px white solid;
+    border-radius: 5px;
+    background-color: #F1CDCE;
+    margin-bottom: 0px;
+    color: black;
+}
+
+        .ahome h1:hover {
+            text-align: center;
+            background-color: transparent;
+            font-size: 32px;
+            border: 3px white solid;
+            border-radius: 5px;
+            background-color: deepskyblue;
+            color:white;
+        }
+
+#btnPBEdit2 {
+
+}
+
+#PBDataList_normal2 {
+    background: url("../images/door.png") no-repeat;
+    background-size: 100%;
+}
+
+    #PBDataList_normal2 table {
+        margin: 0px;
+        margin: auto;
+    }
+
+    .PboardID h3 {
+        margin: 15px 0px;
+        background-color: transparent;
+        font-size: 24px;
+        text-align:center;
+    }
+
+    .PboardID h3:hover {
+        margin-bottom: 15px;
+        background-color: transparent;
+        font-size: 28px;
+        border: 3px white solid;
+        border-radius: 5px;
+        background-color: #0D6EFD;
+    }
