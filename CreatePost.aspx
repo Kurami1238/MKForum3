@@ -9,7 +9,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <a href="https://html-online.com/editor/" target="_blank">https://html-online.com/editor/</a>
     <div>
             <input type="hidden" id="Hidden1" class="memberid" runat="server"/>
             <input type="hidden" id="XXmsg" class="XXmsg" runat="server"/>
