@@ -9,6 +9,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
             <input type="hidden" id="memberid" class="memberid" runat="server"/>
+            <input type="hidden" id="msgmsg" class="msgmsg" runat="server"/>
         <table class="zenbu col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>標題 * </th>
@@ -22,13 +23,7 @@
                         <asp:ListItem Value="無"></asp:ListItem>
                     </asp:DropDownList>
             </tr>
-            <tr class="Cv">
-                <th>封面圖</th>
-                <td>
-                    <asp:FileUpload class="button" ID="fuCoverImage" runat="server" />
-                    <asp:Image ID="imgCoverImage" runat="server" />
-                </td>
-            </tr>
+            
             <tr class="img">
                 <th>文內圖片 </th>
                 <td>
@@ -47,6 +42,13 @@
                     <textarea class="content" id="content" rows="6" cols="28" runat="server"></textarea>
                 </td>
             </tr>
+            <tr class="Cv">
+                <th>封面圖</th>
+                <td>
+                    <asp:FileUpload class="button" ID="fuCoverImage" runat="server" />
+                    <asp:Image ID="imgCoverImage" runat="server" />
+                </td>
+            </tr>
             <tr class="msg">
                 <td colspan="2">
                     <asp:Label runat="server" ID="lblMsg" ForeColor="Red"></asp:Label>
@@ -56,7 +58,7 @@
        
     </div>
     <div>
-        <table class="kobi col-sm-8 col-md-11 col-lg-11">
+        <table class="kobi col-sm-11 col-md-11 col-lg-11">
             <tr class="T">
                 <th>預覽 </th>
                 <td>
@@ -73,38 +75,44 @@
             </tr>
         </table>
     </div>
-    <div class="col-sm-11 col-md-11 col-lg-11">
-     <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" OnClientClick="Createa();" />
+    <div class="col-sm-8 col-md-11 col-lg-11">
+     <asp:Button ID="btnSend" CssClass="cbtn" runat="server" Text="送出" OnClick="btnSend_Click" />
         <asp:Button ID="btnback" CssClass="cbtn" runat="server" Text="返回" OnClick="btnback_Click"/>
         </div>
     <script>
+        $(document).ready(function () {
+            var msg = $(".msgmsg").val();
+            console.log(msg);
+            if (msg != undefined && msg != null && msg != "")
+                alert(msg);
+        });
         $('.content').on('keyup', function () {
             var text = $(".content").val();
             var converter = new showdown.Converter();
             var html = converter.makeHtml(text);
             $('.result').html(html);
-            $('.result2').html(html);
         });
+        var text;
+        text = $(".content").val();
         function big() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "#";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function mid() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "###";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function sml() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "#####";
-            $(".zenbu .C .content").text(text);
+            $(".zenbu .C .content").val(text);
         }
         function narabi() {
-            var text = $(".zenbu .C .content").val();
+            text = $(".content").val();
             text += "+ a\n+ a\n+ a";
-            $(".zenbu .C .content").text(text);
-        }
+            $(".zenbu .C .content").val(text);
         function Getlink() {
             var upup = $(".upup").val();
             var mid = $(".memberid").val();
@@ -136,6 +144,5 @@
             }
 
         }
-        function Createa() { alert('更新文章成功') }
     </script>
 </asp:Content>

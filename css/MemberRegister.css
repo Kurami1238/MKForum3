@@ -1,0 +1,49 @@
+﻿* {
+    background-color:#000;
+    color: white;
+}
+
+.mainMemberRegister {
+    position: absolute;
+    top:20%;
+    left:40%;
+}
+
+.mainMemberRegister input {
+    background-color: #FFF;
+    color: black;
+    height: 35px;
+    width: 250px;
+}
+
+    .mainMemberRegister th {
+        font-size:25px;
+    }
+
+.mainMemberRegister tr {
+    height: 50px;
+}
+
+#btnAccountcheck {
+    width:80px;
+}
+
+#btnCancel, #btnSave {
+    width: 80px;
+    height:45px;
+    font-size:26px;
+}
+
+#btnSave {
+    margin: 15px 85px;
+}
+
+#rdbtnMember_SexList label {
+    margin-right: 30px;
+    margin-left: 5px;
+}
+
+#rdbtnMember_SexList_0, #rdbtnMember_SexList_1 {
+    width: 20px;
+    height: 20px;
+}

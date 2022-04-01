@@ -33,6 +33,15 @@ namespace MKForum
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden XXmsg;
 
         /// <summary>
+        /// msgmsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden msgmsg;
+
+        /// <summary>
         /// txtTitle 控制項。
         /// </summary>
         /// <remarks>
@@ -49,24 +58,6 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList dpdlPostStamp;
-
-        /// <summary>
-        /// fuCoverImage 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuCoverImage;
-
-        /// <summary>
-        /// imgCoverImage 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgCoverImage;
 
         /// <summary>
         /// fuPostImage 控制項。
@@ -112,6 +103,24 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPostHashtag;
+
+        /// <summary>
+        /// fuCoverImage 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuCoverImage;
+
+        /// <summary>
+        /// imgCoverImage 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgCoverImage;
 
         /// <summary>
         /// lblMsg 控制項。

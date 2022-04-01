@@ -26,6 +26,12 @@ namespace MKForum
             int cboardid = this.GetCboardID();
             // 繫結PostStamp
             this.BuildPostStamp(cboardid);
+            // 提示使用者訊息
+            if (HttpContext.Current.Session["Msg"] != null)
+            {
+                this.msgmsg.Value = HttpContext.Current.Session["Msg"].ToString();
+                HttpContext.Current.Session["Msg"] = null;
+            }
         }
         private void BuildPostStamp(int cboardid)
         {
@@ -98,8 +104,9 @@ namespace MKForum
                 }
                 else
                 {
-                    return;
-
+                    HttpContext.Current.Session["Msg"] = "別亂傳檔案，罰你重寫";
+                    Response.Redirect(Request.RawUrl);
+                    //return;
                 }
             }
             if (post.CoverImage == null)
@@ -123,6 +130,7 @@ namespace MKForum
             {
                 this._pmgr.CreateHashtag(postid, htaglist[i]);
             }
+            HttpContext.Current.Session["Msg"] = "新增文章成功";
             Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}", true);
         }
         protected void btnPostImage_Click(object sender, EventArgs e)
@@ -151,8 +159,9 @@ namespace MKForum
                 }
                 else
                 {
-                    this.XXmsg.Value = "別亂傳檔案";  
-                    return;
+                    HttpContext.Current.Session["Msg"] = "別亂傳檔案，罰你重寫";
+                    Response.Redirect(Request.RawUrl);
+                    //return;
                 }
 
             }

@@ -2,7 +2,24 @@
     /*background-color: #181717;*/
     background-color: #0F0016;
     /*     background-color: blue; */
+    color:rgba(255, 248, 240, 0.93)
 }
+a{
+    color:rgba(255, 248, 240, 0.93);
+    text-decoration:none;
+}
+a:link{
+    color:rgba(255, 248, 240, 0.93);
+    text-decoration:none;
+    }
+a:visited {
+    text-decoration:none;
+    color:rgba(255, 248, 240, 0.93);
+    }
+a:active {
+    color:rgba(255, 248, 240, 0.93);
+    text-decoration:none;
+    }
 /*---------SU-3/30增加---------*/
 .Cname {
     width: 80%;
@@ -157,16 +174,35 @@
     }
 */
 /*--------------------------------*/
-#btnRegister {
-    background-color: white;
-    font-size: 22px;
-    width: 75px;
-    height: 50px;
+
+.mainlogin {
+    position:absolute;
+    top:25%;
+    left:40%;
 }
 
+    .mainlogin h1 {
+        color:white;
+        text-align:center;
+    }
+
+    #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout, #btnRegister {
+        background-color: white;
+        color: black;
+        font-family: Consolas;
+        font-size: 22pt;
+    }
+
+    #btnLogin {
+        float:left;
+    }
+#btnRegister {
+    float: right;
+}
 
 #btnwebLogin {
     background-color: white;
+    color: black;
 }
 
 
@@ -181,15 +217,41 @@
     float: inherit;
     margin: 0 auto;
     width: auto;
-    height: 100%
+    height: 100%;
+    /*background-color:red;*/
 }
 
 .memberstatusleft {
     float: left;
-    width: 60%;
+    width: 40%;
     height: 100%;
+    position: relative;
 }
+    .memberstatusleft .Notify {
+        position: absolute;
+        top: 30%;
+        right: 0px;
+    }
+        .memberstatusleft .Notify #btnNotify {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            font-size:32px;
+        }
+    .memberstatusleft #Notifycount {
+        position: absolute;
+        top: 30%;
+        right: 0px;
+        color: white;
+        z-index: 999;
+    }
 
+        .memberstatuscenter {
+            float: left;
+            width: 20%;
+            height: 100%;
+            text-align: right;
+        }
     .memberstatusleft span {
         float: right;
     }
@@ -203,6 +265,14 @@
 
 .MemberStatus input {
     background-color: white;
+    color:black;
+}
+
+.Notify hr {
+    width: 100%;
+    text-align: right;
+    margin: 0px;
+    color:black;
 }
 
 /*--------------------------------*/
@@ -213,26 +283,110 @@
 .Notifytext {
     position: fixed;
     z-index: -999;
-    border: 1px solid black;
-    height: 100px;
+    border: none;
+    height: 130px;
     width: 300px;
     background-color: white;
     text-align: left;
     bottom: 30px;
     right: 50px;
+    background: url("../images/reel2.png") no-repeat;
+    background-size: 100%;
+    overflow: scroll;
 }
 
+    .Notifytext .Notifytextpos {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: transparent;
+    }
+
+    .Notifytext::-webkit-scrollbar {
+        width: 12px; /* width of the entire scrollbar */
+    }
+
+    .Notifytext::-webkit-scrollbar-track {
+        background: transparent; /* color of the tracking area */
+    }
+
+    .Notifytext::-webkit-scrollbar-thumb {
+        background-color: transparent; /* color of the scroll thumb */
+        border-radius: 20px; /* roundness of the scroll thumb */
+        border: none; /* creates padding around scroll thumb */
+    }
+
+
+    .Notifytext input {
+        border: none;
+        background-color: transparent;
+    }
+
     .Notifytext h3 {
-        background-color: white;
-        color: red;
+        background-color: transparent;
+        color: blue;
         font-size: 26px;
     }
 
     .Notifytext span {
-        background-color: white;
+        background-color: transparent;
         color: black;
     }
 
 #btnNotify {
-    background-color: white;
+    background-color: transparent;
 }
+
+/*--------------------------------*/
+
+.ahome h1 {
+    text-align: center;
+    background-color: transparent;
+    font-size: 28px;
+    border-radius: 5px;
+    border: 3px white solid;
+    border-radius: 5px;
+    background-color: #F1CDCE;
+    margin-bottom: 0px;
+    color: black;
+}
+
+        .ahome h1:hover {
+            text-align: center;
+            background-color: transparent;
+            font-size: 32px;
+            border: 3px white solid;
+            border-radius: 5px;
+            background-color: deepskyblue;
+            color:white;
+        }
+
+#btnPBEdit2 {
+
+}
+
+#PBDataList_normal2 {
+    background: url("../images/door.png") no-repeat;
+    background-size: 100%;
+}
+
+    #PBDataList_normal2 table {
+        margin: 0px;
+        margin: auto;
+    }
+
+    .PboardID h3 {
+        margin: 15px 0px;
+        background-color: transparent;
+        font-size: 24px;
+        text-align:center;
+    }
+
+    .PboardID h3:hover {
+        margin-bottom: 15px;
+        background-color: transparent;
+        font-size: 28px;
+        border: 3px white solid;
+        border-radius: 5px;
+        background-color: #0D6EFD;
+    }

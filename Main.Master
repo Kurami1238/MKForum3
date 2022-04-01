@@ -15,19 +15,6 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.min.js"></script>
     <style>
-        #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout {
-            background-color: white;
-            color: black;
-            font-family: Consolas;
-            font-size: 22pt;
-        }
-
-
-        #lblTEXT {
-            color: white;
-            font-size: 42pt;
-        }
-
         .span1 {
             color: white;
             font-size: 16pt;
@@ -145,21 +132,23 @@
 
         <!--登入畫面-->
         <asp:PlaceHolder ID="plhLogin" runat="server" Visible="true">
-
-            <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
-            <br />
-            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox><br />
-            <br />
-            <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnRegister" runat="server" Text="註冊" OnClick="btnRegister_Click" />
-            <br />
-            <span class="span1">測試版登入?</span>
-            <asp:CheckBox runat="server" ID="ckbskip" Checked="true" Visible="false" /><br />
-            <br />
-            <asp:Label ID="lblTEXT" runat="server" Text="Label"></asp:Label>
-            <br />
-            <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
+            <div class="mainlogin">
+                <h1>會員登入</h1>
+                <br />
+                <asp:TextBox ID="txtAccount" runat="server"></asp:TextBox><br />
+                <br />
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox><br />
+                <br />
+                <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
+                <asp:Button ID="btnRegister" runat="server" Text="註冊" OnClick="btnRegister_Click" />
+                <br />
+                <span class="span1">測試版登入?</span>
+                <asp:CheckBox runat="server" ID="ckbskip" Checked="true" Visible="false" /><br />
+                <br />
+                <asp:Label ID="lblTEXT" runat="server"></asp:Label>
+                <br />
+                <asp:Literal ID="ltlMessage" runat="server"></asp:Literal>
+            </div>
         </asp:PlaceHolder>
 
         <!--主板畫面-->
@@ -270,55 +259,57 @@
                         <!-- 上區塊內的右上區塊(使用者狀態區) -->
                         <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
                         <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
-                            使用者狀態區
                             <div class="MemberStatus">
                                 <asp:Button ID="btnwebLogin" runat="server" Text="登入" OnClick="btnwebLogin_Click" />
                                 <asp:PlaceHolder ID="plgMemberStatus" runat="server">
                                     <div class="memberstatusleft">
+                                        <asp:Label ID="Notifycount" runat="server" Text="5"></asp:Label>
 
-                                        <br />
-                                        <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
-                                        <br />
-                                        <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
-                                        &nbsp
-                                        <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
-                                        &nbsp&nbsp
                                         <div class="Notify">
-                                            <button id="btnNotify" type="button" onclick="Notifytoggle();">通知</button>
+                                            <button id="btnNotify" type="button" onclick="Notifytoggle();">🔔</button>
                                             <div class="Notifytext">
-                                                <h3>通知：</h3>
-                                                <asp:Repeater ID="rptMemberFollows" runat="server" OnItemCommand="rptMemberFollows_ItemCommand">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server">
-                                                            <%--<a href="DisplayPost.aspx?CboardID=<%#Eval("CboardID")%>&PostID=<%#Eval("PostID")%>#<%#Eval("Floor")%>">--%>
-                                                            <asp:Button ID="Button1" runat="server" CommandName='<%#Eval("PostID")%>' CommandArgument='<%#Eval("CboardID")+" "+Eval("Floor")+" "+ Eval("PostID")%>' Text='<%# !(bool)Eval("Replied")
+                                                <div class="Notifytextpos">
+                                                    <h3>通知：</h3>
+                                                    <asp:Repeater ID="rptMemberFollows" runat="server" OnItemCommand="rptMemberFollows_ItemCommand">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label1" runat="server">
+                                                                <%--<a href="DisplayPost.aspx?CboardID=<%#Eval("CboardID")%>&PostID=<%#Eval("PostID")%>#<%#Eval("Floor")%>">--%>
+                                                                <asp:Button ID="Button1" runat="server" CommandName='<%#Eval("PostID")%>' CommandArgument='<%#Eval("CboardID")+" "+Eval("Floor")+" "+ Eval("PostID")%>' Text='<%# !(bool)Eval("Replied")
                                                                 ? Eval("PointID") == null 
                                                                    ? Eval("LastEditTime") == null 
                                                                         ? string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("PostDate", "{0:yyyy/MM/dd}")) 
                                                                         : string.Format("新文章:「{0}」 {1}", Eval("Title"), Eval("LastEditTime", "{0:yyyy/MM/dd}"))
                                                                     : Eval("LastEditTime") == null 
-                                                                        ? string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("PostDate", "{0:yyyy/MM/dd}"))
-                                                                        : string.Format("第{0}樓 新回復:「{1}」 {2}", Eval("Floor"), Eval("PostCotent"), Eval("LastEditTime", "{0:yyyy/MM/dd}")) 
+                                                                        ? string.Format("新回復:「{1}」({0}F) {2}", Eval("Floor"), Eval("PostCotent"), Eval("PostDate", "{0:yyyy/MM/dd}"))
+                                                                        : string.Format("新回復:「{1}」({0}F) {2}", Eval("Floor"), Eval("PostCotent"), Eval("LastEditTime", "{0:yyyy/MM/dd}")) 
                                                                 : ""%>'></asp:Button>
-                                                        </asp:Label>
-                                                        <br />
-                                                    </ItemTemplate>
-                                                </asp:Repeater>
+                                                            </asp:Label>
+                                                            <br />
+                                                            <hr />
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
+                                                </div>
                                             </div>
+
                                         </div>
+                                    </div>
 
-
-
-
+                                    <div class="memberstatuscenter">
+                                        <br />
+                                        <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
+                                        <br />
+                                        <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
                                         <br />
                                         <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
-
+                                        <br />
                                     </div>
 
                                     <div class="memberstatusright">
 
                                         <asp:Image ID="imgMember_PicPath" runat="server" />
                                         <br />
+                                        <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
+
                                         <br />
                                         <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
 
@@ -539,7 +530,7 @@
                         rowsText += `
                               <div class="${item.PboardID}">
                                   <a href="/PboardtoCboard.aspx?PboardID=${item.PboardID}" name="PboardID" class="PboardID" value="${item.PboardID}">
-                                    <p>${item.Pname}</p>
+                                    <h3>${item.Pname}</h3>
                               </div>
                         `;
                     }

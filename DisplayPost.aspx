@@ -11,6 +11,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="MainPost col-sm-11 col-md-11 col-lg-11">
+            <input type="hidden" id="msgmsg" class="msgmsg" runat="server"/>
         <div class="mpostall">
             <div class="PostT">
                 <asp:Label ID="lblTitle" runat="server" Text="標題"></asp:Label>
@@ -100,7 +101,7 @@
 
     <div class="CNNmPost col-sm-11 col-md-11 col-lg-11">
         <asp:TextBox class="CNNmT" runat="server" ID="txtCNNmPost" placeholder="請輸入回覆訊息"></asp:TextBox>
-        <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" OnClientClick="NmCreatePosta();" />
+        <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" />
     </div>
 
     <div class="modal fade" id="hondouni" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-modal="true" role="dialog" >
@@ -142,7 +143,7 @@
                 </div>
                 <div class="modal-footer">
                     <asp:button runat="server" ID="modalback" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close" OnClick="modalback_Click" Text="我後悔了"></asp:button>
-                    <asp:Button class="btn" ID="Button1" runat="server" Text="刪除文章" OnClick="btnDeletePost_Click" OnClientClick="dela();" />
+                    <asp:Button class="btn" ID="Button1" runat="server" Text="刪除文章" OnClick="btnDeletePost_Click"  />
                 </div>
             </div>
         </div>
@@ -155,10 +156,12 @@
             var html = converter.makeHtml(text);
             $('.result').html(html);
 
+            var msg = $(".msgmsg").val();
+            console.log(msg);
+            if (msg != undefined && msg != null && msg != "")
+                alert(msg);
         });
 
-        function dela() { alert('刪除成功') }
-        function NmCreatePosta() { alert("回覆成功") }
 
     </script>
 </asp:Content>

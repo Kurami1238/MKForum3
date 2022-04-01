@@ -8,6 +8,7 @@
 
     <div class="Cboard">
         <h1>
+            <input type="hidden" id="msgmsg" class="msgmsg" runat="server"/>
             <asp:Literal runat="server" ID="ltlCbn"></asp:Literal></h1>
         <div class="StampButton">
             <asp:Repeater ID="rptStamp" runat="server" OnItemCommand="rptStamp_ItemCommand">
@@ -59,6 +60,12 @@
     <asp:ImageButton class="btncreatep" ID="btnCreatePostB" runat="server" Text="新增文章" OnClick="btnCreatePost_Click" ImageUrl="css/pen.png" Height="50px" Width="50px" />
     <asp:Label ID="lblMsg" runat="server" ForeColor="Red"></asp:Label>
     <script>
+        $(document).ready(function () {
+            var msg = $(".msgmsg").val();
+            console.log(msg);
+            if (msg != undefined && msg != null && msg != "")
+                alert(msg);
+        });
         $("#StampButton").on("click", "#Sbtn", function () {
             pageIndex = 1;
         });

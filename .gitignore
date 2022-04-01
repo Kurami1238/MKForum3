@@ -26,3 +26,4 @@ bin/
 *.sln.docstates
 # 專案客製
 FileDownload/
+/images/16.mp4
