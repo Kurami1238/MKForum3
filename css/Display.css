@@ -23,7 +23,9 @@ hr{
 div{
     /* border: 2px solid rgb(194, 194, 194); */
 }
-.modal{
+.mm{
+    background-color: rgba(149, 157, 165, 0.8);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px;
     font-family:'moubi';
 }
 .modal .modal-title{
@@ -55,8 +57,11 @@ div{
     font-family:'moubi';
     padding-left: 0px;
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 0.5px double #b34d11;
-    box-shadow: 1px 1px 7px #e76c25;text-align: left;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px;
+
+    /* border-bottom: 0.5px double #b34d11; */
+    /* box-shadow: 1px 1px 7px #e76c25;text-align: left; */
 }
         .MainPost .mpostall{
             padding: 20px;
@@ -84,14 +89,13 @@ div{
        }
         .MainPost .Postbtn{
             margin-left: 130px;
-            margin-right: -10px;
+            margin-right: -20px;
         }
         .MainPost .Postbtn .btn{
             color:rgba(255, 248, 240, 0.87)
 
         }
         .MainPost .Postbtn div{
-            margin-right: -2px;
             border: 1px none #e76c25;
             box-shadow: 2px 2px 7px #e76c25;line-height: 25px;text-align: center;
             border-radius:10px;
@@ -159,9 +163,11 @@ div{
     margin-top: 20px;
     margin-bottom: 20px;
     font-family:'moubi';
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px; */
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 1px double #e76c25;
-    box-shadow: 2px 2px 5px #e76c25;text-align: left;
+    /* border-bottom: 1px double #e76c25; */
+    /* box-shadow: 2px 2px 5px #e76c25; */
+    text-align: left;
 }
         .nomainPost .nmpostall{
             padding: 20px;
@@ -219,8 +225,8 @@ div{
     margin-top: 40px;
     font-family:'moubi';
     text-shadow: 2px 2px 2px #270c0c;
-    border-bottom: 1px double #e76c25;
-    box-shadow: 2px 2px 5px #e76c25;
+    /* border-bottom: 1px double #e76c25; */
+    /* box-shadow: 2px 2px 5px #e76c25; */
     transition: 0.4s;
 }
         .CNNmPost input{

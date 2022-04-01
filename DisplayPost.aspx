@@ -7,6 +7,11 @@
     <link href="css/github-markdown.css" rel="stylesheet" />
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <style>
+        .modal-content > *{
+            background-color:rgb(30, 30, 30);
+        }
+    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -103,9 +108,9 @@
         <asp:TextBox class="CNNmT" runat="server" ID="txtCNNmPost" placeholder="請輸入回覆訊息"></asp:TextBox>
         <asp:Button class="CNNmB" runat="server" ID="btnCNNmPost" OnClick="btnCNNmPost_Click" Text="新增回覆" />
     </div>
-
+    
     <div class="modal fade" id="hondouni" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-modal="true" role="dialog" >
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="background-color:black;"> 
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
