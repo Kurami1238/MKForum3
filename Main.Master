@@ -48,6 +48,7 @@
             .srchCSS * {
                 height: 30px;
                 --bs-gutter-x: 0px;
+                color:black;
             }
 
         .myShadow {
@@ -56,6 +57,8 @@
 
         #btnSearh {
             width: 100%;
+            color:white;
+            line-height:10px;
         }
 
         /*漢堡選單*/

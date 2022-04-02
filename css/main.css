@@ -224,13 +224,13 @@ a {
     float: right;
     background-color: orangered;
     font-size: 16px;
-    color: #198754;
+    color: skyblue;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     outline: none;
     border-radius: 8px;
-    box-shadow: 0 6px #ddd;
+    box-shadow: 0 5px #ddd;
 }
 
     #btnwebLogin:hover {
@@ -288,7 +288,7 @@ a {
 }
 
 #lblMember_NickName, #lblMember_Account, #lblMember_MemberStatus {
-    margin-left: 70px;
+    margin-left: 40%;
     float: left;
     color: #cce7f8;
     -webkit-animation: shining 0.5s alternate infinite;
@@ -310,7 +310,7 @@ a {
     border: 1px solid white;
     width: 40px;
     height: 40px;
-    margin-left:40px;
+    margin-left:20%;
 }
 
 .MemberStatus {
@@ -452,69 +452,90 @@ a {
 
     .ahome h1:hover {
         text-align: center;
-        background: url("../images/skull.gif") no-repeat;
-        background-size: 100%;
+
         color: transparent;
     }
 
-#btnPBEdit2 {
+#PBDataList_normal2 p {
+    margin: 15px 0px;
+    background-color: transparent;
+    font-size: 24px;
+    text-align: center;
+    box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    color:moccasin;
 }
 
-#PBDataList_normal2 {
-    background: url("../images/doorclose.jpg") no-repeat;
-    background-size: 100%;
-}
-
-    #PBDataList_normal2:hover {
-        background: url("../images/door.png") no-repeat;
-        background-size: 100%;
-        animation-name: example;
-        animation-duration: 1s;
+    #PBDataList_normal2 p::before {
+        content: '';
+        display: block;
+        position: absolute;
+        right: 300px;
+        top: 0;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(to right, transparent 0%, #E8E8E8 50%, transparent 100%);
+        animation: loadr 3s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
     }
 
-@keyframes example {
+@keyframes loadr {
     from {
-        background: url("../images/doorclose.jpg") no-repeat;
-        background-size: 100%;
+        right: 0px;
     }
 
     to {
-        background: url("../images/door.png") no-repeat;
-        background-size: 100%;
+        right: 30%;
     }
 }
 
-#PBDataList_normal2:hover > table * {
-    color: white;
+#PBDataList_normal2 p:hover {
+    margin: 15px 0px;
+    background-color: #E8E8E8;
+    font-size: 24px;
+    text-align: center;
+    color: black;
+    animation:linear;
 }
-
-#PBDataList_normal2 table {
-    margin: 0px;
-    margin: auto;
-    background-color: transparent;
-}
-
-    #PBDataList_normal2 table * {
-        background-color: transparent;
-        color: transparent;
-    }
-
-        #PBDataList_normal2 table *:hover {
-            color: white;
-        }
 
 .PboardID h3 {
     margin: 15px 0px;
     background-color: transparent;
     font-size: 24px;
     text-align: center;
+    box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
 }
 
-    .PboardID h3:hover {
-        margin-bottom: 15px;
-        background-color: transparent;
-        font-size: 28px;
-        border: 3px white solid;
-        border-radius: 5px;
-        background-color: #0D6EFD;
+    .PboardID h3::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -150px;
+        top: 0;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(to right, transparent 0%, #E8E8E8 50%, transparent 100%);
+        animation: load 3s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
     }
+
+@keyframes load {
+    from {
+        left: -150px;
+    }
+
+    to {
+        left: 100%;
+    }
+}
+
+.PboardID h3:hover {
+    margin: 15px 0px;
+    background-color: #E8E8E8;
+    font-size: 24px;
+    text-align: center;
+    color:black;
+}
