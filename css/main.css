@@ -3,34 +3,40 @@
     /* background-color: #0F0016; */
     background-color: transparent;
     /*     background-color: blue; */
-    color:rgba(255, 248, 240, 0.93)
+    color: rgba(255, 248, 240, 0.93)
 }
-.container .video{
-    z-index:-1;
+
+.container .video {
+    z-index: -1;
 }
-.container video{
+
+.container video {
     position: fixed;
-    left:0;
-  top:0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
-a{
-    color:rgba(255, 248, 240, 0.93);
-    text-decoration:none;
+
+a {
+    color: rgba(255, 248, 240, 0.93);
+    text-decoration: none;
 }
-a:link{
-    color:rgba(255, 248, 240, 0.93);
-    text-decoration:none;
+
+    a:link {
+        color: rgba(255, 248, 240, 0.93);
+        text-decoration: none;
     }
-a:visited {
-    text-decoration:none;
-    color:rgba(255, 248, 240, 0.93);
+
+    a:visited {
+        text-decoration: none;
+        color: rgba(255, 248, 240, 0.93);
     }
-a:active {
-    color:rgba(255, 248, 240, 0.93);
-    text-decoration:none;
+
+    a:active {
+        color: rgba(255, 248, 240, 0.93);
+        text-decoration: none;
     }
 /*---------SU-3/30增加---------*/
 .Cname {
@@ -188,41 +194,123 @@ a:active {
 /*--------------------------------*/
 
 .mainlogin {
-    position:absolute;
-    top:25%;
-    left:40%;
+    position: absolute;
+    top: 25%;
+    left: 40%;
 }
 
     .mainlogin h1 {
-        color:white;
-        text-align:center;
+        color: white;
+        text-align: center;
     }
 
-    #txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout, #btnRegister {
-        background-color: white;
-        color: black;
-        font-family: Consolas;
-        font-size: 22pt;
-    }
+#txtAccount, #txtPassword, #btnLogin, #ltlMessage, #btnLogout, #btnRegister {
+    background-color: white;
+    color: black;
+    font-family: Consolas;
+    font-size: 22pt;
+}
 
-    #btnLogin {
-        float:left;
-    }
+#btnLogin {
+    float: left;
+}
+
 #btnRegister {
     float: right;
 }
+/*-------------------------------------------*/
 
-#btnwebLogin {
-    background-color: white;
-    color: black;
+#btnwebLogin, #btnwebLogout {
+    float: right;
+    background-color: orangered;
+    font-size: 16px;
+    color: #198754;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border-radius: 8px;
+    box-shadow: 0 6px #ddd;
 }
 
+    #btnwebLogin:hover {
+        background-color: #3e8e41;
+        cursor: pointer;
+        animation: jelly 0.2s;
+        color: white;
+    }
 
+    #btnwebLogin:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+        color: white;
+    }
+
+    #btnwebLogout:hover {
+        background-color: #3e8e41;
+        cursor: pointer;
+        animation: jelly 0.2s;
+        color: white;
+    }
+
+    #btnwebLogout:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+        color: white;
+    }
+
+@keyframes jelly {
+    0%, 100% {
+        transform: scale(1, 1);
+    }
+    33% {
+        transform: scale(0.9, 1.1);
+    }
+    66% {
+        transform: scale(1.1, 0.9);
+    }
+}
+
+/*-------------------------------------------*/
+#lblMember_Change {
+    float: right;
+    margin-top: 35px;
+    margin-right: 10px;
+    font-size: 24px;
+    background-color: transparent;
+    border: none;
+}
+
+.memberinfo {
+    text-align: center;
+}
+
+#lblMember_NickName, #lblMember_Account, #lblMember_MemberStatus {
+    margin-left: 70px;
+    float: left;
+    color: #cce7f8;
+    -webkit-animation: shining 0.5s alternate infinite;
+    animation: shining 0.5s alternate infinite;
+}
+
+@-webkit-keyframes shining {
+    from {
+        text-shadow: 0 0 10px lightblue, 0 0 20px lightblue, 0 0 30px lightblue, 0 0 40px skyblue, 0 0 50px skyblue, 0 0 60px skyblue;
+    }
+
+    to {
+        text-shadow: 0 0 5px lightblue, 0 0 10px lightblue, 0 0 15px lightblue, 0 0 20px skyblue, 0 0 25px skyblue, 0 0 30px skyblue;
+    }
+}
+/*-------------------------------------------*/
 #imgMember_PicPath {
     border-radius: 50%;
     border: 1px solid white;
     width: 40px;
     height: 40px;
+    margin-left:40px;
 }
 
 .MemberStatus {
@@ -239,17 +327,20 @@ a:active {
     height: 100%;
     position: relative;
 }
+
     .memberstatusleft .Notify {
         position: absolute;
         top: 30%;
         right: 0px;
     }
+
         .memberstatusleft .Notify #btnNotify {
             border: none;
             outline: none;
             background-color: transparent;
-            font-size:32px;
+            font-size: 32px;
         }
+
     .memberstatusleft #Notifycount {
         position: absolute;
         top: 30%;
@@ -258,15 +349,16 @@ a:active {
         z-index: 999;
     }
 
-        .memberstatuscenter {
-            float: left;
-            width: 20%;
-            height: 100%;
-            text-align: right;
-        }
-    .memberstatusleft span {
-        float: right;
-    }
+.memberstatuscenter {
+    float: left;
+    width: 20%;
+    height: 100%;
+    text-align: right;
+}
+
+.memberstatusleft span {
+    float: right;
+}
 
 .memberstatusright {
     padding-top: 10px;
@@ -277,14 +369,14 @@ a:active {
 
 .MemberStatus input {
     background-color: white;
-    color:black;
+    color: black;
 }
 
 .Notify hr {
     width: 100%;
     text-align: right;
     margin: 0px;
-    color:black;
+    color: black;
 }
 
 /*--------------------------------*/
@@ -360,14 +452,12 @@ a:active {
 
     .ahome h1:hover {
         text-align: center;
-
         background: url("../images/skull.gif") no-repeat;
         background-size: 100%;
         color: transparent;
     }
 
 #btnPBEdit2 {
-
 }
 
 #PBDataList_normal2 {
@@ -381,6 +471,7 @@ a:active {
         animation-name: example;
         animation-duration: 1s;
     }
+
 @keyframes example {
     from {
         background: url("../images/doorclose.jpg") no-repeat;
@@ -393,32 +484,31 @@ a:active {
     }
 }
 
-    #PBDataList_normal2:hover > table * {
+#PBDataList_normal2:hover > table * {
+    color: white;
+}
 
-        color: white;
-    }
+#PBDataList_normal2 table {
+    margin: 0px;
+    margin: auto;
+    background-color: transparent;
+}
 
-    #PBDataList_normal2 table {
-        margin: 0px;
-        margin: auto;
+    #PBDataList_normal2 table * {
         background-color: transparent;
+        color: transparent;
     }
 
-        #PBDataList_normal2 table * {
-            background-color: transparent;
-            color: transparent;
+        #PBDataList_normal2 table *:hover {
+            color: white;
         }
 
-            #PBDataList_normal2 table *:hover {
-                color: white;
-            }
-
-    .PboardID h3 {
-        margin: 15px 0px;
-        background-color: transparent;
-        font-size: 24px;
-        text-align:center;
-    }
+.PboardID h3 {
+    margin: 15px 0px;
+    background-color: transparent;
+    font-size: 24px;
+    text-align: center;
+}
 
     .PboardID h3:hover {
         margin-bottom: 15px;
