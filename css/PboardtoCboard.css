@@ -4,53 +4,52 @@
     border: none;
 }
 
-    .Pboard h1 {
-        margin-left: 50px;
+    .Pboard span {
+        margin-left: 80px;
         font-size: 50px
     }
 
     .Pboard .content {
-        padding: 30px;
-        margin: 40px;
-        margin-top: 20px;
-        margin-right: 120px;
+        margin-right: 150px;
+
     }
 
         .Pboard .content .article {
             margin: 20px auto;
-            width: auto;
+            width: 80%;
             height: 200px;
+            border-bottom: 0.5px double #b34d11;
+            box-shadow: 1px 1px 7px #e76c25;line-height: 100px;text-align: left;
+            transition: 0.4s;
         }
 
             .Pboard .content .article .t {
                 float: left;
                 width: 30%;
                 height: 100%;
-                background-color: #eeeeee;
-                padding: 80px 0;
+                padding: 80px 0px;
                 border: none;
+                text-align:center;
             }
 
                 .Pboard .content .article .t h6 {
-                    background-color: #eeeeee;
-                    Color: black;
-                    font-size: 40px;
+                    color: #eeeeee;
+                    font-size: 30px;
                     text-align: center;
+                    border-radius: 8px;
                 }
-
 
             .Pboard .content .article .p {
                 float: left;
                 width: 70%;
                 height: 100%;
-                background-color: #eeeeee;
                 padding: 50px 0;
                 border: none;
             }
 
                 .Pboard .content .article .p p {
-                    background-color: #eeeeee;
-                    color: black;
+                    color: #eeeeee;
                     text-align: center;
-                    font-size: 20px;
+                    font-size: 30px;
+                    border-radius: 8px;
                 }

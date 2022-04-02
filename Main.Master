@@ -19,6 +19,7 @@
             background-color: transparent;
             color: rgba(255, 248, 240, 0.93)
         }
+
         .span1 {
             color: white;
             font-size: 16pt;
@@ -32,12 +33,6 @@
             padding: 5%;
             color: white;
         }
-
-        /*p {
-  line-height: 1.4;
-}*/
-
-
         /*上區的樣式*/
         #up-area {
             /*background-color:#010E0F ;*/
@@ -53,27 +48,43 @@
             .srchCSS * {
                 height: 30px;
                 --bs-gutter-x: 0px;
+                color:black;
             }
 
         .myShadow {
-            /*border-bottom: 0.1px solid yellow ;*/
-            /*box-shadow: 1px -4px 15px -5px #ff6a00 inset;*/
             box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         }
 
+        #btnSearh {
+            width: 100%;
+            color:white;
+            line-height:10px;
+        }
 
         /*漢堡選單*/
         #hamburgerMenu {
+            height: none;
             margin-bottom: 10px;
         }
 
-        /*#offcanvasLeft {
-            background: red;*/ /* For browsers that do not support gradients */
-        /*background: -webkit-linear-gradient(left top, red, yellow);*/ /* For Safari 5.1 to 6.0 */
-        /*background: -o-linear-gradient(bottom right, red, yellow);*/ /* For Opera 11.1 to 12.0 */
-        /*background: -moz-linear-gradient(bottom right, red, yellow);*/ /* For Firefox 3.6 to 15 */
-        /*background: linear-gradient(to bottom right, red, yellow);*/ /* Standard syntax */
-        /*}*/
+        #hamburgerMenu2 {
+            position: absolute;
+            margin-top: 0px;
+            margin: 25px;
+            z-index: 2000;
+        }
+
+        #space {
+            height: 39.0167px;
+        }
+
+        #offcanvasLeft {
+            background: red; /* For browsers that do not support gradients */
+            background: -webkit-linear-gradient(left top, #0F0016, #212B36); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(bottom right, #0F0016, #212B36); /*For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(bottom right, #0F0016, #212B36); /*For Firefox 3.6 to 15 */
+            background: linear-gradient(to bottom right, #0F0016, #212B36); /* Standard syntax */
+        }
 
         /*左收合母列表的尺寸*/
         .offcanvas-myLeft {
@@ -82,6 +93,7 @@
             width: 250px;
             border-right: 1px solid rgba(0, 0, 0, 0.2);
             transform: translateX(-100%);
+            scrollbar-darkshadow-color: ActiveBorder;
         }
 
         /*PBArea:左側固定母列表*/
@@ -92,8 +104,8 @@
             padding: 1%;
         }
 
-            /*字體/行高/顏色*/
-            /*#PBArea p {
+        /*字體/行高/顏色*/
+        /*#PBArea p {
                 font: small-caps bold 100% Microsoft JhengHei;
                 line-height: 2;
                 color: #398962;
@@ -162,7 +174,11 @@
                     <div class="container-all">
                         <!--xs以下顯示，md以上不顯示 -->
                         <div class="d-xs-block d-md-none">
-
+                            <!--左選單按鈕-->
+                            <div id="hamburgerMenu2" class="d-xs-block d-sm-none">
+                                <a class="btn navbar-dark border-white" data-bs-toggle="offcanvas" href="#offcanvasLeft" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
+                                </a>
+                            </div>
                             <!--左邊收合母版-->
                             <div class="offcanvas offcanvas-myLeft" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasExampleLabel">
                                 <div class="offcanvas-header">
@@ -223,18 +239,25 @@
                                 <!-- sm為4格，md為4格，lg為4格，置中-->
                                 <div class=" col-sm-3 col-md-2 col-lg-2 ">
                                     <div class="d-flex d-none d-sm-block searchArea ">
-                                        <div class="d-xs-block d-md-none">
-                                            <!--左選單按鈕-->
-                                            <div id="hamburgerMenu">
-                                                <a class="btn navbar-dark border-white" data-bs-toggle="offcanvas" href="#offcanvasLeft" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
-                                                </a>
-                                            </div>
+                                        <div class="d-xs-block d-md-none ">
                                         </div>
                                         <div class="row">
-                                            <div class="srchCSS col-xs-8 col-sm-6">
+                                            <div class="col-xs-8 col-sm-7">
+                                                <!--左選單按鈕-->
+                                                <div id="hamburgerMenu">
+                                                    <a class="btn navbar-dark border-white" data-bs-toggle="offcanvas" href="#offcanvasLeft" role="button" aria-controls="offcanvasExample"><span class="navbar-toggler-icon"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="srchCSS col-xs-4 col-sm-5">
+                                                <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success float-end" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
+                                            </div>
+                                        </div>
+                                        <div class="row try">
+                                            <div class="srchCSS col-xs-8 col-sm-7">
                                                 <asp:TextBox runat="server" ID="txtSearch" class="form-control" placeholder="搜尋"></asp:TextBox>
                                             </div>
-                                            <div class="srchCSS col-xs-4 col-sm-6">
+                                            <div class="srchCSS col-xs-4 col-sm-5">
                                                 <asp:DropDownList ID="srchDrop" runat="server" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                                     <asp:ListItem Selected="True" Value="srchAll"> 全站搜尋 </asp:ListItem>
                                                     <asp:ListItem Selected="false" Value="srchCurrent" disabled="disable"> 當前板塊搜尋 </asp:ListItem>
@@ -243,13 +266,7 @@
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="srchCSS col-xs-8 col-sm-6">
-                                            </div>
-                                            <div class="srchCSS col-xs-4 col-sm-6">
-                                                <asp:Button runat="server" ID="btnSearh" class="btn btn-outline-success float-end" type="submit" OnClick="btnSearh_Click" Text="Search"></asp:Button>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
 
@@ -257,6 +274,7 @@
                                 <!-- 上區塊內的中間區塊(LOGO & 網站標題) -->
                                 <!-- sm為4格，md為4格，lg為4格，置中-->
                                 <div class="col-sm-5 col-md-6 col-lg-6 h3 text-center">
+
                                     <a href="/index.aspx" class="d-block">
                                         <img src="images/logo.gif" width="40" height="40" class="d-inline-block align-top" alt=""></a>
                                     MKForun
@@ -265,6 +283,7 @@
                                 <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
                                 <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
                                     <div class="MemberStatus">
+
                                         <asp:Button ID="btnwebLogin" runat="server" Text="登入" OnClick="btnwebLogin_Click" />
                                         <asp:PlaceHolder ID="plgMemberStatus" runat="server">
                                             <div class="memberstatusleft">
@@ -301,22 +320,23 @@
 
                                             <div class="memberstatuscenter">
                                                 <br />
-                                                <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
-                                                <br />
-                                                <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
-                                                <br />
-                                                <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
                                                 <br />
                                             </div>
 
                                             <div class="memberstatusright">
-
+                                                <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
                                                 <asp:Image ID="imgMember_PicPath" runat="server" />
                                                 <br />
-                                                <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
+                                                <asp:Button ID="lblMember_Change" runat="server" OnClick="lblMember_Change_Click" Text="🖍" />
 
-                                                <br />
-                                                <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
+                                                <div class="memberinfo">
+                                                    <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
+                                                    <br />
+                                                    <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
+                                                    <br />
+                                                    <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
+                                                    <br />
+                                                </div>
 
                                             </div>
                                         </asp:PlaceHolder>

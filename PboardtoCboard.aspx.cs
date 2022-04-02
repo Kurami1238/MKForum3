@@ -21,6 +21,8 @@ namespace MKForum
                 int intpboarqs = Convert.ToInt32(pboarqs);
 
                 List<Cboard> cboards = CboardManager.GetCPboardtoCboard(intpboarqs);
+                
+                this.lblpname.Text = CboardManager.GetPbtoCbtitle(intpboarqs);
                 this.rptpbtocb.DataSource = cboards;
                 this.rptpbtocb.DataBind();
             }

@@ -10,7 +10,7 @@
 
     <div class="Pboard">
 
-        <h1>J-pop</h1>
+        <asp:Label ID="lblpname" runat="server"></asp:Label>
 
         <div class="content">
             <asp:Repeater ID="rptpbtocb" runat="server">
@@ -20,7 +20,6 @@
                         <div class="t">
                             <h6><%# Eval("Cname") %></h6>
                         </div>
-
                         <div class="p">
                             <p>
                                 <%# Eval("CboardCotent") %>

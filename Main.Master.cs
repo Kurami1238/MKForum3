@@ -56,6 +56,7 @@ namespace MKForum
             }
             else if (_amgr.IsLogined())
             {
+                //this.lblMember_Change.Text = "資料" + Environment.NewLine + "變更";
                 string MemberID = HttpContext.Current.Session["MemberID"].ToString();
                 List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows(MemberID);
                 int? RepliedCount = _mfmgr.GetReplied_count(MemberID);

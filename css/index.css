@@ -9,14 +9,14 @@
         padding-left: 20px;
     }
 
-         .title .fire {
-            float: left;
-            background: url(https://acegif.com/wp-content/gifs/fire-17.gif) no-repeat;
-            background-size: contain;
-            width: 100px;
-            position: relative;
-            height: 70px;
-        }
+.title .fire {
+    float: left;
+    background: url(../images/HOT2.png) no-repeat;
+    background-size: contain;
+    width: 80px;
+    position: relative;
+    height: 70px;
+}
 
              .title .fire h3 {
                 background-color: transparent;
@@ -27,7 +27,7 @@
             }
 
          .title h1 {
-            line-height: 70px;
+            line-height: 90px;
             margin-left: 60px;
         }
     /* -------------------------- */
@@ -37,41 +37,62 @@
         display:flex;
     }
 
-    .hot-cboards .content b{
-        color: blue;
-    }
+
+
         .hot-cboards .content a {
             font-size: 20px;
             text-decoration: none;
             font-style: italic;
-            background: url("../images/asd.png") no-repeat;
-            background-size: contain;
+
             width: 100%;
             height: 160px;
             text-align: center;
             position: relative;
-
         }
 
             .hot-cboards .content a:hover {
                 font-size: 20px;
                 text-decoration: none;
                 font-style: italic;
-                background: url("../images/asf.png") no-repeat;
-                background-size: contain;
                 width: 100%;
                 height: 160px;
                 text-align: center;
                 position: relative;
             }
 
+                .hot-cboards .content a:hover > b {
+                    color:deepskyblue;
+                }
+
         .hot-cboards .content b {
-            background-color: transparent;
+            background: url("../images/HOTTag.png") no-repeat;
+            background-size: 120%;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-60%, -80%);
+            top: 20%;
+            left: 20%;
+            height: 200px;
+            width: 200px;
+            font-size: 28px;
+            color: white;
+            line-height: 200px;
+            text-align: center;
+            text-shadow: 2px 2px red,-1px -1px red;
         }
+
+            .hot-cboards .content b:hover {
+                background: url("../images/HOTTag2.png") no-repeat;
+                background-size: 120%;
+                position: absolute;
+                top: 20%;
+                left: 20%;
+                height: 200px;
+                width: 200px;
+                font-size: 28px;
+                color: white;
+                line-height: 200px;
+                text-align: center;
+                text-shadow: 2px 2px red,-1px -1px red;
+            }
 /* ======================= */
 
 .hot-posts {

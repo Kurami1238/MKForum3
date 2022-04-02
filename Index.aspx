@@ -12,7 +12,7 @@
         <div class="title">
             <%--<img src="./images/HOT.png">--%>
             <div class="fire">
-                <h3>HOT</h3>
+                <h3></h3>
             </div>
             <h1>熱門標籤</h1>
         </div>
@@ -20,8 +20,8 @@
             <asp:Repeater ID="rptHotTags" runat="server">
                 <ItemTemplate>
                     <a href="/SearchKekka.aspx?keyword=<%# Eval("Naiyo").ToString().Trim()%>&searcharea=srchTag">
-                        <%--<img src="images/tag.png" width="200" height="100" />--%>
-                        <b>#<%# Eval("Naiyo") %></b>
+                            <%--<img src="images/tag.png" width="200" height="100" />--%>
+                            <b><%# Eval("Naiyo")%></b>
                     </a>
                 </ItemTemplate>
             </asp:Repeater>
@@ -33,7 +33,7 @@
     <div class="hot-posts">
         <div class="title">
             <div class="fire">
-                <h3>HOT</h3>
+                <h3></h3>
             </div>
             <h1>熱門文章</h1>
         </div>
