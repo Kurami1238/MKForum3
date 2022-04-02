@@ -48,7 +48,7 @@
             .srchCSS * {
                 height: 30px;
                 --bs-gutter-x: 0px;
-                color:black;
+                color: black;
             }
 
         .myShadow {
@@ -57,8 +57,8 @@
 
         #btnSearh {
             width: 100%;
-            color:white;
-            line-height:10px;
+            color: white;
+            line-height: 10px;
         }
 
         /*漢堡選單*/
@@ -159,7 +159,7 @@
                         <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
                         <asp:Button ID="btnRegister" runat="server" Text="註冊" OnClick="btnRegister_Click" />
                         <br />
-                        <span class="span1">測試版登入?</span>
+                        <span class="span1">&nbsp;&nbsp;&nbsp; 測試版登入?</span>
                         <asp:CheckBox runat="server" ID="ckbskip" Checked="true" Visible="false" /><br />
                         <br />
                         <asp:Label ID="lblTEXT" runat="server"></asp:Label>
@@ -287,7 +287,7 @@
                                         <asp:Button ID="btnwebLogin" runat="server" Text="登入" OnClick="btnwebLogin_Click" />
                                         <asp:PlaceHolder ID="plgMemberStatus" runat="server">
                                             <div class="memberstatusleft">
-                                                <asp:Label ID="Notifycount" runat="server" Text="5"></asp:Label>
+                                                <asp:Label ID="Notifycount" runat="server"></asp:Label>
 
                                                 <div class="Notify">
                                                     <button id="btnNotify" type="button" onclick="Notifytoggle();">🔔</button>
@@ -324,12 +324,14 @@
                                             </div>
 
                                             <div class="memberstatusright">
-                                                <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
-                                                <asp:Image ID="imgMember_PicPath" runat="server" />
-                                                <br />
-                                                <asp:Button ID="lblMember_Change" runat="server" OnClick="lblMember_Change_Click" Text="🖍" />
-
+                                                <div class="butt">
+                                                    <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
+                                                    <br />
+                                                    <asp:Button ID="lblMember_Change" runat="server" OnClick="lblMember_Change_Click" Text="🖍" />
+                                                </div>
                                                 <div class="memberinfo">
+                                                    <asp:Image ID="imgMember_PicPath" runat="server" />
+                                                    <br />
                                                     <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
                                                     <br />
                                                     <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
