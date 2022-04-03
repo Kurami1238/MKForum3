@@ -3,7 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/CreatePost.css" rel="stylesheet" />
     <script src="js/showdown.js"></script>
-    <script src="js/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <%--<script src="js/jquery.min.js"></script>--%>
     <link href="css/github-markdown.css" rel="stylesheet" />
     <link href="css/github-markdown-dark.css" rel="stylesheet" />
 </asp:Content>
@@ -98,18 +99,39 @@
             alert($('.XXmsg').val)
         });
         var text;
+        function insert(naiyo) {
+            var obj = $(".zenbu .C .content");
+            if (document.selection)  //for ie
+            {
+                obj.focus();
+                var sel = document.selection.createRange();
+                sel.text = naiyo;
+                //sel.text(naiyo);
+            }
+            else  //for firefox
+            {
+                var prefix = obj.value.substring(0, obj.selectionStart);
+                var suffix = obj.value.substring(obj.selectionEnd);
+                obj.value = prefix + naiyo + suffix;
+            }
+        }
+
         text = $(".content").val();
         $('.content').on('keyup', function () {
             text = $(".content").val();
-            var converter = new showdown.Converter();
+            var converter = new showdown.Converter({ 'tables': 'true', 'tasklists': 'true', 'simpleLineBreaks': 'true', 'openLinksInNewWindow': 'true', 'simplifiedAutoLink': 'true', 'strikethrough': 'true', 'customizedHeaderId': 'true', 'emoji': 'true', 'moreStyling': 'true', 'smoothLivePreview': 'true', 'smartIndentationFix': 'true', 'ghMentions': 'true', 'omitExtraWLInCodeBlocks': 'true' });
             //var converter = new showdown.Converter({ extensions: ['table'] });
             var html = converter.makeHtml(text);
             $('.result').html(html);
         });
+        //function big() {
+        //    text = $(".content").val();
+        //    text += "#";
+        //    $(".zenbu .C .content").val(text);
+        //}
         function big() {
-            text = $(".content").val();
-            text += "#";
-            $(".zenbu .C .content").val(text);
+            text = "#";
+            insert(text);
         }
         function mid() {
             text = $(".content").val();

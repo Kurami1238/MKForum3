@@ -278,5 +278,39 @@ namespace MKForum.Managers
             }
         }
 
+
+        public static string GetPbtoCbtitle(int PboardID) 
+        {
+            string connectionString = ConfigHelper.GetConnectionString();
+            string commandText =
+                @"  SELECT Pname
+                    FROM  Pboards
+                    WHERE PboardID = @PboardID;
+                ";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(commandText, conn))
+                    {
+                        command.Parameters.AddWithValue("@PboardID", PboardID);
+                        conn.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            string Pname = (string)reader["Pname"];
+                            return Pname;
+                        }
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog("CboardManager.GetCPboardtoCboard", ex);
+                throw;
+            }
+        }
     }
 }

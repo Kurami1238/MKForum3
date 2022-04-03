@@ -53,7 +53,7 @@ div{
 .MainPost{
     padding: 10px;
     margin: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-family:'moubi';
     padding-left: 0px;
     text-shadow: 2px 2px 2px #270c0c;
@@ -157,11 +157,12 @@ div{
             background-size:contain;
             height: 28px;
         }
-.nomainPost{
+.nomainPost {
     padding: 10px;
-    margin: 5px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 0px;
     font-family:'moubi';
     /* box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px; */
     text-shadow: 2px 2px 2px #270c0c;

@@ -48,6 +48,7 @@
             .srchCSS * {
                 height: 30px;
                 --bs-gutter-x: 0px;
+                color: black;
             }
 
         .myShadow {
@@ -162,7 +163,7 @@
                         <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
                         <asp:Button ID="btnRegister" runat="server" Text="註冊" OnClick="btnRegister_Click" />
                         <br />
-                        <span class="span1">測試版登入?</span>
+                        <span class="span1">&nbsp;&nbsp;&nbsp; 測試版登入?</span>
                         <asp:CheckBox runat="server" ID="ckbskip" Checked="true" Visible="false" /><br />
                         <br />
                         <asp:Label ID="lblTEXT" runat="server"></asp:Label>
@@ -285,10 +286,11 @@
                                 <!-- xs.sm時隱藏，sm以上顯示，sm為4格，md為4格，lg為4格，置中-->
                                 <div class="d-none d-sm-block col-sm-4 col-md-4 col-lg-4  text-center ">
                                     <div class="MemberStatus">
+
                                         <asp:Button ID="btnwebLogin" runat="server" Text="登入" OnClick="btnwebLogin_Click" />
                                         <asp:PlaceHolder ID="plgMemberStatus" runat="server">
                                             <div class="memberstatusleft">
-                                                <asp:Label ID="Notifycount" runat="server" Text="5"></asp:Label>
+                                                <asp:Label ID="Notifycount" runat="server"></asp:Label>
 
                                                 <div class="Notify">
                                                     <button id="btnNotify" type="button" onclick="Notifytoggle();">🔔</button>
@@ -321,22 +323,25 @@
 
                                             <div class="memberstatuscenter">
                                                 <br />
-                                                <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
-                                                <br />
-                                                <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
-                                                <br />
-                                                <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
                                                 <br />
                                             </div>
 
                                             <div class="memberstatusright">
-
-                                                <asp:Image ID="imgMember_PicPath" runat="server" />
-                                                <br />
-                                                <asp:Button ID="lblMember_Change" runat="server" Text="資料變更" OnClick="lblMember_Change_Click" />
-
-                                                <br />
-                                                <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
+                                                <div class="butt">
+                                                    <asp:Button ID="btnwebLogout" runat="server" Text="登出" OnClick="btnLogout_Click" />
+                                                    <br />
+                                                    <asp:Button ID="lblMember_Change" runat="server" OnClick="lblMember_Change_Click" Text="🖍" />
+                                                </div>
+                                                <div class="memberinfo">
+                                                    <asp:Image ID="imgMember_PicPath" runat="server" />
+                                                    <br />
+                                                    <asp:Label ID="lblMember_NickName" runat="server" Text="Label"></asp:Label>
+                                                    <br />
+                                                    <asp:Label ID="lblMember_Account" runat="server" Text="Label"></asp:Label>
+                                                    <br />
+                                                    <asp:Label ID="lblMember_MemberStatus" runat="server" Text="Label"></asp:Label>
+                                                    <br />
+                                                </div>
 
                                             </div>
                                         </asp:PlaceHolder>
