@@ -157,7 +157,7 @@
         $(document).ready(function () {
 
             var text = $(".content").val();
-            var converter = new showdown.Converter();
+            var converter = new showdown.Converter({ 'tables': 'true', 'tasklists': 'true', 'simpleLineBreaks': 'true', 'openLinksInNewWindow': 'true', 'simplifiedAutoLink': 'true', 'strikethrough': 'true', 'customizedHeaderId': 'true', 'emoji': 'true', 'moreStyling': 'true', 'smoothLivePreview': 'true', 'smartIndentationFix': 'true', 'ghMentions': 'true', 'omitExtraWLInCodeBlocks': 'true' });
             var html = converter.makeHtml(text);
             $('.result').html(html);
 
