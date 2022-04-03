@@ -31,10 +31,8 @@ namespace MKForum
 
         //未做:
         //HomePage.aspx
-        //顯示母列表 (!=IsPostBack)
+
         //顯示個人資料 (!=IsPostBack)
-        //如果網址列為子板塊，則依會員權限 顯示黑名單 (!=IsPostBack)
-        //如果網址列為子板塊，則依會員權限 顯示板主名單 (!=IsPostBack)
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -108,10 +106,10 @@ namespace MKForum
                 this.plhPBEdit2.Visible = true;
 
                 //管理員在母版進子版的頁面才能看到子版增刪修
-                if (currentPboard != null && currentCboard == null)
+                if (currentPboard != null && currentCboard == null && plhLogin.Visible ==false)
                 {
                     this.plhCBAPI_normal2.Visible = true;
-                    plhCBEdit2.Visible = true;
+                    this.plhCBEdit2.Visible = true;
                 }
             }
 
@@ -127,11 +125,19 @@ namespace MKForum
                 {
                     this.plhBlk.Visible = true;
                     blckMbrList = _blkmgr.getBlackedList(currentCboard);
-                    this.RptrBlk.DataSource = blckMbrList;
-                    this.RptrBlk.DataBind();
+                    if (blckMbrList.Count != 0)
+                    {
+                        this.ltlBlk.Text = "帳號：(解黑日期)";
+                        this.RptrBlk.DataSource = blckMbrList;
+                        this.RptrBlk.DataBind();
+                    }
                     stampDT = this._stpmgr.getStamp(currentCboard);
-                    this.RptrStp.DataSource = stampDT;
-                    this.RptrStp.DataBind();
+                    if (stampDT.Rows.Count != 0)
+                    {
+                        this.ltlStp.Text = "現有的文章類型：";
+                        this.RptrStp.DataSource = stampDT;
+                        this.RptrStp.DataBind();
+                    }
                 }
             }
             #endregion
@@ -144,8 +150,12 @@ namespace MKForum
                 {
                     this.plhMM.Visible = true;
                     DataTable MMDT = _Mmgr.getModerators(currentCboard);
-                    this.RptrMM.DataSource = MMDT;
-                    this.RptrMM.DataBind();
+                    if (MMDT.Rows.Count != 0)
+                    {
+                        this.ltlMM.Text = "版主名單列表：";
+                        this.RptrMM.DataSource = MMDT;
+                        this.RptrMM.DataBind();
+                    }
                 }
             }
             #endregion
@@ -187,6 +197,14 @@ namespace MKForum
             //把當前母板的值傳到HTML再傳到API
             this.currentPB.Value = currentPboard;
             #endregion
+
+            //藉由預存session跳出視窗 的字串
+            if (Session["mainMsg"] != null)
+            {
+                this.mainMsg.Value = Session["mainMsg"] as string;
+                Session.Remove("mainMsg");
+            }
+
         }
 
         protected void rptMemberFollows_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -204,7 +222,6 @@ namespace MKForum
                     Response.Redirect(url);
                 }
             }
-
         }
 
 
@@ -246,9 +263,7 @@ namespace MKForum
         {
             _lgihp.Logout();
             Response.Redirect(Request.RawUrl);
-
         }
-
 
         //搜尋按鈕( 負責組成URL並導向搜尋頁面 )
         protected void btnSearh_Click(object sender, EventArgs e)
@@ -360,171 +375,163 @@ namespace MKForum
         //黑名單儲存按鈕
         protected void btnBlk_Click(object sender, EventArgs e)
         {
-            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
-            string inpAccount = this.txtBlkAcc.Text.Trim();   //輸入的黑名單帳號，並去掉空白字元
-            string dt = this.txtBlkDate.Text.Trim();       //輸入的黑名單日期
-
-            if (inpAccount == "" || dt == null)
+            try
             {
-                string msg = "輸入的帳號或日期為空";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
+                string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+                string inpAccount = this.txtBlkAcc.Text.Trim();   //輸入的黑名單帳號，並去掉空白字元
+                string dt = this.txtBlkDate.Text.Trim();       //輸入的黑名單日期
 
-            string outAccount = "";
-            if (!_chkInpMgr.IsNumAndEG(inpAccount, out outAccount))
-            {
-                string msg = "輸入的帳號不得有英文及數字以外的字元";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-
-            }
-            if (!_blkmgr.HasMember(inpAccount))
-            {
-                string msg = "輸入的帳號不存在";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
-            DateTime dtDate;
-            if (!DateTime.TryParse(dt, out dtDate))
-            {
-                string msg = "輸入的日期格式有誤";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
-
-            string outDate = dtDate.ToString("yyyy-MM-dd");
-
-            if (this._blkmgr.IsCurrentModerator(currentCboard, inpAccount) == true || this._pBrdMgr.CheckMemberStatus(inpAccount) == 3)
-            {
-                string msg = $"輸入帳號不能為該板板主或管理員。";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-
-            }
-            else
-            {
-                //如果已經在黑名單表
-                if (_blkmgr.InBlacked(inpAccount, currentCboard))
+                if (inpAccount == "" || dt == null)
                 {
-                    //如果正在被黑名單
-                    if (_blkmgr.IsBlacked(inpAccount, currentCboard))
-                    {
-                        this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
-                        //string msg = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";
-                        //Response.Write($"<script>alert('{msg}')</script>");
-                        Response.Redirect(Request.Url.ToString());
-
-                    }
-
-                    else//曾被黑單，但已經解黑，要再度加入黑名單
-                    {
-                        this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
-                        //string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
-                        //Response.Write($"<script>alert('{msg}')</script>");
-                        Response.Redirect(Request.Url.ToString());
-                    }
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的帳號或日期為空。";
+                    return;
                 }
 
-                //如果還未被黑單過
+                string outAccount = "";
+                if (!_chkInpMgr.IsNumAndEG(inpAccount, out outAccount))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的帳號不得有英文及數字以外的字元。";
+                    return;
+
+                }
+                if (!_blkmgr.HasMember(inpAccount))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的帳號不存在。";
+                    return;
+                }
+                DateTime dtDate;
+                if (!DateTime.TryParse(dt, out dtDate))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的日期格式有誤。";
+                    return;
+                }
+
+                string outDate = dtDate.ToString("yyyy-MM-dd");
+
+                if (this._blkmgr.IsCurrentModerator(currentCboard, inpAccount) == true || this._pBrdMgr.CheckMemberStatus(inpAccount) == 3)
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入帳號不能為該板板主或管理員。";
+                    return;
+                }
                 else
                 {
+                    //如果已經在黑名單表
+                    if (_blkmgr.InBlacked(inpAccount, currentCboard))
+                    {
+                        //如果正在被黑名單
+                        if (_blkmgr.IsBlacked(inpAccount, currentCboard))
+                        {
+                            this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
+                            HttpContext.Current.Session["mainMsg"] = $"已更新{outAccount}懲處期限為{outDate} 的 00時00分。";
+                        }
 
-                    this._blkmgr.AddBlackedList(inpAccount, dt, currentCboard);
-                    //string msg = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
-                    //Response.Write($"<script>alert('{msg}')</script>");
-                    Response.Redirect(Request.Url.ToString());
+                        else//曾被黑單，但已經解黑，要再度加入黑名單
+                        {
+                            this._blkmgr.UpdateBlackedList(inpAccount, dt, currentCboard);
+                            HttpContext.Current.Session["mainMsg"] = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
+                        }
+                    }
+                    //如果還未被黑單過
+                    else
+                    {
+                        this._blkmgr.AddBlackedList(inpAccount, dt, currentCboard);
+                        HttpContext.Current.Session["mainMsg"] = $"已加入{outAccount}至黑單，懲處期限為{outDate} 的 00時00分。";
+                    }
                 }
-
-
             }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Session["mainMsg"] = $"編輯黑名單失敗，請聯絡管理員。";
+            }
+            //不論判斷結果為何，都重整頁面
+            Response.Redirect(Request.RawUrl);
         }
 
         //儲存板主
         protected void btnMMSave_Click(object sender, EventArgs e)
         {
-            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
-            string inpModerator = this.txtMMAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
-
-            if (inpModerator == "")
+            try
             {
-                string msg = "請輸入新增的版主帳號";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
+                string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+                string inpModerator = this.txtMMAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
 
-            string outModerator = "";
-            if (!_chkInpMgr.IsNumAndEG(inpModerator, out outModerator))
-            {
-                string msg = "輸入的帳號不得有英文及數字以外的字元";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-
+                if (inpModerator == "")
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"請輸入新增的版主帳號。";
+                    return;
+                }
+                string outModerator = "";
+                if (!_chkInpMgr.IsNumAndEG(inpModerator, out outModerator))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的帳號不得有英文及數字以外的字元。";
+                    return;
+                }
+                if (!_blkmgr.HasMember(outModerator))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的帳號不存在。";
+                    return;
+                }
+                if (this._blkmgr.IsCurrentModerator(currentCboard, outModerator) == true || this._pBrdMgr.CheckMemberStatus(outModerator) == 3)
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入帳號為管理員，或已經是該板板主。";
+                    return;
+                }
+                //如果已經在黑名單表，不能被提升為板主
+                if (_blkmgr.IsBlacked(outModerator, currentCboard))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"黑名單中的帳號不能被提升為板主，請先解除黑名單。";
+                    return;
+                }
+                else
+                {
+                    this._Mmgr.AddModeratorsList(outModerator, currentCboard);
+                    HttpContext.Current.Session["mainMsg"] = $"已加入{outModerator}至版主。";
+                }
             }
-            if (!_blkmgr.HasMember(outModerator))
+            catch (Exception ex)
             {
-                string msg = "輸入的帳號不存在";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
+                HttpContext.Current.Session["mainMsg"] = $"新增板主失敗，請聯絡管理員。";
             }
-
-
-            if (this._blkmgr.IsCurrentModerator(currentCboard, outModerator) == true || this._pBrdMgr.CheckMemberStatus(outModerator) == 3)
-            {
-                string msg = $"輸入帳號為管理員，或已經是該板板主。";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
-            //如果已經在黑名單表，不能被提升為板主
-            if (_blkmgr.IsBlacked(outModerator, currentCboard))
-            {
-                string msg = $"黑名單中的帳號不能被提升為板主，請先解除黑名單。";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
-            else
-            {
-                this._Mmgr.AddModeratorsList(outModerator, currentCboard);
-                //string msg = $"已加入{outModerator}至版主。";
-                //Response.Write($"<script>alert('{msg}')</script>");
-                Response.Redirect(Request.Url.ToString());
-
-            }
+            //不論判斷結果為何，都重整頁面
+            Response.Redirect(Request.RawUrl);
         }
 
         //刪除板主
         protected void btnMMDelete_Click(object sender, EventArgs e)
         {
-            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
-            string inpModerator = this.txtMMAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
+            try
+            {
+                string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+                string inpModerator = this.txtMMAcc.Text.Trim();   //輸入的版主帳號，並去掉空白字元
 
-            if (inpModerator == "")
-            {
-                string msg = "請輸入刪除的版主帳號";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
+                if (inpModerator == "")
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"請輸入刪除的版主帳號。";
+                    return;
+                }
+                string outModerator = "";
+                if (!_chkInpMgr.IsNumAndEG(inpModerator, out outModerator))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的帳號不得有英文及數字以外的字元。";
+                    return;
+                }
+                if (!this._blkmgr.IsCurrentModerator(currentCboard, outModerator))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的帳號不是本板板主。";
+                }
+                else
+                {
 
-            string outModerator = "";
-            if (!_chkInpMgr.IsNumAndEG(inpModerator, out outModerator))
-            {
-                string msg = "輸入的帳號不得有英文及數字以外的字元";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-
+                    this._Mmgr.DeleteModeratorsList(outModerator, currentCboard);
+                    HttpContext.Current.Session["mainMsg"] = $"已從板主名單移除{outModerator}。";
+                }
             }
-            if (!this._blkmgr.IsCurrentModerator(currentCboard, outModerator))
+            catch (Exception ex)
             {
-                string msg = "輸入的帳號不是本板板主";
-                Response.Write($"<script>alert('{msg}')</script>");
+                HttpContext.Current.Session["mainMsg"] = $"刪除板主失敗，請聯絡管理員。";
             }
-            else
-            {
-                this._Mmgr.DeleteModeratorsList(outModerator, currentCboard);
-                //string msg = $"已從板主名單移除{outModerator}。";
-                //Response.Write($"<script>alert('{msg}')</script>");
-                Response.Redirect(Request.Url.ToString());
-            }
+            //不論判斷結果為何，都重整頁面
+            Response.Redirect(Request.RawUrl);
         }
 
         //新增母板
@@ -539,36 +546,31 @@ namespace MKForum
 
                 if (inpPBName == null)
                 {
-                    msg = "未輸入母板名稱";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    HttpContext.Current.Session["mainMsg"] = $"未輸入母板名稱。";
                     return;
                 }
                 //如果輸入的母板塊包含禁字
                 if (this._chkInpMgr.IncludeBanWord(inpPBName))
                 {
-                    msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
                     return;
                 }
 
                 this._pBrdMgr.AddPBoard(inpPBName);
-                msg = "母板塊新增成功。";
-
-                Response.Write($"<script>alert('{msg}')</script>");
+                HttpContext.Current.Session["mainMsg"] = $"母板塊新增成功。";
             }
             catch (Exception ex)
             {
-                string msg = "母板塊新增失敗，請聯絡管理員。";
-                Response.Write($"<script>alert('{msg}')</script>");
+                HttpContext.Current.Session["mainMsg"] = $"母板塊新增失敗，請聯絡管理員。";
             }
         }
 
         //新增子板
         protected void btnAddCB_Click(object sender, EventArgs e)
         {
-            string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
             try
             {
+                string currentPboard = this.Request.QueryString["PboardID"];           //從URL取得當前CboardID
                 //取得輸入的新子板名稱，並去掉空白
                 string inpCBName = this.addCBoard.Text.Trim();
                 string cboardcontent = this.addCBoardcontent.Text.Trim();
@@ -578,112 +580,101 @@ namespace MKForum
 
                 if (inpCBName == null)
                 {
-                    msg = "未輸入子板名稱";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    HttpContext.Current.Session["mainMsg"] = $"未輸入子板名稱。";
                     return;
                 }
                 //如果輸入的子板塊包含禁字
                 if (this._chkInpMgr.IncludeBanWord(inpCBName))
                 {
-                    msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
                     return;
                 }
 
-                this._cBrdMgr.CreateCboard(currentPboard,inpCBName, cboardcontent);
-                msg = "子板塊新增成功。";
-
-                Response.Write($"<script>alert('{msg}')</script>");
+                this._cBrdMgr.CreateCboard(currentPboard, inpCBName, cboardcontent);
+                HttpContext.Current.Session["mainMsg"] = $"子板塊新增成功。";
             }
             catch (Exception ex)
             {
-                string msg = "子板塊新增失敗，請聯絡管理員。";
-                Response.Write($"<script>alert('{msg}')</script>");
+                HttpContext.Current.Session["mainMsg"] = $"子板塊新增失敗，請聯絡管理員。";
             }
-
         }
-
 
         //新增文章類型
         protected void btnStpAdd_Click(object sender, EventArgs e)
         {
-            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
             try
             {
+                string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
                 //取得輸入的新類型名稱，並去掉空白
                 string strIinpStp = this.inpStp.Text.Trim();
-                //如果輸入的新類型名稱是空的，提示使用者
-                string msg = "";
 
                 if (strIinpStp == null)
                 {
-                    msg = "未輸入文章類型名稱";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    HttpContext.Current.Session["mainMsg"] = $"未輸入文章類型名稱。";
                     return;
                 }
                 //如果輸入的新類型包含禁字
                 if (this._chkInpMgr.IncludeBanWord(strIinpStp))
                 {
-                    msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
                     return;
                 }
                 //如果輸入的新類型已經存在
                 if (this._stpmgr.IncludeStp(strIinpStp, currentCboard))
                 {
-                    msg = "文章類型已經存在";
-                    Response.Write($"<script>alert('{msg}')</script>");
+                    HttpContext.Current.Session["mainMsg"] = $"文章類型已經存在。";
                 }
                 else
                 {
                     this._stpmgr.AddStmp(strIinpStp, currentCboard);
-                    //msg = "文章類型新增成功。";
-                    //Response.Write($"<script>alert('{msg}')</script>");
-                    Response.Redirect(Request.Url.ToString());
+                    HttpContext.Current.Session["mainMsg"] = $"已新增文章類型：{strIinpStp}。";
                 }
             }
             catch (Exception ex)
             {
-                string msg = "文章類型新增失敗，請聯絡管理員。";
-                Response.Write($"<script>alert('{msg}')</script>");
+                HttpContext.Current.Session["mainMsg"] = $"文章類型新增失敗，請聯絡管理員。";
             }
+            //不論判斷結果為何，都重整頁面
+            Response.Redirect(Request.RawUrl);
         }
 
         //刪除文章類型
         protected void btnStpDelect_Click(object sender, EventArgs e)
         {
-            string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
-            string strIinpStp = this.inpStp.Text.Trim();   //輸入的文章類型，並去掉空白字元
-
-            if (strIinpStp == "")
+            try
             {
-                string msg = "未輸入欲刪除的文章類型";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
-            }
+                string currentCboard = this.Request.QueryString["CboardID"];    //當前子板塊
+                string strIinpStp = this.inpStp.Text.Trim();   //輸入的文章類型，並去掉空白字元
 
-            if (this._chkInpMgr.IncludeBanWord(strIinpStp))
-            {
-                string msg = "輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
-                Response.Write($"<script>alert('{msg}')</script>");
-                return;
+                if (strIinpStp == "")
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"未輸入欲刪除的文章類型。";
+                    return;
+                }
 
-            }
-            if (!this._stpmgr.IncludeStp(strIinpStp, currentCboard))
-            {
-                string msg = "輸入的文章類型不存在";
-                Response.Write($"<script>alert('{msg}')</script>");
-            }
-            else
-            {
-                this._stpmgr.DeleteStmp(strIinpStp, currentCboard);
-                //string msg = $"已從文章類型 移除{strIinpStp}。";
-                //Response.Write($"<script>alert('{msg}')</script>");
-                Response.Redirect(Request.Url.ToString());
+                if (this._chkInpMgr.IncludeBanWord(strIinpStp))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的文字不可包含: 幹尛、你媽超胖 等字詞。";
+                    return;
 
+                }
+                if (!this._stpmgr.IncludeStp(strIinpStp, currentCboard))
+                {
+                    HttpContext.Current.Session["mainMsg"] = $"輸入的文章類型不存在。";
+                }
+                else
+                {
+                    this._stpmgr.DeleteStmp(strIinpStp, currentCboard);
+                    HttpContext.Current.Session["mainMsg"] = $"已從文章類型移除{strIinpStp}。";
+                }
             }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Session["mainMsg"] = $"文章類型刪除失敗，請聯絡管理員。";
+            }
+            //不論判斷結果為何，都重整頁面
+            Response.Redirect(Request.RawUrl);
         }
-
 
     }
 }
