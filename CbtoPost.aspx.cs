@@ -53,9 +53,9 @@ namespace MKForum
 
         private int GetCboardID()
         {
-            string cboardsText = this.Request.QueryString["Cboard"];
+            string cboardsText = this.Request.QueryString["CboardID"];
             int cboard = (string.IsNullOrWhiteSpace(cboardsText))
-                            ? 2 : Convert.ToInt32(cboardsText);
+                            ? 0 : Convert.ToInt32(cboardsText);
             Cboard cboardd = CboardManager.GetCboard(cboard);
             _cboardid = cboard;
             this.ltlCbn.Text = cboardd.Cname;
