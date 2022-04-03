@@ -1,3 +1,4 @@
+
 .hot-cboards {
     padding: 20px;
     border: none;
@@ -18,181 +19,241 @@
     height: 70px;
 }
 
-             .title .fire h3 {
-                background-color: transparent;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-         .title h1 {
-            line-height: 90px;
-            margin-left: 60px;
-        }
-    /* -------------------------- */
-
-    .hot-cboards .content {
-        padding: 0px 30px;
-        display:flex;
+    .title .fire h3 {
+        background-color: transparent;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
+.title h1 {
+    line-height: 90px;
+    margin-left: 60px;
+}
+/* -------------------------- */
+
+.hot-cboards .content {
+    padding: 0px 30px;
+    display: flex;
+}
 
 
-        .hot-cboards .content a {
+    .hot-cboards .content a {
+        font-size: 20px;
+        text-decoration: none;
+        font-style: italic;
+        width: 100%;
+        height: 160px;
+        text-align: center;
+        position: relative;
+    }
+
+        .hot-cboards .content a:hover {
             font-size: 20px;
             text-decoration: none;
             font-style: italic;
-
             width: 100%;
             height: 160px;
             text-align: center;
             position: relative;
         }
 
-            .hot-cboards .content a:hover {
-                font-size: 20px;
-                text-decoration: none;
-                font-style: italic;
-                width: 100%;
-                height: 160px;
-                text-align: center;
-                position: relative;
+            .hot-cboards .content a:hover > b {
+                color: deepskyblue;
+                margin-bottom: 20px;
             }
 
-                .hot-cboards .content a:hover > b {
-                    color:deepskyblue;
-                }
+    /* -------------------------- */
 
-        .hot-cboards .content b {
-            background: url("../images/HOTTag.png") no-repeat;
-            background-size: 120%;
+
+
+    .hot-cboards .content b {
+        background: url("../images/HOTTag.png") no-repeat;
+        background-size: 100%;
+        position: absolute;
+        top: 20%;
+        left: 15%;
+        height: 200px;
+        width: 100%;
+        font-size: 48px;
+        color: white;
+        line-height: 200px;
+        text-align: center;
+        text-shadow: 2px 2px red,-1px -1px red;
+    }
+
+
+
+        .hot-cboards .content b:hover {
+            background: url("../images/HOTTag2.png") no-repeat;
+            background-size: 100%;
             position: absolute;
             top: 20%;
-            left: 20%;
+            left: 15%;
             height: 200px;
-            width: 200px;
-            font-size: 28px;
+            width: 100%;
+            font-size: 48px;
             color: white;
             line-height: 200px;
             text-align: center;
             text-shadow: 2px 2px red,-1px -1px red;
         }
 
-            .hot-cboards .content b:hover {
-                background: url("../images/HOTTag2.png") no-repeat;
-                background-size: 120%;
-                position: absolute;
-                top: 20%;
-                left: 20%;
-                height: 200px;
-                width: 200px;
-                font-size: 28px;
-                color: white;
-                line-height: 200px;
-                text-align: center;
-                text-shadow: 2px 2px red,-1px -1px red;
-            }
-/* ======================= */
+@media (min-width: 1000px) and (max-width: 1200px) {
+    .hot-cboards .content b {
+        font-size: 38px; 
+        line-height: 150px;
+    }
 
-.hot-posts {
-    padding: 20px;
-    border: none;
+        .hot-cboards .content b:hover {
+            font-size: 38px;
+            line-height: 150px;
+        }
+}
+@media (min-width: 600px) and (max-width: 1000px) {
+    .hot-cboards .content b {
+        font-size: 38px;
+        line-height: 120px;
+    }
+
+        .hot-cboards .content b:hover {
+            font-size: 38px;
+            line-height: 120px;
+        }
+}
+@media (min-width: 400px) and (max-width: 600px) {
+    .hot-cboards .content b {
+        font-size: 24px;
+        line-height: 100px;
+    }
+        .hot-cboards .content b:hover {
+            font-size: 24px;
+            line-height: 100px;
+        }
+}
+@media (min-width: 250px) and (max-width: 400px) {
+    .hot-cboards .content b {
+        font-size: 20px;
+        line-height: 60px;
+    }
+
+        .hot-cboards .content b:hover {
+            font-size: 20px;
+            line-height: 60px;
+        }
+}
+@media (min-width: 0px) and (max-width: 250px) {
+    .hot-cboards .content b {
+        font-size: 16px;
+        line-height: 40px;
+    }
+        .hot-cboards .content b:hover {
+            font-size: 16px;
+            line-height: 40px;
+        }
 }
 
-    .hot-posts .title img {
-        float: left;
+    /* ======================= */
+
+    .hot-posts {
+        padding: 20px;
+        border: none;
     }
 
-    .hot-posts .title {
-        font-size: 28px;
-        padding-left: 20px;
-        border: none;
-        margin-bottom: 30px;
-    }
+        .hot-posts .title img {
+            float: left;
+        }
+
+        .hot-posts .title {
+            font-size: 28px;
+            padding-left: 20px;
+            border: none;
+            margin-bottom: 30px;
+        }
 
         .hot-posts a {
             text-decoration: none;
         }
 
-    .hot-posts .content {
-        padding: 10px;
-        margin: 20px;
-    }
-
-        .hot-posts .content .article {
+        .hot-posts .content {
             padding: 10px;
-            margin: 0px 0px 20px auto;
-            border: 1px double #e76c25;
-            box-shadow: 2px 2px 6px #e76c25;
+            margin: 20px;
         }
 
-        .hot-posts .content .article:hover {
-            background: url(https://acegif.com/wp-content/gifs/fire-15.gif) no-repeat;
-            background-size: 100%;
-            padding: 10px;
-            margin: 0px 0px 20px auto;
-            border: 1px double #e76c25;
-            box-shadow: 2px 2px 6px #e76c25;
-        }
+            .hot-posts .content .article {
+                padding: 10px;
+                margin: 0px 0px 20px auto;
+                border: 1px double #e76c25;
+                box-shadow: 2px 2px 6px #e76c25;
+            }
+
+                .hot-posts .content .article:hover {
+                    background: url(https://acegif.com/wp-content/gifs/fire-15.gif) no-repeat;
+                    background-size: 100%;
+                    padding: 10px;
+                    margin: 0px 0px 20px auto;
+                    border: 1px double #e76c25;
+                    box-shadow: 2px 2px 6px #e76c25;
+                }
 
 
 
-            .hot-posts .content .article h1 {
+                .hot-posts .content .article h1 {
+                    font-size: 20px;
+                    color: white;
+                    background-color: transparent;
+                }
+
+
+            .hot-posts .content h2 {
+                margin-bottom: 0px;
+                background: url(https://acegif.com/wp-content/gifs/fire-13.gif) no-repeat;
+                background-size: 100%;
+                text-align: center;
+                padding: 3px;
+                background-color: red;
+                color: #fff;
+                border-radius: 10px 10px 0 0;
+                box-shadow: 2px 2px 6px #e76c25;
+            }
+
+            .hot-posts .content .article .ppd {
                 font-size: 20px;
+                background-color: rgb(44, 44, 44);
+                line-height: 60px;
+                height: 100px;
+                width: 70%;
+                margin-bottom: 18px;
+                color: #0d6efd;
+            }
+
+                .hot-posts .content .article .ppd .ellipsis {
+                    background-color: rgb(44, 44, 44);
+                    overflow: hidden;
+                    display: -webkit-box;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 1; /*行數*/
+                    -webkit-box-orient: vertical;
+                    white-space: normal;
+                    color: #0d6efd;
+                }
+
+            .hot-posts .content .article h3 {
+                font-size: 20px;
+                float: left;
                 color: white;
                 background-color: transparent;
             }
 
-
-        .hot-posts .content h2 {
-            margin-bottom: 0px;
-            background: url(https://acegif.com/wp-content/gifs/fire-13.gif) no-repeat;
-            background-size: 100%;
-            text-align: center;
-            padding: 3px;
-            background-color: red;
-            color: #fff;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 2px 2px 6px #e76c25;
-        }
-
-        .hot-posts .content .article .ppd {
-            font-size: 20px;
-            background-color: rgb(44, 44, 44);
-            line-height: 60px;
-            height: 100px;
-            width: 70%;
-            margin-bottom:18px;
-            color: #0d6efd;
-
-        }
-            .hot-posts .content .article .ppd .ellipsis {
-                background-color: rgb(44, 44, 44);
-                overflow: hidden;
-                display: -webkit-box;
-                text-overflow: ellipsis;
-                -webkit-line-clamp: 1; /*行數*/
-                -webkit-box-orient: vertical;
-                white-space: normal;
-                color: #0d6efd;
+            .hot-posts .content .article h4 {
+                font-size: 20px;
+                float: right;
+                margin-right: 30px;
+                color: white;
+                background-color: transparent;
             }
 
-        .hot-posts .content .article h3 {
-            font-size: 20px;
-            float: left;
-            color: white;
-            background-color: transparent;
-        }
-
-        .hot-posts .content .article h4 {
-            font-size: 20px;
-            float: right;
-            margin-right: 30px;
-            color: white;
-            background-color: transparent;
-        }
-        .hot-posts .content .article h5 {
-            background-color: transparent;
-        }
-
+            .hot-posts .content .article h5 {
+                background-color: transparent;
+            }
