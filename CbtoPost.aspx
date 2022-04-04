@@ -124,7 +124,7 @@
                     var postv = "👁‍" + list[i].PostView
                     var postm = "作者：" + list[i].MemberAccount
                     $(".PostA", rpt).attr({ "href": url, "title": titlex });
-                    $(".imgPostP", rpt).attr({ "src": list[i].Coverimage });
+                    $(".imgPostP", rpt).attr({ "src": list[i].CoverImage });
                     $(".PostT", rpt).text(list[i].Title);
                     $(".PostC", rpt).text(list[i].PostCotent);
                     $(".PostM", rpt).text(postm);
