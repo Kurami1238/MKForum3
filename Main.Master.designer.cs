@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <自動產生的>
+// <自動產生>
 //     這段程式碼是由工具產生的。
 //
 //     變更這個檔案可能會導致不正確的行為，而且如果已重新產生
 //     程式碼，則會遺失變更。
-// </自動產生的>
+// </自動產生>
 //------------------------------------------------------------------------------
 
 namespace MKForum
@@ -168,6 +168,15 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.Button btnPBSave1;
 
         /// <summary>
+        /// Hidden1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden Hidden1;
+
+        /// <summary>
         /// plhCBAPI_normal1 控制項。
         /// </summary>
         /// <remarks>
@@ -213,22 +222,22 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.PlaceHolder plhCBDsplMode1;
 
         /// <summary>
-        /// addCBoard1 控制項。
+        /// TextBox1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox addCBoard1;
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
 
         /// <summary>
-        /// addCBoardcontent1 控制項。
+        /// TextBox2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox addCBoardcontent1;
+        protected global::System.Web.UI.WebControls.TextBox TextBox2;
 
         /// <summary>
         /// btnAddCB1 控制項。
@@ -573,6 +582,15 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
+        /// ltlBlk 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ltlBlk;
+
+        /// <summary>
         /// RptrBlk 控制項。
         /// </summary>
         /// <remarks>
@@ -607,6 +625,15 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStpDelect;
+
+        /// <summary>
+        /// ltlStp 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ltlStp;
 
         /// <summary>
         /// RptrStp 控制項。
@@ -654,6 +681,15 @@ namespace MKForum
         protected global::System.Web.UI.WebControls.Button btnMMDelete;
 
         /// <summary>
+        /// ltlMM 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ltlMM;
+
+        /// <summary>
         /// RptrMM 控制項。
         /// </summary>
         /// <remarks>
@@ -661,5 +697,14 @@ namespace MKForum
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater RptrMM;
+
+        /// <summary>
+        /// mainMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden mainMsg;
     }
 }
