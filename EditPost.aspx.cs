@@ -47,6 +47,17 @@ namespace MKForum
             this.DisplayPost(post);
             this._motopost = post;
 
+            // 取得Tag標籤
+            List<PostHashtag> phl = this._pmgr.GetPostHashtagList(this._motopost.PostID);
+            string pht = string.Empty;
+            for (var i = 0; i < phl.Count; i++)
+            {
+                if (i != phl.Count - 1)
+                    pht += phl[i].Naiyo +'/';
+                else
+                    pht += phl[i].Naiyo;
+            }
+            this.txtPostHashtag.Text = pht;
             // 提示使用者訊息
             if (HttpContext.Current.Session["Msg"] != null)
             {
@@ -103,7 +114,7 @@ namespace MKForum
             if (this.fuCoverImage.HasFile)
             {
 
-                if (this.CheckImgFormat(this.fuPostImage.FileName) == true)
+                if (this.CheckImgFormat(this.fuCoverImage.FileName) == true)
                 {
                     System.Threading.Thread.Sleep(3);
                     Random random = new Random((int)DateTime.Now.Ticks);
@@ -118,7 +129,7 @@ namespace MKForum
                     this.fuCoverImage.SaveAs(newFilePath);
                     post.CoverImage = "/FileDownload/PostContent/" + fileName;
                 }
-                else        
+                else
                 {
                     HttpContext.Current.Session["Msg"] = "別亂傳檔案，罰你重寫";
                     Response.Redirect(Request.RawUrl);
@@ -128,8 +139,28 @@ namespace MKForum
 
             // 更新Post
             string cboard = this.Request.QueryString["CboardID"];
-
             this._pmgr.UpdatePost(post);
+
+            // 處理#tag
+            string htagtext = this.txtPostHashtag.Text;
+            string[] htagarr = htagtext.Split('/');
+            List<string> htaglist = new List<string>();
+            List<PostHashtag> phl = this._pmgr.GetPostHashtagList(this._motopost.PostID);
+            foreach (var x in htagarr)
+            {
+                htaglist.Add(x);
+                for (var i = 0; i < phl.Count; i++)
+                {
+                    if (string.Compare(x, phl[i].Naiyo) == 0)
+                    {
+                        htaglist.Remove(x);
+                    }
+                }
+            }
+            for (int i = 0; i < htaglist.Count; i++)
+            {
+                this._pmgr.CreateHashtag(this._motopost.PostID, htaglist[i]);
+            }
             //提示使用者成功
             HttpContext.Current.Session["Msg"] = "更新成功";
             if (post.PointID == null)
