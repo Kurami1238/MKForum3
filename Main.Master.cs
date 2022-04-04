@@ -238,7 +238,13 @@ namespace MKForum
                     string postID = e.CommandArgument.ToString();
                     string[] postIDs = postID.Split(' ');
                     this._mfmgr.UpdateReplied(MemberID, postIDs[2], 1);
-                    string url = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}#{2}", postIDs[0], postIDs[2], postIDs[1]);
+
+                    string url = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}#{2}", postIDs[0], postIDs[3], postIDs[1]);
+                    if (Convert.ToInt32(postIDs[1]) == 1)
+                    {
+                        url = string.Format("DisplayPost.aspx?CboardID={0}&PostID={1}#{2}", postIDs[0], postIDs[2], postIDs[1]);
+                    }
+
                     Response.Redirect(url);
                 }
             }
