@@ -712,14 +712,18 @@ namespace MKForum.Managers
         public void UpdatePost(Post post)
         {
             string connectionString = ConfigHelper.GetConnectionString();
-            string commandText =
-                @"  UPDATE Posts
-                    SET 
+            string sets = @"SET
                         Title = @title,
                         PostCotent = @postcotent,
-                        LastEditTime = @lastedittime,
-                        CoverImage = @coverimage,
-                        SortID = @sortid
+                        LastEditTime = @lastedittime
+                        ";
+            if (post.CoverImage != null)
+                sets += ",CoverImage = @coverimage ";
+            if (post.SortID != null)
+                sets += ",SortID = @sortid ";
+            string commandText =
+                $@"  UPDATE Posts
+                    {sets}
                     WHERE PostID = @postID ";
             try
             {
@@ -733,9 +737,10 @@ namespace MKForum.Managers
                         command.Parameters.AddWithValue(@"title", post.Title);
                         command.Parameters.AddWithValue(@"postcotent", post.PostCotent);
                         command.Parameters.AddWithValue(@"lastedittime", DateTime.Now);
-                        command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
-                        command.Parameters.AddWithValue(@"sortid", post.SortID);
-
+                        if (post.CoverImage != null)
+                            command.Parameters.AddWithValue(@"coverimage", post.CoverImage);
+                        if (post.SortID != null)
+                            command.Parameters.AddWithValue(@"sortid", post.SortID);
                         command.ExecuteNonQuery();
                     }
                 }
