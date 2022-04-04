@@ -46,7 +46,7 @@ namespace MKForum
         {
             string stamp = this.Request.QueryString["Sort"];
             if (!string.IsNullOrWhiteSpace(stamp))
-                this.sortid.Value = stamp;
+                this.sortid.Value = stamp;  
             else
                 this.sortid.Value = "0";
         }
@@ -196,7 +196,7 @@ namespace MKForum
                 case "btnStamp":
                     string cboardid = this.Request.QueryString["CboardID"];
                     string sortid = e.CommandArgument.ToString();
-                    Response.Redirect($"CbtoPost.aspx?Cboard={cboardid}&Sort={sortid}", true);
+                    Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}&Sort={sortid}", true);
                     break;
             }
         }
