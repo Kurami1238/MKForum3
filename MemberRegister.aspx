@@ -73,6 +73,7 @@
 
             <asp:Button runat="server" ID="btnSave" Text="儲存" OnClick="btnSave_Click" />
             <asp:Button runat="server" ID="btnCancel" Text="取消" OnClick="btnCancel_Click" />
+            <br />
             <asp:Label runat="server" ID="lblMsg" ForeColor="Red"></asp:Label>
 
         </div>

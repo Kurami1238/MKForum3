@@ -45,8 +45,20 @@ namespace MKForum
             if (Guid.TryParse(postidtext, out postid))
                 post = this._pmgr.GetPost(postid);
             this.DisplayPost(post);
+            this.dpdlPostStamp.DataValueField = post.SortID.ToString();
             this._motopost = post;
 
+            // 取得Tag標籤
+            List<PostHashtag> phl = this._pmgr.GetPostHashtagList(this._motopost.PostID);
+            string pht = string.Empty;
+            for (var i = 0; i < phl.Count; i++)
+            {
+                if (i != phl.Count - 1)
+                    pht += phl[i].Naiyo +'/';
+                else
+                    pht += phl[i].Naiyo;
+            }
+            this.txtPostHashtag.Text = pht;
             // 提示使用者訊息
             if (HttpContext.Current.Session["Msg"] != null)
             {
@@ -84,6 +96,7 @@ namespace MKForum
         protected void btnSend_Click(object sender, EventArgs e)
         {
             Post post = this._motopost;
+            
             string TitleText = this.txtTitle.Text.Trim();
             string PostCotentText = this.content.InnerText.Trim();
             post.Title = TitleText;
@@ -95,41 +108,66 @@ namespace MKForum
                 this.lblMsg.Text = this._pmgr.GetmsgText();
                 return;
             }
-            // 處理類型
-            string postSorttext = this.dpdlPostStamp.Text;
-            int? postSort = Convert.ToInt32(postSorttext);
-            post.SortID = postSort;
-            // 儲存圖片
-            if (this.fuCoverImage.HasFile)
+            if (post.PointID == null)
             {
-
-                if (this.CheckImgFormat(this.fuPostImage.FileName) == true)
+                // 處理類型
+                string postSorttext = this.dpdlPostStamp.Text;
+                int? postSort = Convert.ToInt32(postSorttext);
+                post.SortID = postSort;
+                // 儲存圖片
+                if (this.fuCoverImage.HasFile)
                 {
-                    System.Threading.Thread.Sleep(3);
-                    Random random = new Random((int)DateTime.Now.Ticks);
 
-                    string folderPath = "~/FileDownload/PostContent/";
-                    string fileName = "C" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuCoverImage.FileName);
+                    if (this.CheckImgFormat(this.fuCoverImage.FileName) == true)
+                    {
+                        System.Threading.Thread.Sleep(3);
+                        Random random = new Random((int)DateTime.Now.Ticks);
 
-                    folderPath = HostingEnvironment.MapPath(folderPath);
-                    if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
-                        Directory.CreateDirectory(folderPath);
-                    string newFilePath = Path.Combine(folderPath, fileName);
-                    this.fuCoverImage.SaveAs(newFilePath);
-                    post.CoverImage = "/FileDownload/PostContent/" + fileName;
+                        string folderPath = "~/FileDownload/PostContent/";
+                        string fileName = "C" + DateTime.Now.ToString("yyyyMMdd_HHmmss_FFFFFF") + "_" + random.Next(100000).ToString("00000") + Path.GetExtension(this.fuCoverImage.FileName);
+
+                        folderPath = HostingEnvironment.MapPath(folderPath);
+                        if (!Directory.Exists(folderPath)) // 假如資料夾不存在，先建立
+                            Directory.CreateDirectory(folderPath);
+                        string newFilePath = Path.Combine(folderPath, fileName);
+                        this.fuCoverImage.SaveAs(newFilePath);
+                        post.CoverImage = "/FileDownload/PostContent/" + fileName;
+                    }
+                    else
+                    {
+                        HttpContext.Current.Session["Msg"] = "別亂傳檔案，罰你重寫";
+                        Response.Redirect(Request.RawUrl);
+                    }
+
                 }
-                else        
+
+               
+
+                // 處理#tag
+                string htagtext = this.txtPostHashtag.Text;
+                string[] htagarr = htagtext.Split('/');
+                List<string> htaglist = new List<string>();
+                List<PostHashtag> phl = this._pmgr.GetPostHashtagList(this._motopost.PostID);
+                foreach (var x in htagarr)
                 {
-                    HttpContext.Current.Session["Msg"] = "別亂傳檔案，罰你重寫";
-                    Response.Redirect(Request.RawUrl);
+                    htaglist.Add(x);
+                    for (var i = 0; i < phl.Count; i++)
+                    {
+                        if (string.Compare(x, phl[i].Naiyo) == 0)
+                        {
+                            htaglist.Remove(x);
+                        }
+                    }
                 }
-
+                for (int i = 0; i < htaglist.Count; i++)
+                {
+                    this._pmgr.CreateHashtag(this._motopost.PostID, htaglist[i]);
+                }
             }
-
             // 更新Post
             string cboard = this.Request.QueryString["CboardID"];
-
             this._pmgr.UpdatePost(post);
+
             //提示使用者成功
             HttpContext.Current.Session["Msg"] = "更新成功";
             if (post.PointID == null)

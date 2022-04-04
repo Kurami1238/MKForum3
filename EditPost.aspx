@@ -42,6 +42,11 @@
                     <textarea class="content" id="content" rows="6" cols="28" runat="server"></textarea>
                 </td>
             </tr>
+            <tr class="tag">
+                <th>#tag (用/分隔)</th>
+                <td>
+                    <asp:TextBox ID="txtPostHashtag" runat="server"></asp:TextBox></td>
+            </tr>
             <tr class="Cv">
                 <th>封面圖</th>
                 <td>

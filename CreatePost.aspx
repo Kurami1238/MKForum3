@@ -94,6 +94,12 @@
             console.log(msg);
             if (msg != undefined && msg != null && msg != "")
                 alert(msg);
+            $("input").focus(function () {
+                $(this).css("border","1px none #1a0302");
+            });
+            $("input").blur(function () {
+                $(this).css("background-color", "transparent");
+            });
         });
         $('.XXmsg').change(function(){
             alert($('.XXmsg').val)
@@ -101,6 +107,8 @@
         var text;
         function insert(naiyo) {
             var obj = $(".zenbu .C .content");
+            var o = document.selection;
+            alert(o);
             if (document.selection)  //for ie
             {
                 obj.focus();
@@ -124,15 +132,15 @@
             var html = converter.makeHtml(text);
             $('.result').html(html);
         });
-        //function big() {
-        //    text = $(".content").val();
-        //    text += "#";
-        //    $(".zenbu .C .content").val(text);
-        //}
         function big() {
-            text = "#";
-            insert(text);
+            text = $(".content").val();
+            text += "#";
+            $(".zenbu .C .content").val(text);
         }
+        //function big() {
+        //    text = "#";
+        //    insert(text);
+        //}
         function mid() {
             text = $(".content").val();
             text += "###";

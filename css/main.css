@@ -284,9 +284,9 @@ a {
 
 #btnwebLogin, #btnwebLogout {
     float: right;
-    background-color: orangered;
+    background-color: transparent;
     font-size: 16px;
-    color: skyblue;
+    color: white;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
@@ -455,9 +455,8 @@ a {
     z-index: -999;
     border: none;
     height: 130px;
-    width: 300px;
+    width: 350px;
     background-color: white;
-    text-align: left;
     bottom: 30px;
     right: 50px;
     background: url("../images/reel2.png") no-repeat;
@@ -474,8 +473,11 @@ a {
 
     .Notifytext::-webkit-scrollbar {
         width: 12px; /* width of the entire scrollbar */
+        background-color: transparent; /* color of the scroll thumb */
     }
-
+    .Notifytext::-webkit-scrollbar-corner {
+        background-color: transparent; /* color of the scroll thumb */
+    }
     .Notifytext::-webkit-scrollbar-track {
         background: transparent; /* color of the tracking area */
     }
@@ -494,8 +496,13 @@ a {
 
     .Notifytext h3 {
         background-color: transparent;
-        color: blue;
-        font-size: 26px;
+        font-family: Microsoft JhengHei;
+        color: black;
+        font-size: 24px;
+        text-decoration: underline;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        font-family: sans;
+        color: #CA9651;
     }
 
     .Notifytext span {

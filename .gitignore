@@ -25,5 +25,5 @@ bin/
 *.userosscache
 *.sln.docstates
 # 專案客製
-FileDownload/
+# FileDownload/
 /images/16.mp4

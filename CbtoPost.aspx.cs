@@ -46,16 +46,16 @@ namespace MKForum
         {
             string stamp = this.Request.QueryString["Sort"];
             if (!string.IsNullOrWhiteSpace(stamp))
-                this.sortid.Value = stamp;
+                this.sortid.Value = stamp;  
             else
                 this.sortid.Value = "0";
         }
 
         private int GetCboardID()
         {
-            string cboardsText = this.Request.QueryString["Cboard"];
+            string cboardsText = this.Request.QueryString["CboardID"];
             int cboard = (string.IsNullOrWhiteSpace(cboardsText))
-                            ? 2 : Convert.ToInt32(cboardsText);
+                            ? 0 : Convert.ToInt32(cboardsText);
             Cboard cboardd = CboardManager.GetCboard(cboard);
             _cboardid = cboard;
             this.ltlCbn.Text = cboardd.Cname;
@@ -78,7 +78,7 @@ namespace MKForum
             // 如果有點文章類型按鈕
             string stamp = this.Request.QueryString["Sort"];
             if (int.TryParse(stamp, out int sortid))
-                postList = this._pmgr.GetPostListwithStamp(sortid);
+                postList = this._pmgr.GetPostList(cboard, _pageSize, 1, sortid, out int totalrows);
             else
                 postList = this._pmgr.GetPostList(cboard, _pageSize, 1, out int totalrows);
             // 文章若長度大於二十個字，後面則隱藏
@@ -196,7 +196,7 @@ namespace MKForum
                 case "btnStamp":
                     string cboardid = this.Request.QueryString["CboardID"];
                     string sortid = e.CommandArgument.ToString();
-                    Response.Redirect($"CbtoPost.aspx?Cboard={cboardid}&Sort={sortid}", true);
+                    Response.Redirect($"CbtoPost.aspx?CboardID={cboardid}&Sort={sortid}", true);
                     break;
             }
         }

@@ -56,7 +56,9 @@ namespace MKForum
             {
                 //this.lblMember_Change.Text = "資料" + Environment.NewLine + "變更";
                 string MemberID = HttpContext.Current.Session["MemberID"].ToString();
+
                 List<Post> MemberFollows = _mfmgr.GetReplied_POSTMemberFollows(MemberID);
+
                 int? RepliedCount = _mfmgr.GetReplied_count(MemberID);
                 if (_mfmgr.GetReplied_POSTMemberFollows(MemberID) != null)
                 {
@@ -162,6 +164,23 @@ namespace MKForum
             #endregion
 
         }
+        public string Replacereply(string str)
+        {
+            if (str.Length > 5)
+            {
+                str = str.Substring(0, 6) + "...";
+            }
+            return str;
+        }
+        public string ReplaceArticle(string str)
+        {
+            if (str.Length > 10)
+            {
+                str = str.Substring(0, 10) + "...";
+            }
+            return str;
+        }
+
         protected void Page_Prerender(object sender, EventArgs e)
         {
 
