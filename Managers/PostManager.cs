@@ -412,7 +412,7 @@ namespace MKForum.Managers
                             ( 
                             SELECT TOP {skip} PostID
                             FROM Posts
-                            WHERE PointID IS NULL
+                            WHERE PointID IS NULL AND CboardID = @cboardID
                             ORDER BY LastEditTime DESC
                             )
                         {whereCondition}
@@ -476,7 +476,7 @@ namespace MKForum.Managers
                             ( 
                             SELECT TOP {skip} PostID
                             FROM Posts
-                            WHERE PointID IS NULL
+                            WHERE PointID IS NULL AND CboardID = @cboardID
                             ORDER BY LastEditTime DESC
                             )
                         {whereCondition}
