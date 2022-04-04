@@ -19,9 +19,12 @@
             background-color: transparent;
             color: rgba(255, 248, 240, 0.93)
         }
-
+        .bb {
+            background-color: #100f10;
+            z-index:-2;
+        }
         .span1 {
-            color: white;
+            color: white;   
             font-size: 16pt;
         }
         /*右側欄的textbox*/
@@ -144,6 +147,8 @@
 </head>
 <body>
     <div class="row">
+        <%--這是為了防止眼睛被閃蝦--%>
+        <div class="bb">
         <div class="container">
             <form id="form1" runat="server">
 
@@ -481,6 +486,7 @@
 
             <video class="video" src="images/Final Work Lunar Tears ffff.mp4" autoplay muted loop></video>
         </div>
+            </div>
     </div>
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
