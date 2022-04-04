@@ -287,9 +287,9 @@ a {
 
 #btnwebLogin, #btnwebLogout {
     float: right;
-    background-color: orangered;
+    background-color: transparent;
     font-size: 16px;
-    color: skyblue;
+    color: white;
     cursor: pointer;
     text-align: center;
     text-decoration: none;

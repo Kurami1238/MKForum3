@@ -476,7 +476,7 @@ namespace MKForum.Managers
                             ( 
                             SELECT TOP {skip} PostID
                             FROM Posts
-                            WHERE PointID IS NULL AND CboardID = @cboardID
+                            WHERE PointID IS NULL AND ( CboardID = @cboardID AND SortID = @sortID )
                             ORDER BY LastEditTime DESC
                             )
                         {whereCondition}
