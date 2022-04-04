@@ -140,7 +140,7 @@ namespace MKForum.BackAdmin
             string PassWordValue = this.txtMember_PassWord.Text.Trim();
             string PassWordValueCheck = this.txtMember_PassWord_Check.Text.Trim();
 
-            char[] special_symbols = { '\\', '/' ,':', '*', '"', '<', '>', '|', ','};
+            char[] special_symbols = { '\\' ,':', '*', '"', '<', '>', '|', ','};
             foreach (char i in special_symbols)
             {
                 if (NickNameValue.Contains(i))

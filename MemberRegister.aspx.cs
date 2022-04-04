@@ -161,13 +161,13 @@ namespace MKForum
                 msgList.Add("密碼輸入不一致");
 
 
-            //Regex a_zPattern = new Regex("[a-z]");
-            //Regex a_zPattern2 = new Regex("[A-Z]");
-            //var a_zPattern01 = a_zPattern.Matches(PassWordValue);
-            //var a_zPattern02 = a_zPattern2.Matches(PassWordValue);
-            //if (a_zPattern01.Count == 0)
-            //    if (a_zPattern02.Count == 0)
-            //        msgList.Add("密碼請用英文及數字");
+            Regex a_zPattern = new Regex("[a-z]");
+            Regex a_zPattern2 = new Regex("[A-Z]");
+            var a_zPattern01 = a_zPattern.Matches(PassWordValue);
+            var a_zPattern02 = a_zPattern2.Matches(PassWordValue);
+            if (a_zPattern01.Count == 0)
+                if (a_zPattern02.Count == 0)
+                    msgList.Add("密碼請用英文及數字");
 
 
             if (SexValue == null)
