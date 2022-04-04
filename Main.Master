@@ -72,8 +72,15 @@
             z-index: 2000;
         }
 
+        #hamburgerMenu3 {
+            position: fixed;
+            right: 0;
+            margin-top: 0px;
+            margin: 25px;
+            z-index: 1999;
+        }
 
-        #offcanvasLeft {
+        #offcanvasLeft, #offcanvasRight {
             background: red; /* For browsers that do not support gradients */
             background: -webkit-linear-gradient(left top, #0F0016, #212B36); /* For Safari 5.1 to 6.0 */
             background: -o-linear-gradient(bottom right, #0F0016, #212B36); /*For Opera 11.1 to 12.0 */
@@ -92,9 +99,18 @@
             border-right: 1px solid rgba(0, 0, 0, 0.2);
             transform: translateX(-100%);
             scrollbar-darkshadow-color: ActiveBorder;
+            z-index: 2010;
+        }
+
+        .offcanvas-myRight {
+            top: 0;
+            right: 0;
+            width: 300px;
+            border-left: 1px solid rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
         }
         /*PBArea:左側固定子列表*/
-        #CBTilte1,#CBTilte2 {
+        #CBTilte1, #CBTilte2 {
             border-right: 1px;
             border-radius: 10px;
             background: rgba(0,0,0,0.3);
@@ -474,16 +490,16 @@
                                             <br />
                                         </div>
                                     </asp:PlaceHolder>
-        </div>
-    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </asp:PlaceHolder>
                 <input id="mainMsg" name="mainMsg" runat="server" type="hidden" />
-    </form>
+            </form>
 
             <video class="video" src="images/Final Work Lunar Tears ffff.mp4" autoplay muted loop></video>
-    </div>
+        </div>
     </div>
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
