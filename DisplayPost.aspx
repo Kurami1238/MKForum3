@@ -87,7 +87,7 @@
                         </div>
                     </asp:PlaceHolder>
                     <asp:HiddenField runat="server" ID="hfNmPID" Value='<%# Eval("PostID")%>' />
-                    <a href='<%# "SearchKekka.aspx?keyword=" + Eval("MemberAccount") + "&searcharea=srchWriter" %>' title="搜尋此：<%# Eval("MemberID")%> 作者">
+                    <a href='<%# "SearchKekka.aspx?keyword=" + Eval("MemberAccount") + "&searcharea=srchWriter" %>' title="搜尋此：<%# Eval("MemberAccount")%> 作者">
                         <div class="nmM">
                             <asp:Label ID="lblNmMember" runat="server" Text='<%# "作者：" +Eval("MemberAccount")%>'></asp:Label>
                         </div>

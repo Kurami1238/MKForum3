@@ -117,21 +117,22 @@
                 for (var i = 0; i < list.length; i++) {
                     var rpt = $("#PostHazimari .test").eq(0).clone(true);
                     //console.log($("#PostA").attr("href"));
-                    console.log(rpt.html());
+                    //console.log(rpt.html());
                     var url = "DisplayPost.aspx?CboardID=" + list[i].CboardID + "&PostID=" + list[i].PostID;
                     var titlex = "前往：" + list[i].Title;
                     var postdd = "最後編輯：" + list[i].LastEditTime
                     var postv = "👁‍" + list[i].PostView
+                    var postm = "作者：" + list[i].MemberAccount
                     $(".PostA", rpt).attr({ "href": url, "title": titlex });
                     $(".imgPostP", rpt).attr({ "src": list[i].Coverimage });
                     $(".PostT", rpt).text(list[i].Title);
                     $(".PostC", rpt).text(list[i].PostCotent);
-                    $(".PostM", rpt).text(list[i].MemberAccount);
+                    $(".PostM", rpt).text(postm);
                     $(".PostD", rpt).text(postdd);
                     $(".PostV", rpt).text(postv);
 
                     //$("btnPostEdit").attr({ "CommandArgument": list[i].PostID });
-                    console.log(rpt.html());
+                    //console.log(rpt.html());
                     //$("#Nmphl").text(list[i].LastEditTime);
                     $(".content").append(rpt);
                 }
