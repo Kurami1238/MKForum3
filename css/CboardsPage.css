@@ -11,12 +11,18 @@ img{
     position: fixed;
     top:490px;
     right: 65px;
-    background:#e76c25;
+    background:transparent;
     border-radius: 50%;
-    box-shadow: 2px 1px 5px #e76c25;
+    box-shadow: rgba(171, 194, 216, 0.685) 2px 2px 12px;
     transition: 1.2s;
     -webkit-filter: opacity(30%); /* Safari */
     filter: opacity(30%);
+}
+.btncreatep:hover{
+    background-color: #e76c25e3;
+    box-shadow: #e76c25 0px 2px 6px;
+    -webkit-filter: opacity(30%); /* Safari */
+    filter: opacity(100%);
 }
 @media screen and (min-width:576px){
     .btncreatep{
@@ -60,10 +66,7 @@ img{
         right: 450px;
     }
 }
-.btncreatep:hover{
-    -webkit-filter: opacity(30%); /* Safari */
-    filter: opacity(100%);
-}
+
 
 .PostA:hover{
     text-shadow: 2px 2px 2px #941a12;
@@ -139,7 +142,7 @@ img{
         .Cboard .content .article {
             padding: 10px;
             margin: 15px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 12px;
             /* box-shadow: 1px 1px 7px #e76c25;line-height: 100px;text-align: left; */
             transition: 0.4s;
 
@@ -154,7 +157,7 @@ img{
         }
 
             .Cboard .content .article h6 {
-                font-size: 44px;
+                font-size: 34px;
             }
 
             .Cboard .content .article p {

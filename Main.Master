@@ -153,6 +153,7 @@
 <body>
     <div class="row">
         <%--這是為了防止眼睛被閃蝦--%>
+            <div class="bb"></div>
         <div class="container">
             <form id="form1" runat="server">
 
@@ -487,7 +488,6 @@
                     </div>
                 </asp:PlaceHolder>
             </form>
-            <div class="bb"></div>
             <video class="video" src="images/Final Work Lunar Tears ffff.mp4" autoplay muted loop></video>
         </div>
     </div>

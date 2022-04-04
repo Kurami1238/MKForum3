@@ -78,7 +78,7 @@ namespace MKForum
             // 如果有點文章類型按鈕
             string stamp = this.Request.QueryString["Sort"];
             if (int.TryParse(stamp, out int sortid))
-                postList = this._pmgr.GetPostListwithStamp(sortid);
+                postList = this._pmgr.GetPostList(cboard, _pageSize, 1, sortid, out int totalrows);
             else
                 postList = this._pmgr.GetPostList(cboard, _pageSize, 1, out int totalrows);
             // 文章若長度大於二十個字，後面則隱藏
