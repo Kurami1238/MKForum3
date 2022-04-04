@@ -257,7 +257,7 @@ namespace MKForum
             string pwd = this.txtPassword.Text.Trim();
             if (this.ckbskip.Checked)
             {
-                if (this._amgr.TryLogin("Text05", "12345678"))
+                if (this._amgr.TryLogin("666", "a11111111"))
                 {
                     Session["NeedTouroku"] = null;
                     Response.Redirect(Request.RawUrl);

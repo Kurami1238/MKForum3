@@ -18,7 +18,10 @@
     height: 100%;
     object-fit: cover;
 }
-
+#btnSearh{
+    color: rgba(255, 248, 240, 0.93);
+    background-color: transparent;
+}
 a {
     color: rgba(255, 248, 240, 0.93);
     text-decoration: none;

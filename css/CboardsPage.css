@@ -11,7 +11,7 @@ img{
     position: fixed;
     top:490px;
     right: 65px;
-    background:transparent;
+    background:rgba(171, 194, 216, 0.285);
     border-radius: 50%;
     box-shadow: rgba(171, 194, 216, 0.685) 2px 2px 12px;
     transition: 1.2s;
