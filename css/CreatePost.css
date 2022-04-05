@@ -38,8 +38,11 @@ hr{
           box-shadow: 2px 1px 5px #e76c25;
           border-radius:10px;
           font-size: 18px;
-
         }
+.zenbu select option {
+    background: #100f10;
+    background-color: #100f10;
+}
         .zenbu textarea{
             border: 1px none #e76c25;
             box-shadow: 2px 1px 4px #e76c25;
