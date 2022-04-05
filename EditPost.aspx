@@ -118,6 +118,7 @@
             text = $(".content").val();
             text += "+ a\n+ a\n+ a";
             $(".zenbu .C .content").val(text);
+        }
         function Getlink() {
             var upup = $(".upup").val();
             var mid = $(".memberid").val();

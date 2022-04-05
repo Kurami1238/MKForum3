@@ -330,8 +330,8 @@
                                                                         <asp:Button ID="Button1" runat="server" CommandName='<%#Eval("PostID")%>' CommandArgument='<%#Eval("CboardID")+" "+Eval("Floor")+" "+ Eval("PostID")+" "+Eval("PointID")%>' Text='<%# !(bool)Eval("Replied")
                                                                 ? Eval("PointID") == null
                                                                    ? Eval("LastEditTime") == null
-                                                                        ? string.Format("新文章:「{0}」 {1}", ReplaceArticle(Eval("Title").ToString()), Eval("PostDate", "{0:yyyy/MM/dd}"))
-                                                                    : string.Format("新文章:「{0}」 {1}", ReplaceArticle(Eval("Title").ToString()), Eval("LastEditTime", "{0:yyyy/MM/dd}"))
+                                                                        ? string.Format("新回復:「{0}」 {1}", ReplaceArticle(Eval("Title").ToString()), Eval("PostDate", "{0:yyyy/MM/dd}"))//新文章
+                                                                    : string.Format("新回復:「{0}」 {1}", ReplaceArticle(Eval("Title").ToString()), Eval("LastEditTime", "{0:yyyy/MM/dd}"))//新文章
                                                                     : Eval("LastEditTime") == null
                                                                         ? string.Format("新回復:「{1}」({0}F) {2}", Eval("Floor"), Replacereply(Eval("PostCotent").ToString()), Eval("PostDate", "{0:yyyy/MM/dd}"))
                                                                         : string.Format("新回復:「{1}」({0}F) {2}", Eval("Floor"), Replacereply(Eval("PostCotent").ToString()), Eval("LastEditTime", "{0:yyyy/MM/dd}"))
