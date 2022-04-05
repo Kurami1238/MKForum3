@@ -233,6 +233,7 @@ namespace MKForum.Managers
                     INNER JOIN Members
                     ON Posts.MemberID = Members.MemberID
                     {Zyouken}
+                    ORDER BY LastEditTime DESC
                 ";
             string commandCountText = $@"SELECT COUNT(PostID)
                                         FROM Posts
@@ -300,6 +301,7 @@ namespace MKForum.Managers
                     INNER JOIN Members
                     ON Posts.MemberID = Members.MemberID
                     {Zyouken}
+                    ORDER BY LastEditTime DESC
                 ";
             string commandCountText = $@"SELECT COUNT(PostID)
                                         FROM Posts
@@ -378,6 +380,7 @@ namespace MKForum.Managers
                     INNER JOIN Members
                     ON Posts.MemberID = Members.MemberID
                     {Zyouken}
+                    ORDER BY LastEditTime DESC
                 ";
             string commandCountText = $@"SELECT COUNT(PostID)
                                         FROM Posts
@@ -520,6 +523,7 @@ namespace MKForum.Managers
                                 INNER JOIN Members
                                 ON Posts.MemberID = Members.MemberID
                                  {pluszyoukenP}
+                                ORDER BY LastEditTime DESC
                                 ";
                 commandCountText = $@"SELECT COUNT(PostID)
                                       FROM Posts
@@ -534,6 +538,7 @@ namespace MKForum.Managers
                                 INNER JOIN Members
                                 ON Posts.MemberID = Members.MemberID
                                 {pluszyoukenC} 
+                                ORDER BY LastEditTime DESC
                                 ";
                 commandCountText = $@"SELECT COUNT(PostID)
                                       FROM Posts
