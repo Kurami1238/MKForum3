@@ -5,6 +5,15 @@
     /*     background-color: blue; */
     color: rgba(255, 248, 240, 0.93)
 }
+/* .row .c8763{
+    box-shadow: rgba(  149, 157, 165, 0.2) 0px 2px 6px;
+    width: 50px;
+    height: 30px;
+}
+.c8763:hover{
+    background-color: #3e8e41;
+    color: black;
+} */
 
 .container .video {
     z-index: -1;

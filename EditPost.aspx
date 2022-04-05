@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="css/EditPost.css" rel="stylesheet" />
     <script src="js/showdown.js"></script>
+    <%--<script src="http://code.jquery.com/jquery-latest.js"></script>--%>
     <script src="js/jquery.min.js"></script>
     <link href="css/github-markdown.css" rel="stylesheet" />
     <link href="css/github-markdown-dark.css" rel="stylesheet" />
@@ -90,6 +91,10 @@
             console.log(msg);
             if (msg != undefined && msg != null && msg != "")
                 alert(msg);
+            var text = $(".content").val();
+            var converter = new showdown.Converter({ 'tables': 'true', 'tasklists': 'true', 'simpleLineBreaks': 'true', 'openLinksInNewWindow': 'true', 'simplifiedAutoLink': 'true', 'strikethrough': 'true', 'customizedHeaderId': 'true', 'emoji': 'true', 'moreStyling': 'true', 'smoothLivePreview': 'true', 'smartIndentationFix': 'true', 'ghMentions': 'true', 'omitExtraWLInCodeBlocks': 'true' });
+            var html = converter.makeHtml(text);
+            $('.result').html(html);
         });
         $('.content').on('keyup', function () {
             var text = $(".content").val();
@@ -118,6 +123,7 @@
             text = $(".content").val();
             text += "+ a\n+ a\n+ a";
             $(".zenbu .C .content").val(text);
+        }
         function Getlink() {
             var upup = $(".upup").val();
             var mid = $(".memberid").val();

@@ -10,6 +10,9 @@
 @media screen and (min-width:630px){
     .CNNmPost .CNNmT{width: 80%;}
 }
+#ContentPlaceHolder1_dpdlPostStamp option{
+    background-color: transparent;
+}
 img{
     max-width: 100%;
     max-height: 100%;
